@@ -58,8 +58,6 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', $user);
 
-        $user->with('subs.totalHashRate', 'subs.workers');
-
         return new UserResource($user);
     }
 }

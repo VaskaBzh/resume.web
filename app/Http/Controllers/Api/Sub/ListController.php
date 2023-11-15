@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Sub;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Sub\GeneralSubsDataResource;
 use App\Http\Resources\Sub\SubResource;
 use App\Models\User;
 use App\Services\External\BtcComService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use OpenApi\Attributes as OA;
+use phpseclib3\Crypt\AES;
 use Symfony\Component\HttpFoundation\Response;
 
 class ListController extends Controller
@@ -35,8 +38,19 @@ class ListController extends Controller
                     description: 'Successful response',
                     content: [
                         new OA\JsonContent(
-                            type: 'array',
-                            items: new OA\Items(ref: '#/components/schemas/SubResource')
+                            properties: [
+                                new OA\Property(
+                                    property: 'list',
+                                    type: 'array',
+                                    items: new OA\Items(ref: '#/components/schemas/SubResource'),
+                                ),
+                                new OA\Property(
+                                    property: 'general_subs_data',
+                                    type: 'array',
+                                    items: new OA\Items(ref: '#/components/schemas/GeneralSubsDataResource')
+                                ),
+                            ],
+                            type: 'object'
                         ),
                     ],
                 ),
@@ -61,11 +75,17 @@ class ListController extends Controller
     public function __invoke(
         User $user,
         BtcComService $btcComService
-    ): ResourceCollection {
+    ): JsonResponse {
         $this->authorize('viewAny', $user);
 
-        $subCollection = $btcComService->transformSubCollection(subs: $user->subs()->get());
+        $subCollection = $btcComService->transformSubCollection(subs: $user->subs()
+            ->with('workers')
+            ->get()
+        );
 
-        return SubResource::collection($subCollection);
+        return new JsonResponse([
+            'list' => SubResource::collection($subCollection),
+            'overall' => new GeneralSubsDataResource($subCollection),
+        ]);
     }
 }
