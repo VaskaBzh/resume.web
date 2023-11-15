@@ -8,8 +8,14 @@ use App\Enums\Hash\Unit;
 
 class HashRate
 {
+    /**
+     * hash rate value
+     */
     public float $value;
 
+    /*
+     * hash rate unit
+     */
     public string $unit;
 
     private function __construct(float $value)
