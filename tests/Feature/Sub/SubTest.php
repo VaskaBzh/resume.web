@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Sub;
 
 use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class SubTest extends TestCase
@@ -20,5 +21,6 @@ class SubTest extends TestCase
 
     public function testBasic()
     {
+        Sanctum::actingAs($this->user);
     }
 }

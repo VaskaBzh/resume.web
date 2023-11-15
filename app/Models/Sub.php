@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Builders\SubBuilder;
 use App\Enums\Worker\Status;
 use App\Utils\Helper;
+use App\ValueObjects\HashRate;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -77,17 +78,17 @@ class Sub extends Model
     {
         return $this->hasMany(Wallet::class, 'group_id');
     }
+
+    public function watcherLinks(): HasMany
+    {
+        return $this->hasMany(WatcherLink::class, 'group_id');
+    }
     /* end relations */
 
     /* Custom builder */
     public function newEloquentBuilder($query): SubBuilder
     {
         return new SubBuilder($query);
-    }
-
-    public function watcherLinks(): HasMany
-    {
-        return $this->hasMany(WatcherLink::class, 'group_id');
     }
 
     /* Attributes */
@@ -98,13 +99,30 @@ class Sub extends Model
         );
     }
 
-    public function totalHashRate(): Attribute
+    /**
+     * Total hash rate per 24 h
+     */
+    public function hashRate(): Attribute
     {
         return Attribute::make(
             get: fn () => $this
                 ->workers()
                 ->byStatus(Status::ACTIVE->value)
                 ->sum('approximate_hash_rate')
+
+        );
+    }
+
+    /**
+     * Convert value and unit
+     */
+    public function convertedHashRate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => HashRate::from(value: $this->workers()
+                ->byStatus(Status::ACTIVE->value)
+                ->sum('approximate_hash_rate')
+            )
         );
     }
 
