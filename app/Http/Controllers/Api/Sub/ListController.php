@@ -78,14 +78,15 @@ class ListController extends Controller
     ): JsonResponse {
         $this->authorize('viewAny', $user);
 
-        $subCollection = $btcComService->transformSubCollection(subs: $user->subs()
+        $subs = $user->subs()
             ->with('workers')
-            ->get()
-        );
+            ->get();
+
+        $subCollection = $btcComService->transformSubCollection(subs: $subs);
 
         return new JsonResponse([
             'list' => SubResource::collection($subCollection),
-            'overall' => new GeneralSubsDataResource($subCollection),
+            'overall' => new GeneralSubsDataResource($subs),
         ]);
     }
 }
