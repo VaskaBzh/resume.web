@@ -1001,10 +1001,21 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/SubResource"
-                                    }
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SubResource"
+                                            }
+                                        },
+                                        "general_subs_data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/GeneralSubsDataResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -3043,7 +3054,7 @@
                     "workers_count_active": {
                         "type": "integer"
                     },
-                    "workers_count_in_active": {
+                    "workers_count_inactive": {
                         "type": "integer"
                     },
                     "workers_count_unstable": {
@@ -3113,12 +3124,6 @@
                     },
                     "has_referral_role": {
                         "type": "boolean"
-                    },
-                    "general_subs_data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/GeneralSubsDataResource"
-                        }
                     }
                 },
                 "type": "object"

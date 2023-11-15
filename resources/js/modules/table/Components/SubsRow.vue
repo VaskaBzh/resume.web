@@ -9,16 +9,10 @@
 	>
 		<row-column
 			v-for="(column, i) in service.filteredColumns"
+            :key="i"
 			:value="column[1]"
-
 			:columnKey="column[0]"
-			:unit="service.unit[1]"
 		/>
-<!--		<row-column>-->
-<!--			<template v-slot:icon>-->
-<!--				<open-list-icon />-->
-<!--			</template>-->
-<!--		</row-column>-->
 	</tr>
 </template>
 

@@ -25,18 +25,15 @@ class GeneralSubsDataResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $hashRate = HashRate::from($this->subs->sum('total_hash_rate'));
-        $workers = $this->subs->pluck('workers')->flatMap;
+        $totalHashPerDay = HashRate::from($this->sum('total_hash_rate'));
+        $workers = $this->pluck('workers')->flatMap;
 
         return [
-            'total_hash_rate' => $hashRate->value,
-            'total_hash_rate_unit' => $hashRate->unit,
-            'total_active_workers' => $workers
-                ->where('status', 'ACTIVE')
-                ->count(),
-            'total_inactive_workers' => $workers
-                ->where('status', 'INACTIVE')
-                ->count(),
+            'total_hash_per_day' => $totalHashPerDay->value,
+            'per_day_unit' => $totalHashPerDay->unit,
+            'total_active_workers' => $workers->where('status', 'ACTIVE')->count(),
+            'total_inactive_workers' => $workers->where('status', 'INACTIVE')->count(),
+            'total_dead_workers' => $workers->where('status', 'DEAD')->count(),
         ];
     }
 }

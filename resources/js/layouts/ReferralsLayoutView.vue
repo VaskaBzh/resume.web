@@ -45,6 +45,11 @@ export default {
         $route(newRoute) {
             this.viewService.setView(newRoute);
         },
+        "$i18n.locale"() {
+            this.viewService.setTabs()
+            document.title = this.$t("header.links.referral");
+        },
+
     },
     methods: {
         referralRouting(routeName) {
@@ -52,8 +57,6 @@ export default {
         },
     },
     mounted() {
-        document.title = this.$t("header.links.referral");
-
         this.viewService.setTabs().setView(this.$route);
     },
 };

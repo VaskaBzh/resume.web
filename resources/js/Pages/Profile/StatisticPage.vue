@@ -46,8 +46,8 @@
                 <cabinet-card
                     class="statistic__card-first"
                     :title="$t('statistic.info_blocks.hash.titles[0]')"
-                    :value="Number(getAccount.hash_per_min).toFixed(2)"
-                    unit="TH/s"
+                    :value="getAccount.hash_per_min ?? 0"
+                    :unit="`${getAccount.hash_per_min_unit ?? 'T'}H/s`"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
@@ -56,8 +56,8 @@
                 <cabinet-card
                     class="statistic__card-second"
                     :title="$t('statistic.info_blocks.hash.titles[1]')"
-                    :value="Number(getAccount.hash_per_day).toFixed(2)"
-                    unit="TH/s"
+                    :value="getAccount.hash_per_day ?? 0"
+                    :unit="`${getAccount.hash_per_day_unit ?? 'T'}H/s`"
                 >
                     <template #svg>
                         <day-hashrate-icon />
@@ -153,6 +153,8 @@ export default {
     watch: {
         "$i18n.locale"() {
             document.title = this.$t("header.links.statistic");
+
+            this.lineChartService.setButtons();
 
             // this.lineChartService.setTranslate(this.$t);
             // this.barChartService.setTranslate(this.$t);
