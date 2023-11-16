@@ -15,7 +15,7 @@
                 }"
             >
                 <div class="nav__block">
-                    <logo-block class="nav_logo" v-tooltip="'adsfasdfasdfs'"/>
+                    <logo-block class="nav_logo" />
                     <div class="header-select-container">
                         <select-theme />
                         <select-language />

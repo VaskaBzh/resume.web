@@ -5,7 +5,7 @@
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
                     <span class="hero_title_row hero_title_row-first">
-                        <span class="hero_title_elem" >
+                        <span class="hero_title_elem">
                             {{ $t("title[0]") }}
                         </span>
                     </span>
