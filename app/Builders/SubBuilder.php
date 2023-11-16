@@ -51,4 +51,9 @@ class SubBuilder extends BaseBuilder
     {
         return $this->model->incomes()->where('created_at', '>=', now()->subMonth());
     }
+
+    public function whereNameIn(Collection $names): Builder
+    {
+        return $this->whereIn('sub', $names);
+    }
 }

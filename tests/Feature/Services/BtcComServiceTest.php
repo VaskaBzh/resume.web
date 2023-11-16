@@ -440,7 +440,7 @@ class BtcComServiceTest extends TestCase
                     ],
                 ],
                 'expectedTransform' => [
-                    WorkerData::fromRequest([
+                    WorkerData::fromArray([
                         'group_id' => 6002482,
                         'worker_id' => 6140576275788688963,
                         'name' => 'Ramaz.S19x10x110x0x66',
@@ -477,7 +477,7 @@ class BtcComServiceTest extends TestCase
                             ],
                         ],
                     ]),
-                    WorkerData::fromRequest([
+                    WorkerData::fromArray([
                         'group_id' => 6003108,
                         'worker_id' => -3844127170179888225,
                         'name' => 'evgen789.10x102x0x72',
@@ -588,7 +588,7 @@ class BtcComServiceTest extends TestCase
                             'hash' => 108.800,
                             'unit' => 'T',
                         ]),
-                        'worker_data' => WorkerData::fromRequest([
+                        'worker_data' => WorkerData::fromArray([
                             'group_id' => 666666,
                             'worker_id' => 6140576275788688963,
                             'name' => 'Ramaz.S19x10x110x0x66',
@@ -630,7 +630,7 @@ class BtcComServiceTest extends TestCase
                             'hash' => 123.800,
                             'unit' => 'T',
                         ]),
-                        'worker_data' => WorkerData::fromRequest([
+                        'worker_data' => WorkerData::fromArray([
                             'group_id' => 6003108,
                             'worker_id' => -3844127170179888225,
                             'name' => 'evgen789.10x102x0x72',

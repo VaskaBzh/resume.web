@@ -6,14 +6,29 @@ namespace App\Services\External\BtcCom;
 
 use App\Dto\Sub\TransformSubData;
 use App\Dto\WorkerData;
+use App\Enums\Hash\Unit;
 use App\Models\Sub;
-use App\Models\Worker;
 use App\Services\External\TransformContract;
+use App\Utils\HashRateConverter;
 use Illuminate\Support\Collection;
 
 class DataTransformer implements TransformContract
 {
-    public function transformSub(Sub $sub, array $data): TransformSubData
+    public function transformCollection(Collection $collection, string $className): Collection
+    {
+        return $collection->map(function (array $item) use ($className) {
+
+            $method = 'transform'.class_basename($className);
+
+            if (method_exists($this, $method) && filled($item)) {
+                return $this->$method($item);
+            }
+
+            throw new \Exception(sprintf('Transform method %s not found.', $method));
+        });
+    }
+
+    public function transformSub(Sub $sub, array $remoteSub): TransformSubData
     {
         $subData = [
             'sub' => $sub->sub,
@@ -25,33 +40,22 @@ class DataTransformer implements TransformContract
             'yesterday_amount' => $sub->yesterday_amount,
         ];
 
-        return TransformSubData::fromArray(data: array_merge($subData, $data));
-    }
-
-    public function transformCollection(Collection $collection, string $className): Collection
-    {
-        return $collection->map(function (array $item) use ($className) {
-
-            $method = 'transform'.class_basename($className);
-
-            if (method_exists($this, $method)) {
-                return $this->$method($item);
-            }
-
-            throw new \Exception(sprintf('Transform method %s not found.', $method));
-        });
+        return TransformSubData::fromArray(array_merge($subData, $remoteSub));
     }
 
     public function transformWorker(array $remoteWorker)
     {
         if (filled($remoteWorker)) {
-            return WorkerData::fromRequest(requestData: [
+            return WorkerData::fromArray([
                 'group_id' => $remoteWorker['gid'],
                 'worker_id' => $remoteWorker['worker_id'],
                 'name' => $remoteWorker['worker_name'],
-                'approximate_hash_rate' => $remoteWorker['shares_1d'],
+                'hash_per_day' => HashRateConverter::toPure(
+                    value: (float) $remoteWorker['shares_1d'],
+                    unit: Unit::tryFrom($remoteWorker['shares_1d_unit'])
+                )->value,
                 'status' => $remoteWorker['status'],
-                'unit' => $remoteWorker['shares_unit'],
+                'unit' => $remoteWorker['shares_1d_unit'],
                 'pool_data' => $remoteWorker,
             ]);
         }

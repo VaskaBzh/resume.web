@@ -285,7 +285,7 @@ class BtcComService
     {
         return $btcComWorkers->map(static function (array $btcComWorker) {
             if (filled($btcComWorker)) {
-                return WorkerData::fromRequest(requestData: [
+                return WorkerData::fromArray([
                     'group_id' => $btcComWorker['gid'],
                     'worker_id' => $btcComWorker['worker_id'],
                     'name' => $btcComWorker['worker_name'],
@@ -317,7 +317,7 @@ class BtcComService
                         'hash' => $btcComWorker['shares_1m'],
                         'unit' => $btcComWorker['shares_unit'],
                     ]),
-                    'worker_data' => WorkerData::fromRequest(requestData: [
+                    'worker_data' => WorkerData::fromArray([
                         'group_id' => $groupId,
                         'worker_id' => $btcComWorker['worker_id'],
                         'name' => $btcComWorker['worker_name'],
