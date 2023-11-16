@@ -34,6 +34,7 @@ export default {
     background-color: var(--tooltip-body-color);
     color: var(--tooltip-text-color);
     padding: 12px;
+    box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
 }
 
 .tippy-box[data-theme~="custom-theme"] .tippy-arrow {

@@ -1,30 +1,30 @@
 <template>
-    <nav class="nav" id="header">
+    <nav id="header" class="nav">
         <div class="nav__container">
             <router-link to="login" class="button-black">
                 {{ $t("footer.button") }}
             </router-link>
             <router-link to="/">
-                <header-logo-icon class="nav_logo"/>
+                <header-logo-icon class="nav_logo" />
             </router-link>
-            <nav-links class="nav__navigation"/>
-            <select-language-land class="nav_lang"/>
+            <nav-links class="nav__navigation" />
+            <select-language-land class="nav_lang" />
         </div>
     </nav>
     <div class="burger-mobile">
-        <burger-menu/>
+        <burger-menu />
     </div>
 </template>
 
 <script>
 import NavLinks from "../../navs/Components/NavLinks.vue";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import BurgerMenu from "../../burger/Components/BurgerMenu.vue";
 import HeaderLogoIcon from "@/modules/common/icons/HeaderLogoIcon.vue";
 
 export default {
-    components: {SelectLanguageLand, NavLinks, BurgerMenu, HeaderLogoIcon},
+    components: { SelectLanguageLand, NavLinks, BurgerMenu, HeaderLogoIcon },
     i18n: {
         sharedMessages: HomeMessage,
     },
@@ -115,7 +115,9 @@ export default {
 .burger-mobile {
     position: fixed;
     height: 26px;
-    right: calc((100vw - clamp(0px, 100vw, 1920px)) / 2 + clamp(16px, 5vw, 100px));
+    right: calc(
+        (100vw - clamp(0px, 100vw, 1920px)) / 2 + clamp(16px, 5vw, 100px)
+    );
     transition: all 0.5s ease 0s;
     align-items: center;
     display: inline-flex;
