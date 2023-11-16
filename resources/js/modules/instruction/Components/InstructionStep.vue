@@ -1,30 +1,26 @@
 <template>
-	<teleport to="body">
-		<div
-			class="onboarding"
-			v-if="isVisible && step_active === step"
-			@click="$emit('next')"
-		></div>
-	</teleport>
-	<div
-		class="onboarding__card"
-		:class="className"
-		v-if="isVisible && step_active === step"
-	>
-		<instruction-title
-			:title="$t(title)"
-		/>
-		<instruction-nav
-			:step="step"
-			:steps_count="steps_count"
-			@next="$emit('next')"
-			@prev="$emit('prev')"
-			@close="$emit('close')"
-		/>
-		<instruction-text
-			:text="$t(text)"
-		/>
-	</div>
+    <teleport to="body">
+        <div
+            v-if="isVisible && step_active === step"
+            class="onboarding"
+            @click="$emit('next')"
+        ></div>
+    </teleport>
+    <div
+        v-if="isVisible && step_active === step"
+        class="onboarding__card"
+        :class="className"
+    >
+        <instruction-title :title="$t(title)" />
+        <instruction-nav
+            :step="step"
+            :steps_count="steps_count"
+            @next="$emit('next')"
+            @prev="$emit('prev')"
+            @close="$emit('close')"
+        />
+        <instruction-text :text="$t(text)" />
+    </div>
 </template>
 
 <script>
@@ -34,30 +30,30 @@ import InstructionText from "@/modules/instruction/Components/UI/InstructionText
 import { InstructionMessage } from "@/modules/instruction/lang/InstructionMessage";
 
 export default {
-	name: "instruction-step",
-	components: {
-		InstructionText,
-		InstructionNav,
-		InstructionTitle
-	},
-	i18n: {
-		sharedMessages: InstructionMessage,
-	},
-	props: {
-		className: String,
-		title: String,
-		text: String,
-		step: Number,
-		step_active: Number,
-		steps_count: Number,
-		isVisible: Boolean,
-	},
-	mounted() {
-		if (this.isVisible) {
-			this.$emit("start");
-		}
-	},
-}
+    name: "InstructionStep",
+    components: {
+        InstructionText,
+        InstructionNav,
+        InstructionTitle,
+    },
+    i18n: {
+        sharedMessages: InstructionMessage,
+    },
+    props: {
+        className: String,
+        title: String,
+        text: String,
+        step: Number,
+        step_active: Number,
+        steps_count: Number,
+        isVisible: Boolean,
+    },
+    mounted() {
+        if (this.isVisible) {
+            this.$emit("start");
+        }
+    },
+};
 </script>
 
 <style lang="scss">
@@ -68,7 +64,7 @@ export default {
     top: 0;
     left: 0;
     z-index: 100;
-    background: rgba(0, 0, 0, 0.50);
+    background: rgba(0, 0, 0, 0.5);
     cursor: pointer;
 
     @media (max-height: 1000px) {
@@ -85,9 +81,17 @@ export default {
         border-style: dashed;
         border-color: transparent;
 
+        @media (max-height: 1000px) {
+            border-width: 0;
+        }
+
+        @media (max-width: 1279.98px) {
+            border-width: 0;
+        }
+
         &-target {
             border-radius: 24px;
-            border-color: var(--text-focus, #2E90FA);
+            border-color: var(--text-focus, #2e90fa);
             z-index: 1001;
             position: relative;
 
@@ -103,7 +107,7 @@ export default {
 
     &__card {
         border-radius: 16px;
-        background: var(--background-datepicker, #2C2F34);
+        background: var(--background-datepicker, #2c2f34);
         box-shadow: 0 2px 12px -1px rgba(16, 24, 40, 0.08);
         padding: 8px;
         min-width: 436px;

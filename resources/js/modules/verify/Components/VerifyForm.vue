@@ -9,7 +9,7 @@
             input-name="code"
             :input-label="$t(placeholder)"
             :input-value="service.form.code"
-            @getValue="service.form.code = $event"
+            @get-value="service.form.code = $event"
         />
         <verify-link
             class="verify_link"
@@ -19,8 +19,7 @@
         <div class="verify__buttons">
             <main-button
                 class="button-reverse verify_button button-full"
-                @click.prevent="$emit('back')"
-                type="none"
+                @click="backHandler"
             >
                 <template #text>
                     {{ $t("back") }}
@@ -28,7 +27,7 @@
             </main-button>
             <main-button
                 class="button-blue verify_button button-full"
-                type="submit"
+                type="button"
             >
                 <template #text>
                     {{ $t(button_text) }}
@@ -58,6 +57,7 @@ export default {
         re_verify_text: Boolean,
         button_text: Boolean,
     },
+    emits: ["back", "sendForm"],
     computed: {
         ...mapGetters(["user"]),
     },
@@ -78,7 +78,14 @@ export default {
     },
     methods: {
         sendFormWithCode() {
-            this.$emit("sendForm", this.service.form.code);
+            if (this.service.form.code?.length > 0) {
+                this.$emit("sendForm", this.service.form.code);
+            }
+        },
+        backHandler(event) {
+            if (event.pointerType === "touch") {
+                this.$emit("back");
+            }
         },
     },
 };

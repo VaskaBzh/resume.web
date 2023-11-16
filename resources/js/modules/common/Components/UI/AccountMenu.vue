@@ -49,7 +49,6 @@
             :opened-off="openedAddPopup"
             :wait="wait"
             :closed="closed"
-            :errors="errors"
         >
             <form class="form form-popup popup__form" @submit.prevent="addAcc">
                 <main-title class="account-title"
@@ -59,7 +58,12 @@
                     {{ $t("accounts.popups.add.text") }}
                 </p>
                 <transition name="error">
-                    <span class="error-message" v-if="errorMassage" :class="{'error-message-active': errorMassage }">{{$t("accounts.popups.add.error")}}</span>
+                    <span
+                        v-if="errorMassage"
+                        class="error-message"
+                        :class="{ 'error-message-active': errorMassage }"
+                        >{{ $t("accounts.popups.add.error") }}</span
+                    >
                 </transition>
                 <input
                     ref="input"
@@ -68,7 +72,7 @@
                     autofocus
                     type="text"
                     class="input popup__input"
-                    :class="{'popup__input-error': errorMassage}"
+                    :class="{ 'popup__input-error': errorMassage }"
                     :placeholder="$t('accounts.popups.add.placeholders.name')"
                 />
                 <button type="submit" class="all-link blue-button">
@@ -133,7 +137,7 @@ export default {
         let wait = ref(false);
         let closed = ref(false);
         const t = i18n.global.t;
-        let errorMassage = ref(false)
+        let errorMassage = ref(false);
 
         const form = reactive({
             name: "",
@@ -158,7 +162,7 @@ export default {
                     closed.value = true;
 
                     store.dispatch("accounts_all", store.getters.user.id);
-                    form.name = ""
+                    form.name = "";
                 } catch (err) {
                     console.error("Error with: " + err);
 
@@ -171,26 +175,26 @@ export default {
                     });
                 }
             } else {
-                errorMassage.value = true
+                errorMassage.value = true;
             }
             wait.value = false;
         };
 
         watch(
-            ()=> form.name,
+            () => form.name,
             (newVal, old) => {
                 if (errorMassage.value && newVal !== old) {
-                    errorMassage.value = false
+                    errorMassage.value = false;
                 }
-        },
-        )
+            }
+        );
 
         return {
             form,
             addAcc,
             wait,
             closed,
-            errorMassage
+            errorMassage,
         };
     },
     data() {
@@ -370,7 +374,7 @@ export default {
 
 .error-enter-active,
 .error-leave-active {
-    transition: all .35s ease-in-out;
+    transition: all 0.35s ease-in-out;
 }
 .error-enter-from,
 .error-leave-to {
@@ -383,7 +387,7 @@ export default {
 .error-message {
     max-height: 0;
     overflow: hidden;
-    color: #F1404A;
+    color: #f1404a;
     left: 0;
     top: -10%;
     font-family: NunitoSans, serif;
@@ -394,191 +398,191 @@ export default {
     transition: max-height 1s ease-in;
 }
 
-    .error-message-active {
-        padding: 5px;
-        max-height: 100%;
-        transition: all .35s ease-in;
-    }
+.error-message-active {
+    padding: 5px;
+    max-height: 100%;
+    transition: all 0.35s ease-in;
+}
 
-    .account-title {
-        font-family: Unbounded, serif;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 32px; /* 160% */
-    }
+.account-title {
+    font-family: Unbounded, serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+}
 
-    .popup__input {
-        border: 1px solid transparent;
-        border-radius: var(--surface-border-radius-radius-s-md, 12px);
-        background: var(--background-modal-input, #fff);
-        padding: var(--py-4, 16px) var(--px-4, 16px);
-        color: var(--select-text-no-value, #d0d5dd);
-        font-family: NunitoSans, serif;
-        font-size: 16px;
-        font-weight: 400;
-        outline: none;
-        border: 1px solid transparent;
-        line-height: 24px;
-    }
+.popup__input {
+    border: 1px solid transparent;
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-modal-input, #fff);
+    padding: var(--py-4, 16px) var(--px-4, 16px);
+    color: var(--select-text-no-value, #d0d5dd);
+    font-family: NunitoSans, serif;
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    border: 1px solid transparent;
+    line-height: 24px;
+}
 
-    .popup__input-error {
-        border: 1px solid #F1404A;
-        box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
-        border-radius: 12px;
-        transition: all 0.5s ease 0s;
-        outline: none;
-    }
+.popup__input-error {
+    border: 1px solid #f1404a;
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+    border-radius: 12px;
+    transition: all 0.5s ease 0s;
+    outline: none;
+}
 
-    .popup__input:focus {
-        border: 1px solid #2e90fa;
-    }
+.popup__input:focus {
+    border: 1px solid #2e90fa;
+}
 
-    .popup__input::placeholder {
-        color: var(--select-text-no-value, var(--gray-3100, #d0d5dd));
-        font-family: NunitoSans;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px; /* 150% */
-    }
+.popup__input::placeholder {
+    color: var(--select-text-no-value, var(--gray-3100, #d0d5dd));
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
 
-    .blue-button {
-        border-radius: 12px;
-        background: var(--buttons-primary-fill-border-default, #2e90fa);
-        /* shadow-btn-xl */
-        box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
-        padding: 12px 16px;
-        color: var(--buttons-primary-text, #fff);
-        /* Body 1/Nunito Sans 10pt/18/Bold */
-        font-family: NunitoSans;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 32px; /* 177.778% */
-        margin: 80px 0 0px;
-    }
+.blue-button {
+    border-radius: 12px;
+    background: var(--buttons-primary-fill-border-default, #2e90fa);
+    /* shadow-btn-xl */
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 12px 16px;
+    color: var(--buttons-primary-text, #fff);
+    /* Body 1/Nunito Sans 10pt/18/Bold */
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px; /* 177.778% */
+    margin: 80px 0 0px;
+}
 
-    .button {
-        position: relative;
-        margin-bottom: 16px;
+.button {
+    position: relative;
+    margin-bottom: 16px;
+    width: 100%;
+    @media (max-width: 500px) {
         width: 100%;
-        @media (max-width: 500px) {
-            width: 100%;
-        }
+    }
 
-        &_name {
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.5s ease 0s;
-            border-radius: 16px;
-            background: var(
-                    --gradient-v-1,
-                    linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
-            );
-            box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
+    &_name {
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.5s ease 0s;
+        border-radius: 16px;
+        background: var(
+            --gradient-v-1,
+            linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
+        );
+        box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
             0px 8px 24px -6px rgba(0, 0, 0, 0.16);
-            display: flex;
-            padding: 16px;
-            color: var(--background-island, #fff);
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 150%; /* 24px */
-            align-items: center;
-            gap: 16px;
-            align-self: stretch;
-            min-height: 73px;
+        display: flex;
+        padding: 16px;
+        color: var(--background-island, #fff);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 24px */
+        align-items: center;
+        gap: 16px;
+        align-self: stretch;
+        min-height: 73px;
 
-            &_text {
-                display: flex;
-                flex-direction: column;
-                min-height: 44px;
-                justify-content: flex-end;
-            }
-
-            &-target {
-                svg {
-                    &:last-child {
-                        transform: rotate(180deg);
-                    }
-                }
-            }
-
-            svg {
-                transition: all 0.5s ease 0s;
-
-                &:last-child {
-                    margin-left: auto;
-                }
-            }
-        }
-
-        .list_button {
-            a {
-                text-decoration: none;
-            }
-        }
-
-        .mini {
-            height: fit-content;
-        }
-
-        .target {
-            &.button {
-                &__menu {
-                    visibility: visible;
-                    opacity: 1;
-                    transition: all 0.5s ease 0s;
-                }
-            }
-        }
-
-        &__row {
-            cursor: pointer;
-            position: relative;
-
-            &:not(:first-child) {
-                height: 40px;
-            }
-
-            &:not(:last-child) {
-                &:after {
-                    content: "";
-                    width: 100%;
-                    height: 1px;
-                    background: #c5c5c5;
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                }
-            }
-        }
-
-        &_title {
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 143.1%;
-            color: #969797;
-        }
-
-        &__menu {
-            visibility: hidden;
-            opacity: 0;
-            height: fit-content;
+        &_text {
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            border-radius: 16px;
-            background: var(--background-sub-dropdown, #fff);
-            box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
-            min-width: 100%;
-            padding: 4px;
-            position: absolute;
-            color: var(--text-secondary);
-            right: 0;
-            top: 80px;
+            min-height: 44px;
+            justify-content: flex-end;
+        }
+
+        &-target {
+            svg {
+                &:last-child {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        svg {
             transition: all 0.5s ease 0s;
+
+            &:last-child {
+                margin-left: auto;
+            }
         }
     }
+
+    .list_button {
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .mini {
+        height: fit-content;
+    }
+
+    .target {
+        &.button {
+            &__menu {
+                visibility: visible;
+                opacity: 1;
+                transition: all 0.5s ease 0s;
+            }
+        }
+    }
+
+    &__row {
+        cursor: pointer;
+        position: relative;
+
+        &:not(:first-child) {
+            height: 40px;
+        }
+
+        &:not(:last-child) {
+            &:after {
+                content: "";
+                width: 100%;
+                height: 1px;
+                background: #c5c5c5;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+            }
+        }
+    }
+
+    &_title {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 143.1%;
+        color: #969797;
+    }
+
+    &__menu {
+        visibility: hidden;
+        opacity: 0;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-radius: 16px;
+        background: var(--background-sub-dropdown, #fff);
+        box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
+        min-width: 100%;
+        padding: 4px;
+        position: absolute;
+        color: var(--text-secondary);
+        right: 0;
+        top: 80px;
+        transition: all 0.5s ease 0s;
+    }
+}
 </style>
