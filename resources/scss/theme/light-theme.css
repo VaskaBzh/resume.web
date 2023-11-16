@@ -17,6 +17,7 @@
     --background-island-inner-1: #53B1FD12;
     --background-island-inner-2: #53B1FD12;
     --background-accient: #2E90FA;
+    --background-death: #2C2F340D;
 
     /* text */
     --text-primary: #1D2939;
@@ -38,9 +39,10 @@
     --status-waiting: #ffb868;
     --status-succesfull: #1FB96C;
     --status-failed: #F1404A;
+    --status-death: #667085;
 
     /* select */
-    --text-no-value : #D0D5DD;
+    --text-no-value: #D0D5DD;
 
     /* button */
     --buttons-fourth-fill-border-default: #F2F4F7;

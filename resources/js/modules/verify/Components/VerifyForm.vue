@@ -3,7 +3,7 @@
         <main-title>{{ $t(title) }}</main-title>
         <main-description>{{ $t(text) }}</main-description>
     </div>
-    <div class="verify__content">
+    <form class="verify__content" @submit.prevent="sendFormWithCode">
         <main-input
             class="verify_input"
             input-name="code"
@@ -19,7 +19,8 @@
         <div class="verify__buttons">
             <main-button
                 class="button-reverse verify_button button-full"
-                @click="$emit('back')"
+                @click.prevent="$emit('back')"
+                type="none"
             >
                 <template #text>
                     {{ $t("back") }}
@@ -27,14 +28,14 @@
             </main-button>
             <main-button
                 class="button-blue verify_button button-full"
-                @click="sendFormWithCode"
+                type="submit"
             >
                 <template #text>
                     {{ $t(button_text) }}
                 </template>
             </main-button>
         </div>
-    </div>
+    </form>
 </template>
 
 <script>
