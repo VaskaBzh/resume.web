@@ -35,7 +35,6 @@ class SubTest extends TestCase
 
         Sanctum::actingAs($this->user);
 
-
         $this->getJson(route('v1.sub.show', $this->user->subs()->first()->group_id))
             ->assertExactJson([
 

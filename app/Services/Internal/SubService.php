@@ -24,21 +24,16 @@ final readonly class SubService
         $remoteSub = $this->client->getSub(groupId: $sub->group_id);
         $workers = $sub->workers;
 
+        dd($remoteSub->get('shares_1m_pure'));
+
         $remoteSub->concat([
             'today_forecast' => $this->todayForecast(
                 hashPerDay: $sub->hash_rate,
                 fee: config('api.btc.fee') + $sub->allbtc_fee
             ),
             'last_month_amount' => $sub->lastMonthIncomes()->sum('daily_amount'),
-            'workers_count_active' => $workers
-                ->where('status', 'ACTIVE')
-                ->count(),
-            'workers_count_inactive' => $workers
-                ->where('status', 'INACTIVE')
-                ->count(),
-            'workers_count_unstable' => $workers
-                ->where('status', 'DEAD')
-                ->count(),
+            'hash_per_day' => $hashPerDay->value,
+            'hash_per_day_unit' => $hashPerDay->unit,
         ]);
 
         return $this->dataTransformer->transformSub(

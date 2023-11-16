@@ -120,7 +120,7 @@ class Client implements ClientContract
             ]
         );
 
-        return $workers->has('data') ? $workers : collect();
+        return $workers->has('data') ? collect($workers->get('data')) : collect();
     }
 
     /**

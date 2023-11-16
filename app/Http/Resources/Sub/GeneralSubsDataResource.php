@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Sub;
 
-use App\ValueObjects\HashRate;
+use App\Utils\HashRateConverter;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 
@@ -25,7 +25,7 @@ class GeneralSubsDataResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $totalHashPerDay = HashRate::from($this->sum('hash_rate'));
+        $totalHashPerDay = HashRateConverter::from($this->sum('hash_rate'));
         $workers = $this->pluck('workers')->flatMap;
 
         return [
