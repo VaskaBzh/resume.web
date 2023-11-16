@@ -53,4 +53,8 @@
     --icons-accent: #53B1FD4D;
     --icons-primary: #6F7682;
     --icons-secondary: #595E68;
+
+    /* tooltip */
+    --tooltip-text-color: #C5C8CD;
+    --tooltip-body-color: rgba(44, 47, 52, 0.90);
 }
