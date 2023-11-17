@@ -3,12 +3,12 @@
         <div class="subs__wrapper">
             <main-title class="subs_title">{{ $t("title") }} </main-title>
 
-            <div v-if="!!overall.total_hash_per_day" class="subs__cards">
+            <div class="subs__cards">
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="overallCurrentHashRate.hashRate"
-                    :unit="`${overallCurrentHashRate.unit}H/s`"
+                    :value="overallCurrentHashRate.hashRate ?? 0"
+                    :unit="`${overallCurrentHashRate.unit ?? 'T'}H/s`"
                     hint_position="right"
                     :hint="$t('info_blocks.hash.hints[0]')"
                 >
@@ -19,8 +19,8 @@
                 <cabinet-card
                     class="subs__card-second"
                     :title="$t('info_blocks.hash.titles[1]')"
-                    :value="overall.total_hash_per_day"
-                    :unit="`${overall.per_day_unit}H/s`"
+                    :value="overall.total_hash_per_day ?? 0"
+                    :unit="`${overall.per_day_unit ?? 'T'}H/s`"
                     hint_position="right"
                     :hint="$t('info_blocks.hash.hints[1]')"
                 >
@@ -31,13 +31,13 @@
                 <cabinet-card
                     class="card-active subs__card-third"
                     :title="$t('info_blocks.workers.types[0]')"
-                    :value="overall.total_active_workers"
+                    :value="overall.total_active_workers ?? 0"
                     :hint="$t('info_blocks.workers.hints.active')"
                 />
                 <cabinet-card
                     class="card-in-active subs__card-fourth"
                     :title="$t('info_blocks.workers.types[2]')"
-                    :value="overall.total_inactive_workers"
+                    :value="overall.total_inactive_workers ?? 0"
                     :hint="$t('info_blocks.workers.hints.inactive')"
                 />
             </div>
