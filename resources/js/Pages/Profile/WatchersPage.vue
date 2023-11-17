@@ -328,19 +328,6 @@ export default {
     }
 }
 
-@media (max-width: 768px) {
-    .watcher_slider {
-        max-height: 500px;
-        height: unset;
-    }
-}
-@media (max-width: 500px) {
-    .watcher_slider {
-        height: auto;
-        max-height: none;
-    }
-}
-
 @media (max-width: 700px) {
     .watchers__wrapper {
         display: flex;

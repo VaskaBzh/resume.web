@@ -1,8 +1,6 @@
 <template>
     <div class="workers">
-        <div
-            class="workers__wrapper"
-        >
+        <div class="workers__wrapper">
             <main-title class="title-worker"
                 >{{ $t("workers.title") }}
             </main-title>
@@ -94,7 +92,6 @@
         @dropWatcher="dropWorkers"
     >
         <worker-card
-            v-if="Object.entries(worker_service.target_worker).length > 0"
             class="workers__card"
             :target_worker="worker_service.target_worker"
             :graph="worker_service.workers_graph"
@@ -288,30 +285,10 @@ export default {
 
     &__card {
         min-width: calc(50% - 6px);
-        min-height: 440px;
+        min-height: 300px;
 
-        @media (max-width: 1340px) {
-            min-height: 480px;
-        }
-        @media (max-width: 1200px) {
-            min-height: unset;
-        }
-        @media (max-width: 998px) {
-            min-height: 450px;
-            position: absolute;
-            width: calc(100% - 20px);
-        }
-        @media (max-width: 500px) {
-            min-height: 380px;
-        }
-        @media (max-width: 490px) {
-            width: 100%;
-        }
-        @media (max-width: 410px) {
-            min-height: 550px;
-        }
-        @media (max-width: 390px) {
-            min-height: 490px;
+        @media (min-width: 1200px) {
+            margin-top: 64px;
         }
     }
 

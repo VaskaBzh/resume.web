@@ -1,32 +1,32 @@
 <template>
-	<div
-		class="group"
-		:class="{
-			'group-closed': !isOpen,
-		}"
-		ref="group"
-	>
-		<span
-			class="group_name"
-			v-if="group.group_name"
-			@click="toggleDropdown"
-		>
-			{{ $t(group.group_name) }}
-			<dropdown-icon class="group_icon" />
-		</span>
+    <div
+        ref="group"
+        class="group"
+        :class="{
+            'group-closed': !isOpen,
+        }"
+    >
+        <span
+            v-if="group.group_name"
+            class="group_name"
+            @click="toggleDropdown"
+        >
+            {{ $t(group.group_name) }}
+            <dropdown-icon class="group_icon" />
+        </span>
         <div class="group__content">
             <div class="group__list">
                 <transition-group name="tabs">
                     <nav-tab
-                        @click="$emit('closeBurger')"
                         v-for="(tab, i) in tabs"
-                        :tab="tab"
                         :key="i"
+                        :tab="tab"
+                        @click="$emit('closeBurger')"
                     />
                 </transition-group>
             </div>
         </div>
-	</div>
+    </div>
 </template>
 
 <script>
@@ -34,41 +34,41 @@ import NavTab from "@/modules/navs/Components/UI/NavTab.vue";
 import DropdownIcon from "../../../common/icons/DropdownIcon.vue";
 
 export default {
-	name: "nav-group",
-	props: {
-		group: Object,
-	},
-	components: {
-		DropdownIcon,
-		NavTab,
-	},
-	data() {
-		return {
-			isOpen: true,
-		};
-	},
-	methods: {
-		toggleDropdown() {
-			this.isOpen = !this.isOpen;
-		},
-	},
-	computed: {
-		tabs() {
-			return this.isOpen ? this.group.links : [];
-		},
-	},
-}
+    name: "NavGroup",
+    components: {
+        DropdownIcon,
+        NavTab,
+    },
+    props: {
+        group: Object,
+    },
+    data() {
+        return {
+            isOpen: true,
+        };
+    },
+    computed: {
+        tabs() {
+            return this.isOpen ? this.group.links : [];
+        },
+    },
+    methods: {
+        toggleDropdown() {
+            this.isOpen = !this.isOpen;
+        },
+    },
+};
 </script>
 
 <style scoped lang="scss">
 .tabs-enter-active,
 .tabs-leave-active {
-	transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 .tabs-enter-from,
 .tabs-leave-to {
-	opacity: 0;
-	transform: translateX(-25px);
+    opacity: 0;
+    transform: translateX(-25px);
 }
 .group {
     display: flex;
@@ -109,7 +109,7 @@ export default {
 
     &_icon {
         transition: all 0.5s ease 0s;
-        stroke: var(--svg-fill)
+        stroke: var(--svg-fill);
     }
 
     &-closed {
