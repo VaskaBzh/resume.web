@@ -809,7 +809,6 @@ const messages = {
             block: {
                 titles: [
                     "Current hashrate",
-                    ,
                     "Worker",
                     "Hashrate / 24h",
                     "Total paid out",
