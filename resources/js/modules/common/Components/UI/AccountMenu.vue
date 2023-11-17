@@ -57,24 +57,23 @@
                 <p class="popup-text">
                     {{ $t("accounts.popups.add.text") }}
                 </p>
-                <transition name="error">
-                    <span
-                        v-if="errorMassage"
-                        class="error-message"
-                        :class="{ 'error-message-active': errorMassage }"
-                        >{{ $t("accounts.popups.add.error") }}</span
-                    >
-                </transition>
                 <input
                     ref="input"
                     v-model="form.name"
-                    required
                     autofocus
                     type="text"
                     class="input popup__input"
-                    :class="{ 'popup__input-error': errorMassage }"
+                    :class="{ 'popup__input-error': !!errorMessage }"
                     :placeholder="$t('accounts.popups.add.placeholders.name')"
                 />
+                <transition name="error">
+                    <span
+                        v-if="!!errorMessage"
+                        class="error-message"
+                        :class="{ 'error-message-active': !!errorMessage }"
+                        >{{ $t(`accounts.popups.add.error.${errorMessage}`) }}</span
+                    >
+                </transition>
                 <button type="submit" class="all-link blue-button">
                     <svg
                         width="24"
@@ -101,12 +100,11 @@
 </template>
 
 <script>
-import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import store from "../../../../store";
+import store from "@/store";
 import { ref, reactive, watch } from "vue";
 
 import { ProfileApi } from "@/api/api";
@@ -117,7 +115,6 @@ export default {
     components: {
         MainTitle,
         MainPopup,
-        BlueButton,
         MainRadio,
     },
     props: {
@@ -137,7 +134,7 @@ export default {
         let wait = ref(false);
         let closed = ref(false);
         const t = i18n.global.t;
-        let errorMassage = ref(false);
+        let errorMessage = ref(null);
 
         const form = reactive({
             name: "",
@@ -147,35 +144,54 @@ export default {
             wait.value = true;
             closed.value = false;
 
-            if (form.name.length >= 3) {
-                try {
-                    const response = await ProfileApi.post(
-                        `/subs/create/${store.getters.user.id}`,
-                        form
-                    );
+            if (form.name.length === 0) {
+                errorMessage.value = "empty";
 
-                    store.dispatch("setNotification", {
-                        status: "success",
-                        title: "added",
-                        text: response.data.message,
-                    });
-                    closed.value = true;
+                return;
+            }
 
-                    store.dispatch("accounts_all", store.getters.user.id);
-                    form.name = "";
-                } catch (err) {
-                    console.error("Error with: " + err);
+            const RUS_LETTERS_REGEXP = /^[а-я,А-Я]/;
+            if (
+                form.name.length > 15 ||
+                form.name.length < 3 ||
+                RUS_LETTERS_REGEXP.test(form.name)
+            ) {
+                errorMessage.value = "invalid";
 
-                    store.dispatch("setFullErrors", err.response.data.errors);
+                return;
+            }
 
-                    store.dispatch("setNotification", {
-                        status: "error",
-                        title: "error",
-                        text: err.response.data.error,
-                    });
-                }
-            } else {
-                errorMassage.value = true;
+            if (form.name.split(" ").length > 1) {
+                errorMessage.value = "no_space";
+
+                return;
+            }
+
+            try {
+                const response = await ProfileApi.post(
+                    `/subs/create/${store.getters.user.id}`,
+                    form
+                );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "added",
+                    text: response.data.message,
+                });
+                closed.value = true;
+
+                store.dispatch("accounts_all", store.getters.user.id);
+                form.name = "";
+            } catch (err) {
+                console.error("Error with: " + err);
+
+                store.dispatch("setFullErrors", err.response.data.errors);
+
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.error,
+                });
             }
             wait.value = false;
         };
@@ -183,8 +199,8 @@ export default {
         watch(
             () => form.name,
             (newVal, old) => {
-                if (errorMassage.value && newVal !== old) {
-                    errorMassage.value = false;
+                if (errorMessage.value && newVal !== old) {
+                    errorMessage.value = null;
                 }
             }
         );
@@ -194,7 +210,7 @@ export default {
             addAcc,
             wait,
             closed,
-            errorMassage,
+            errorMessage,
         };
     },
     data() {

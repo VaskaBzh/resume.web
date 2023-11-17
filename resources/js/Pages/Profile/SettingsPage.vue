@@ -2,17 +2,17 @@
     <div ref="page" class="settings">
         <main-title class="title-settings">{{ $t("title[2]") }} </main-title>
         <div class="settings__main">
-            <div v-if="!user.email_verified_at" class="settings__card">
-                <main-title class="cabinet_title card_title"
-                    >{{ $t("title[0]") }}
-                </main-title>
-                <div class="settings__content">
-                    <settings-list
-                        :rows="settingsService.rows"
-                        @openPopup="settingsService.getHtml($event)"
-                    />
-                </div>
-            </div>
+            <!--            <div v-if="!user.email_verified_at" class="settings__card">-->
+            <!--                <main-title class="cabinet_title card_title"-->
+            <!--                    >{{ $t("title[0]") }}-->
+            <!--                </main-title>-->
+            <!--                <div class="settings__content">-->
+            <!--                    <settings-list-->
+            <!--                        :rows="settingsService.rows"-->
+            <!--                        @openPopup="settingsService.getHtml($event)"-->
+            <!--                    />-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div
                 class="settings__card onboarding_block"
                 :class="{
@@ -178,7 +178,6 @@ export default {
         },
         async sendDisable(form) {
             this.settingsService.disableFacForm.setForm(form);
-
 
             await this.settingsService.sendDisableFac();
 
