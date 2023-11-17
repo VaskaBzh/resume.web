@@ -1,5 +1,5 @@
 <template>
-    <button :aria-label="text" :tooltip-position="position">
+    <button class="tooltip_elem" v-tooltip="text">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon"
@@ -29,76 +29,10 @@ export default {
 };
 </script>
 <style scoped>
-[aria-label][tooltip-position] {
+.tooltip_elem {
     position: relative;
     cursor: pointer;
     display: flex;
     align-items: center;
-}
-
-[aria-label][tooltip-position]::before {
-    --scale: 0;
-    position: absolute;
-    z-index: 10;
-    font-size: 1rem;
-    transition: transform 100ms;
-    transition-timing-function: linear;
-}
-
-[aria-label][tooltip-position]:hover::before {
-    --scale: 1;
-}
-
-[aria-label][tooltip-position]::before {
-    content: attr(aria-label);
-    background-color: var(--tooltip-color);
-    padding: var(--py-3, 12px) var(--px-3, 12px);
-    border-radius: 0.3em;
-    width: max-content;
-    max-width: 100%;
-    text-align: left;
-    transform: scale(0);
-}
-
-/** Left */
-
-[aria-label][tooltip-position="left"]::before {
-    --translate-x: calc(-100% - var(--arrow-size));
-    --translate-y: -50%;
-    left: 0px;
-    top: 50%;
-    transform-origin: right center;
-}
-
-/** Right */
-
-[aria-label][tooltip-position="right"]::before {
-    --translate-x: calc(100% + var(--arrow-size));
-    --translate-y: -50%;
-    right: 0px;
-    top: 50%;
-    transform-origin: left center;
-}
-
-[aria-label][tooltip-position]::before {
-    --tooltip-color: var(--background-island, #fff);
-    --arrow-size: 0.5rem;
-    --scale: 0;
-    border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    border: 1px solid var(--background-tooltip-shadow);
-    background: var(--background-island, #fff);
-    opacity: 0.9;
-    box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
-    color: var(--text-secondary, #475467);
-    font-family: NunitoSans, Serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    min-width: 216px;
-    line-height: 16px;
-    /* padding: var(--py-3, 12px) var(--px-3, 12px); */
-    z-index: 1;
-    transform: translate(var(--translate-x), var(--translate-y))
-        scale(var(--scale));
 }
 </style>
