@@ -155,6 +155,7 @@ export default {
         &[data-popup="#seeChart"] {
             border-width: 1px;
             border-style: solid;
+	        border-color: transparent;
             td {
                 transition: all 0.3s ease 0s;
                 &:nth-child(4) {

@@ -3,15 +3,12 @@
         <div class="subs__wrapper">
             <main-title class="subs_title">{{ $t("title") }} </main-title>
 
-            <div
-                class="subs__cards"
-                v-if="!!overall.total_hash_per_day"
-            >
+            <div v-if="!!overall.total_hash_per_day" class="subs__cards">
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="overall.total_hash_per_day"
-                    :unit="`${overall.per_day_unit}H/s`"
+                    :value="overallCurrentHashRate.hashRate"
+                    :unit="`${overallCurrentHashRate.unit}H/s`"
                     hint_position="right"
                     :hint="$t('info_blocks.hash.hints[0]')"
                 >
@@ -74,14 +71,16 @@
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
-import { mapGetters } from "vuex";
 import SubHeader from "@/modules/subs/Components/SubHeader.vue";
 import SubList from "@/modules/subs/Components/SubList.vue";
-import { SubMessages } from "@/modules/subs/lang/SubMessages";
-import { SubService } from "@/modules/subs/services/SubService";
 import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
 import DayHashrateIcon from "@/modules/common/icons/DayHashrateIcon.vue";
 import MinuteHashrateIcon from "@/modules/common/icons/MinuteHashrateIcon.vue";
+
+import { UnitMultiplierEnum } from "@/modules/subs/enums/UnitMultiplierEnum";
+import { mapGetters } from "vuex";
+import { SubMessages } from "@/modules/subs/lang/SubMessages";
+import { SubService } from "@/modules/subs/services/SubService";
 
 export default {
     components: {
@@ -128,6 +127,17 @@ export default {
             "getAccount",
             "overall",
         ]),
+        overallCurrentHashRate() {
+            const currentHashRate = this.getSumAccountsStatistic(
+                "hash_per_min",
+                "hash_per_min_unit"
+            );
+
+            return {
+                hashRate: currentHashRate,
+                unit: "T",
+            };
+        },
     },
     mounted() {
         this.service.setDocumentTitle(this.$t("title"));
@@ -141,6 +151,24 @@ export default {
     methods: {
         toggleIsTable(subsTypeState = null) {
             this.service.toggleSubsType(subsTypeState);
+        },
+        getSumAccountsStatistic(accountStatisticKey, accountUnitKey = null) {
+            const initialValue = 0;
+
+            return this.allAccounts.reduce((accumulator, currentAccount) => {
+                let currentAccountValue = Number(
+                    currentAccount[accountStatisticKey]
+                );
+
+                if (accountUnitKey) {
+                    const hashRateUnit = currentAccount[accountUnitKey];
+
+                    currentAccountValue =
+                        currentAccountValue * UnitMultiplierEnum[hashRateUnit];
+                }
+
+                return accumulator + currentAccountValue;
+            }, initialValue);
         },
     },
 };

@@ -6,6 +6,7 @@
                     class="referral__card-info"
                     :title="$t('stats.cards[0]')"
                     :value="service.statsCards[4]?.value ?? 0"
+                    unit="%"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/percent-icon.png" />
