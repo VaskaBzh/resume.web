@@ -1,4 +1,4 @@
-import {StatesService} from "@/modules/common/services/extends/base/StatesService";
+import { StatesService } from "@/modules/common/services/extends/base/StatesService";
 
 export class PopupControllService {
     constructor() {

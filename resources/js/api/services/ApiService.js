@@ -21,9 +21,7 @@ export class ApiService {
     }
 
     setHeaders() {
-        this.setTokenHeaders()
-            .setLocaleHeaders()
-            .setCsrfHeaders();
+        this.setTokenHeaders().setLocaleHeaders().setCsrfHeaders();
 
         return this;
     }
@@ -81,8 +79,11 @@ export class ApiService {
                 return response;
             },
             async (error) => {
-                if (error.response && error.response.status === unAuthorizedError) {
-                    await this.homeRedirect()
+                if (
+                    error.response &&
+                    error.response.status === unAuthorizedError
+                ) {
+                    await this.homeRedirect();
 
                     this.dropUser();
                 }
