@@ -27,17 +27,18 @@ final readonly class WorkerService
     public function sync(int $groupId): void
     {
         $onlineWorkers = $this->client->getWorkerList($groupId);
-        $deadWorkers = $this->client->getWorkerList(0, 'dead');
+        $deadWorkers = $this->client->getWorkerList($groupId, 'dead');
+        $localSubs = Sub::all();
 
-        $updatedCount = $this->transform->transformCollection(
+        $syncedCount = $this->transform->transformCollection(
             collection: collect([...$onlineWorkers, ...$deadWorkers]),
             className: Worker::class
-        )->each(static function (WorkerData $workerData) {
+        )->filter(static fn (WorkerData $data) => $localSubs
+            ->pluck('group_id')
+            ->contains($data->groupId)
+        )->each(static fn (WorkerData $workerData) => Update::execute(workerData: $workerData))->count();
 
-            Update::execute(workerData: $workerData);
-        })->count();
-
-        Log::channel('commands')->info(sprintf('WORKERS UPDATE COMPLETE. COUNT: %s', $updatedCount));
+        Log::channel('commands')->info(sprintf('WORKERS UPDATE COMPLETE. COUNT: %s', $syncedCount));
     }
 
     /**
