@@ -7,13 +7,6 @@
         <td
             v-for="(column, i) in renderColumns"
             :key="i"
-            v-tooltip="
-                viewportWidth >= 767.98
-                    ? column[0] === 'status'
-                        ? { message: columns.message }
-                        : null
-                    : null
-            "
             class="table_column"
         >
             <span v-show="viewportWidth <= 767.98" class="label">{{

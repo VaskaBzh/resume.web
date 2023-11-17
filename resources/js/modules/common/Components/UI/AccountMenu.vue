@@ -71,7 +71,9 @@
                         v-if="!!errorMessage"
                         class="error-message"
                         :class="{ 'error-message-active': !!errorMessage }"
-                        >{{ $t(`accounts.popups.add.error.${errorMessage}`) }}</span
+                        >{{
+                            $t(`accounts.popups.add.error.${errorMessage}`)
+                        }}</span
                     >
                 </transition>
                 <button type="submit" class="all-link blue-button">

@@ -127,7 +127,7 @@ export default defineComponent({
     },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .onboarding_block-target {
     background: var(--background-island);
 }
@@ -145,6 +145,10 @@ export default defineComponent({
 .nav {
     min-width: 320px;
     position: relative;
+}
+
+.nav__column {
+    @include columnMixin($gap: 24px);
 }
 
 .nav::before {

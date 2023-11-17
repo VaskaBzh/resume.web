@@ -140,9 +140,6 @@ export default {
     transform: translate(-50%, -50%);
 }
 .card__wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
     padding: 24px;
     width: 100%;
 }
@@ -153,15 +150,11 @@ export default {
     .card_close {
         display: none;
     }
-    .card__block {
-        min-height: unset;
-    }
     .card__wrapper {
-        position: unset;
-        top: unset;
-        left: unset;
         padding: 0;
-        min-height: 390px;
+    }
+    .card__head .card_title {
+        width: fit-content;
     }
 }
 .card__content {
@@ -215,13 +208,6 @@ export default {
     gap: 8px;
     margin-top: 24px;
 }
-@media (max-width: 800px) {
-    .card__block {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-    }
-}
 .card__elem {
     width: 100%;
     border-radius: 24px;
@@ -234,10 +220,7 @@ export default {
 }
 @media (max-width: 410px) {
     .card__block {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        justify-content: space-between;
+        grid-template-columns: 1fr;
     }
     .card__elem {
         width: 100%;
@@ -245,7 +228,6 @@ export default {
     .card__head {
         gap: 8px;
     }
-
     .card_status {
         border-radius: 8px;
         background: var(--background-success, #21322e);
