@@ -809,7 +809,6 @@ const messages = {
             block: {
                 titles: [
                     "Current hashrate",
-                    ,
                     "Worker",
                     "Hashrate / 24h",
                     "Total paid out",
@@ -825,7 +824,11 @@ const messages = {
                         name: "Please enter the name",
                     },
                     button: "+ Add",
-                    error: 'Enter at least 3 characters'
+                    error: {
+                        empty: "Enter name",
+                        invalid: "3 to 15 Latin letters or numbers in length",
+                        no_space: "The name must not contain spaces.",
+                    },
                 },
                 change: {
                     title: "Change the sub-account name",
@@ -1863,7 +1866,11 @@ const messages = {
                         name: "Введите имя",
                     },
                     button: "Добавить",
-                    error: 'Введите не менее 3 символов'
+                    error: {
+                        empty: "Введите имя",
+                        invalid: "Длина от 3 до 15 латинских букв или цифр",
+                        no_space: "Имя не должно содержать пробелы",
+                    },
                 },
                 change: {
                     title: "Измените имя субаккаунта",

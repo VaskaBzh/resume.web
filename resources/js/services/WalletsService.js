@@ -320,10 +320,6 @@ export class WalletsService extends DefaultSubsService {
                             text: err.response.data.message,
                         });
 
-                        await this.index();
-                        this.clearForm();
-                        this.closePopup();
-
                         return;
                     }
                 }

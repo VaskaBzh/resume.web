@@ -291,7 +291,8 @@ export default {
         font-weight: 400;
         line-height: 32px; /* 160% */
     }
-    .income-cards-container {
+    .income-cards-container,
+    .income-cards-article {
         gap: 8px;
     }
 }

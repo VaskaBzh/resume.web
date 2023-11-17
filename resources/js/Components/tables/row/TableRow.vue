@@ -5,21 +5,14 @@
         @mousedown="openPopup"
     >
         <td
-            class="table_column"
-            :key="i"
             v-for="(column, i) in renderColumns"
-            v-tooltip="
-                viewportWidth >= 767.98
-                    ? column[0] === 'status'
-                        ? { message: this.columns.message }
-                        : null
-                    : null
-            "
+            :key="i"
+            class="table_column"
         >
-            <span class="label" v-show="viewportWidth <= 767.98">{{
+            <span v-show="viewportWidth <= 767.98" class="label">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash ref="row_content" :class="column[0]">{{
+            <span ref="row_content" v-hash :class="column[0]">{{
                 column[1]
             }}</span>
         </td>
@@ -27,12 +20,12 @@
         <!--            $t("more")-->
         <!--        }}</span>-->
         <svg
+            v-if="!!columns.graphId && !removePercent"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            v-if="!!this.columns.graphId && !removePercent"
         >
             <path
                 d="M10 6L16 12L10 18"
@@ -48,7 +41,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-    name: "table-row",
+    name: "TableRow",
     props: {
         columns: Array,
         titles: Array,
@@ -125,6 +118,9 @@ export default {
             return obj;
         },
     },
+    mounted() {
+        this.setWorkersStats();
+    },
     methods: {
         setWorkersStats() {
             if (this.getWorkersStats) {
@@ -143,9 +139,6 @@ export default {
                 id: this.columns.graphId,
             });
         },
-    },
-    mounted() {
-        this.setWorkersStats();
     },
 };
 </script>
@@ -266,9 +259,11 @@ export default {
         &.active,
         &.inactive,
         &.unstable,
+        &.dead,
         &.ACTIVE,
         &.INACTIVE,
-        &.UNSTABLE {
+        &.UNSTABLE,
+        &.DEAD {
             span {
                 &.status,
                 &.name {
@@ -304,51 +299,33 @@ export default {
                 }
             }
         }
-        &.active {
-            span.status:before {
-                background: #13d60e;
-            }
-        }
-        &.ACTIVE {
-            span.name:before {
-                background: #13d60e;
-            }
-        }
+        &.active,
+        &.ACTIVE,
         &.complete,
         &.completed {
-            span.status:before {
+            span.name:before {
                 background: #13d60e;
             }
         }
-        &.inactive {
-            span.status:before {
-                background: #ff0000;
-            }
-        }
-        &.INACTIVE {
-            span.name:before {
-                background: #ff0000;
-            }
-        }
+        &.inactive,
+        &.INACTIVE,
         &.error,
         &.rejected {
             span.status:before {
                 background: #ff0000;
             }
         }
-        &.unstable {
-            span.status:before {
-                background: #e9c058;
-            }
-        }
-        &.UNSTABLE {
-            span.name:before {
-                background: #e9c058;
-            }
-        }
+        &.unstable,
+        &.UNSTABLE,
         &.pending {
             span.status:before {
                 background: #e9c058;
+            }
+        }
+        &.dead,
+        &.DEAD {
+            span.name:before {
+                background: var(--status-death, #667085);
             }
         }
     }

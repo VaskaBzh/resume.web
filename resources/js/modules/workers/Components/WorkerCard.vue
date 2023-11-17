@@ -9,7 +9,7 @@
         <div class="card__wrapper">
             <div class="card__content">
                 <transition name="fade">
-                    <div class="card__head" v-show="!wait">
+                    <div v-show="!wait" class="card__head">
                         <h3 class="card_title">{{ target_worker.name }}</h3>
                         <span
                             class="card_status"
@@ -18,27 +18,26 @@
                                     target_worker.class === 'ACTIVE',
                                 'card_status-in-active':
                                     target_worker.class === 'INACTIVE',
+                                'card_status-dead':
+                                    target_worker.class === 'DEAD',
                             }"
                             >{{ target_worker.class }}</span
                         >
                     </div>
                 </transition>
-                <cross-icon
-                    class="card_close"
-                    @click="$emit('closeCard')"
-                />
+                <cross-icon class="card_close" @click="$emit('closeCard')" />
                 <!--            <main-tabs-->
                 <!--                @getValue="$emit('getValue', $event)"-->
                 <!--                :tabs="buttons"-->
                 <!--                :active="offset"-->
                 <!--            />-->
                 <transition name="fade">
-                    <div class="card_graph" v-if="!wait">
-                        <main-line-graph :graphData="graph" :height="height" />
+                    <div v-if="!wait" class="card_graph">
+                        <main-line-graph :graph-data="graph" :height="height" />
                     </div>
                 </transition>
                 <transition name="fade">
-                    <div class="card__block" v-show="!wait">
+                    <div v-show="!wait" class="card__block">
                         <cabinet-card
                             class="card__elem"
                             :title="$t('statistic.info_blocks.hash.titles[0]')"
@@ -46,7 +45,7 @@
                             unit="TH/s"
                             :page="'worker'"
                         >
-                            <template v-slot:svg>
+                            <template #svg>
                                 <minute-hashrate-icon />
                             </template>
                         </cabinet-card>
@@ -57,7 +56,7 @@
                             unit="TH/s"
                             :page="'worker'"
                         >
-                            <template v-slot:svg>
+                            <template #svg>
                                 <day-hashrate-icon />
                             </template>
                         </cabinet-card>
@@ -79,7 +78,7 @@ import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import { mapGetters } from "vuex";
 
 export default {
-    name: "worker-card",
+    name: "WorkerCard",
     components: {
         WaitPreloader,
         DayHashrateIcon,
@@ -102,10 +101,16 @@ export default {
     computed: {
         ...mapGetters(["viewportWidth"]),
         hashPerDay() {
-            return this.wait ? null : Number(this.target_worker.hashrate.split(" ")[0]).toFixed(2);
+            return this.wait
+                ? null
+                : Number(this.target_worker.hashrate.split(" ")[0]).toFixed(2);
         },
         hashPerMin() {
-            return this.wait ? null : Number(this.target_worker.hashrate_per_day.split(" ")[0]).toFixed(2);
+            return this.wait
+                ? null
+                : Number(
+                      this.target_worker.hashrate_per_day.split(" ")[0]
+                  ).toFixed(2);
         },
     },
 };
@@ -135,9 +140,6 @@ export default {
     transform: translate(-50%, -50%);
 }
 .card__wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
     padding: 24px;
     width: 100%;
 }
@@ -148,15 +150,11 @@ export default {
     .card_close {
         display: none;
     }
-    .card__block {
-        min-height: unset;
-    }
     .card__wrapper {
-        position: unset;
-        top: unset;
-        left: unset;
         padding: 0;
-        min-height: 390px;
+    }
+    .card__head .card_title {
+        width: fit-content;
     }
 }
 .card__content {
@@ -210,13 +208,6 @@ export default {
     gap: 8px;
     margin-top: 24px;
 }
-@media (max-width: 800px) {
-    .card__block {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-    }
-}
 .card__elem {
     width: 100%;
     border-radius: 24px;
@@ -229,10 +220,7 @@ export default {
 }
 @media (max-width: 410px) {
     .card__block {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        justify-content: space-between;
+        grid-template-columns: 1fr;
     }
     .card__elem {
         width: 100%;
@@ -240,11 +228,14 @@ export default {
     .card__head {
         gap: 8px;
     }
-
     .card_status {
         border-radius: 8px;
-        background: var(--background-success, #21322E);
+        background: var(--background-success, #21322e);
         font-size: 12px;
     }
+}
+.card_status-dead {
+    color: var(--status-death, #667085);
+    background: var(--background-death, rgba(44, 47, 52, 0.05));
 }
 </style>

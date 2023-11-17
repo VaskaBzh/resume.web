@@ -46,4 +46,9 @@ export default {
     align-items: center;
     width: 100%;
 }
+@media (max-width: 767.98px) {
+    .cards {
+        flex-direction: column;
+    }
+}
 </style>

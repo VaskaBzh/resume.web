@@ -90,6 +90,10 @@
                             @getWallet="setForm"
                         ></wallet-block>
                         <!--                    @remove="wallets.removeWallet(wallet)"-->
+                        <warning-block
+                            class="wallets_warning"
+                            text="wallets_change"
+                        />
                     </div>
                 </div>
                 <instruction-step
@@ -301,6 +305,7 @@
                     class="input popup__input autopayput_input"
                 />
             </div>
+            <warning-block class="wallets_warning" text="wallets_change" />
             <button type="submit" class="all-link change-autopyout_button">
                 <svg
                     width="24"
@@ -733,6 +738,7 @@ input:focus {
 
     &__list {
         display: flex;
+        flex-direction: column;
         gap: 16px;
         transition: all 0.3s ease 0s;
         width: 100%;
@@ -749,6 +755,9 @@ input:focus {
                 border-radius: 12px;
                 border: none;
             }
+        }
+        .wallets_warning {
+            margin-top: 0;
         }
     }
 
