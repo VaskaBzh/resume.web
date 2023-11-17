@@ -32,7 +32,12 @@ export default {
     border-radius: 12px;
     border: 1px solid var(--tooltip-body-color);
     background-color: var(--tooltip-body-color);
-    color: var(--tooltip-text-color);
+    color: var(--text-secondary, #475467);
+    font-family: NunitoSans, serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
     padding: 12px;
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
 }
