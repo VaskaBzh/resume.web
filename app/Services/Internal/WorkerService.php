@@ -21,9 +21,12 @@ final readonly class WorkerService
     ) {
     }
 
-    public function sync(): void
+    /**
+     * Get remote workers and update all local workers
+     */
+    public function sync(int $groupId): void
     {
-        $onlineWorkers = $this->client->getWorkerList();
+        $onlineWorkers = $this->client->getWorkerList($groupId);
         $deadWorkers = $this->client->getWorkerList(0, 'dead');
 
         $updatedCount = $this->transform->transformCollection(
@@ -37,9 +40,12 @@ final readonly class WorkerService
         Log::channel('commands')->info(sprintf('WORKERS UPDATE COMPLETE. COUNT: %s', $updatedCount));
     }
 
-    public function add(): void
+    /**
+     *  Add new workers by group_id
+     */
+    public function addNew(int $groupId): void
     {
-        $newRemoteWorkers = $this->client->getWorkerList(); // TODO: SET UNGROUPED ID
+        $newRemoteWorkers = $this->client->getWorkerList($groupId);
 
         if ($newRemoteWorkers->isNotEmpty()) {
 
@@ -55,16 +61,22 @@ final readonly class WorkerService
 
             $owners = Sub::whereNameIn($workerNames)->get();
 
-            $newLocalWorkers = $transformed->each(function (WorkerData $data) use ($owners) {
+            $newLocalWorkerIDs = $transformed->map(function (WorkerData $data) use ($owners) {
                 if ($owner = $owners->firstWhere('sub', head(explode('.', $data->name)))) {
 
-                 dump($data);
-                }
-            });
-            dd('s');
-            dd($newLocalWorkers);
-            $this->client->updateRemoteWorker($newLocalWorkers->only(''));
-        }
+                    $newLocalWorker = Create::execute($owner, $data);
 
+                    return [
+                        'workerId' => $newLocalWorker->worker_id,
+                        'groupId' => $newLocalWorker->worker_id,
+                    ];
+                }
+            })->filter();
+
+            $this->client->updateRemoteWorkers($newLocalWorkerIDs);
+
+            Log::channel('commands')
+                ->info(sprintf('WORKERS UPDATE COMPLETE. COUNT: %s', $newLocalWorkerIDs->count()));
+        }
     }
 }

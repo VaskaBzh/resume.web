@@ -33,6 +33,11 @@ return [
          */
         'ungrouped_id' => -1,
 
+        /**
+         * Contains all grouped workers
+         */
+        'all_groups' => 0,
+
         'default_page_size' => 1000,
 
         /**

@@ -103,14 +103,12 @@ class Client implements ClientContract
     /* --------------------- Workers -------------------- */
 
     /**
-     *  Get remote worker list by status
+     *  Get remote worker list by status & group_id
      *
      * @throws \Exception
      */
-    public function getWorkerList(
-        ?int $groupId = 0,
-        ?string $workerStatus = 'all'
-    ): Collection {
+    public function getWorkerList(int $groupId, ?string $workerStatus = 'all'): Collection
+    {
         $workers = $this->call(
             segments: ['worker'],
             params: [
@@ -126,19 +124,20 @@ class Client implements ClientContract
     /**
      * Update remote worker group
      */
-    public function updateRemoteWorker(Collection $data): void
+    public function updateRemoteWorkers(Collection $data): void
     {
-
-//        $this->call(
-//            segments: [
-//                'worker',
-//                'update',
-//            ],
-//            method: 'post',
-//            params: [
-//                'group_id' => $groupId,
-//                'worker_id' => (string) $workerId,
-//            ]);
+        $data->each(function (array $data) {
+            $this->call(
+                segments: [
+                    'worker',
+                    'update',
+                ],
+                method: 'post',
+                params: [
+                    'group_id' => $data['groupId'],
+                    'worker_id' => (string) $data['workerId'],
+                ]);
+        });
     }
 
     /**

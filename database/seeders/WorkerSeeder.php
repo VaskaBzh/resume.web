@@ -2,25 +2,34 @@
 
 namespace Database\Seeders;
 
+use App\Dto\WorkerData;
 use App\Models\Worker;
-use App\Services\External\BtcComService;
+use App\Services\External\BtcCom\Client;
+use App\Services\External\TransformContract;
 use Illuminate\Database\Seeder;
 
 class WorkerSeeder extends Seeder
 {
-    public function run(BtcComService $btcComService): void
+    public function run(Client $client, TransformContract $transformer): void
     {
-        $workers = $btcComService->getWorkerList(6001912);
+        $remoteWorkers = $client->getWorkerList(6001912);
 
-        $workers->each(
-            static fn (array $worker) => Worker::updateOrCreate(['worker_id' => (int) $worker['worker_id']],
-                [
-                    'group_id' => (int) $worker['gid'],
-                    'worker_id' => (int) $worker['worker_id'],
-                    'hash_per_day' => (float) $worker['shares_1d'],
-                    'status' => $worker['status'],
-                    'pool_data' => $worker,
-                ])
-        );
+        $workers = $transformer->transformCollection($remoteWorkers, Worker::class);
+        $workers->each(static function (WorkerData $workerData) {
+            Worker::updateOrCreate(['worker_id' => $workerData->workerId], [
+                'group_id' => $workerData->groupId,
+                'name' => $workerData->name,
+                'worker_id' => $workerData->workerId,
+                'hash_per_day' => $workerData->hashPerDay,
+                'status' => $workerData->status,
+                'unit' => $workerData->unitPerDay,
+                'pool_data' => $workerData->poolData,
+            ])
+                ->workerHashrates()
+                ->create([
+                    'hash_per_min' => $workerData->hashPerMin,
+                    'unit' => $workerData->unitPerMin,
+                ]);
+        });
     }
 }

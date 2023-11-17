@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Services\External\BtcComService;
 use App\Services\Internal\WorkerService;
 use Illuminate\Console\Command;
 
@@ -17,9 +16,11 @@ class SyncWorkerCommand extends Command
     /**
      * Синхронизация с воркерами btc.com
      */
-    public function handle(BtcComService $btcComService, WorkerService $workerService): void
+    public function handle(WorkerService $workerService): void
     {
-        $workerService->sync();
-        $btcComService->createLocalWorkers();
+        $workerService->sync(groupId: config('api.btc.all_groups'));
+        if (! config('app.local')) {
+            $workerService->addNew(groupId: config('api.btc.ungrouped_id'));
+        }
     }
 }

@@ -20,9 +20,9 @@ interface ClientContract
 
     public function createRemoteSub(string $subName): Collection;
 
-    public function getWorkerList(?int $groupId = 0, ?string $workerStatus = 'all'): Collection;
+    public function getWorkerList(int $groupId, ?string $workerStatus = 'all'): Collection;
 
-    public function updateRemoteWorker(Collection $data): void;
+    public function updateRemoteWorkers(Collection $data): void;
 
     public function getFppsRate(): float|int;
 }
