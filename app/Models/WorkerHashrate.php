@@ -17,7 +17,7 @@ class WorkerHashrate extends Model
 
     protected $fillable = [
         'worker_id',
-        'hash',
+        'hash_per_min',
         'unit',
     ];
 

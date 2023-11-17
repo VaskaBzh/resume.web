@@ -11,7 +11,6 @@ use App\Models\Sub;
 use App\Models\Worker;
 use App\Services\External\ClientContract;
 use App\Services\External\TransformContract;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
 final readonly class WorkerService
@@ -38,31 +37,33 @@ final readonly class WorkerService
         Log::channel('commands')->info(sprintf('WORKERS UPDATE COMPLETE. COUNT: %s', $updatedCount));
     }
 
-    public function add()
+    public function add(): void
     {
-        $newWorkers = $this->client->getWorkerList();
+        $newRemoteWorkers = $this->client->getWorkerList(); // TODO: SET UNGROUPED ID
 
-        if ($newWorkers->isNotEmpty()) {
+        if ($newRemoteWorkers->isNotEmpty()) {
 
             $transformed = $this->transform->transformCollection(
-                collection: $newWorkers,
+                collection: $newRemoteWorkers,
                 className: Worker::class
             );
 
             $workerNames = $transformed
-                ->pluck('name')
-                ->map(static function (string $name) {
-                    return head(explode('.', $name));
-                });
+                ->map(
+                    static fn (WorkerData $data) => head(explode('.', $data->name))
+                );
 
-            Sub::whereNameIn($workerNames)
-                ->get()
-                ->each(function (Sub $sub) use ($transformed) {
-                    dd($transformed);
-                    $worker = $transformed->where('name', $sub->sub);
-                    dd($worker);
-                });
+            $owners = Sub::whereNameIn($workerNames)->get();
 
+            $newLocalWorkers = $transformed->each(function (WorkerData $data) use ($owners) {
+                if ($owner = $owners->firstWhere('sub', head(explode('.', $data->name)))) {
+
+                 dump($data);
+                }
+            });
+            dd('s');
+            dd($newLocalWorkers);
+            $this->client->updateRemoteWorker($newLocalWorkers->only(''));
         }
 
     }

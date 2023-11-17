@@ -22,7 +22,7 @@ interface ClientContract
 
     public function getWorkerList(?int $groupId = 0, ?string $workerStatus = 'all'): Collection;
 
-    public function updateRemoteWorker(int $workerId, int $groupId): void;
+    public function updateRemoteWorker(Collection $data): void;
 
     public function getFppsRate(): float|int;
 }

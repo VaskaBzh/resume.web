@@ -43,21 +43,21 @@ class DataTransformer implements TransformContract
         return TransformSubData::fromArray(array_merge($subData, $remoteSub));
     }
 
-    public function transformWorker(array $remoteWorker)
+    public function transformWorker(array $remoteWorker): WorkerData
     {
-        if (filled($remoteWorker)) {
-            return WorkerData::fromArray([
-                'group_id' => $remoteWorker['gid'],
-                'worker_id' => $remoteWorker['worker_id'],
-                'name' => $remoteWorker['worker_name'],
-                'hash_per_day' => HashRateConverter::toPure(
-                    value: (float) $remoteWorker['shares_1d'],
-                    unit: Unit::tryFrom($remoteWorker['shares_1d_unit'])
-                )->value,
-                'status' => $remoteWorker['status'],
-                'unit' => $remoteWorker['shares_1d_unit'],
-                'pool_data' => $remoteWorker,
-            ]);
-        }
+        return WorkerData::fromArray([
+            'group_id' => $remoteWorker['gid'],
+            'worker_id' => $remoteWorker['worker_id'],
+            'name' => $remoteWorker['worker_name'],
+            'status' => $remoteWorker['status'],
+            'hash_per_day' => HashRateConverter::toPure(
+                value: (float) $remoteWorker['shares_1d'],
+                unit: Unit::tryFrom($remoteWorker['shares_1d_unit'])
+            )->value,
+            'unit_per_day' => $remoteWorker['shares_1d_unit'],
+            'hash_per_min' => $remoteWorker['shares_1m_pure'],
+            'unit_per_min' => $remoteWorker['shares_unit'],
+            'pool_data' => $remoteWorker,
+        ]);
     }
 }

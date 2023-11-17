@@ -126,18 +126,19 @@ class Client implements ClientContract
     /**
      * Update remote worker group
      */
-    public function updateRemoteWorker(int $workerId, int $groupId): void
+    public function updateRemoteWorker(Collection $data): void
     {
-        $this->call(
-            segments: [
-                'worker',
-                'update',
-            ],
-            method: 'post',
-            params: [
-                'group_id' => $groupId,
-                'worker_id' => (string) $workerId,
-            ]);
+
+//        $this->call(
+//            segments: [
+//                'worker',
+//                'update',
+//            ],
+//            method: 'post',
+//            params: [
+//                'group_id' => $groupId,
+//                'worker_id' => (string) $workerId,
+//            ]);
     }
 
     /**

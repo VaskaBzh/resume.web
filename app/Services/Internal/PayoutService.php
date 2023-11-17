@@ -17,7 +17,7 @@ use App\Models\Wallet;
 use App\Services\External\WalletService;
 use Illuminate\Support\Facades\Log;
 
-class PayoutService
+final class PayoutService
 {
     private Sub $sub;
 

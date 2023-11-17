@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
@@ -33,6 +32,26 @@ return new class extends Migration
         });
 
         Schema::drop('referrals');
+
+        Schema::table('workers', function (Blueprint $table) {
+            $table->renameColumn('approximate_hash_rate', 'hash_per_day');
+        });
+        Schema::table('workers', function (Blueprint $table) {
+            DB::table('workers')->update(['hash_per_day' => 0]);
+            $table->unsignedBigInteger('hash_per_day')
+                ->change()
+                ->default(0);
+        });
+
+        Schema::table('workers_hashrate', function (Blueprint $table) {
+            $table->renameColumn('hash', 'hash_per_min');
+        });
+        Schema::table('workers_hashrate', function (Blueprint $table) {
+            DB::table('workers_hashrate')->update(['hash_per_min' => 0]);
+            $table->unsignedBigInteger('hash_per_min')
+                ->change()
+                ->default(0);
+        });
     }
 
     public function down(): void
@@ -59,6 +78,25 @@ return new class extends Migration
 
         Schema::table('incomes', function (Blueprint $table) {
             $table->dropColumn('type');
+        });
+
+        Schema::table('workers', function (Blueprint $table) {
+            $table->float('hash_per_day')
+                ->default(0)
+                ->change();
+        });
+        Schema::table('workers', function (Blueprint $table) {
+            $table->renameColumn('hash_per_day', 'approximate_hash_rate');
+        });
+
+        Schema::table('workers_hashrate', function (Blueprint $table) {
+            DB::table('workers_hashrate')->update(['hash_per_min' => 0]);
+            $table->float('hash_per_min')
+                ->change()
+                ->default(0);
+        });
+        Schema::table('workers_hashrate', function (Blueprint $table) {
+            $table->renameColumn('hash_per_min', 'hash');
         });
     }
 };

@@ -7,12 +7,14 @@ namespace App\Dto;
 final readonly class WorkerData
 {
     public function __construct(
-        public int $group_id,
-        public int $worker_id,
+        public int $groupId,
+        public int $workerId,
         public string $name,
-        public int $hashPerDay,
         public string $status,
-        public string $unit,
+        public int $hashPerDay,
+        public string $unitPerDay,
+        public int $hashPerMin,
+        public string $unitPerMin,
         public array $poolData,
     ) {
     }
@@ -20,13 +22,15 @@ final readonly class WorkerData
     public static function fromArray(array $data): WorkerData
     {
         return new self(
-            group_id: (int) $data['group_id'],
-            worker_id: (int) $data['worker_id'],
+            groupId: (int) $data['group_id'],
+            workerId: (int) $data['worker_id'],
             name: $data['name'],
-            hashPerDay: (int) $data['hash_per_day'],
             status: $data['status'],
-            unit: $data['unit'],
-            poolData: $data['pool_data'],
+            hashPerDay: (int) $data['hash_per_day'],
+            unitPerDay: $data['unit_per_day'],
+            hashPerMin: (int) $data['hash_per_min'],
+            unitPerMin: $data['unit_per_min'],
+            poolData: $data['pool_data']
         );
     }
 }

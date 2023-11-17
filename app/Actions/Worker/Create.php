@@ -5,22 +5,34 @@ declare(strict_types=1);
 namespace App\Actions\Worker;
 
 use App\Dto\WorkerData;
+use App\Models\Sub;
 use App\Models\Worker;
 
 class Create
 {
     public static function execute(
+        Sub $owner,
         WorkerData $workerData,
     ): Worker {
-        return Worker::create([
-            'worker_id' => $workerData->worker_id,
-            'group_id' => $workerData->group_id,
-            'name' => $workerData->name,
-            'approximate_hash_rate' => $workerData->approximateHashRate,
-            'status' => $workerData->status,
-            'unit' => $workerData->unit,
-            'pool_data' => $workerData->poolData,
-            'deleted_at' => null,
-        ]);
+        $worker = $owner
+            ->workers()
+            ->create([
+                'worker_id' => $workerData->workerId,
+                'name' => $workerData->name,
+                'status' => $workerData->status,
+                'hash_per_day' => $workerData->hashPerDay,
+                'unit' => $workerData->unitPerDay,
+                'pool_data' => $workerData->poolData,
+                'deleted_at' => null,
+            ]);
+
+        $worker
+            ->workerHashrates()
+            ->create([
+                'hash_per_min' => $workerData->hashPerMin,
+                'unit' => $workerData->unitPerMin,
+            ]);
+
+        return $worker;
     }
 }
