@@ -186,8 +186,8 @@ export default defineComponent({
 
 @media (max-width: 998px) {
     .nav__content {
-        padding: 0 clamp(12px, 2vw, 24px) 0;
         height: 100%;
+        padding: 0;
     }
 }
 
@@ -205,10 +205,11 @@ export default defineComponent({
     .nav {
         position: fixed;
         right: 0;
-        top: 71px;
-        height: calc(100vh - 71px);
-        padding: 20px 0 24px;
-        z-index: 100;
+        top: 0;
+	    height: 100%;
+        max-height: 100vh;
+        padding: 92px clamp(12px, 2vw, 24px) 24px;
+        z-index: 99;
         background: var(--background-island);
         box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
     }
