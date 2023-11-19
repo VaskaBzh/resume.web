@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\Hash\Unit;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
+use App\Utils\HashRateConverter;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
@@ -112,33 +114,39 @@ class TestingSeeder extends Seeder
             ->count(6)
             ->sequence(
                 [
+                    'worker_id' => 1111,
                     'status' => 'INACTIVE',
-                    'approximate_hash_rate' => 100,
+                    'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 1,
                 ],
                 [
+                    'worker_id' => 11111,
                     'status' => 'ACTIVE',
-                    'approximate_hash_rate' => 100,
+                    'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 1,
                 ],
                 [
+                    'worker_id' => 2222,
                     'status' => 'INACTIVE',
-                    'approximate_hash_rate' => 100,
+                    'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 2,
                 ],
                 [
+                    'worker_id' => 3333,
                     'status' => 'ACTIVE',
-                    'approximate_hash_rate' => 100,
+                    'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 3,
                 ],
                 [
+                    'worker_id' => 333333,
                     'status' => 'INACTIVE',
-                    'approximate_hash_rate' => 100,
+                    'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 3,
                 ],
                 [
+                    'worker_id' => 4444,
                     'status' => 'ACTIVE',
-                    'approximate_hash_rate' => 100,
+                    'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 5,
                 ]
             )->create();

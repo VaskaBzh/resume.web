@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Dto\Sub\TransformSubData;
+use App\Dto\WorkerData;
 use App\Models\Sub;
 use Illuminate\Support\Collection;
 
@@ -12,7 +13,7 @@ interface TransformContract
 {
     public function transformSub(Sub $sub, array $remoteSub): TransformSubData;
 
-    public function transformWorker(array $remoteWorker);
+    public static function transformWorker(array $remoteWorker): WorkerData;
 
-    public function transformCollection(Collection $collection, string $className): Collection;
+    public function transformCollection(Collection $collection, string $itemType): Collection;
 }

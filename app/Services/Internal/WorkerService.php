@@ -11,7 +11,7 @@ use App\Models\Sub;
 use App\Models\Worker;
 use App\Services\External\ClientContract;
 use App\Services\External\TransformContract;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Collection;
 
 final readonly class WorkerService
 {
@@ -24,60 +24,50 @@ final readonly class WorkerService
     /**
      * Get remote workers and update all local workers
      */
-    public function sync(int $groupId): void
+    public function sync(int $groupId, string $status): Collection
     {
-        $onlineWorkers = $this->client->getWorkerList($groupId);
-        $deadWorkers = $this->client->getWorkerList($groupId, 'dead');
-        $localSubs = Sub::all();
+        $localSubs = Sub::pluck('group_id');
 
-        $syncedCount = $this->transform->transformCollection(
-            collection: collect([...$onlineWorkers, ...$deadWorkers]),
-            className: Worker::class
-        )->filter(static fn (WorkerData $data) => $localSubs
-            ->pluck('group_id')
-            ->contains($data->groupId)
-        )->each(static fn (WorkerData $workerData) => Update::execute(workerData: $workerData))->count();
+        $localSubWorkers = $this->client
+            ->getWorkerList($groupId, $status)
+            ->filter(static fn (array $data) => $localSubs->contains($data['gid']));
 
-        Log::channel('commands')->info(sprintf('WORKERS UPDATE COMPLETE. COUNT: %s', $syncedCount));
+        return $this->transform
+            ->transformCollection(collection: $localSubWorkers, itemType: Worker::class)
+            ->each(static fn (WorkerData $workerData) => Update::execute(workerData: $workerData));
     }
 
     /**
      *  Add new workers by group_id
      */
-    public function addNew(int $groupId): void
+    public function addNew(int $groupId): Collection
     {
         $newRemoteWorkers = $this->client->getWorkerList($groupId);
 
-        if ($newRemoteWorkers->isNotEmpty()) {
+        $transformed = $this->transform->transformCollection(
+            collection: $newRemoteWorkers,
+            itemType: Worker::class
+        );
 
-            $transformed = $this->transform->transformCollection(
-                collection: $newRemoteWorkers,
-                className: Worker::class
-            );
+        $workerNames = $transformed
+            ->map(static fn (WorkerData $data) => head(explode('.', $data->name)));
 
-            $workerNames = $transformed
-                ->map(
-                    static fn (WorkerData $data) => head(explode('.', $data->name))
-                );
+        $owners = Sub::whereNameIn($workerNames)->get();
 
-            $owners = Sub::whereNameIn($workerNames)->get();
+        $newLocalWorkerIDs = $transformed->map(function (WorkerData $data) use ($owners) {
+            if ($owner = $owners->firstWhere('sub', head(explode('.', $data->name)))) {
 
-            $newLocalWorkerIDs = $transformed->map(function (WorkerData $data) use ($owners) {
-                if ($owner = $owners->firstWhere('sub', head(explode('.', $data->name)))) {
+                $newLocalWorker = Create::execute($owner, $data);
 
-                    $newLocalWorker = Create::execute($owner, $data);
+                return [
+                    'workerId' => $newLocalWorker->worker_id,
+                    'groupId' => $newLocalWorker->group_id,
+                ];
+            }
+        })->filter();
 
-                    return [
-                        'workerId' => $newLocalWorker->worker_id,
-                        'groupId' => $newLocalWorker->worker_id,
-                    ];
-                }
-            })->filter();
+        $this->client->updateRemoteWorkers($newLocalWorkerIDs);
 
-            $this->client->updateRemoteWorkers($newLocalWorkerIDs);
-
-            Log::channel('commands')
-                ->info(sprintf('WORKERS UPDATE COMPLETE. COUNT: %s', $newLocalWorkerIDs->count()));
-        }
+        return $newLocalWorkerIDs;
     }
 }

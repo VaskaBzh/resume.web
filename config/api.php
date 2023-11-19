@@ -19,6 +19,18 @@ return [
         'url' => 'https://pool.api.btc.com/v1',
 
         /**
+         * btc api paths
+         */
+        'paths' => [
+            'group' => '/groups/{group}',
+            'group list' => '/worker/groups',
+            'create group' => '/groups/create',
+            'worker list' => '/worker',
+            'update worker' => '/worker/update',
+            'earn history' => '/account/earn-history',
+        ],
+
+        /**
          *  Authorization token
          */
         'token' => env('BTC_AUTH_TOKEN'),

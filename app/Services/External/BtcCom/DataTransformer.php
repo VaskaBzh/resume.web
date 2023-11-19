@@ -14,18 +14,15 @@ use Illuminate\Support\Collection;
 
 class DataTransformer implements TransformContract
 {
-    public function transformCollection(Collection $collection, string $className): Collection
+    public function transformCollection(Collection $collection, string $itemType): Collection
     {
-        return $collection->map(function (array $item) use ($className) {
+        $method = 'transform'.class_basename($itemType);
 
-            $method = 'transform'.class_basename($className);
-
-            if (method_exists($this, $method) && filled($item)) {
-                return $this->$method($item);
-            }
-
+        if (! method_exists($this, $method)) {
             throw new \Exception(sprintf('Transform method %s not found.', $method));
-        });
+        }
+
+        return $collection->map(static fn (array $item) => static::$method($item));
     }
 
     public function transformSub(Sub $sub, array $remoteSub): TransformSubData
@@ -43,7 +40,7 @@ class DataTransformer implements TransformContract
         return TransformSubData::fromArray(array_merge($subData, $remoteSub));
     }
 
-    public function transformWorker(array $remoteWorker): WorkerData
+    public static function transformWorker(array $remoteWorker): WorkerData
     {
         return WorkerData::fromArray([
             'group_id' => $remoteWorker['gid'],

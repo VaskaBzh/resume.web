@@ -16,15 +16,17 @@ class Create
     ): Worker {
         $worker = $owner
             ->workers()
-            ->create([
-                'worker_id' => $workerData->workerId,
-                'name' => $workerData->name,
-                'status' => $workerData->status,
-                'hash_per_day' => $workerData->hashPerDay,
-                'unit' => $workerData->unitPerDay,
-                'pool_data' => $workerData->poolData,
-                'deleted_at' => null,
-            ]);
+            ->firstOrCreate(
+                ['worker_id' => $workerData->workerId],
+                [
+                    'worker_id' => $workerData->workerId,
+                    'name' => $workerData->name,
+                    'status' => $workerData->status,
+                    'hash_per_day' => $workerData->hashPerDay,
+                    'unit' => $workerData->unitPerDay,
+                    'pool_data' => $workerData->poolData,
+                ]
+            );
 
         $worker
             ->workerHashrates()

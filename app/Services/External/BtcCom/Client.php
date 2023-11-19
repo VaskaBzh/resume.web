@@ -17,7 +17,7 @@ class Client implements ClientContract
      * Call btc.com
      */
     public function call(
-        array $segments,
+        string $path,
         string $method = 'get',
         array $params = []
     ): Collection {
@@ -33,7 +33,7 @@ class Client implements ClientContract
         $retry = config('api.btc.retry_count');
 
         while ($retry > 0) {
-            $response = $client->$method(implode('/', $segments), $params);
+            $response = $client->$method($path, $params);
 
             if (isset($response['data'])) {
 
@@ -55,7 +55,10 @@ class Client implements ClientContract
      */
     public function getSub(int $groupId): Collection
     {
-        return $this->call(segments: ['groups', $groupId]);
+        return $this->call(path: str_replace('{group}',
+            "$groupId",
+            config('api.btc.paths.group'))
+        );
     }
 
     /**
@@ -64,7 +67,7 @@ class Client implements ClientContract
     public function getSubList(): Collection
     {
         $btcComSubs = $this->call(
-            segments: ['worker', 'groups'],
+            path: config('api.btc.paths.group list'),
             params: [
                 'page_size' => config('api.btc.default_page_size'),
             ]
@@ -84,7 +87,7 @@ class Client implements ClientContract
     public function createRemoteSub(string $subName): Collection
     {
         $btcComSub = $this->call(
-            segments: ['groups', 'create'],
+            path: config('api.btc.paths.create group'),
             method: 'post',
             params: [
                 'group_name' => $subName,
@@ -110,7 +113,7 @@ class Client implements ClientContract
     public function getWorkerList(int $groupId, ?string $workerStatus = 'all'): Collection
     {
         $workers = $this->call(
-            segments: ['worker'],
+            path: config('api.btc.paths.worker list'),
             params: [
                 'group' => $groupId,
                 'page_size' => config('api.btc.default_page_size'),
@@ -128,10 +131,7 @@ class Client implements ClientContract
     {
         $data->each(function (array $data) {
             $this->call(
-                segments: [
-                    'worker',
-                    'update',
-                ],
+                path: config('api.btc.paths.update worker'),
                 method: 'post',
                 params: [
                     'group_id' => $data['groupId'],
@@ -147,9 +147,10 @@ class Client implements ClientContract
      */
     public function getFppsRate(): float|int
     {
-        $fppsRate = $this->call(['account', 'earn-history'], params: [
-            'page_size' => '1',
-        ]);
+        $fppsRate = $this->call(
+            path: config('api.btc.paths.earn history'),
+            params: ['page_size' => '1']
+        );
 
         return Arr::get($fppsRate->get('list'), '0.more_than_pps96_rate');
     }

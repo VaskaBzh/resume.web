@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 interface ClientContract
 {
     public function call(
-        array $segments,
+        string $path,
         string $method = 'get',
         array $params = [],
     ): Collection;
