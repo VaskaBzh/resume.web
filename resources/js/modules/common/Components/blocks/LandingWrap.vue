@@ -145,7 +145,7 @@ export default {
     flex-wrap: wrap;
     gap: 0 10px;
     overflow: visible;
-    font-size: clamp(22px, 2.8vw, 65px);
+    font-size: clamp(28px, 2.8vw, 65px);
 }
 
 @media (min-width: 1500.98px) {
@@ -189,7 +189,6 @@ export default {
         transform: none;
         left: 0;
         top: 0;
-        margin-top: 0;
     }
 
 }
