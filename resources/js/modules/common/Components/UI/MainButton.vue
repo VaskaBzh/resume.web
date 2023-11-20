@@ -35,6 +35,26 @@ export default {
             default: false,
         },
     },
+	// data() {
+	// 	return {
+	// 		wait: false,
+	// 	};
+	// },
+	// methods: {
+	// 	setWaitState(event) {
+	// 		this.wait = event.detail;
+	// 	}
+	// },
+	// mounted() {
+	// 	if (this.formButton) {
+	// 		document.addEventListener("waitRequest", this.setWaitState);
+	// 	}
+	// },
+	// unmounted() {
+	// 	if (this.formButton) {
+	// 		document.removeEventListener("waitRequest", this.setWaitState);
+	// 	}
+	// }
 };
 </script>
 

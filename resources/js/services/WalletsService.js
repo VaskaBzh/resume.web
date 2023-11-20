@@ -263,7 +263,7 @@ export class WalletsService extends DefaultSubsService {
 
         if (this.group_id !== -1) {
             if (this.validateAddress() || this.validateName()) {
-                this.waitAddWallet = false;
+                this.waitChangeWallet = false;
 
                 return this;
             }

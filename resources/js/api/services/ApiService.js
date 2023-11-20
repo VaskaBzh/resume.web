@@ -117,49 +117,53 @@ export class ApiService {
         return this;
     }
 
-    // createWaitListener() {
-    //     this.waitEvent = new CustomEvent("waitRequest");
+    // createWaitListener(newWaitState) {
+    //     this.waitState = newWaitState;
     //
-    //     // {
-    //     //     detail: { [this.errorName]: this.errorList },
-    //     // }
+    //     this.waitEvent = new CustomEvent("waitRequest", {
+    //             detail: this.waitState,
+    //         }
+    //     );
     //
     //     document.dispatchEvent(this.waitEvent);
     // }
     //
-    // createPassedListener() {
-    //     this.passedEvent = new CustomEvent("passedRequest");
-    //
-    //     // {
-    //     //     detail: { [this.errorName]: this.errorList },
-    //     // }
-    //
-    //     document.dispatchEvent(this.passedEvent);
-    // }
-    //
     // checkWaitMethods() {
-    //     this.instance.interceptors.request.use(
+    //     this.instance.interceptors.response.use(
     //         (response) => {
     //             if (
-    //                 response.method === MethodsEnum["post"] ||
-    //                 response.method === MethodsEnum["put"]
+    //                 response.config.method === MethodsEnum["post"] ||
+    //                 response.config.method === MethodsEnum["put"]
     //             ) {
-    //                 console.log("start");
-    //                 this.createWaitListener();
+    //                 this.createWaitListener(false);
     //             }
     //
     //             return response;
     //         },
-    //         (error) => {
-    //             console.log(error);
-    //             // if (
-    //             //     error.method === MethodsEnum["post"] &&
-    //             //     error.method === MethodsEnum["put"]
-    //             // ) {
+    //         async (error) => {
+    //             if (
+    //                 error.response.config.method === MethodsEnum["post"] ||
+    //                 error.response.config.method === MethodsEnum["put"]
+    //             ) {
+    //                 this.createWaitListener(false);
+    //             }
     //
     //             return Promise.reject(error);
-    //             // }
     //         }
+    //     );
+    //     this.instance.interceptors.request.use(
+    //         (config) => {
+    //             if (
+    //                 config.method === MethodsEnum["post"] ||
+    //                 config.method === MethodsEnum["put"]
+    //             ) {
+    //                 this.createWaitListener(true);
+    //             }
+    //
+    //             if (!this.waitState) {
+    //                 return config;
+    //             }
+    //         },
     //     );
     //
     //     return this;
