@@ -17,7 +17,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', new OnlyEngNameRule, 'min:3'],
+            'name' => ['required', 'string', 'max:255', new OnlyEngNameRule, 'min:3', 'unique:users,name'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:10', 'max:50', 'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
             'referral_code' => ['string', 'nullable', 'exists:users,referral_code'],

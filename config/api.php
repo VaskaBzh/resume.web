@@ -53,9 +53,9 @@ return [
         'default_page_size' => 1000,
 
         /**
-         * Wait before retrying request
+         * Wait before retrying request in in microseconds
          */
-        'delay_sec' => 1,
+        'delay_sec' => 50000,
 
         /**
          * Retry request if btc.com bad response with status 200

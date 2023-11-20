@@ -7,7 +7,7 @@ namespace App\Services\External;
 use App\Actions\Sub\Create;
 use App\Actions\Worker\Create as WorkerCreate;
 use App\Actions\Worker\Update;
-use App\Dto\Sub\SubData;
+use App\Dto\Sub\SubUpsertData;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
 use App\Exceptions\BusinessException;
@@ -127,7 +127,7 @@ class BtcComService
         $remoteSub = $this->createRemoteSub(subName: $subName);
 
         Create::execute(
-            subData: SubData::fromRequest([
+            subData: SubUpsertData::fromRequest([
                 'user_id' => $user->id,
                 'group_id' => $remoteSub['gid'],
                 'sub_name' => $subName,

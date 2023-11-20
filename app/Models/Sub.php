@@ -105,24 +105,11 @@ class Sub extends Model
     public function hashRate(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this
+            get: fn (): int => (int) $this
                 ->workers()
                 ->byStatus(Status::ACTIVE->value)
-                ->sum('approximate_hash_rate')
+                ->sum('hash_per_day')
 
-        );
-    }
-
-    /**
-     * Convert value and unit
-     */
-    public function convertedHashRate(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => HashRateConverter::from(value: $this->workers()
-                ->byStatus(Status::ACTIVE->value)
-                ->sum('approximate_hash_rate')
-            )
         );
     }
 

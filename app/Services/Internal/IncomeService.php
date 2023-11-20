@@ -9,7 +9,7 @@ use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
 use App\Dto\Income\IncomeCreateData;
-use App\Dto\Sub\SubData;
+use App\Dto\Sub\SubUpsertData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
@@ -261,7 +261,7 @@ final class IncomeService
     public function updateLocalSub(Sub $sub, Type $incomeType): void
     {
         Update::execute(
-            subData: SubData::fromRequest([
+            subData: SubUpsertData::fromRequest([
                 'user_id' => $sub->user_id,
                 'group_id' => $sub->group_id,
                 'sub_name' => $sub->sub,

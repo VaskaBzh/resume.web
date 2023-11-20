@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions\Sub;
 
-use App\Dto\Sub\SubData;
+use App\Dto\Sub\SubUpsertData;
 use App\Models\Sub;
 
 class Update
 {
-    public static function execute(SubData $subData, Sub $sub): void
+    public static function execute(SubUpsertData $subData, Sub $sub): void
     {
         $sub->update(
             [

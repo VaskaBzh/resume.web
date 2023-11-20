@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\External\BtcCom;
 
 use App\Exceptions\BusinessException;
+use App\Models\Worker;
 use App\Services\External\ClientContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -42,7 +43,7 @@ class Client implements ClientContract
 
             $retry--;
 
-            sleep($delay);
+            usleep($delay);
         }
 
         return collect();
@@ -129,14 +130,16 @@ class Client implements ClientContract
      */
     public function updateRemoteWorkers(Collection $data): void
     {
-        $data->each(function (array $data) {
+        $data->each(function (Worker $worker) {
             $this->call(
                 path: config('api.btc.paths.update worker'),
                 method: 'post',
                 params: [
-                    'group_id' => $data['groupId'],
-                    'worker_id' => (string) $data['workerId'],
+                    'group_id' => $worker->group_id,
+                    'worker_id' => (string) $worker->worker_id,
                 ]);
+
+            usleep(config('api.btc.delay_sec'));
         });
     }
 

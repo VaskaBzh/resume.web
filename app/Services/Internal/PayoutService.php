@@ -6,8 +6,8 @@ namespace App\Services\Internal;
 
 use App\Actions\Income\Complete;
 use App\Actions\Sub\Update;
-use App\Dto\Income\IncomeCompleteData;
-use App\Dto\Sub\SubData;
+use App\Dto\Income\CompleteData;
+use App\Dto\Sub\SubUpsertData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\PayoutCompleteEvent;
@@ -100,7 +100,7 @@ final class PayoutService
     public function clearPendingAmount(): PayoutService
     {
         Update::execute(
-            subData: SubData::fromRequest([
+            subData: SubUpsertData::fromRequest([
                 'user_id' => $this->sub->user_id,
                 'group_id' => $this->sub->group_id,
                 'sub_name' => $this->sub->sub,
@@ -124,7 +124,7 @@ final class PayoutService
         if ($incomes) {
             Complete::execute(
                 incomes: $incomes,
-                incomeCompleteData: IncomeCompleteData::fromRequest([
+                incomeCompleteData: CompleteData::fromRequest([
                     'status' => $this->params['status'],
                     'message' => $this->params['message'],
                 ])

@@ -4,43 +4,43 @@ declare(strict_types=1);
 
 namespace App\Services\External\BtcCom;
 
-use App\Dto\Sub\TransformSubData;
+use App\Dto\Sub\SubViewData;
 use App\Dto\WorkerData;
 use App\Enums\Hash\Unit;
 use App\Models\Sub;
 use App\Services\External\TransformContract;
 use App\Utils\HashRateConverter;
-use Illuminate\Support\Collection;
 
 class DataTransformer implements TransformContract
 {
-    public function transformCollection(Collection $collection, string $itemType): Collection
+    public function transformSub(Sub $sub, array $remoteSub): SubViewData
     {
-        $method = 'transform'.class_basename($itemType);
+        $sub->load('workers');
+        $hashPerMin = HashRateConverter::fromPure((int) $remoteSub['shares_1m_pure']);
+        $hashPerDay = HashRateConverter::fromPure($sub->hash_rate);
 
-        if (! method_exists($this, $method)) {
-            throw new \Exception(sprintf('Transform method %s not found.', $method));
-        }
-
-        return $collection->map(static fn (array $item) => static::$method($item));
-    }
-
-    public function transformSub(Sub $sub, array $remoteSub): TransformSubData
-    {
-        $subData = [
+        return SubViewData::fromArray([
             'sub' => $sub->sub,
             'user_id' => $sub->user_id,
-            'pending_amount' => $sub->pending_amount,
             'group_id' => $sub->group_id,
+            'active_workers_count' => $sub->workers->where('status', 'ACTIVE')->count(),
+            'inactive_workers_count' => $sub->workers->where('status', 'INACTIVE')->count(),
+            'dead_workers_count' => $sub->workers->where('status', 'DEAD')->count(),
+            'hash_per_min' => $hashPerMin->value,
+            'hash_per_min_unit' => $hashPerMin->unit,
+            'hash_per_day' => $hashPerDay->value,
+            'hash_per_day_unit' => $hashPerDay->unit,
             'total_payout' => $sub->total_payout,
             'total_amount' => $sub->total_amount,
             'yesterday_amount' => $sub->yesterday_amount,
-        ];
-
-        return TransformSubData::fromArray(array_merge($subData, $remoteSub));
+            'today_forecast' => $sub->todayForecast($sub->hash_rate,
+                config('api.btc.fee') + $sub->allbtc_fee
+            ),
+            'last_month_amount' => $sub->lastMonthIncomes()->sum('daily_amount'),
+        ]);
     }
 
-    public static function transformWorker(array $remoteWorker): WorkerData
+    public function transformWorker(array $remoteWorker): WorkerData
     {
         return WorkerData::fromArray([
             'group_id' => $remoteWorker['gid'],

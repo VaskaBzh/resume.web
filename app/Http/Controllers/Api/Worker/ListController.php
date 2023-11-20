@@ -89,7 +89,6 @@ class ListController extends Controller
         Sub $sub,
         BtcComService $btcComService
     ): AnonymousResourceCollection {
-
         return WorkerResource::collection(
             resource: $sub->workers()
                 ->byStatus(Status::tryFromInsensitive($request->status)?->value)

@@ -110,8 +110,7 @@ class RegisterController extends Controller
         RegisterRequest $request,
         BtcComService $btcComService
     ): JsonResponse {
-        auth()->login($user = UserService::create(userData: UserData::fromRequest($request->all())
-        ));
+        auth()->login($user = UserService::create(userData: UserData::fromRequest($request->all())));
 
         event(new Registered(
             user: $user,

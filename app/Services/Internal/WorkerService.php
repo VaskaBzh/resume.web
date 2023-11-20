@@ -8,7 +8,6 @@ use App\Actions\Worker\Create;
 use App\Actions\Worker\Update;
 use App\Dto\WorkerData;
 use App\Models\Sub;
-use App\Models\Worker;
 use App\Services\External\ClientContract;
 use App\Services\External\TransformContract;
 use Illuminate\Support\Collection;
@@ -26,15 +25,16 @@ final readonly class WorkerService
      */
     public function sync(int $groupId, string $status): Collection
     {
-        $localSubs = Sub::pluck('group_id');
+        $remoteWorkers = $this->client
+            ->getWorkerList($groupId, $status);
 
-        $localSubWorkers = $this->client
-            ->getWorkerList($groupId, $status)
-            ->filter(static fn (array $data) => $localSubs->contains($data['gid']));
+        $localSubs = Sub::whereIn('group_id', $remoteWorkers->pluck('gid'))
+            ->pluck('group_id');
 
-        return $this->transform
-            ->transformCollection(collection: $localSubWorkers, itemType: Worker::class)
-            ->each(static fn (WorkerData $workerData) => Update::execute(workerData: $workerData));
+        return $remoteWorkers
+            ->filter(static fn (array $data) => in_array($data['gid'], $localSubs->toArray(), true))
+            ->map(fn (array $data) => $this->transform->transformWorker($data))
+            ->each(fn (WorkerData $workerData) => Update::execute(workerData: $workerData));
     }
 
     /**
@@ -44,30 +44,22 @@ final readonly class WorkerService
     {
         $newRemoteWorkers = $this->client->getWorkerList($groupId);
 
-        $transformed = $this->transform->transformCollection(
-            collection: $newRemoteWorkers,
-            itemType: Worker::class
-        );
+        $transformed = $newRemoteWorkers->map(fn (array $data) => $this->transform->transformWorker($data));
 
         $workerNames = $transformed
             ->map(static fn (WorkerData $data) => head(explode('.', $data->name)));
 
         $owners = Sub::whereNameIn($workerNames)->get();
 
-        $newLocalWorkerIDs = $transformed->map(function (WorkerData $data) use ($owners) {
+        $newLocalWorkers = $transformed->map(function (WorkerData $data) use ($owners) {
             if ($owner = $owners->firstWhere('sub', head(explode('.', $data->name)))) {
 
-                $newLocalWorker = Create::execute($owner, $data);
-
-                return [
-                    'workerId' => $newLocalWorker->worker_id,
-                    'groupId' => $newLocalWorker->group_id,
-                ];
+                return Create::execute($owner, $data);
             }
         })->filter();
 
-        $this->client->updateRemoteWorkers($newLocalWorkerIDs);
+        $this->client->updateRemoteWorkers($newLocalWorkers);
 
-        return $newLocalWorkerIDs;
+        return $newLocalWorkers;
     }
 }

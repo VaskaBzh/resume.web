@@ -6,7 +6,7 @@ namespace App\Dto\Sub;
 
 use Illuminate\Support\Arr;
 
-final readonly class SubData
+final readonly class SubUpsertData
 {
     /**
      * @param  int  $userId - id пользователя allbtc.com
@@ -24,7 +24,7 @@ final readonly class SubData
     ) {
     }
 
-    public static function fromRequest(array $requestData): SubData
+    public static function fromRequest(array $requestData): SubUpsertData
     {
         return new self(
             userId: $requestData['user_id'],

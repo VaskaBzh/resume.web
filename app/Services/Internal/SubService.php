@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Dto\Sub\TransformSubData;
+use App\Dto\Sub\SubViewData;
 use App\Models\MinerStat;
 use App\Models\Sub;
+use App\Models\User;
 use App\Services\External\ClientContract;
 use App\Services\External\TransformContract;
 use App\Utils\Helper;
@@ -15,31 +16,42 @@ final readonly class SubService
 {
     public function __construct(
         private ClientContract $client,
-        private TransformContract $dataTransformer,
+        private TransformContract $transform,
     ) {
     }
 
-    public function handleSub(Sub $sub): TransformSubData
+    public function handleSub(Sub $sub): SubViewData
     {
         $remoteSub = $this->client->getSub(groupId: $sub->group_id);
-        $workers = $sub->workers;
 
-        dd($remoteSub->get('shares_1m_pure'));
+        return $this->transform->transformSub($sub, $remoteSub->toArray());
+    }
 
-        $remoteSub->concat([
-            'today_forecast' => $this->todayForecast(
-                hashPerDay: $sub->hash_rate,
-                fee: config('api.btc.fee') + $sub->allbtc_fee
-            ),
-            'last_month_amount' => $sub->lastMonthIncomes()->sum('daily_amount'),
-            'hash_per_day' => $hashPerDay->value,
-            'hash_per_day_unit' => $hashPerDay->unit,
-        ]);
+    public function handleSubList(User $user)
+    {
+        $remoteSubs = $this->client->getSubList();
 
-        return $this->dataTransformer->transformSub(
-            sub: $sub,
-            data: $remoteSub->toArray()
-        );
+        $subs = $user->subs()
+            ->whereIn('group_id', $remoteSubs->pluck('gid'))
+            ->with(['workers'])
+            ->orderByDesc('group_id')
+            ->get();
+
+        $remoteSubs = $remoteSubs
+            ->whereIn('gid', $subs->pluck('group_id'))
+            ->sortByDesc('gid');
+
+        dd($subs, $remoteSubs);
+        ////            ->map(function (array $remoteSub) use ($subs) {
+        ////                $subs->each(function (Sub $sub) use ($remoteSub) {
+        ////                    return $this->transform->transformSub($sub, $remoteSub);
+        ////                });
+        ////            })
+        ////        ;
+        //
+        //        $subCollection = $subs->map(function (Sub $sub) {
+        //            return $this->transform->transformSub($sub)
+        //        });
     }
 
     /**
