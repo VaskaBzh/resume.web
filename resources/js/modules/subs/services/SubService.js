@@ -44,7 +44,7 @@ export class SubService extends DefaultSubsService {
     }
 
     async addSubaccount() {
-
+        this.waitSubAdd = true;
         try {
             this.addForm.validate({
                 name: "required|min:3|max:15|en",
@@ -62,7 +62,11 @@ export class SubService extends DefaultSubsService {
             this.addForm.setClearForm();
 
             store.dispatch("accounts_all", store.getters.user.id);
+
+            this.waitSubAdd = false;
         } catch (err) {
+            this.waitSubAdd = false;
+
             console.error(`Error with: ${err}`);
 
             if (err.response && err.response.status !== 401) {

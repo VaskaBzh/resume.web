@@ -3,24 +3,51 @@
         class="button"
         :class="{
             'button-icon': !$slots.text && $slots.svg,
+            'button-disabled': !!wait,
         }"
+        :type="{
+            button: !!wait,
+            submit: !wait,
+        }"
+        :disabled="!!wait"
     >
-        <span v-show="$slots.text" class="button_text">
+        <span v-show="$slots.text && !wait" class="button_text">
             <slot name="text" />
         </span>
-        <span v-show="$slots.svg" class="button_icon">
+        <span v-show="$slots.svg && !wait" class="button_icon">
             <slot name="svg" />
+        </span>
+        <span v-show="wait" class="button_icon button_icon-wait">
+            <main-icon class="icon-md" name="cabinet-wait" />
         </span>
     </button>
 </template>
 
 <script>
+import MainIcon from "@/modules/common/icons/MainIcon.vue";
+
 export default {
     name: "MainButton",
+    components: { MainIcon },
+    props: {
+        wait: {
+            type: Boolean,
+            default: false,
+        },
+    },
 };
 </script>
 
 <style scoped>
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .button {
     width: fit-content;
     border-radius: 12px;
@@ -99,6 +126,11 @@ export default {
     height: 24px;
     stroke: none;
     fill: var(--buttons-primary-text, var(--main-gohan, #fff));
+}
+
+.button_icon-wait {
+    animation: rotate 1s linear 0s infinite;
+    transform-origin: center;
 }
 
 .button-stroke .button_icon {

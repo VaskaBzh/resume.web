@@ -1,11 +1,14 @@
 import axios from "axios";
 import store from "@/store";
 import { router } from "@/router/index";
+// import { MethodsEnum } from "@/api/enums/MethodsEnum";
 
 export class ApiService {
     constructor() {
         this.instance = null;
         this.controller = null;
+        // this.waitEvent = null;
+        // this.passedEvent = null;
     }
 
     setInstance() {
@@ -113,6 +116,54 @@ export class ApiService {
 
         return this;
     }
+
+    // createWaitListener() {
+    //     this.waitEvent = new CustomEvent("waitRequest");
+    //
+    //     // {
+    //     //     detail: { [this.errorName]: this.errorList },
+    //     // }
+    //
+    //     document.dispatchEvent(this.waitEvent);
+    // }
+    //
+    // createPassedListener() {
+    //     this.passedEvent = new CustomEvent("passedRequest");
+    //
+    //     // {
+    //     //     detail: { [this.errorName]: this.errorList },
+    //     // }
+    //
+    //     document.dispatchEvent(this.passedEvent);
+    // }
+    //
+    // checkWaitMethods() {
+    //     this.instance.interceptors.request.use(
+    //         (response) => {
+    //             if (
+    //                 response.method === MethodsEnum["post"] ||
+    //                 response.method === MethodsEnum["put"]
+    //             ) {
+    //                 console.log("start");
+    //                 this.createWaitListener();
+    //             }
+    //
+    //             return response;
+    //         },
+    //         (error) => {
+    //             console.log(error);
+    //             // if (
+    //             //     error.method === MethodsEnum["post"] &&
+    //             //     error.method === MethodsEnum["put"]
+    //             // ) {
+    //
+    //             return Promise.reject(error);
+    //             // }
+    //         }
+    //     );
+    //
+    //     return this;
+    // }
 
     // initNotifications() {
     //

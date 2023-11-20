@@ -15,6 +15,8 @@ export class RegistrationService {
         this.route = route;
 
         this.validateService = new ValidateService();
+
+        this.waitRegistration = false;
     }
 
     setForm() {
@@ -27,40 +29,45 @@ export class RegistrationService {
 
     async account_create() {
         if (this.checkbox) {
-                let validEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
+            let validEmail =
+                /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
 
-                if (Object.entries(this.validate).length === 0 && validEmail.test(this.form.email)) {
-                    try {
+            if (
+                Object.entries(this.validate).length === 0 &&
+                validEmail.test(this.form.email)
+            ) {
+                this.waitRegistration = true;
 
-                        const response = await ProfileApi.post(
-                            "/register",
-                            this.form
-                        );
+                try {
+                    const response = await ProfileApi.post(
+                        "/register",
+                        this.form
+                    );
 
-                        const user = response.data.user;
+                    const user = response.data.user;
 
+                    this.router.push({
+                        name: "confirm",
+                        query: {
+                            email: user.email,
+                            action: "registration",
+                        },
+                    });
 
-                        this.router.push({
-                            name: "confirm",
-                            query: {
-                                email: user.email,
-                                action: "registration",
-                            },
-                        });
-                    } catch (err) {
-                        console.error("Error with: " + err);
+                    this.waitRegistration = false;
+                } catch (err) {
+                    this.waitRegistration = false;
 
-                        store.dispatch("setFullErrors", err.response.data.errors);
-                    }
+                    console.error("Error with: " + err);
 
+                    store.dispatch("setFullErrors", err.response.data.errors);
                 }
-
+            }
         } else {
             this.checkboxState = true;
             setTimeout(() => (this.checkboxState = false), 1500);
         }
     }
-
 
     validateProcess(event) {
         this.validate = this.validateService.validateProcess(
@@ -69,5 +76,4 @@ export class RegistrationService {
             this.validate
         );
     }
-
 }

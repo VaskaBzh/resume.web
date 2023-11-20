@@ -19,6 +19,7 @@
                 <main-button
                     class="button-blue button-full button-xl sub_button"
                     type="submit"
+                    :wait="wait"
                 >
                     <template #text>{{ $t("popup.add.button") }}</template>
                 </main-button>
@@ -78,7 +79,9 @@ export default {
     },
     methods: {
         addSubaccount() {
-            this.$emit("add_subaccount", this.formModel);
+            if (!this.wait) {
+                this.$emit("add_subaccount", this.formModel);
+            }
         },
     },
     i18n: {
