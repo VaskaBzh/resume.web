@@ -15,7 +15,6 @@ class DataTransformer implements TransformContract
 {
     public function transformSub(Sub $sub, array $remoteSub): SubViewData
     {
-        $sub->load('workers');
         $hashPerMin = HashRateConverter::fromPure((int) $remoteSub['shares_1m_pure']);
         $hashPerDay = HashRateConverter::fromPure($sub->hash_rate);
 
