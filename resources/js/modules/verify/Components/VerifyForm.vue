@@ -90,7 +90,7 @@ export default {
             }
         },
         backHandler(event) {
-            if (event.pointerType === "touch") {
+            if (event.pointerType === "touch" || event.pointerType === "mouse") {
                 this.$emit("back");
             }
         },
