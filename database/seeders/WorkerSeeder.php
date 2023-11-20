@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
+use App\Actions\Worker\Update;
 use App\Dto\WorkerData;
-use App\Models\Worker;
+use App\Models\WorkerHashrate;
 use App\Services\External\BtcCom\Client;
 use App\Services\External\TransformContract;
 use Illuminate\Database\Seeder;
@@ -14,22 +17,16 @@ class WorkerSeeder extends Seeder
     {
         $remoteWorkers = $client->getWorkerList(6001912);
 
-        $workers = $transformer->transformCollection($remoteWorkers, Worker::class);
-        $workers->each(static function (WorkerData $workerData) {
-            Worker::updateOrCreate(['worker_id' => $workerData->workerId], [
-                'group_id' => $workerData->groupId,
-                'name' => $workerData->name,
+        $remoteWorkers->map(function (array $remoteWorker) use ($transformer) {
+            return $transformer->transformWorker($remoteWorker);
+        })->each(static function (WorkerData $workerData) {
+            Update::execute($workerData);
+
+            WorkerHashrate::create([
                 'worker_id' => $workerData->workerId,
-                'hash_per_day' => $workerData->hashPerDay,
-                'status' => $workerData->status,
-                'unit' => $workerData->unitPerDay,
-                'pool_data' => $workerData->poolData,
-            ])
-                ->workerHashrates()
-                ->create([
-                    'hash_per_min' => $workerData->hashPerMin,
-                    'unit' => $workerData->unitPerMin,
-                ]);
+                'hash_per_min' => $workerData->hashPerMin,
+                'unit' => $workerData->unitPerMin,
+            ]);
         });
     }
 }

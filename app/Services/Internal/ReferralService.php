@@ -7,12 +7,25 @@ namespace App\Services\Internal;
 use App\Models\Income;
 use App\Models\Sub;
 use App\Models\User;
+use App\Utils\HashRateConverter;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 class ReferralService
 {
     public static function getReferrerStatistic(User $referrer): array
     {
+        $referrer->load('subs');
+
+        $result = User::withCount('referrals')
+            ->with(['subs' => function (HasMany $query) {
+                $query->withSum(['workers as total_referrals_hash_rate'], 'hash_per_day')
+                    ->where('');
+            }])->find($referrer->id);
+
+        dd($result);
+
+        dd($result);
         $referrer->load([
             'subs',
             'referrals',
@@ -20,6 +33,11 @@ class ReferralService
         ]);
 
         $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
+
+        $totalHashRate = HashRateConverter::fromPure($activeReferralSubs
+            ->map
+            ->hash_rate
+            ->sum());
 
         return [
             'group_id' => $referrer->active_sub,
@@ -31,10 +49,8 @@ class ReferralService
             'referrals_total_amount' => Income::whereIn('group_id', $referrer->subs->pluck('group_id'))
                 ->where('type', 'referral')
                 ->sum('daily_amount'),
-            'total_referrals_hash_rate' => $activeReferralSubs
-                ->map
-                ->hash_rate
-                ->sum(),
+            'total_referrals_hash_rate' => $totalHashRate->value,
+            'hash_rate_unit' => $totalHashRate->unit,
         ];
     }
 

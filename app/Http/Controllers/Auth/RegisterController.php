@@ -7,7 +7,6 @@ use App\Events\Registered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
-use App\Services\External\BtcComService;
 use App\Services\Internal\SubService;
 use App\Services\Internal\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;

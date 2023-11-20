@@ -59,31 +59,31 @@ class SubServiceTest extends TestCase
             ]);
     }
 
-//    /**
-//     * @test
-//     *
-//     * @testdox  it create remote and local sub
-//     *
-//     * @dataProvider subCreateDataProvider
-//     */
-//    public function createSub($successResponse)
-//    {
-//        $this->makeFakeRequestToRemotePool($successResponse);
-//
-//        $this->postJson(route('v1.sub.create', $this->user), [
-//            'name' => 'TestName',
-//        ])
-//            ->assertCreated()
-//            ->assertExactJson(['message' => 'Subaccount successful created']);
-//
-//        $this->assertDatabaseHas('subs', [
-//            'sub' => 'TestName',
-//            'group_id' => 666666,
-//            'allbtc_fee' => 3.5,
-//            'pending_amount' => 0,
-//            'total_amount' => 0,
-//        ]);
-//    }
+    /**
+     * @test
+     *
+     * @testdox  it create remote and local sub
+     *
+     * @dataProvider subCreateDataProvider
+     */
+    public function createSub($successResponse)
+    {
+        $this->makeFakeRequestToRemotePool($successResponse);
+
+        $this->postJson(route('v1.sub.create', $this->user), [
+            'name' => 'TestName',
+        ])
+            ->assertCreated()
+            ->assertExactJson(['message' => 'Subaccount successful created']);
+
+        $this->assertDatabaseHas('subs', [
+            'sub' => 'TestName',
+            'group_id' => 666666,
+            'allbtc_fee' => 3.5,
+            'pending_amount' => 0,
+            'total_amount' => 0,
+        ]);
+    }
 
     /**
      * @test
@@ -94,7 +94,7 @@ class SubServiceTest extends TestCase
     {
         $this->makeFakeRequestToRemotePool(['exist']);
 
-       // $this->expectException(BusinessException::class);
+        // $this->expectException(BusinessException::class);
         //$this->expectExceptionMessage(__('actions.sub_account_already_exist'));
 
         $this->postJson(route('v1.sub.create', $this->user), [

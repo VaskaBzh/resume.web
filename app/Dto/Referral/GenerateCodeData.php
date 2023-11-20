@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Dto;
+namespace App\Dto\Referral;
 
 use App\Models\User;
 
-final readonly class ReferralData
+final readonly class GenerateCodeData
 {
     public function __construct(
         public User $user,
@@ -14,7 +14,7 @@ final readonly class ReferralData
     ) {
     }
 
-    public static function fromRequest(array $requestData): ReferralData
+    public static function fromRequest(array $requestData): GenerateCodeData
     {
         return new self(
             user: $requestData['user'],
