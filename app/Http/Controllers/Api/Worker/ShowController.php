@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api\Worker;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WorkerResource;
 use App\Models\Worker;
-use App\Services\External\BtcComService;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Services\External\BtcComService;
+use App\Services\Internal\SubService;
 use App\Services\Internal\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
@@ -108,8 +109,9 @@ class RegisterController extends Controller
     ]
     public function register(
         RegisterRequest $request,
-        BtcComService $btcComService
+        SubService $subService,
     ): JsonResponse {
+
         auth()->login($user = UserService::create(userData: UserData::fromRequest($request->all())));
 
         event(new Registered(

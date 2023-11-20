@@ -6,7 +6,6 @@ namespace App\Models;
 
 use App\Builders\SubBuilder;
 use App\Enums\Worker\Status;
-use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

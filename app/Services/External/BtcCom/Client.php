@@ -94,7 +94,8 @@ class Client implements ClientContract
                 'group_name' => $subName,
             ]);
 
-        if ($btcComSub->get('exist') === true) {
+        if (in_array('exist', $btcComSub->toArray(), true)) {
+
             throw new BusinessException(
                 __('actions.sub_account_already_exist'),
                 Response::HTTP_BAD_REQUEST

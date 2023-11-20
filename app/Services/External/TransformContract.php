@@ -11,5 +11,6 @@ use App\Models\Sub;
 interface TransformContract
 {
     public function transformSub(Sub $sub, array $remoteSub): SubViewData;
+
     public function transformWorker(array $remoteWorker): WorkerData;
 }

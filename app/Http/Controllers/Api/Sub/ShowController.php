@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api\Sub;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Sub\SubResource;
 use App\Models\Sub;
-use App\Services\External\BtcComService;
 use App\Services\Internal\SubService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

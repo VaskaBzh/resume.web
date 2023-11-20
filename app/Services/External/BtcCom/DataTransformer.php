@@ -15,8 +15,10 @@ class DataTransformer implements TransformContract
 {
     public function transformSub(Sub $sub, array $remoteSub): SubViewData
     {
+        $hashPerDayPure = $sub->hash_rate;
+
         $hashPerMin = HashRateConverter::fromPure((int) $remoteSub['shares_1m_pure']);
-        $hashPerDay = HashRateConverter::fromPure($sub->hash_rate);
+        $hashPerDay = HashRateConverter::fromPure($hashPerDayPure);
 
         return SubViewData::fromArray([
             'sub' => $sub->sub,
@@ -25,17 +27,20 @@ class DataTransformer implements TransformContract
             'active_workers_count' => $sub->workers->where('status', 'ACTIVE')->count(),
             'inactive_workers_count' => $sub->workers->where('status', 'INACTIVE')->count(),
             'dead_workers_count' => $sub->workers->where('status', 'DEAD')->count(),
-            'hash_per_min' => $hashPerMin->value,
+            'hash_per_min_pure' => (int) $remoteSub['shares_1m_pure'],
+            'hash_per_min' => (float) $hashPerMin->value,
             'hash_per_min_unit' => $hashPerMin->unit,
-            'hash_per_day' => $hashPerDay->value,
+            'hash_per_day_pure' => (int) $hashPerDayPure,
+            'hash_per_day' => (float) $hashPerDay->value,
             'hash_per_day_unit' => $hashPerDay->unit,
-            'total_payout' => $sub->total_payout,
-            'total_amount' => $sub->total_amount,
-            'yesterday_amount' => $sub->yesterday_amount,
-            'today_forecast' => $sub->todayForecast($sub->hash_rate,
+            'pending_amount' => (float) $sub->pending_amount,
+            'total_payout' => (float) $sub->total_payout,
+            'total_amount' => (float) $sub->total_amount,
+            'yesterday_amount' => (float) $sub->yesterday_amount,
+            'today_forecast' => (float) $sub->todayForecast($sub->hash_rate,
                 config('api.btc.fee') + $sub->allbtc_fee
             ),
-            'last_month_amount' => $sub->lastMonthIncomes()->sum('daily_amount'),
+            'last_month_amount' => (float) $sub->lastMonthIncomes()->sum('daily_amount'),
         ]);
     }
 

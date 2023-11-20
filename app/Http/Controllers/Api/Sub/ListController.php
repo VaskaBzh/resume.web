@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Sub\GeneralSubsDataResource;
 use App\Http\Resources\Sub\SubResource;
 use App\Models\User;
-use App\Services\External\BtcComService;
 use App\Services\Internal\SubService;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
@@ -80,8 +79,8 @@ class ListController extends Controller
         $subCollection = $subService->getSubList(user: $user);
 
         return new JsonResponse([
-            'list' => SubResource::collection($subCollection),
-            'overall' => new GeneralSubsDataResource($subs),
+            'list' => SubResource::collection($subCollection->get('subs')),
+            'overall' => new GeneralSubsDataResource($subCollection->get('overall')),
         ]);
     }
 }

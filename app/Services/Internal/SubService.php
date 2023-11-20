@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
+use App\Actions\Sub\Create;
+use App\Dto\Sub\SubsOverallData;
+use App\Dto\Sub\SubUpsertData;
 use App\Dto\Sub\SubViewData;
 use App\Models\Sub;
 use App\Models\User;
@@ -14,10 +17,9 @@ use Illuminate\Support\Collection;
 final readonly class SubService
 {
     public function __construct(
-        private ClientContract    $client,
+        private ClientContract $client,
         private TransformContract $transform,
-    )
-    {
+    ) {
     }
 
     public function getSub(Sub $sub): SubViewData
@@ -35,18 +37,47 @@ final readonly class SubService
         $localUserSubs = $user->subs()
             ->whereIn('group_id', $remoteSubs->pluck('gid'))
             ->with(['workers'])
-            ->orderByDesc('group_id')
             ->get();
 
-        return [
-            'transformed' => $remoteSubs
-                ->whereIn('gid', $localUserSubs->pluck('group_id'))
-                ->sortByDesc('gid')
-                ->map(function (array $remoteSub) use ($localUserSubs) {
-                    foreach ($localUserSubs as $sub) {
-                        return $this->transform->transformSub($sub, $remoteSub);
-                    }
-                })->filter(),
-            'overral' =>
+        $transformed = $remoteSubs
+            ->whereIn('gid', $localUserSubs->pluck('group_id'))
+            ->map(function (array $remoteSub) use ($localUserSubs) {
+                $targetSub = $localUserSubs
+                    ->where('group_id', $remoteSub['gid'])
+                    ->first();
+
+                return $this->transform->transformSub(
+                    sub: $targetSub,
+                    remoteSub: $remoteSub
+                );
+
+            })->filter();
+
+        return collect([
+            'subs' => $transformed,
+            'overall' => SubsOverallData::fromCollection(
+                subs: $transformed,
+                workers: $localUserSubs->pluck('workers')
+            ),
+        ]);
+    }
+
+    /**
+     * Create remote sub-account
+     * Create local sub-account based on remote sub-account group_id
+     */
+    public function create(
+        User $user,
+        string $subName,
+    ): void {
+        $remoteSub = $this->client->createRemoteSub(subName: $subName);
+
+        Create::execute(
+            subData: SubUpsertData::fromRequest([
+                'user_id' => $user->id,
+                'group_id' => $remoteSub['gid'],
+                'sub_name' => $subName,
+            ])
+        );
     }
 }
