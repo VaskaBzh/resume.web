@@ -87,7 +87,6 @@ class ListController extends Controller
     public function __invoke(
         Request $request,
         Sub $sub,
-        BtcComService $btcComService
     ): AnonymousResourceCollection {
         return WorkerResource::collection(
             resource: $sub->workers()

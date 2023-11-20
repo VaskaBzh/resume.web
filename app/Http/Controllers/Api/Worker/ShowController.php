@@ -57,7 +57,7 @@ use Symfony\Component\HttpFoundation\Response;
 ]
 class ShowController extends Controller
 {
-    public function __invoke(Worker $worker, BtcComService $btcComService): WorkerResource
+    public function __invoke(Worker $worker): WorkerResource
     {
         return new WorkerResource($worker);
     }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Sub\SubResource;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
+use App\Services\Internal\SubService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
@@ -61,13 +62,13 @@ class ShowController extends Controller
     public function __invoke(
         Request $request,
         Sub $sub,
-        BtcComService $btcComService,
+        SubService $subService,
     ): JsonResource {
         if (! $request->attributes->get('access_key_valid')) {
 
             $this->authorize('viewOrChange', $sub);
         }
 
-        return new SubResource($btcComService->transformSub($sub));
+        return new SubResource($subService->getSub($sub));
     }
 }
