@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        <landing-title tag="h2" class="wrap_title" ref="title">
+        <landing-title tag="h2" class="wrap_title wrap_title__security"  ref="title">
             <slot name="title"></slot>
         </landing-title>
         <div class="wrap__content">
@@ -38,20 +38,59 @@ export default {
     align-items: center;
     gap: 50px;
     width: 100%;
-    max-width: clamp(860px, 10vw, 100%);
-    height: clamp(680px, 10vw, 444px);
+    max-width: clamp(328px, 55vw, 860px);
+    height: clamp(370px, 40vw, 680px);
+    flex-flow: row nowrap;
+    padding-right: 50px;
     margin-bottom: clamp(20px, 10vw, 30px);
     position: relative;
 }
 
-@media (max-width: 1500.87px) {
-    .wrap {
-        flex-direction: column;
+
+.wrap_title__security {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 50%;
+    max-width: 584px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    overflow: visible;
+    font-size: clamp(22px, 2.8vw, 65px);
+    transform: translateX(-50%);
+}
+
+@media (min-width: 1500.98px) {
+    .wrap_title__security {
+
     }
 }
 
+@media (max-width: 1500.98px) {
+    .wrap_title__security {
+
+        max-width: 625px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .wrap_title__security {
+        width: 35%;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768.98px) {
+
+    .wrap_title__security {
+        transform: translate(0%,-50%);
+        max-width: 335px;
+    }
+
+}
+
 .wrap__content {
-    position: absolute;
     overflow: hidden;
     left: 50%;
     max-width: 380px;
@@ -60,7 +99,7 @@ export default {
 @media (max-width: 1500.87px) {
     .wrap__content {
         top: clamp(50%, 40vw, 60%);
-        transform: translate(-50%, -50%);
+
     }
 }
 
@@ -68,7 +107,7 @@ export default {
     .wrap__content {
         left: 50px;
         top: 50%;
-        transform: translateY(-50%);
+
     }
 
     .wrap {
@@ -111,20 +150,20 @@ export default {
 
 @media (min-width: 1500.98px) {
     .wrap_title {
-        transform: translateX(-50%);
+
     }
 }
 
 @media (max-width: 1500.98px) {
     .wrap_title {
-        transform: translateY(-50%);
+
         max-width: 625px;
     }
 }
 
 @media (max-width: 991.98px) {
     .wrap_title {
-        transform: translateY(-50%);
+
         max-width: 500px;
     }
 }
@@ -135,11 +174,13 @@ export default {
     }
 
     .wrap {
+        flex-flow: column nowrap;
         width: 100vw;
-        padding: 0 clamp(16px, 10vw, 32px);
+        padding: 0 clamp(16px, 10vw, 32px) 30px;
     }
 
     .wrap_title {
+        width: 70%;
         max-width: 335px;
     }
 
@@ -151,9 +192,5 @@ export default {
         margin-top: 0;
     }
 
-    .wrap {
-        height: auto;
-        padding: 0 clamp(16px, 10vw, 32px) 30px;
-    }
 }
 </style>

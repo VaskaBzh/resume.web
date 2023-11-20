@@ -163,7 +163,7 @@ export default {
     &__content {
         display: flex;
         flex-direction: column;
-        max-width: 536px;
+        max-width: auto;
         width: 100%;
         gap: 16px;
     }
