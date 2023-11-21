@@ -28,7 +28,6 @@ class IncomeServiceTest extends TestCase
             ->get();
     }
 
-
     /**
      * @test
      *
