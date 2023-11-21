@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\External;
+namespace App\Services\External\Contracts;
 
 use App\Dto\Sub\SubViewData;
 use App\Dto\WorkerData;

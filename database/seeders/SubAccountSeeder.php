@@ -29,7 +29,7 @@ class SubAccountSeeder extends Seeder
             'sub' => 'Referral',
         ]);
 
-        User::find(1)->update([
+        User::whereEmail('forest@gmail.com')->update([
             'active_sub' => 6001912,
             'referral_code' => ReferralService::generateReferralCode(User::find(1)),
         ]);
