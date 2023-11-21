@@ -7,13 +7,14 @@
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="overallCurrentHashRate.hashRate ?? 0"
-                    :unit="`${overallCurrentHashRate.unit ?? 'T'}H/s`"
+                    :value="overall.total_hash_per_min ?? 0"
+                    :unit="`${overall.per_min_unit ?? 'T'}H/s`"
                     hint_position="right"
                     :hint="$t('info_blocks.hash.hints[0]')"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
+                        :
                     </template>
                 </cabinet-card>
                 <cabinet-card
