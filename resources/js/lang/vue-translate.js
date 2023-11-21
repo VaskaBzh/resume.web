@@ -1778,7 +1778,7 @@ const messages = {
             referral: "Реферальный кабинет",
             settings: "Аккаунт",
             faq: "FAQ",
-            support: "Поддержка",
+            support: "Служба поддержки",
         },
         days: "Дней",
         hours: "Часа",
