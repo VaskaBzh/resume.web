@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
+use App\Actions\Hashes\DeleteOldHashrates;
 use App\Actions\Sub\Create;
 use App\Dto\Sub\SubsOverallData;
 use App\Dto\Sub\SubUpsertData;
 use App\Dto\Sub\SubViewData;
+use App\Models\Hash;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\Contracts\ClientContract;
@@ -22,6 +24,14 @@ final readonly class SubService
     ) {
     }
 
+    private static function withLocal(Collection $userIds, Collection $groupIds): Collection
+    {
+        return Sub::whereIn('user_id', $userIds)
+            ->whereIn('group_id', $groupIds)
+            ->with('workers')
+            ->get();
+    }
+
     public function getSub(Sub $sub): SubViewData
     {
         $sub->load('workers');
@@ -33,25 +43,8 @@ final readonly class SubService
     public function getSubList(User $user): Collection
     {
         $remoteSubs = $this->client->getSubList();
-
-        $localUserSubs = $user->subs()
-            ->whereIn('group_id', $remoteSubs->pluck('gid'))
-            ->with(['workers'])
-            ->get();
-
-        $transformed = $remoteSubs
-            ->whereIn('gid', $localUserSubs->pluck('group_id'))
-            ->map(function (array $remoteSub) use ($localUserSubs) {
-                $targetSub = $localUserSubs
-                    ->where('group_id', $remoteSub['gid'])
-                    ->first();
-
-                return $this->transform->transformSub(
-                    sub: $targetSub,
-                    remoteSub: $remoteSub
-                );
-
-            })->filter();
+        $localUserSubs = self::withLocal($user->pluck('id'), $remoteSubs->pluck('gid'));
+        $transformed = $this->transformCollection($localUserSubs, $remoteSubs);
 
         return collect([
             'subs' => $transformed,
@@ -60,6 +53,22 @@ final readonly class SubService
                 workers: $localUserSubs->pluck('workers')
             ),
         ]);
+    }
+
+    private function transformCollection(Collection $localSubs, Collection $remoteSubs): Collection
+    {
+        return $remoteSubs
+            ->whereIn('gid', $localSubs->pluck('group_id'))
+            ->map(function (array $remoteSub) use ($localSubs) {
+                $targetSub = $localSubs
+                    ->where('group_id', $remoteSub['gid'])
+                    ->first();
+
+                return $this->transform->transformSub(
+                    sub: $targetSub,
+                    remoteSub: $remoteSub
+                );
+            })->filter();
     }
 
     /**
@@ -79,5 +88,32 @@ final readonly class SubService
                 'sub_name' => $subName,
             ])
         );
+    }
+
+    public function createHash(): void
+    {
+        $remoteSubList = $this->client->getSubList();
+
+        $localSubList = self::withLocal(User::pluck('id'), $remoteSubList->pluck('gid'));
+
+        $transformed = $this->transformCollection($localSubList, $remoteSubList);
+
+        $transformed->each(function (SubViewData $subData) {
+            if ($subData->hashPerMinPure > 0) {
+
+                // TODO: CreateNewAndDeleteOld action
+                DeleteOldHashrates::execute(
+                    groupId: $subData->groupId,
+                    date: now()->subMonths(2)->toDateTimeString()
+                );
+
+                Hash::create([
+                    'group_id' => $subData->groupId,
+                    'hash' => $subData->hashPerMinPure,
+                    'unit' => $subData->hashPerMinUnit,
+                    'worker_count' => $subData->activeWorkersCount,
+                ]);
+            }
+        });
     }
 }

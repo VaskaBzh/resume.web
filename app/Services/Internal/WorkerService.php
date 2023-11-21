@@ -6,10 +6,13 @@ namespace App\Services\Internal;
 
 use App\Actions\Worker\Create;
 use App\Actions\Worker\Update;
+use App\Actions\WorkerHashRate\CreateNewAndDeleteOld;
 use App\Dto\WorkerData;
 use App\Models\Sub;
+use App\Models\Worker;
 use App\Services\External\Contracts\ClientContract;
 use App\Services\External\Contracts\TransformContract;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 final readonly class WorkerService
@@ -61,5 +64,24 @@ final readonly class WorkerService
         $this->client->updateRemoteWorkers($newLocalWorkers);
 
         return $newLocalWorkers;
+    }
+
+    public function createHashes(int $groupId): void
+    {
+        $remoteWorkers = $this->client->getWorkerList($groupId);
+        $localWorkers = Worker::select('worker_id')
+            ->whereIn('worker_id', $remoteWorkers->pluck('worker_id'))
+            ->get();
+
+        $remoteWorkers->each(function (array $remoteWorker) use ($localWorkers) {
+            if ($localWorker = $localWorkers->where('worker_id', $remoteWorker['worker_id'])->first()) {
+                if (Arr::get($remoteWorker, 'shares_1m_pure', 0) > 0) {
+                    CreateNewAndDeleteOld::execute($localWorker, [
+                        'hash_rate_per_min' => $remoteWorker['shares_1m_pure'],
+                        'unit' => $remoteWorker['shares_unit'],
+                    ]);
+                }
+            }
+        });
     }
 }
