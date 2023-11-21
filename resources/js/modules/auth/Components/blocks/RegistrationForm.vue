@@ -1,5 +1,9 @@
 <template>
-    <form class="form-auth" @submit.prevent="service.account_create" autocomplete="off">
+    <form
+        class="form-auth"
+        autocomplete="off"
+        @submit.prevent="service.account_create"
+    >
         <main-title class="form-auth_title"
             >{{ $t("auth.reg.title") }}
         </main-title>
@@ -86,9 +90,17 @@
                 </a>
             </span>
         </label>
-        <blue-button class="form-auth_button auth" type="submit"
-            ><a class="all-link">{{ $t("auth.reg.button") }}</a></blue-button
-        >
+        <div class="form-auth__block">
+            <main-button
+                class="form-auth_button button-xl"
+                :wait="service.waitRegistration"
+                type="submit"
+            >
+                <template #text>
+                    {{ $t("auth.reg.button") }}
+                </template>
+            </main-button>
+        </div>
         <p class="text text-light form-auth_text">
             {{ $t("auth.reg.link[0]") }}
             <router-link :to="{ name: 'login' }" class="form-auth_link"
@@ -105,7 +117,7 @@ import MainPassword from "@/modules/common/Components/inputs/MainPassword.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 
 import { RegistrationService } from "@/modules/auth/services/RegistrationService";
 import { mapGetters } from "vuex";
@@ -118,7 +130,7 @@ export default {
         MainValidate,
         AuthErrors,
         MainTitle,
-        BlueButton,
+        MainButton,
     },
     computed: {
         ...mapGetters(["errors", "errorsExpired"]),
@@ -132,21 +144,21 @@ export default {
     mounted() {
         this.service.setForm();
     },
-
-
-
-
 };
 </script>
 
 <style scoped lang="scss">
-
 .form-auth {
     gap: 0;
     @media (max-width: 991.98px) {
         padding: 0 clamp(16px, 5vw, 60px);
     }
 
+    &__block {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
 
     &__content {
         display: flex;
@@ -170,41 +182,11 @@ export default {
     }
 
     &_button {
-        padding: 0;
-        margin: 0;
-        background: rgb(63, 123, 221);
-        color: #fff;
-        text-transform: lowercase;
-        border: none;
-        width: fit-content;
-        display: inline-flex;
-        border-radius: 16px;
-        @media (max-width: $mobileSmall) {
-            min-width: 100%;
-        }
-
-        & .all-link {
-            padding: 0;
-            font-size: 20px;
-            font-weight: 500;
-            line-height: 135%;
-            min-width: 400px;
-            @media (max-width: $mobileSmall) {
-                min-width: 100%;
-            }
-        }
+        min-width: 300px;
 
         @media (max-width: $tablet) {
-            width: 100%;
-            & .all-link {
-                padding: 18px 0;
-            }
-        }
-        @media (max-width: $mobile) {
-            & .all-link {
-                font-size: 16px;
-                padding: 14px 0;
-            }
+            min-width: 100%;
+            margin-bottom: 16px;
         }
     }
 

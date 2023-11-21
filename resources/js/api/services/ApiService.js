@@ -1,11 +1,14 @@
 import axios from "axios";
 import store from "@/store";
 import { router } from "@/router/index";
+// import { MethodsEnum } from "@/api/enums/MethodsEnum";
 
 export class ApiService {
     constructor() {
         this.instance = null;
         this.controller = null;
+        // this.waitEvent = null;
+        // this.passedEvent = null;
     }
 
     setInstance() {
@@ -21,9 +24,7 @@ export class ApiService {
     }
 
     setHeaders() {
-        this.setTokenHeaders()
-            .setLocaleHeaders()
-            .setCsrfHeaders();
+        this.setTokenHeaders().setLocaleHeaders().setCsrfHeaders();
 
         return this;
     }
@@ -81,8 +82,11 @@ export class ApiService {
                 return response;
             },
             async (error) => {
-                if (error.response && error.response.status === unAuthorizedError) {
-                    await this.homeRedirect()
+                if (
+                    error.response &&
+                    error.response.status === unAuthorizedError
+                ) {
+                    await this.homeRedirect();
 
                     this.dropUser();
                 }
@@ -112,6 +116,58 @@ export class ApiService {
 
         return this;
     }
+
+    // createWaitListener(newWaitState) {
+    //     this.waitState = newWaitState;
+    //
+    //     this.waitEvent = new CustomEvent("waitRequest", {
+    //             detail: this.waitState,
+    //         }
+    //     );
+    //
+    //     document.dispatchEvent(this.waitEvent);
+    // }
+    //
+    // checkWaitMethods() {
+    //     this.instance.interceptors.response.use(
+    //         (response) => {
+    //             if (
+    //                 response.config.method === MethodsEnum["post"] ||
+    //                 response.config.method === MethodsEnum["put"]
+    //             ) {
+    //                 this.createWaitListener(false);
+    //             }
+    //
+    //             return response;
+    //         },
+    //         async (error) => {
+    //             if (
+    //                 error.response.config.method === MethodsEnum["post"] ||
+    //                 error.response.config.method === MethodsEnum["put"]
+    //             ) {
+    //                 this.createWaitListener(false);
+    //             }
+    //
+    //             return Promise.reject(error);
+    //         }
+    //     );
+    //     this.instance.interceptors.request.use(
+    //         (config) => {
+    //             if (
+    //                 config.method === MethodsEnum["post"] ||
+    //                 config.method === MethodsEnum["put"]
+    //             ) {
+    //                 this.createWaitListener(true);
+    //             }
+    //
+    //             if (!this.waitState) {
+    //                 return config;
+    //             }
+    //         },
+    //     );
+    //
+    //     return this;
+    // }
 
     // initNotifications() {
     //

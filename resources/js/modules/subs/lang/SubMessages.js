@@ -30,6 +30,16 @@ export const SubMessages = {
                 },
             },
         },
+        popup: {
+            add: {
+                title: "Add subaccount",
+                text: "Subaccount name cannot be changed in the future",
+                placeholder: {
+                    name: "Subaccount name",
+                },
+                button: "Add",
+            },
+        },
     },
     ru: {
         title: "Субаккаунты",
@@ -60,6 +70,16 @@ export const SubMessages = {
                     inactive:
                         "Сумма неактивных воркеров со всех ваших субаккаунтов.",
                 },
+            },
+        },
+        popup: {
+            add: {
+                title: "Добавить субаккаунт",
+                text: "В дальнейшем имя субаккаунта невозможно изменить",
+                placeholder: {
+                    name: "Имя субаккаунта",
+                },
+                button: "Добавить",
             },
         },
     },

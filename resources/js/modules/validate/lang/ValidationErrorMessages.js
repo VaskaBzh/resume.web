@@ -7,12 +7,14 @@ export const ValidationErrorMessages = {
         // limit_length_and_letters_and_numbers: "Length of {min_length}-{max_length} characters consisting of A-Z, a-z, 0-9",
         string: "{name} must consist of A-Z, a-z",
         upper: "{name} must consist of A-Z",
-        lower:"{name} must consist of a-z",
+        lower: "{name} must consist of a-z",
         number: "{name} must consist of 0-9",
         string_number: "{name} must consist of A-Z, a-z, 0-9",
         upper_number: "{name} must consist of A-Z, 0-9",
         lower_number: "{name} must consist of a-z, 0-9",
         required: "The field should not be empty",
+        ru: "Only characters other than Cyrillic are not allowed",
+        en: "Only characters other than Latin characters are not allowed",
     },
     ru: {
         email: "Некорректный email",
@@ -26,8 +28,10 @@ export const ValidationErrorMessages = {
         number: "{name} должны состоять из 0-9",
         string_number: "{name} должны состоять из A-Z, a-z, 0-9",
         upper_number: "{name} должны состоять из A-Z, 0-9",
-        lower_number: '{name} должны состоять из a-z, 0-9',
+        lower_number: "{name} должны состоять из a-z, 0-9",
         match: "{inputsName} не совпадают",
         required: "Поле не должен быть пустым",
+        ru: "Не допустимы только символы, кроме кирилицы",
+        en: "Не допустимы только символы, кроме латиницы",
     },
-}
+};

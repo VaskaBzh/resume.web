@@ -1,7 +1,6 @@
 <template>
     <main-popup
         id="addWatcher"
-        :wait="wait"
         :opened="opened"
         :closed="closed"
         :instruction-config="instructionConfig"
@@ -12,7 +11,7 @@
         "
         @closed="$emit('closed')"
     >
-        <form @submit.prevent="setFormAllowedRoutes" class="watchers__form">
+        <form class="watchers__form" @submit.prevent="setFormAllowedRoutes">
             <div class="watchers__column">
                 <div class="watchers-add">
                     <main-title class="watcher_title"
@@ -51,7 +50,7 @@
             <main-button
                 type="submit"
                 class="button-blue button-full watchers_button"
-
+                :wait="wait"
             >
                 <template #text>
                     {{ $t("add_watcher_card.buttons") }}
@@ -198,16 +197,18 @@ export default {
             this.form.allowedRoutes = [];
         },
         setFormAllowedRoutes() {
-            this.dropFormAllowedRoutes();
-            this.allowedRoutes.forEach((route) => {
-                if (route.checked)
-                    this.form.allowedRoutes = [
-                        ...this.form.allowedRoutes,
-                        ...route.routes,
-                    ];
-            });
+            if (!this.wait) {
+                this.dropFormAllowedRoutes();
+                this.allowedRoutes.forEach((route) => {
+                    if (route.checked)
+                        this.form.allowedRoutes = [
+                            ...this.form.allowedRoutes,
+                            ...route.routes,
+                        ];
+                });
 
-            this.$emit("createWatcher", this.form);
+                this.$emit("createWatcher", this.form);
+            }
         },
         setAllowedRoutes(checkState, index) {
             this.allowedRoutes[index].checked = checkState;
