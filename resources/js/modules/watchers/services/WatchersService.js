@@ -14,6 +14,8 @@ export class WatchersService extends MetaTableService {
         this.popupCardClosed = false;
         this.blocks = [];
         this.card = null;
+
+        this.waitAddWacher = false;
     }
 
     useTranslater() {
@@ -125,6 +127,8 @@ export class WatchersService extends MetaTableService {
 
     async createWatcher() {
         if (this.group_id !== -1) {
+            this.waitAddWacher = true;
+
             try {
                 const response = await ProfileApi.post(
                     `/watchers/create/${this.group_id}`,
@@ -144,7 +148,11 @@ export class WatchersService extends MetaTableService {
 
                 this.dropForm();
                 this.closePopup();
+
+                this.waitAddWacher = false;
             } catch (err) {
+                this.waitAddWacher = false;
+
                 console.error(err);
 
                 store.dispatch("setNotification", {

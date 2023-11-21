@@ -27,7 +27,8 @@
             </main-button>
             <main-button
                 class="button-blue verify_button button-full"
-                type="button"
+                type="submit"
+                :wait="wait"
             >
                 <template #text>
                     {{ $t(button_text) }}
@@ -56,6 +57,10 @@ export default {
         placeholder: Boolean,
         re_verify_text: Boolean,
         button_text: Boolean,
+        wait: {
+            type: Boolean,
+            default: false,
+        },
     },
     emits: ["back", "sendForm"],
     computed: {
@@ -78,12 +83,14 @@ export default {
     },
     methods: {
         sendFormWithCode() {
-            if (this.service.form.code?.length > 0) {
-                this.$emit("sendForm", this.service.form.code);
+            if (!this.wait) {
+                if (this.service.form.code?.length > 0) {
+                    this.$emit("sendForm", this.service.form.code);
+                }
             }
         },
         backHandler(event) {
-            if (event.pointerType === "touch") {
+            if (event.pointerType === "touch" || event.pointerType === "mouse") {
                 this.$emit("back");
             }
         },

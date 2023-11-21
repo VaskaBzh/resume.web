@@ -4,11 +4,7 @@
         :class="{ 'table__row-cursor': columns?.graphId }"
         @mousedown="openPopup"
     >
-        <td
-            v-for="(column, i) in renderColumns"
-            :key="i"
-            class="table_column"
-        >
+        <td v-for="(column, i) in renderColumns" :key="i" class="table_column">
             <span v-show="viewportWidth <= 767.98" class="label">{{
                 renderTitles[i]
             }}</span>
@@ -303,29 +299,49 @@ export default {
         &.ACTIVE,
         &.complete,
         &.completed {
-            span.name:before {
-                background: #13d60e;
+            span {
+                &.name,
+                &.status {
+                    &:before {
+                        background: #13d60e;
+                    }
+                }
             }
         }
         &.inactive,
         &.INACTIVE,
         &.error,
         &.rejected {
-            span.status:before {
-                background: #ff0000;
+            span {
+                &.name,
+                &.status {
+                    &:before {
+                        background: #ff0000;
+                    }
+                }
             }
         }
         &.unstable,
         &.UNSTABLE,
         &.pending {
-            span.status:before {
-                background: #e9c058;
+            span {
+                &.name,
+                &.status {
+                    &:before {
+                        background: #e9c058;
+                    }
+                }
             }
         }
         &.dead,
         &.DEAD {
-            span.name:before {
-                background: var(--status-death, #667085);
+            span {
+                &.name,
+                &.status {
+                    &:before {
+                        background: var(--status-death, #667085);
+                    }
+                }
             }
         }
     }

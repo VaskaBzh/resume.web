@@ -1,20 +1,29 @@
 <template>
     <div class="form__row">
-        <div class="form__block" @click="$refs.input.focus()">
-            <label class="form_label" v-show="inputLabel">{{ inputLabel }}</label>
+        <label
+            :for="inputName"
+            class="form__block"
+            :class="{
+                'form__block-error': errors[inputName]?.length > 0,
+            }"
+            @click="$refs.input.focus()"
+        >
+            <span v-show="inputLabel" class="form_label">{{ inputLabel }}</span>
             <input
+                :id="inputName"
                 ref="input"
+                v-model="modelValue"
                 :type="inputType"
                 :placeholder="inputPlaceholder"
                 :name="inputName"
-                v-model="modelValue"
-                :class="{
-                    'form_input-error': errors[inputName],
-                }"
                 class="form_input"
-            >
-        </div>
-        <validation-errors class="form__list-errors" :error_list="errors" :list_name="inputName" />
+            />
+        </label>
+        <validation-errors
+            class="form__list-errors"
+            :error_list="errors"
+            :list_name="inputName"
+        />
     </div>
 </template>
 
@@ -25,7 +34,7 @@ import ValidationErrors from "@/modules/validate/Components/ValidationErrors.vue
 export default {
     name: "FormPopupInput",
     components: {
-        ValidationErrors
+        ValidationErrors,
     },
     props: {
         inputValue: {
@@ -52,18 +61,21 @@ export default {
     computed: {
         ...mapGetters(["errors"]),
     },
+    emits: ["inputChange"],
     data() {
         return {
             modelValue: this.inputValue,
         };
     },
-    emits: ["inputChange"],
     watch: {
+        inputValue(newInputValue) {
+            this.modelValue = newInputValue;
+        },
         modelValue(newModelValue) {
             this.$emit("inputChange", newModelValue);
         },
     },
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -78,29 +90,29 @@ export default {
         @include columnMixin();
         justify-content: center;
         border-radius: var(--surface-border-radius-radius-s-md, 12px);
-        background: var(--background-modal-input, #2C2F34);
+        background: var(--background-modal-input, #2c2f34);
         min-height: adaptive-value(48px, 56px);
         width: 100%;
         padding: 0 adaptive-value(12px, 16px);
         cursor: text;
+        border: 1px solid transparent;
+        &-error {
+            border-color: var(--status-failed, #f1404a);
+        }
     }
     &_input {
-        color: var(--text-secondary, #C5C8CD);
+        color: var(--text-secondary, #c5c8cd);
         font-size: adaptive-value(14px, 16px);
         line-height: adaptive-value(20px, 24px);
-        border: 1px solid transparent;
         outline: none;
         background: transparent;
         width: inherit;
         &::placeholder {
-            color: var(--text-no-value, #D0D5DD);
-        }
-        &-error {
-            border-color: (--status-failed, #F1404A);
+            color: var(--text-no-value, #d0d5dd);
         }
     }
     &_label {
-        color: var(--text-teritary, #6F7682);
+        color: var(--text-teritary, #6f7682);
         font-size: adaptive-value(10px, 12px);
         line-height: adaptive-value(12px, 16px);
         width: inherit;

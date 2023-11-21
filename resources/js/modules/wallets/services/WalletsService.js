@@ -27,8 +27,8 @@ export class WalletsService {
         return new VerifyFormControllService();
     }
 
-    setFormData(formData = new WalletFormData()) {
-        this.form.setFormData(formData).initForm();
+    setFormData(formData = WalletFormData) {
+        this.form.setFormData(formData).setClearForm();
 
         return this;
     }

@@ -59,15 +59,23 @@
             </div>
             <span>{{ $t("auth.login.checkbox") }}</span>
         </label>
-        <blue-button class="form-auth_button auth" type="submit"
-            ><a class="all-link">{{ $t("auth.login.button") }}</a></blue-button
-        >
-        <verify-link
-            class="form-auth_forgot-password"
-            verify-url="/password/forgot"
-            :verify-text="$t('auth.login.reset')"
-            :data="service.form"
-        />
+        <div class="form-auth__block">
+            <main-button
+                class="form-auth_button button-xl auth"
+                :wait="service.waitLogin"
+                type="submit"
+            >
+                <template #text>
+                    {{ $t("auth.login.button") }}
+                </template>
+            </main-button>
+            <verify-link
+                class="form-auth_forgot-password"
+                verify-url="/password/forgot"
+                :verify-text="$t('auth.login.reset')"
+                :data="service.form"
+            />
+        </div>
         <p class="text text-light form-auth_text">
             {{ $t("auth.login.link[0]") }}
             <router-link :to="{ name: 'registration' }" class="form-auth_link">
@@ -77,7 +85,7 @@
     </form>
     <password-popup
         :opened="service.openedPasswordPopup"
-        :wait="service.waitAjax"
+        :wait="service.waitPasswordChange"
         :closed="service.closedPasswordPopup"
         :validate-service="service"
         @sendPassword="sendPassword($event)"
@@ -91,6 +99,7 @@
             text="form.fac.text"
             placeholder="form.fac.placeholder"
             button_text="form.fac.button_text"
+            :wait="service.waitLogin"
             @sendForm="loginWithSecretCode($event)"
         />
     </verify-popup>
@@ -102,16 +111,15 @@ import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
 import MainPassword from "@/modules/common/Components/inputs/MainPassword.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
 import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
+import VerifyPopup from "@/modules/verify/Components/VerifyPopup.vue";
+import TwoFacForm from "@/modules/verify/Components/TwoFacForm.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 
 import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 import { LoginService } from "@/modules/auth/services/LoginService";
 import { mapGetters } from "vuex";
-import VerifyPopup from "../../../verify/Components/VerifyPopup.vue";
-import TwoFacForm from "../../../verify/Components/TwoFacForm.vue";
-
 export default {
     name: "LoginForm",
     components: {
@@ -122,7 +130,7 @@ export default {
         MainPassword,
         AuthErrors,
         MainTitle,
-        BlueButton,
+        MainButton,
         PasswordPopup,
     },
     i18n: {
@@ -164,11 +172,15 @@ export default {
     },
     methods: {
         async loginWithSecretCode(secret) {
-            this.service.form.google2fa_code = secret;
-            await this.service.login();
+            if (!this.service.waitLogin) {
+                this.service.form.google2fa_code = secret;
+                await this.service.login();
+            }
         },
         async sendPassword(form) {
-            await this.service.sendPassword(form);
+            if (!this.service.waitPasswordChange) {
+                await this.service.sendPassword(form);
+            }
         },
         async openPasswordPopup() {
             await this.service.openPasswordPopup();
@@ -183,6 +195,13 @@ export default {
     width: 100%;
     @media (max-width: 991.98px) {
         padding: 0 clamp(16px, 5vw, 60px);
+    }
+
+    &__block {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
     .form-auth_forgot-password {
@@ -223,37 +242,11 @@ export default {
     }
 
     &_button {
-        padding: 0;
-        margin: 0;
-        background: rgb(63, 123, 221);
-        color: #fff;
-        text-transform: lowercase;
-        border: none;
-        width: fit-content;
-        border-radius: 16px;
-        @media (max-width: $mobileSmall) {
-            min-width: 100%;
-        }
-
-        & .all-link {
-            padding: 0;
-            font-size: 20px;
-            font-weight: 500;
-            line-height: 135%;
-            min-width: 300px;
-        }
+        min-width: 300px;
 
         @media (max-width: $tablet) {
-            width: 100%;
-            & .all-link {
-                padding: 18px 0;
-            }
-        }
-        @media (max-width: $mobile) {
-            & .all-link {
-                font-size: 16px;
-                padding: 14px 0;
-            }
+            min-width: 100%;
+            margin-bottom: 16px;
         }
     }
 

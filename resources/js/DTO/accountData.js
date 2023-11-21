@@ -1,7 +1,7 @@
 export class accountData {
     constructor(accountRecord) {
         this.group_id = accountRecord.group_id;
-        this.name = accountRecord.sub;
+        this.name = accountRecord.name;
         this.workers_count_active = accountRecord.workers_count_active;
         this.workers_count_in_active = accountRecord.workers_count_inactive;
         this.workers_count_unstable = accountRecord.workers_count_unstable;

@@ -3,7 +3,6 @@
         id="2fac"
         ref="fac"
         :opened="opened"
-        :wait="wait"
         :closed="closed"
         :make-resize="makeResize"
     >
@@ -45,6 +44,7 @@
                 <main-button
                     class="button-blue fac_button button-full"
                     type="submit"
+                    :wait="wait"
                 >
                     <template #text>{{ $t("fac_popup.button[2]") }} </template>
                 </main-button>
@@ -111,7 +111,9 @@ export default {
             }
         },
         closePopup() {
-            this.$emit("sendVerify", this.form);
+            if (!this.wait) {
+                this.$emit("sendVerify", this.form);
+            }
         },
     },
 };

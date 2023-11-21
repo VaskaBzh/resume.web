@@ -3,7 +3,6 @@
         id="password"
         ref="password"
         :opened="opened"
-        :wait="wait"
         :closed="closed"
         :make-resize="makeResize"
     >
@@ -13,7 +12,7 @@
                 >{{ $t("password_popup.description") }}
             </main-description>
         </div>
-        <form  @submit.prevent="closePopup" class="password__content">
+        <form class="password__content" @submit.prevent="closePopup">
             <profile-password
                 class="password_input"
                 name="old_password"
@@ -28,7 +27,7 @@
                 name="password"
                 :placeholder="$t('password_popup.placeholders.new_password')"
                 :model="form.password"
-                :class="{'not-validate' : validateInputs}"
+                :class="{ 'not-validate': validateInputs }"
                 @changeValue="changePasswordForm('password', $event)"
             />
             <main-validate :validate="validateService.validate" />
@@ -39,22 +38,26 @@
                     $t('password_popup.placeholders.confirm_password')
                 "
                 :model="form['password_confirmation']"
-                :class="{'not-validate' : validateInputs}"
-                @changeValue="changePasswordForm('password_confirmation', $event)"
+                :class="{ 'not-validate': validateInputs }"
+                @changeValue="
+                    changePasswordForm('password_confirmation', $event)
+                "
             />
             <transition name="error">
-                <span class="password_error"
-                      v-if="validateInputs"
-                      :class="{'active-error': errorMassage}"
+                <span
+                    v-if="validateInputs"
+                    class="password_error"
+                    :class="{ 'active-error': errorMassage }"
                 >
-                {{ $t('error.password-confirmation') }}
-            </span>
+                    {{ $t("error.password-confirmation") }}
+                </span>
             </transition>
             <main-button
                 type="submit"
                 class="button-blue password_button button-full"
                 :disabled="sendButton"
-                :class="{'active-disabled': sendButton}"
+                :class="{ 'active-disabled': sendButton }"
+                :wait="wait"
             >
                 <template #text>{{ $t("password_popup.button") }} </template>
             </main-button>
@@ -102,23 +105,28 @@ export default {
                     setTimeout(() => (this.makeResize = false), 50);
                 }, 355);
 
-                if(Object.keys(this.validateService.validate).length !== 0 && newVal !== oldVal) {
-                    this.validateInputs = false
-                    this.sendButton = true
+                if (
+                    Object.keys(this.validateService.validate).length !== 0 &&
+                    newVal !== oldVal
+                ) {
+                    this.validateInputs = false;
+                    this.sendButton = true;
                 }
 
-                if(this.validateInputs && newVal !== oldVal) {
-                    this.validateInputs = false
+                if (this.validateInputs && newVal !== oldVal) {
+                    this.validateInputs = false;
                 }
             }
-
         },
         "form.password_confirmation"(newVal, oldVal) {
-            if(this.validateInputs && newVal !== oldVal) {
-                this.validateInputs = false
+            if (this.validateInputs && newVal !== oldVal) {
+                this.validateInputs = false;
             }
-            if(newVal && Object.keys(this.validateService.validate).length === 0) {
-                this.sendButton = false
+            if (
+                newVal &&
+                Object.keys(this.validateService.validate).length === 0
+            ) {
+                this.sendButton = false;
             }
         },
         formData(newFormData) {
@@ -142,15 +150,14 @@ export default {
     },
     methods: {
         closePopup() {
-           if (this.form.password === this.form['password_confirmation']) {
-
-               this.$emit("sendPassword", this.form)
-           } else {
-               this.validateInputs = true
-               this.errorMassage = true
-           }
-
-
+            if (!this.wait) {
+                if (this.form.password === this.form["password_confirmation"]) {
+                    this.$emit("sendPassword", this.form);
+                } else {
+                    this.validateInputs = true;
+                    this.errorMassage = true;
+                }
+            }
         },
         changePasswordForm(formKey, event) {
             const formValue = event.target ? event.target.value : event;
@@ -191,7 +198,7 @@ export default {
 }
 
 .not-validate {
-    border: 2px solid #F1404A;
+    border: 2px solid #f1404a;
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: 12px;
     transition: all 0.5s ease 0s;
@@ -201,7 +208,7 @@ export default {
 .password_error {
     max-height: 0;
     overflow: hidden;
-    color: #F1404A;
+    color: #f1404a;
     position: absolute;
     left: 0;
     bottom: 25%;
@@ -216,13 +223,13 @@ export default {
 .active-error {
     padding: 5px;
     max-height: 100%;
-    transition: all .35s ease-in;
+    transition: all 0.35s ease-in;
 }
 
 .error-enter-active,
 .error-leave-active {
     position: absolute;
-    transition: all .35s ease-in-out;
+    transition: all 0.35s ease-in-out;
 }
 .error-enter-from,
 .error-leave-to {

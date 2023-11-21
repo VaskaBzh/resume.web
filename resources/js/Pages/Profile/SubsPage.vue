@@ -7,13 +7,14 @@
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="overallCurrentHashRate.hashRate ?? 0"
-                    :unit="`${overallCurrentHashRate.unit ?? 'T'}H/s`"
+                    :value="overall.total_hash_per_min ?? 0"
+                    :unit="`${overall.per_min_unit ?? 'T'}H/s`"
                     hint_position="right"
                     :hint="$t('info_blocks.hash.hints[0]')"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
+                        :
                     </template>
                 </cabinet-card>
                 <cabinet-card
@@ -50,6 +51,7 @@
                     :subs-type="service.subsType"
                     @changeType="toggleIsTable($event)"
                     @searched="service.searchSub($event)"
+                    @open_add_popup="service.addPopup.openPopup()"
                 />
                 <sub-list
                     :subs-type="service.subsType"
@@ -65,6 +67,13 @@
                 :empty="service.emptySubs"
             />
         </div>
+        <add-sub-popup
+            :opened="service.addPopup.getOpenedState()"
+            :closed="service.addPopup.getClosedState()"
+            :wait="service.waitSubAdd"
+            :form="service.addForm.form"
+            @add_subaccount="addSubaccount($event)"
+        />
     </div>
 </template>
 
@@ -76,6 +85,7 @@ import SubList from "@/modules/subs/Components/SubList.vue";
 import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
 import DayHashrateIcon from "@/modules/common/icons/DayHashrateIcon.vue";
 import MinuteHashrateIcon from "@/modules/common/icons/MinuteHashrateIcon.vue";
+import AddSubPopup from "@/modules/subs/Components/AddSubPopup.vue";
 
 import { UnitMultiplierEnum } from "@/modules/subs/enums/UnitMultiplierEnum";
 import { mapGetters } from "vuex";
@@ -84,6 +94,7 @@ import { SubService } from "@/modules/subs/services/SubService";
 
 export default {
     components: {
+        AddSubPopup,
         SubList,
         SubHeader,
         MainTitle,
@@ -101,21 +112,12 @@ export default {
         };
     },
     watch: {
-        allAccounts(newAccountsList) {
-            this.service
-                .setSubList(newAccountsList)
-                .statesProcess()
-                .tableProcess()
-                .tableStatesProcess();
+        allAccounts() {
+            this.subProcess();
         },
         "$i18n.locale"() {
             this.service.setDocumentTitle(this.$t("title"));
-
-            this.service
-                .setSubList(this.allAccounts)
-                .statesProcess()
-                .tableProcess()
-                .tableStatesProcess();
+            this.subProcess();
         },
     },
     computed: {
@@ -127,48 +129,26 @@ export default {
             "getAccount",
             "overall",
         ]),
-        overallCurrentHashRate() {
-            const currentHashRate = this.getSumAccountsStatistic(
-                "hash_per_min",
-                "hash_per_min_unit"
-            );
-
-            return {
-                hashRate: currentHashRate,
-                unit: "T",
-            };
-        },
     },
     mounted() {
         this.service.setDocumentTitle(this.$t("title"));
-
-        this.service
-            .setSubList(this.allAccounts)
-            .statesProcess()
-            .tableStatesProcess()
-            .tableProcess();
+        this.subProcess();
     },
     methods: {
+        addSubaccount(form) {
+            this.service.addForm.setForm(form);
+            this.service.addSubaccount();
+        },
+        subProcess() {
+            this.service
+                .setSubList(this.allAccounts)
+                .statesProcess()
+                .tableStatesProcess()
+                .tableProcess()
+                .addFormProcess();
+        },
         toggleIsTable(subsTypeState = null) {
             this.service.toggleSubsType(subsTypeState);
-        },
-        getSumAccountsStatistic(accountStatisticKey, accountUnitKey = null) {
-            const initialValue = 0;
-
-            return this.allAccounts.reduce((accumulator, currentAccount) => {
-                let currentAccountValue = Number(
-                    currentAccount[accountStatisticKey]
-                );
-
-                if (accountUnitKey) {
-                    const hashRateUnit = currentAccount[accountUnitKey];
-
-                    currentAccountValue =
-                        currentAccountValue * UnitMultiplierEnum[hashRateUnit];
-                }
-
-                return accumulator + currentAccountValue;
-            }, initialValue);
         },
     },
 };
