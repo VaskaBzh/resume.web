@@ -10,7 +10,6 @@ use App\Enums\Income\Type;
 use App\Models\Income;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
-use App\Utils\HashRateConverter;
 use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
