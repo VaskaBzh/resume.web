@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-use Illuminate\Support\Arr;
-
 final readonly class WorkerData
 {
     public function __construct(
-        public int $group_id,
-        public int $worker_id,
+        public int $groupId,
+        public int $workerId,
         public string $name,
-        public ?float $approximateHashRate,
         public string $status,
-        public string $unit,
+        public int $hashPerDay,
+        public string $unitPerDay,
+        public int $hashPerMin,
+        public string $unitPerMin,
         public array $poolData,
     ) {
     }
 
-    public static function fromRequest(array $requestData): WorkerData
+    public static function fromArray(array $data): WorkerData
     {
         return new self(
-            group_id: (int) $requestData['group_id'],
-            worker_id: (int) $requestData['worker_id'],
-            name: $requestData['name'],
-            approximateHashRate: (float) Arr::get($requestData, 'approximate_hash_rate'),
-            status: $requestData['status'],
-            unit: $requestData['unit'],
-            poolData: $requestData['pool_data'],
+            groupId: (int) $data['group_id'],
+            workerId: (int) $data['worker_id'],
+            name: $data['name'],
+            status: $data['status'],
+            hashPerDay: (int) $data['hash_per_day'],
+            unitPerDay: $data['unit_per_day'],
+            hashPerMin: (int) $data['hash_per_min'],
+            unitPerMin: $data['unit_per_min'],
+            poolData: $data['pool_data']
         );
     }
 }

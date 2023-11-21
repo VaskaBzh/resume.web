@@ -20,7 +20,7 @@ class Worker extends Model
         'name',
         'worker_id',
         'group_id',
-        'approximate_hash_rate',
+        'hash_per_day',
         'status',
         'unit',
         'pool_data',

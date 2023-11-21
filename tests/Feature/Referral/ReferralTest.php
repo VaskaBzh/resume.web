@@ -10,6 +10,7 @@ use App\Enums\Income\Type;
 use App\Models\Income;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
+use App\Utils\HashRateConverter;
 use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -86,7 +87,8 @@ class ReferralTest extends TestCase
                     'referral_percent' => 1,
                     'referrals_total_amount' => '0.00044444',
                     'referral_url' => route('v1.register', 'referral_code='.$this->referrer->referral_code),
-                    'total_referrals_hash_rate' => 100,
+                    'total_referrals_hash_rate' => '100.00',
+                    'hash_rate_unit' => 'T',
                 ],
             ])
             ->assertStatus(Response::HTTP_OK);
@@ -116,7 +118,8 @@ class ReferralTest extends TestCase
                     [
                         'email' => 'second@gmail.com',
                         'referral_active_workers_count' => 1,
-                        'referral_hash_per_day' => 100,
+                        'referral_hash_per_day' => '100.00',
+                        'referral_hash_per_day_unit' => 'T',
                         'referral_inactive_workers_count' => 1,
                         'referral_percent' => 1,
                         'total_amount' => 0.00044444,

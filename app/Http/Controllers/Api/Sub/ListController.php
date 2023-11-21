@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Sub\GeneralSubsDataResource;
 use App\Http\Resources\Sub\SubResource;
 use App\Models\User;
-use App\Services\External\BtcComService;
+use App\Services\Internal\SubService;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,19 +72,15 @@ class ListController extends Controller
     ]
     public function __invoke(
         User $user,
-        BtcComService $btcComService
+        SubService $subService,
     ): JsonResponse {
         $this->authorize('viewAny', $user);
 
-        $subs = $user->subs()
-            ->with(['workers'])
-            ->get();
-
-        $subCollection = $btcComService->transformSubCollection(subs: $subs);
+        $subCollection = $subService->getSubList(user: $user);
 
         return new JsonResponse([
-            'list' => SubResource::collection($subCollection),
-            'overall' => new GeneralSubsDataResource($subs),
+            'list' => SubResource::collection($subCollection->get('subs')),
+            'overall' => new GeneralSubsDataResource($subCollection->get('overall')),
         ]);
     }
 }

@@ -46,7 +46,11 @@ optimize:
 tinker:
 	$(ARTISAN) tinker
 test:
-	$(ARTISAN) test --testdox --env=testing
+	@if [ -z "$(name)" ]; then \
+		$(ARTISAN) test --testdox --env=testing; \
+	else \
+		$(ARTISAN) test --filter=$(name) --testdox --env=testing; \
+	fi
 remote_test:
 	ssh mainuser@92.205.188.112
 docs:
