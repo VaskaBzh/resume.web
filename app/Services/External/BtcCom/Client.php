@@ -6,7 +6,7 @@ namespace App\Services\External\BtcCom;
 
 use App\Exceptions\BusinessException;
 use App\Models\Worker;
-use App\Services\External\ClientContract;
+use App\Services\External\Contracts\ClientContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;

@@ -28,6 +28,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => __('validation.required', ['attribute' => __('validation.attributes.name')]),
+            'name.unique' => __('validation.unique', ['attribute' => __('validation.attributes.user')]),
             'name.regex' => __('validation.regex', ['attribute' => __('validation.attributes.name')]),
             'password.required' => __('validation.required', ['attribute' => __('validation.attributes.password')]),
             'password.min' => __('validation.min.string', [

@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Services\External\BtcCom\Client as BtcComClient;
 use App\Services\External\BtcCom\DataTransformer as BtcComDataTransformer;
-use App\Services\External\ClientContract;
-use App\Services\External\TransformContract;
+use App\Services\External\Contracts\ClientContract;
+use App\Services\External\Contracts\TransformContract;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
