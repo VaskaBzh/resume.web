@@ -9,7 +9,7 @@ use App\Dto\WorkerData;
 use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcCom\Client;
-use App\Services\External\TransformContract;
+use App\Services\External\Contracts\TransformContract;
 use Illuminate\Database\Seeder;
 
 class WorkerSeeder extends Seeder

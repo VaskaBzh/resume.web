@@ -110,7 +110,6 @@ class RegisterController extends Controller
         RegisterRequest $request,
         SubService $subService,
     ): JsonResponse {
-
         auth()->login($user = UserService::create(userData: UserData::fromRequest($request->all())));
 
         event(new Registered(
