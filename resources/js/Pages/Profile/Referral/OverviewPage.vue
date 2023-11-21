@@ -56,10 +56,7 @@
                     {{ $t("referral.text") }}
                 </p>
                 <div class="referral__row">
-                    <main-copy
-                        class="referral_code"
-                        :code="service.code"
-                    />
+                    <main-copy class="referral_code" :code="service.code" />
                 </div>
             </div>
         </div>
@@ -162,7 +159,7 @@ export default {
         if (this.user.id) {
             this.service.setUser(this.user);
 
-             this.service.index();
+            this.service.index();
         }
         this.service.getGradeList();
 
