@@ -6,11 +6,11 @@
 import LoginForm from "@/modules/auth/Components/blocks/LoginForm.vue";
 
 export default {
-    name: "login-page",
-    props: { errors: Object },
+    name: "LoginPage",
     components: {
         LoginForm,
     },
+    props: { errors: Object },
     mounted() {
         document.title = this.$t("auth.login.head");
     },

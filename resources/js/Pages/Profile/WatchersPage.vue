@@ -77,7 +77,7 @@
         </div>
     </div>
     <watchers-popup-add
-        :wait="service.wait"
+        :wait="service.waitAddWacher"
         :opened="openOnBoardingPopup"
         :closed="service.popupClosed || closeOnBoardingPopup"
         :instruction-config="instructionService"

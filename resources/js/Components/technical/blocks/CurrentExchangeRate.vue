@@ -4,18 +4,18 @@
             <span class="rate-title">BTC</span>
             <span class="rate-current-price"> ${{ price }}</span>
         </div>
-        <div class="rate-block" v-if="isRu && isUSD">
+        <div v-if="isRu && isUSD" class="rate-block">
             <span class="rate-title">USD</span>
             <span class="rate-current-price">{{ currentUSD }}₽</span>
         </div>
     </article>
 </template>
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
-    name: "current-exchange-rate",
+    name: "CurrentExchangeRate",
     data() {
         return {
             currentUSD: null,
@@ -35,6 +35,20 @@ export default {
         async "$i18n.locale"() {
             await this.getUSD();
         },
+    },
+    async mounted() {
+        await this.getUSD();
+
+        const response = await this.fetchPrice();
+
+        this.price = Number(response).toFixed(0);
+        await this.setBitcoinCourse();
+    },
+    unmounted() {
+        clearInterval(this.interval);
+        if (this.intervalUsd) {
+            clearInterval(this.intervalUsd);
+        }
     },
     methods: {
         async getUSD() {
@@ -64,7 +78,11 @@ export default {
             }
         },
         async fetchPrice() {
-            return (await axios.get('https://testnet.binancefuture.com/fapi/v1/premiumIndex?symbol=BTCUSDT')).data.indexPrice;
+            return (
+                await axios.get(
+                    "https://testnet.binancefuture.com/fapi/v1/premiumIndex?symbol=BTCUSDT"
+                )
+            ).data.indexPrice;
         },
         async setBitcoinCourse() {
             this.interval = setInterval(async () => {
@@ -73,20 +91,6 @@ export default {
                 this.price = Number(response).toFixed(0);
             }, 5000);
         },
-    },
-    async mounted() {
-        await this.getUSD();
-
-        const response = await this.fetchPrice();
-
-        this.price = Number(response).toFixed(0);
-        await this.setBitcoinCourse();
-    },
-    unmounted() {
-        clearInterval(this.interval);
-        if (this.intervalUsd) {
-            clearInterval(this.intervalUsd);
-        }
     },
 };
 </script>
@@ -97,7 +101,6 @@ export default {
     justify-content: end;
     gap: 24px;
     font-family: Unbounded;
-
 }
 
 @media (max-width: 410px) {

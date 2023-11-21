@@ -10,7 +10,9 @@ export const ValidationErrorKeysEnum = {
     number: "number",
     string_number: "string_number",
     upper_number: "upper_number",
-    lower_number: 'lower_number',
-    equal: 'equal',
-    required: 'required',
-}
+    lower_number: "lower_number",
+    equal: "equal",
+    required: "required",
+    ru: "ru",
+    en: "en",
+};

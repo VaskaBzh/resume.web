@@ -32,6 +32,7 @@
         <!--		    </main-button>-->
         <main-button
             class="button-blue verify_button button-full"
+            :wait="wait"
             @click="sendFormWithCode"
         >
             <template #text>
@@ -60,6 +61,10 @@ export default {
         text: Boolean,
         placeholder: Boolean,
         button_text: Boolean,
+        wait: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         ...mapGetters(["user"]),
@@ -81,7 +86,9 @@ export default {
     },
     methods: {
         sendFormWithCode() {
-            this.$emit("sendForm", this.service.form.code);
+            if (!this.wait) {
+                this.$emit("sendForm", this.service.form.code);
+            }
         },
     },
 };

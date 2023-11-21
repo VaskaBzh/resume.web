@@ -18,12 +18,10 @@ export class Validator {
     }
 
     increaseErrorList(errorKey, translateArgs = {}) {
-        this.errorList.push(
-            {
-                path: ValidationErrorKeysEnum[errorKey],
-                args: translateArgs,
-            }
-        );
+        this.errorList.push({
+            path: ValidationErrorKeysEnum[errorKey],
+            args: translateArgs,
+        });
     }
 
     dropErrorList() {
@@ -32,10 +30,14 @@ export class Validator {
 
     setErrorEvent() {
         this.errorEvent = new CustomEvent("validationError", {
-            detail: { [this.errorName]: this.errorList  }
+            detail: { [this.errorName]: this.errorList },
         });
 
         document.dispatchEvent(this.errorEvent);
+
+        if (Object.entries(this.errorList).length > 0) {
+            throw new Error("Has validation error");
+        }
     }
 
     getValidationFunction(validationRuleName) {
@@ -56,11 +58,20 @@ export class Validator {
             const validationRuleData = splitValidationRule[RULE_DATA_INDEX];
 
             if (
-                this.getValidationFunction(validationRuleName) ?
-                this.getValidationFunction(validationRuleName)(inputValue, validationRuleData) :
-                this.getValidationFunction("isValid")(inputValue, validationRuleName)
+                this.getValidationFunction(validationRuleName)
+                    ? this.getValidationFunction(validationRuleName)(
+                          inputValue,
+                          validationRuleData
+                      )
+                    : this.getValidationFunction(
+                          this.getValidationFunction(validationRuleName)
+                              ? validationRuleName
+                              : "isValid"
+                      )(inputValue, validationRuleName)
             ) {
-                this.increaseErrorList(validationRuleName, { [validationRuleName]: validationRuleData});
+                this.increaseErrorList(validationRuleName, {
+                    [validationRuleName]: validationRuleData,
+                });
             }
 
             if (i === validationRulesList.length - 1) {

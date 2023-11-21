@@ -43,6 +43,9 @@ export class SettingsService {
         this.closedPasswordPopup = false;
 
         this.validateService = new ValidateService();
+
+        this.waitFacProcess = false;
+        this.waitPasswordChange = false;
     }
 
     createNewForm() {
@@ -62,6 +65,8 @@ export class SettingsService {
     }
 
     async sendVerify(form) {
+        this.waitFacProcess = true;
+
         try {
             this.form.code = form.code;
             const response = await this.fetchFac();
@@ -74,7 +79,11 @@ export class SettingsService {
             });
 
             store.dispatch("setUser");
+
+            this.waitFacProcess = false;
         } catch (err) {
+            this.waitFacProcess = false;
+
             console.error(err);
 
             store.dispatch("setNotification", {
@@ -83,7 +92,6 @@ export class SettingsService {
                 text: err.response.data.message || err.response.data.error,
             });
         }
-
     }
 
     removeRouteQuery() {
@@ -106,6 +114,8 @@ export class SettingsService {
     }
 
     async sendPassword() {
+        this.waitPasswordChange = true;
+
         try {
             const response = await this.fetchPassword();
 
@@ -118,7 +128,11 @@ export class SettingsService {
                 title: "changed",
                 text: response.message,
             });
+
+            this.waitPasswordChange = false;
         } catch (err) {
+            this.waitPasswordChange = false;
+
             console.error(err);
 
             store.dispatch("setNotification", {
@@ -157,6 +171,8 @@ export class SettingsService {
     }
 
     async sendDisableFac() {
+        this.waitFacProcess = true;
+
         try {
             const response = await this.fetchDisableFac();
 
@@ -167,7 +183,11 @@ export class SettingsService {
                 title: "changed",
                 text: response.message,
             });
+
+            this.waitFacProcess = false;
         } catch (err) {
+            this.waitFacProcess = false;
+
             console.error(err);
 
             store.dispatch("setFullErrors", err.response.data.errors);
@@ -196,13 +216,16 @@ export class SettingsService {
     }
 
     async fetchDisableFac() {
-        return (await ProfileApi.put(`/2fac/disable/${this.user.id}`, this.disableFacForm.form)).data;
+        return (
+            await ProfileApi.put(
+                `/2fac/disable/${this.user.id}`,
+                this.disableFacForm.form
+            )
+        ).data;
     }
 
     async generateFac() {
-        return (
-            await ProfileApi.get(`/2fac/qrcode/${this.user.id}`)
-        ).data;
+        return (await ProfileApi.get(`/2fac/qrcode/${this.user.id}`)).data;
     }
 
     async fetchFac() {
@@ -350,7 +373,6 @@ export class SettingsService {
     }
 
     ajaxChange = (data) => {
-
         this.setValue(data.value);
 
         if (data.bool) {
