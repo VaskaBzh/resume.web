@@ -9,8 +9,8 @@ use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Exceptions\IncomeCreatingException;
 use App\Models\Sub;
-use App\Services\External\BtcComService;
 use App\Services\Internal\IncomeService;
+use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
@@ -69,7 +69,7 @@ class IncomeServiceTest extends TestCase
         $hashrate = $subWithHashRate->hash_rate;
 
         $getPureDailyEarning = $this->calculate($hashrate);
-        $expectDailyAmount = $this->calculate($hashrate, BtcComService::FEE + 3.5);
+        $expectDailyAmount = $this->calculate($hashrate, config('api.btc.fee') + 3.5);
 
         $this->assertTrue($getPureDailyEarning > $expectDailyAmount);
 
@@ -79,7 +79,7 @@ class IncomeServiceTest extends TestCase
             'daily_amount' => number_format($expectDailyAmount, 8, '.', ''),
             'status' => Status::PENDING->value,
             'message' => Message::LESS_MIN_WITHDRAWAL->value,
-            'hash' => $hashrate,
+            'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
         $this->assertDatabaseHas('subs', [
             'user_id' => $subWithHashRate->user_id,
@@ -90,7 +90,7 @@ class IncomeServiceTest extends TestCase
         ]);
         $this->assertDatabaseHas('finances', [
             'group_id' => $subWithHashRate->group_id,
-            'earn' => number_format($getPureDailyEarning - $getPureDailyEarning * (BtcComService::FEE / 100),
+            'earn' => number_format($getPureDailyEarning - $getPureDailyEarning * (config('api.btc.fee') / 100),
                 8,
                 '.',
                 ''
@@ -119,7 +119,7 @@ class IncomeServiceTest extends TestCase
         $subWithHashRate->update(['pending_amount' => 1, 'total_amount' => 1]);
         $subWithHashRate->save();
 
-        $expectDailyAmount = $this->calculate($subWithHashRate->hash_rate, BtcComService::FEE + 3.5);
+        $expectDailyAmount = $this->calculate($subWithHashRate->hash_rate, config('api.btc.fee') + 3.5);
 
         $service = resolve(IncomeService::class)->init($subWithHashRate, null);
 
@@ -185,7 +185,7 @@ class IncomeServiceTest extends TestCase
             'daily_amount' => $expectReferrerDailyAmount,
             'status' => Status::PENDING->value,
             'message' => Message::LESS_MIN_WITHDRAWAL->value,
-            'hash' => $hashrate,
+            'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
     }
 
@@ -204,7 +204,7 @@ class IncomeServiceTest extends TestCase
         $hashrate = $referralSub->hash_rate;
 
         $subDiscountedFee = $referralSub->allbtc_fee - $referralSub->user->referral_discount;
-        $resultFee = BtcComService::FEE + $subDiscountedFee;
+        $resultFee = config('api.btc.fee') + $subDiscountedFee;
 
         $pureDailyEarning = $this->calculate($hashrate);
         $expectDailyAmount = number_format($this->calculate($hashrate, $resultFee),
@@ -223,7 +223,7 @@ class IncomeServiceTest extends TestCase
             'daily_amount' => $expectDailyAmount,
             'status' => Status::PENDING->value,
             'message' => Message::LESS_MIN_WITHDRAWAL->value,
-            'hash' => $hashrate,
+            'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
         $this->assertDatabaseHas('subs', [
             'user_id' => $referralSub->user_id,
@@ -234,13 +234,13 @@ class IncomeServiceTest extends TestCase
         ]);
         $this->assertDatabaseHas('finances', [
             'group_id' => $referralSub->group_id,
-            'earn' => number_format($pureDailyEarning - $pureDailyEarning * (BtcComService::FEE / 100),
+            'earn' => number_format($pureDailyEarning - $pureDailyEarning * (config('api.btc.fee') / 100),
                 8,
                 '.',
                 ''
             ),
             'user_total' => $expectDailyAmount,
-            'percent' => $resultFee - BtcComService::FEE,
+            'percent' => $resultFee - config('api.btc.fee'),
             'profit' => number_format($pureDailyEarning * ($subDiscountedFee / 100),
                 8,
                 '.',

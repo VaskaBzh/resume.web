@@ -21,6 +21,7 @@ use OpenApi\Attributes as OA;
                         new OA\Property(property: 'referral_active_workers_count', type: 'integer'),
                         new OA\Property(property: 'referral_inactive_workers_count', type: 'integer'),
                         new OA\Property(property: 'referral_hash_per_day', type: 'float'),
+                        new OA\Property(property: 'referral_hash_per_day_unit', type: 'string'),
                         new OA\Property(property: 'total_amount', type: 'float'),
                         new OA\Property(property: 'referral_percent', type: 'float'),
                     ],
