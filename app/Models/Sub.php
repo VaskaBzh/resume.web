@@ -7,7 +7,6 @@ namespace App\Models;
 use App\Builders\SubBuilder;
 use App\Enums\Worker\Status;
 use App\Utils\Helper;
-use App\ValueObjects\HashRate;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -105,24 +104,11 @@ class Sub extends Model
     public function hashRate(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this
+            get: fn (): int => (int) $this
                 ->workers()
                 ->byStatus(Status::ACTIVE->value)
-                ->sum('approximate_hash_rate')
+                ->sum('hash_per_day')
 
-        );
-    }
-
-    /**
-     * Convert value and unit
-     */
-    public function convertedHashRate(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => HashRate::from(value: $this->workers()
-                ->byStatus(Status::ACTIVE->value)
-                ->sum('approximate_hash_rate')
-            )
         );
     }
 

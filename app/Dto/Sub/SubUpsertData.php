@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Dto;
+namespace App\Dto\Sub;
 
 use Illuminate\Support\Arr;
 
-final readonly class SubData
+final readonly class SubUpsertData
 {
     /**
      * @param  int  $userId - id пользователя allbtc.com
@@ -21,11 +21,10 @@ final readonly class SubData
         public string $subName,
         public ?float $pendingAmount,
         public ?float $totalAmount,
-        public ?bool $isActive,
     ) {
     }
 
-    public static function fromRequest(array $requestData): SubData
+    public static function fromRequest(array $requestData): SubUpsertData
     {
         return new self(
             userId: $requestData['user_id'],
@@ -33,7 +32,6 @@ final readonly class SubData
             subName: $requestData['sub_name'],
             pendingAmount: Arr::get($requestData, 'pending_amount', 0),
             totalAmount: Arr::get($requestData, 'total_amount', 0),
-            isActive: $requestData['is_active']
         );
     }
 }

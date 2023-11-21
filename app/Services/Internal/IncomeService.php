@@ -9,7 +9,7 @@ use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
 use App\Dto\Income\IncomeCreateData;
-use App\Dto\SubData;
+use App\Dto\Sub\SubUpsertData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
@@ -18,7 +18,7 @@ use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
-use App\Services\External\BtcComService;
+use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 use Illuminate\Support\Facades\Log;
 
@@ -168,7 +168,7 @@ final class IncomeService
         $this->params[Type::MINING->value]['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: BtcComService::FEE + $this->fee
+            fee: config('api.btc.fee') + $this->fee
         );
 
         return $this;
@@ -248,7 +248,7 @@ final class IncomeService
                 'referral_id' => $incomeType->value === 'referral' ? $this->sub->user->id : null,
                 'status' => $this->params[$incomeType->value]['status'],
                 'message' => $this->params[$incomeType->value]['message'],
-                'hash' => $this->params['hash'],
+                'hash' => (float) HashRateConverter::fromPure($this->params['hash'])->value,
                 'diff' => $this->params['diff'],
             ])
         );
@@ -261,13 +261,12 @@ final class IncomeService
     public function updateLocalSub(Sub $sub, Type $incomeType): void
     {
         Update::execute(
-            subData: SubData::fromRequest([
+            subData: SubUpsertData::fromRequest([
                 'user_id' => $sub->user_id,
                 'group_id' => $sub->group_id,
                 'sub_name' => $sub->sub,
                 'pending_amount' => $this->params[$incomeType->value]['pendingAmount'],
                 'total_amount' => $this->params[$incomeType->value]['totalAmount'],
-                'is_active' => $sub->is_active,
             ]),
             sub: $sub
         );
@@ -280,7 +279,7 @@ final class IncomeService
     {
         Create::execute(financeData: FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
-            'earn' => $this->dailyEarn - $this->dailyEarn * (BtcComService::FEE / 100),
+            'earn' => $this->dailyEarn - $this->dailyEarn * (config('api.btc.fee') / 100),
             'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
             'percent' => $this->fee,
             'profit' => $this->dailyEarn * ($this->fee / 100),

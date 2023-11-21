@@ -15,6 +15,7 @@ use OpenApi\Attributes as OA;
             new OA\Property(property: 'active_referrals_count', type: 'integer'),
             new OA\Property(property: 'referrals_total_amount', type: 'float'),
             new OA\Property(property: 'total_referrals_hash_rate', type: 'float'),
+            new OA\Property(property: 'hash_rate_unit', type: 'string'),
             new OA\Property(property: 'referral_percent', type: 'float'),
             new OA\Property(property: 'referral_url', type: 'string'),
         ],
