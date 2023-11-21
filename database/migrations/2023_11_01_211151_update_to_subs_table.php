@@ -44,6 +44,13 @@ return new class extends Migration
                 ->default(0);
         });
 
+        Schema::table('hashes', function (Blueprint $table) {
+            DB::table('hashes')->update(['hash' => 0]);
+            $table->unsignedBigInteger('hash')
+                ->change()
+                ->default(0);
+        });
+
         Schema::table('workers_hashrate', function (Blueprint $table) {
             $table->renameColumn('hash', 'hash_per_min');
         });
@@ -93,6 +100,13 @@ return new class extends Migration
         Schema::table('workers_hashrate', function (Blueprint $table) {
             DB::table('workers_hashrate')->update(['hash_per_min' => 0]);
             $table->float('hash_per_min')
+                ->change()
+                ->default(0);
+        });
+
+        Schema::table('hashes', function (Blueprint $table) {
+            DB::table('hashes')->update(['hash' => 0]);
+            $table->float('hash')
                 ->change()
                 ->default(0);
         });
