@@ -129,17 +129,6 @@ export default {
             "getAccount",
             "overall",
         ]),
-        overallCurrentHashRate() {
-            const currentHashRate = this.getSumAccountsStatistic(
-                "hash_per_min",
-                "hash_per_min_unit"
-            );
-
-            return {
-                hashRate: currentHashRate,
-                unit: "T",
-            };
-        },
     },
     mounted() {
         this.service.setDocumentTitle(this.$t("title"));
@@ -160,24 +149,6 @@ export default {
         },
         toggleIsTable(subsTypeState = null) {
             this.service.toggleSubsType(subsTypeState);
-        },
-        getSumAccountsStatistic(accountStatisticKey, accountUnitKey = null) {
-            const initialValue = 0;
-
-            return this.allAccounts.reduce((accumulator, currentAccount) => {
-                let currentAccountValue = Number(
-                    currentAccount[accountStatisticKey]
-                );
-
-                if (accountUnitKey) {
-                    const hashRateUnit = currentAccount[accountUnitKey];
-
-                    currentAccountValue =
-                        currentAccountValue * UnitMultiplierEnum[hashRateUnit];
-                }
-
-                return accumulator + currentAccountValue;
-            }, initialValue);
         },
     },
 };
