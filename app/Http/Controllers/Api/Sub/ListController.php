@@ -43,7 +43,7 @@ class ListController extends Controller
                                     items: new OA\Items(ref: '#/components/schemas/SubResource'),
                                 ),
                                 new OA\Property(
-                                    property: 'general_subs_data',
+                                    property: 'overall',
                                     type: 'array',
                                     items: new OA\Items(ref: '#/components/schemas/GeneralSubsDataResource')
                                 ),
