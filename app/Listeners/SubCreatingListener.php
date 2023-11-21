@@ -7,8 +7,8 @@ namespace App\Listeners;
 use App\Actions\User\AttachReferral;
 use App\Enums\User\Roles;
 use App\Events\Registered;
-use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
+use App\Services\Internal\SubService;
 
 final readonly class SubCreatingListener
 {
@@ -30,7 +30,7 @@ final readonly class SubCreatingListener
             $event->user->assignRole(Roles::REFERRAL->value);
         }
 
-        app(BtcComService::class)->createLocalSub(
+        app(SubService::class)->create(
             user: $event->user,
             subName: $event->user->name
         );

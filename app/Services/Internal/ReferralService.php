@@ -4,37 +4,44 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
+use App\Builders\SubBuilder;
 use App\Models\Income;
 use App\Models\Sub;
 use App\Models\User;
+use App\Utils\HashRateConverter;
 use Illuminate\Support\Collection;
 
 class ReferralService
 {
     public static function getReferrerStatistic(User $referrer): array
     {
-        $referrer->load([
-            'subs',
-            'referrals',
-            'referrals.subs',
-        ]);
+        $referrer->load('subs');
+
+        $result = User::withCount([
+            'referrals as active_referrals_count' => function ($query) {
+                $query->whereHas('subs', function (SubBuilder $subQuery) {
+                    $subQuery->hasWorkerHashRate();
+                });
+            },
+            'referrals as attached_referrals_count',
+        ])->find($referrer->id);
 
         $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
 
+        $totalHashRate = HashRateConverter::fromPure($activeReferralSubs
+            ->map
+            ->hash_rate
+            ->sum());
+
         return [
             'group_id' => $referrer->active_sub,
-            'attached_referrals_count' => $referrer->referrals
-                ->count(),
-            'active_referrals_count' => $activeReferralSubs
-                ->unique('user_id')
-                ->count(),
+            'attached_referrals_count' => $result->active_referrals_count,
+            'active_referrals_count' => $result->attached_referrals_count,
             'referrals_total_amount' => Income::whereIn('group_id', $referrer->subs->pluck('group_id'))
                 ->where('type', 'referral')
                 ->sum('daily_amount'),
-            'total_referrals_hash_rate' => $activeReferralSubs
-                ->map
-                ->hash_rate
-                ->sum(),
+            'total_referrals_hash_rate' => $totalHashRate->value,
+            'hash_rate_unit' => $totalHashRate->unit,
         ];
     }
 
@@ -49,6 +56,7 @@ class ReferralService
 
             $referralWorkers = $referral->subs->pluck('workers')->flatMap;
             $referralSubs = $referral->subs;
+            $totalHashRate = HashRateConverter::fromPure($referralSubs->map->hash_rate->sum());
 
             return [
                 'email' => $referral->email,
@@ -58,7 +66,8 @@ class ReferralService
                 'referral_inactive_workers_count' => $referralWorkers
                     ->where('status', 'INACTIVE')
                     ->count(),
-                'referral_hash_per_day' => $referralSubs->map->hash_rate->sum(),
+                'referral_hash_per_day' => $totalHashRate->value,
+                'referral_hash_per_day_unit' => $totalHashRate->unit,
                 'total_amount' => $referralSubs->sum('total_amount'),
                 'referral_percent' => $referral->referral_percentage,
             ];

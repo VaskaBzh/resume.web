@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Income;
 
-final readonly class IncomeCompleteData
+final readonly class CompleteData
 {
     public function __construct(
         public string $status,
@@ -12,7 +12,7 @@ final readonly class IncomeCompleteData
     ) {
     }
 
-    public static function fromRequest(array $requestData): IncomeCompleteData
+    public static function fromRequest(array $requestData): CompleteData
     {
         return new self(
             status: $requestData['status'],

@@ -11,14 +11,14 @@ class Update
 {
     public static function execute(WorkerData $workerData): void
     {
-        Worker::where('worker_id', $workerData->worker_id)
-            ->withTrashed()
-            ->update([
-                'name' => $workerData->name,
-                'approximate_hash_rate' => $workerData->approximateHashRate,
-                'status' => $workerData->status,
-                'unit' => $workerData->unit,
-                'pool_data' => $workerData->poolData,
-            ]);
+        Worker::withTrashed()->updateOrCreate(['worker_id' => $workerData->workerId], [
+            'worker_id' => $workerData->workerId,
+            'group_id' => $workerData->groupId,
+            'name' => $workerData->name,
+            'hash_per_day' => $workerData->hashPerDay,
+            'status' => $workerData->status,
+            'unit' => $workerData->unitPerDay,
+            'pool_data' => $workerData->poolData,
+        ]);
     }
 }

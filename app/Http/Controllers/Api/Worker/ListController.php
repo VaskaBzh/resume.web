@@ -8,7 +8,6 @@ use App\Enums\Worker\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WorkerResource;
 use App\Models\Sub;
-use App\Services\External\BtcComService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use OpenApi\Attributes as OA;
@@ -87,9 +86,7 @@ class ListController extends Controller
     public function __invoke(
         Request $request,
         Sub $sub,
-        BtcComService $btcComService
     ): AnonymousResourceCollection {
-
         return WorkerResource::collection(
             resource: $sub->workers()
                 ->byStatus(Status::tryFromInsensitive($request->status)?->value)

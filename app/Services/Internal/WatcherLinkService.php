@@ -8,7 +8,7 @@ use App\Actions\WatcherLink\Create;
 use App\Dto\WatcherLinkData;
 use App\Models\WatcherLink;
 
-class WatcherLinkService
+readonly class WatcherLinkService
 {
     private function __construct(
         private WatcherLinkData $watcherLinkData,
