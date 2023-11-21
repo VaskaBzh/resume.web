@@ -56,7 +56,6 @@
         v-if="settingsService.form !== {}"
         :form="settingsService.form"
         :validate="settingsService.validate"
-        :wait="settingsService.waitAjax"
         :closed="settingsService.closed"
         @ajaxChange="settingsService.ajaxChange($event)"
         @validate="
@@ -67,7 +66,7 @@
     />
     <fac-popup
         :opened="settingsService.openedFacPopup"
-        :wait="settingsService.waitAjax"
+        :wait="settingsService.waitFacProcess"
         :closed="settingsService.closedFacPopup"
         :qr-code="settingsService.qrCode"
         :code="settingsService.code"
@@ -76,11 +75,12 @@
     <fac-disable-popup
         :opened="settingsService.facDisabledPopup.getOpenedState()"
         :closed="settingsService.facDisabledPopup.getClosedState()"
+        :wait="settingsService.waitFacProcess"
         @sendDisable="sendDisable($event)"
     />
     <settings-password-popup
         :opened="settingsService.openedPasswordPopup"
-        :wait="settingsService.waitAjax"
+        :wait="settingsService.waitPasswordChange"
         :closed="settingsService.closedPasswordPopup"
         :validate-service="settingsService"
         :form-data="settingsService.passwordForm"

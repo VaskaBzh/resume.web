@@ -1,13 +1,15 @@
 <template>
     <div
+        v-show="
+            error_list[list_name]?.length > 0 || errors[list_name]?.length > 0
+        "
         class="errors"
-        v-show="error_list[list_name] || errors[list_name]"
     >
         <div
-            class="errors_elem"
             v-for="(error, i) in error_list[list_name] ?? errors[list_name]"
             :key="i"
             v-t="error"
+            class="errors_elem"
         ></div>
     </div>
 </template>
@@ -26,15 +28,15 @@ export default {
         list_name: {
             type: String,
             default: "",
-        }
+        },
     },
     i18n: {
         sharedMessages: ValidationErrorMessages,
     },
     computed: {
-        ...mapGetters(["errors"])
-    }
-}
+        ...mapGetters(["errors"]),
+    },
+};
 </script>
 
 <style scoped lang="scss">
@@ -42,7 +44,7 @@ export default {
     @include columnMixin($gap: 8);
     padding: 0 adaptive-value(12px, 16px);
     &_elem {
-        color: var(--status-failed, #F1404A);
+        color: var(--status-failed, #f1404a);
         font-size: 12px;
         line-height: 16px;
     }

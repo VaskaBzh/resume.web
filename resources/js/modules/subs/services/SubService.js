@@ -1,6 +1,11 @@
+import store from "@/store";
+
 import { DefaultSubsService } from "@/modules/common/services/extends/DefaultSubsService";
 import { PageService } from "@/modules/common/services/extends/PageService";
-import store from "@/store";
+import { PopupControllService } from "@/modules/popup/services/PopupControllService";
+import { Form } from "@/modules/form/models/Form";
+import { ProfileApi } from "@/api/api";
+import { AddFormData } from "@/modules/subs/DTO/AddFormData";
 
 export class SubService extends DefaultSubsService {
     constructor(titleIndexes = [0, 1, 2, 3, 4]) {
@@ -18,7 +23,65 @@ export class SubService extends DefaultSubsService {
         this.waitSubs = true;
         this.emptySubs = false;
         this.emptyTableSubs = false;
+        this.waitSubAdd = false;
+
         this.page = new PageService();
+
+        this.addForm = this.createFormModel();
+        this.addPopup = this.createPopupControllService();
+    }
+
+    createFormModel() {
+        return new Form();
+    }
+
+    createPopupControllService() {
+        return new PopupControllService();
+    }
+
+    addFormProcess() {
+        this.addForm.setFormData(AddFormData).setClearForm();
+    }
+
+    async addSubaccount() {
+        this.waitSubAdd = true;
+        try {
+            this.addForm.validate({
+                name: "required|min:3|max:15|en",
+            });
+
+            const response = (await this.fetchSubAdd()).data;
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "added",
+                text: response.message,
+            });
+
+            this.addPopup.closePopup();
+            this.addForm.setClearForm();
+
+            store.dispatch("accounts_all", store.getters.user.id);
+
+            this.waitSubAdd = false;
+        } catch (err) {
+            this.waitSubAdd = false;
+
+            console.error(`Error with: ${err}`);
+
+            if (err.response && err.response.status !== 401) {
+                store.dispatch("setFullErrors", {
+                    name: err.response.data.errors.messages,
+                });
+            }
+        }
+    }
+
+    async fetchSubAdd() {
+        return await ProfileApi.post(
+            `/subs/create/${store.getters.user.id}`,
+            this.addForm.form
+        );
     }
 
     setTranslate(translate) {
@@ -72,9 +135,7 @@ export class SubService extends DefaultSubsService {
     }
 
     tableProcess() {
-        this.setRows()
-            .setTitles()
-            .setTable();
+        this.setRows().setTitles().setTable();
 
         return this;
     }
@@ -83,26 +144,20 @@ export class SubService extends DefaultSubsService {
         const query = searchQuery.toLowerCase().trim();
 
         if (!query) {
-            this.setSubList()
-                .tableStatesProcess()
-                .tableProcess();
+            this.setSubList().tableStatesProcess().tableProcess();
 
             return this;
         }
 
         const newSubsArray = store.getters.allAccounts
             .map((sub) => {
-
                 const filteredSubsList = sub.name.toLowerCase().includes(query);
 
                 return filteredSubsList ? sub : null;
             })
-            .filter(bool => bool);
+            .filter((bool) => bool);
 
-        this.setSubList(newSubsArray)
-            .tableStatesProcess()
-            .tableProcess();
-
+        this.setSubList(newSubsArray).tableStatesProcess().tableProcess();
     }
 
     setSubList(newSubList = store.getters.allAccounts) {
@@ -125,7 +180,6 @@ export class SubService extends DefaultSubsService {
     toggleSubsType(subsTypeState = null) {
         this.subsType = subsTypeState ?? !this.subsType;
     }
-
 
     setDocumentTitle(title) {
         this.page.titleProcess(title);

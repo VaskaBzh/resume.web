@@ -1,16 +1,14 @@
 <template>
-    <main-popup
-        id="2fac_disable"
-        ref="fac"
-        :opened="opened"
-        :wait="wait"
-        :closed="closed"
-    >
+    <main-popup id="2fac_disable" ref="fac" :opened="opened" :closed="closed">
         <form-popup @submitForm="closePopup">
             <template #head>
                 <main-head>
-                    <template #title>{{ $t("fac_popup.disable.title") }}</template>
-                    <template #text>{{ $t("fac_popup.disable.text") }}</template>
+                    <template #title>{{
+                        $t("fac_popup.disable.title")
+                    }}</template>
+                    <template #text>{{
+                        $t("fac_popup.disable.text")
+                    }}</template>
                 </main-head>
             </template>
             <template #content>
@@ -25,8 +23,11 @@
                 <main-button
                     class="button-blue button-full fac_button"
                     type="submit"
+                    :wait="wait"
                 >
-                    <template #text>{{ $t("fac_popup.disable.button") }}</template>
+                    <template #text>{{
+                        $t("fac_popup.disable.button")
+                    }}</template>
                 </main-button>
             </template>
         </form-popup>
@@ -46,6 +47,15 @@ import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 
 export default {
     name: "FacDisablePopup",
+    components: {
+        FormPopupInput,
+        FormPopup,
+        MainHead,
+        MainPopup,
+        MainCopy,
+        MainButton,
+        MainInput,
+    },
     props: {
         opened: Boolean,
         closed: Boolean,
@@ -61,18 +71,11 @@ export default {
             },
         };
     },
-    components: {
-        FormPopupInput,
-        FormPopup,
-        MainHead,
-        MainPopup,
-        MainCopy,
-        MainButton,
-        MainInput,
-    },
     methods: {
         closePopup() {
-            this.$emit("sendDisable", this.form);
+            if (!this.wait) {
+                this.$emit("sendDisable", this.form);
+            }
         },
     },
 };
