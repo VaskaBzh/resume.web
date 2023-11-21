@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Services\Internal\ReferralService;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -27,5 +28,10 @@ class UserSeeder extends Seeder
             'referral_discount' => $user->referral_discount,
             'password' => bcrypt('12345678'),
         ])->assignRole('referral');
+
+        User::whereEmail('forest@gmail.com')->update([
+            'active_sub' => 6001912,
+            'referral_code' => ReferralService::generateReferralCode($user),
+        ]);
     }
 }
