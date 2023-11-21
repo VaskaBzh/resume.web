@@ -56,10 +56,7 @@
                     {{ $t("referral.text") }}
                 </p>
                 <div class="referral__row">
-                    <main-copy
-                        class="referral_code"
-                        :code="service.code"
-                    />
+                    <main-copy class="referral_code" :code="service.code" />
                 </div>
             </div>
         </div>
@@ -78,6 +75,7 @@
                     class="referral__card-info"
                     :title="$t('stats.cards[3]')"
                     :value="service.statsCards[2]?.value ?? 0"
+                    :hint="$t('stats.hints.active')"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/active-icon.png" />
@@ -161,7 +159,7 @@ export default {
         if (this.user.id) {
             this.service.setUser(this.user);
 
-             this.service.index();
+            this.service.index();
         }
         this.service.getGradeList();
 

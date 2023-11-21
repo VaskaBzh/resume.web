@@ -65,7 +65,7 @@
             <transition name="fade">
                 <watchers-card
                     v-if="
-                        viewportWidth > 700 &&
+                        viewportWidth > 850 &&
                         !service.waitTable &&
                         !service.emptyTable
                     "
@@ -92,7 +92,7 @@
         @removeWatcher="removeWatcher($event)"
     />
     <watchers-popup-card
-        v-if="viewportWidth <= 700"
+        v-if="viewportWidth <= 850"
         :wait="service.wait"
         :closed="service.popupCardClosed"
         :opened="service.popupCardOpened"
@@ -328,7 +328,7 @@ export default {
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 850px) {
     .watchers__wrapper {
         display: flex;
     }

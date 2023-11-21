@@ -24,7 +24,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-    name: "nav-tab",
+    name: "NavTab",
     props: {
         tab: Object,
     },

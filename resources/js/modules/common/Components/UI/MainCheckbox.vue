@@ -3,7 +3,7 @@
         ref="checkbox"
         class="checkbox"
         @click="checkboxer"
-        :class="{ checked: isChecked }"
+        :class="{ checked: isChecked, disabled: !editable }"
     >
         <slot></slot>
     </span>
@@ -24,6 +24,7 @@ export default {
     data() {
         return {
             isChecked: this.is_checked,
+
         };
     },
     methods: {
@@ -62,8 +63,9 @@ export default {
         width: 60px;
         height: 32px;
         background: var(--main-checkbox-default);
-        transition: all 0.3s ease;
         border-radius: 32px;
+        opacity: 1;
+        transition: all .2s ease;
     }
     &::before {
         content: "";
@@ -77,25 +79,48 @@ export default {
         filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.1));
         border-radius: 50%;
         background: #fff;
-        transition: all 0.3s ease;
+        opacity: 1;
+        transition: all .2s ease;
     }
     &.checked {
+        transition: all .3s ease;
+        opacity: 1;
         &::before {
+            opacity: 1;
             right: 4px;
+
         }
         &:after {
+            opacity: 1;
             background: #53b1fd;
+
         }
     }
+
+    &.disabled {
+        transition: opacity .3s ease;
+        &::before {
+            opacity: .5;
+
+        }
+        &:after {
+            opacity: .5;
+
+        }
+    }
+
     &-sm {
         &::after {
             width: 44px;
             height: 24px;
+            opacity: 1;
+
         }
         &::before {
             width: 16px;
             height: 16px;
             right: 24px;
+            opacity: 1;
         }
     }
 }
