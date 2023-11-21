@@ -11,11 +11,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        /*
-         * Заполнит базу тестовым пользователем
-         *
-        */
-        User::updateOrCreate(['email' => 'forest@gmail.com'], [
+        $user = User::updateOrCreate(['email' => 'forest@gmail.com'], [
             'name' => 'MainTest',
             'email' => 'forest@gmail.com',
             'referral_percent' => 1,
@@ -26,10 +22,10 @@ class UserSeeder extends Seeder
         User::updateOrCreate(['email' => 'referral@gmail.com'], [
             'name' => 'Referral',
             'email' => 'referral@gmail.com',
-            'referrer_id' => 1,
-            'referral_percent' => 1,
-            'referral_discount' => 0,
+            'referrer_id' => $user->id,
+            'referral_percent' => $user->referral_percent,
+            'referral_discount' => $user->referral_discount,
             'password' => bcrypt('12345678'),
-        ]);
+        ])->assignRole('referral');
     }
 }

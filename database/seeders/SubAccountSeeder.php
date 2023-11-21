@@ -21,6 +21,14 @@ class SubAccountSeeder extends Seeder
             'sub' => 'MainTest',
         ]);
 
+        Sub::updateOrcreate([
+            'group_id' => 9999999,
+        ], [
+            'user_id' => User::whereEmail('referral@gmail.com')->first()->id,
+            'group_id' => 9999999,
+            'sub' => 'Referral',
+        ]);
+
         User::find(1)->update([
             'active_sub' => 6001912,
             'referral_code' => ReferralService::generateReferralCode(User::find(1)),

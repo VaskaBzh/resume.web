@@ -19,6 +19,7 @@ use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
 use App\Services\External\BtcComService;
+use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 use Illuminate\Support\Facades\Log;
 
@@ -168,7 +169,7 @@ final class IncomeService
         $this->params[Type::MINING->value]['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: BtcComService::FEE + $this->fee
+            fee: config('api.btc.fee') + $this->fee
         );
 
         return $this;
@@ -248,7 +249,7 @@ final class IncomeService
                 'referral_id' => $incomeType->value === 'referral' ? $this->sub->user->id : null,
                 'status' => $this->params[$incomeType->value]['status'],
                 'message' => $this->params[$incomeType->value]['message'],
-                'hash' => $this->params['hash'],
+                'hash' => (float) HashRateConverter::fromPure($this->params['hash'])->value,
                 'diff' => $this->params['diff'],
             ])
         );
@@ -279,7 +280,7 @@ final class IncomeService
     {
         Create::execute(financeData: FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
-            'earn' => $this->dailyEarn - $this->dailyEarn * (BtcComService::FEE / 100),
+            'earn' => $this->dailyEarn - $this->dailyEarn * (config('api.btc.fee') / 100),
             'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
             'percent' => $this->fee,
             'profit' => $this->dailyEarn * ($this->fee / 100),
