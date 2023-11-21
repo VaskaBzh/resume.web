@@ -132,6 +132,7 @@ export default {
     },
     mounted() {
         this.service.setDocumentTitle(this.$t("title"));
+        this.service.addFormProcess();
         this.subProcess();
     },
     methods: {
@@ -144,8 +145,7 @@ export default {
                 .setSubList(this.allAccounts)
                 .statesProcess()
                 .tableStatesProcess()
-                .tableProcess()
-                .addFormProcess();
+                .tableProcess();
         },
         toggleIsTable(subsTypeState = null) {
             this.service.toggleSubsType(subsTypeState);
