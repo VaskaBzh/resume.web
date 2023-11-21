@@ -109,6 +109,7 @@ export default {
         &-list {
             width: fit-content;
             @media (max-width: 497.98px) {
+                width: auto;
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 600;

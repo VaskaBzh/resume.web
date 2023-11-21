@@ -16,9 +16,35 @@
                             <p class="mission-view_item_text">
                                 {{ $t("main.text[0]") }}
                             </p>
+                        </div>
+                    </landing-text>
+                </template>
+            </landing-wrap>
+            <landing-wrap>
+                <template #title>
+                    {{ $t("main.title[1]") }}
+                </template>
+                <template #content>
+                    <landing-text>
+                        <div
+                            class="mission__cards animation-up animation-opacity"
+                        >
                             <p class="mission-view_item_text-two">
                                 {{ $t("main.text[1]") }}.
                             </p>
+                        </div>
+                    </landing-text>
+                </template>
+            </landing-wrap>
+            <landing-wrap>
+                <template #title>
+                    {{ $t("main.title[2]") }}
+                </template>
+                <template #content>
+                    <landing-text>
+                        <div
+                            class="mission__cards animation-up animation-opacity"
+                        >
                             <p class="mission-view_item_text-three">
                                 {{ $t("main.text[2]") }}
                             </p>

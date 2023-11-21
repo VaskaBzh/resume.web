@@ -99,7 +99,7 @@ export default {
 
 .footer-content {
     position: relative;
-    padding: clamp(50px, 10vw, 100px) clamp(16px, 5vw, 100px) 0;
+    padding: clamp(50px, 10vw, 100px) clamp(16px, 5vw, 100px) 1px;
 }
 
 .footer-content::before {
@@ -217,7 +217,6 @@ export default {
 .connect-button {
     border-radius: 20px;
     border: 1px solid var(--secondary-gray-2, rgba(152, 162, 179, 0.5));
-    padding: 10px;
     color: var(--gray-170, rgba(245, 250, 255, 0.7));
     text-align: center;
     font-family: NunitoSans;
@@ -228,6 +227,13 @@ export default {
     width: 108%;
     text-transform: uppercase;
     cursor: pointer;
+    min-height: 36px;
+}
+
+.connect-button a {
+    padding: 10px;
+    width: 100%;
+    display: inline-block;
 }
 
 li {
