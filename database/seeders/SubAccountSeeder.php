@@ -6,7 +6,6 @@ namespace Database\Seeders;
 
 use App\Models\Sub;
 use App\Models\User;
-use App\Services\Internal\ReferralService;
 use Illuminate\Database\Seeder;
 
 class SubAccountSeeder extends Seeder
