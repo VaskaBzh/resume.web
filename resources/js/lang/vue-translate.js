@@ -1471,7 +1471,7 @@ const messages = {
                 complexity: "Сложность",
                 hosting: "Хостингам",
                 settings: "Настройки",
-                referral: "Реф кабинет",
+                referral: "Реферальный кабинет",
                 buttons: {
                     add: "Добавить сабаккаунт",
                     leave: "Выйти",
@@ -1775,7 +1775,7 @@ const messages = {
             connecting: "Подключение",
             watchers: "Наблюдатели",
             wallets: "Кошельки",
-            referral: "Реф кабинет",
+            referral: "Реферальный кабинет",
             settings: "Аккаунт",
             faq: "FAQ",
             support: "Поддержка",

@@ -78,6 +78,7 @@
                     class="referral__card-info"
                     :title="$t('stats.cards[3]')"
                     :value="service.statsCards[2]?.value ?? 0"
+                    :hint="$t('stats.hints.active')"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/active-icon.png" />
