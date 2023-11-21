@@ -10,14 +10,16 @@ use App\Enums\Hash\Unit;
 use App\Models\Sub;
 use App\Services\External\TransformContract;
 use App\Utils\HashRateConverter;
+use Illuminate\Support\Arr;
 
 class DataTransformer implements TransformContract
 {
     public function transformSub(Sub $sub, array $remoteSub): SubViewData
     {
         $hashPerDayPure = $sub->hash_rate;
+        $hashPerMinPure = (int) Arr::get($remoteSub, 'shares_1m_pure', 0);
 
-        $hashPerMin = HashRateConverter::fromPure((int) $remoteSub['shares_1m_pure']);
+        $hashPerMin = HashRateConverter::fromPure($hashPerMinPure);
         $hashPerDay = HashRateConverter::fromPure($hashPerDayPure);
 
         return SubViewData::fromArray([
@@ -27,7 +29,7 @@ class DataTransformer implements TransformContract
             'active_workers_count' => $sub->workers->where('status', 'ACTIVE')->count(),
             'inactive_workers_count' => $sub->workers->where('status', 'INACTIVE')->count(),
             'dead_workers_count' => $sub->workers->where('status', 'DEAD')->count(),
-            'hash_per_min_pure' => (int) $remoteSub['shares_1m_pure'],
+            'hash_per_min_pure' => $hashPerMinPure,
             'hash_per_min' => (float) $hashPerMin->value,
             'hash_per_min_unit' => $hashPerMin->unit,
             'hash_per_day_pure' => (int) $hashPerDayPure,
@@ -52,12 +54,12 @@ class DataTransformer implements TransformContract
             'name' => $remoteWorker['worker_name'],
             'status' => $remoteWorker['status'],
             'hash_per_day' => HashRateConverter::toPure(
-                value: (float) $remoteWorker['shares_1d'],
-                unit: Unit::tryFrom($remoteWorker['shares_1d_unit'])
+                value: (float) Arr::get($remoteWorker, 'shares_1d', 0),
+                unit: Unit::tryFrom(Arr::get($remoteWorker, 'shares_1d_unit', 'T'))
             )->value,
-            'unit_per_day' => $remoteWorker['shares_1d_unit'],
-            'hash_per_min' => $remoteWorker['shares_1m_pure'],
-            'unit_per_min' => $remoteWorker['shares_unit'],
+            'unit_per_day' => Arr::get($remoteWorker, 'shares_1d_unit', 'T'),
+            'hash_per_min' => Arr::get($remoteWorker, 'shares_1m_pure', 0),
+            'unit_per_min' => Arr::get($remoteWorker, 'shares_unit', 'T'),
             'pool_data' => $remoteWorker,
         ]);
     }
