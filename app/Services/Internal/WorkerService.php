@@ -8,8 +8,8 @@ use App\Actions\Worker\Create;
 use App\Actions\Worker\Update;
 use App\Dto\WorkerData;
 use App\Models\Sub;
-use App\Services\External\ClientContract;
-use App\Services\External\TransformContract;
+use App\Services\External\Contracts\ClientContract;
+use App\Services\External\Contracts\TransformContract;
 use Illuminate\Support\Collection;
 
 final readonly class WorkerService

@@ -10,8 +10,8 @@ use App\Dto\Sub\SubUpsertData;
 use App\Dto\Sub\SubViewData;
 use App\Models\Sub;
 use App\Models\User;
-use App\Services\External\ClientContract;
-use App\Services\External\TransformContract;
+use App\Services\External\Contracts\ClientContract;
+use App\Services\External\Contracts\TransformContract;
 use Illuminate\Support\Collection;
 
 final readonly class SubService

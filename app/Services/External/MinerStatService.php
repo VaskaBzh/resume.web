@@ -6,6 +6,7 @@ namespace App\Services\External;
 
 use App\Actions\MinerStat\Upsert;
 use App\Models\MinerStat;
+use App\Services\External\Contracts\ClientContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -29,7 +30,7 @@ class MinerStatService
     private function import(): ?Collection
     {
         $stats = [
-            'fpps_rate' => resolve(BtcComService::class)->getFppsRate(),
+            'fpps_rate' => resolve(ClientContract::class)->getFppsRate(),
             'network_hashrate' => (float) number_format(
                 (int) $this->call(self::$urls['network_hashrate']) / 1000000000,
                 2,

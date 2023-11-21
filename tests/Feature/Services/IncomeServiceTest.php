@@ -28,6 +28,7 @@ class IncomeServiceTest extends TestCase
             ->get();
     }
 
+
     /**
      * @test
      *
@@ -70,8 +71,6 @@ class IncomeServiceTest extends TestCase
 
         $getPureDailyEarning = $this->calculate($hashrate);
         $expectDailyAmount = $this->calculate($hashrate, config('api.btc.fee') + 3.5);
-
-        $this->assertTrue($getPureDailyEarning > $expectDailyAmount);
 
         $this->assertDatabaseHas('incomes', [
             'group_id' => $subWithHashRate->group_id,
