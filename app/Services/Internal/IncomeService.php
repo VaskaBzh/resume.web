@@ -18,7 +18,6 @@ use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
-use App\Services\External\BtcComService;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 use Illuminate\Support\Facades\Log;
