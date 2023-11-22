@@ -24,17 +24,21 @@ final readonly class HashRateConverter
         $gH = $pureHashRate / pow(10, 9);
 
         return match (true) {
-            $pureHashRate >= 0 && $numberLength < 13 => new self(
+            $pureHashRate == 0 || $numberLength < 10 => new self(
+                '0.0',
+                Unit::TERA_HASH->value
+            ),
+            $pureHashRate > 0 && $numberLength < 13 => new self(
                 number_format($gH, 2, '.', ''),
                 Unit::GIGA_HASH->value
-            ),
-            $numberLength >= 16 => new self(
-                number_format($gH / 1000000, 2, '.', ''),
-                Unit::PETA_HASH->value
             ),
             $numberLength < 16 && $numberLength >= 13 => new self(
                 number_format($gH / 1000, 2, '.', ''),
                 Unit::TERA_HASH->value
+            ),
+            $numberLength >= 16 => new self(
+                number_format($gH / 1000000, 2, '.', ''),
+                Unit::PETA_HASH->value
             ),
             default => throw new \Exception('Number can not be unsigned')
         };
