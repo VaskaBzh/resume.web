@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Sub;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Sub\GeneralSubsDataResource;
+use App\Http\Resources\Sub\OverallSubsDataResource;
 use App\Http\Resources\Sub\SubResource;
 use App\Models\User;
 use App\Services\Internal\SubService;
@@ -45,7 +45,7 @@ class ListController extends Controller
                                 new OA\Property(
                                     property: 'overall',
                                     type: 'array',
-                                    items: new OA\Items(ref: '#/components/schemas/GeneralSubsDataResource')
+                                    items: new OA\Items(ref: '#/components/schemas/OverallSubsDataResource')
                                 ),
                             ],
                             type: 'object'
@@ -80,7 +80,7 @@ class ListController extends Controller
 
         return new JsonResponse([
             'list' => SubResource::collection($subCollection->get('subs')),
-            'overall' => new GeneralSubsDataResource($subCollection->get('overall')),
+            'overall' => new OverallSubsDataResource($subCollection->get('overall')),
         ]);
     }
 }
