@@ -3,12 +3,12 @@ export const WorkerMessages = {
         all: "All",
         active: "Active",
         inactive: "Inactive",
-        dead: "Dead",
+        dead: "Archive",
     },
     ru: {
         all: "Все",
         active: "Активные",
         inactive: "Неактивные",
-        dead: "Мертвые",
-    }
-}
+        dead: "Архив",
+    },
+};

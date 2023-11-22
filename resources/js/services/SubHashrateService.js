@@ -47,12 +47,9 @@ export class SubHashrateService {
     async makeFullValues() {
         const [values, amount, unit] = this.records.slice(-this.offset).reduce(
             (acc, el) => {
-                let hashrate = el.hashrate ?? 0;
-                if (el.unit === "P") hashrate *= 1000;
-                else if (el.unit === "E") hashrate *= 1000000;
-                acc[0].push(Number(hashrate));
-                el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                acc[2].push("T");
+                acc[0].push(el.hashrate ?? 0);
+                acc[1].push(el.amount || 0);
+                acc[2].push(el.unit || "T");
 
                 return acc;
             },
