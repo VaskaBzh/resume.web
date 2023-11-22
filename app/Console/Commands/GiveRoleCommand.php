@@ -19,7 +19,7 @@ class GiveRoleCommand extends Command
         $roleName = $this
             ->choice(
                 question: 'What role would you like to assign to the user?',
-                choices: Role::all()->pluck('name')->toArray()
+                choices: Role::all()->pluck('name')->toArray(),
             );
 
         match ($roleName) {
@@ -32,7 +32,7 @@ class GiveRoleCommand extends Command
     private function createReferralProgram(string $roleName)
     {
         while (true) {
-            $userCredential = $this->ask(question: 'Please type referrer name or email');
+            $userCredential = $this->ask(question: 'Please type owner name or email');
             $user = User::where('name', $userCredential)
                 ->orWhere('email', $userCredential)
                 ->firstOrFail();
@@ -48,6 +48,7 @@ class GiveRoleCommand extends Command
                 'referral_discount' => $this->ask('Referral discount'),
                 'referral_code' => ReferralService::generateReferralCode($user),
             ];
+
 
             if ($this->confirm('Are your sure?')) {
 
@@ -72,13 +73,14 @@ class GiveRoleCommand extends Command
 
             $referrerEmail = $this->choice(
                 question: 'Please choice referrer',
-                choices: $referrers->pluck('email')->toArray()
+                choices: $referrers->pluck('name', 'email')->toArray()
             );
 
             $referrer = $referrers->where('email', $referrerEmail)->first();
 
             $userCredential = $this->ask(question: 'Please type referral name or email');
             $user = User::whereEmail($userCredential)
+                ->orWhere('name', $userCredential)
                 ->firstOrFail();
 
             $customReferralPercent = $this->ask('Enter the special referral percent');
