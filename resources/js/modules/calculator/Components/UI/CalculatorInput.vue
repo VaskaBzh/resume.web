@@ -1,17 +1,17 @@
 <template>
-    <div class="row" @mousedown="$refs.input.focus()">
+    <label :for="inputName" class="row" @mousedown="$refs.input.focus()">
         <input
+            :id="inputName"
             ref="input"
+            v-model="value"
             type="text"
             :disabled="disabled"
-            :id="inputName"
             :name="inputName"
-            v-model="value"
             class="row__input"
             :placeholder="$t(inputLabel)"
         />
-        <span class="row_unit" v-show="inputUnit">{{ inputUnit }}</span>
-    </div>
+        <span v-show="inputUnit" class="row_unit">{{ inputUnit }}</span>
+    </label>
 </template>
 
 <script>
@@ -35,13 +35,13 @@ export default {
     watch: {
         value(newVal, oldVal) {
             clearTimeout(this.throttle);
+            let regExp = /[a-zа-яё]|[!$()№";'@#&_%$*+,~`:=<>?[|\]/\-\\^{|}]/gi;
+            if (newVal.length > 9 || regExp.test(newVal)) {
+                this.value = oldVal;
+                return;
+            }
 
             this.throttle = setTimeout(() => {
-                let regExp = /[a-zа-яё]|[!$()№";'@#&_%$*+,~`:=<>?[|\]/\-\\^{|}]/gi;
-                if (newVal.length > 9 || regExp.test(newVal)) {
-                    this.value = oldVal;
-                    return;
-                }
                 this.$emit("getValue", newVal);
             }, 500);
         },

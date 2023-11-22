@@ -80,13 +80,15 @@ export class WorkerService {
                 name: "dead",
                 value: "dead",
             },
-        ]
+        ];
 
         return this;
     }
 
     async fetchList() {
-        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`);
+        return await ProfileApi.get(
+            `/workers/${this.group_id}?per_page=100&status=${this.status}`
+        );
     }
 
     async fetchWorker() {
