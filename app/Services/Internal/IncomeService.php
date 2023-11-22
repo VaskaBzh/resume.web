@@ -211,7 +211,7 @@ final class IncomeService
     {
         $dailyAmount = $this->params[$incomeType->value]['dailyAmount'];
 
-        return ($sub->pending_amount + $dailyAmount) >= Wallet::MIN_BITCOIN_WITHDRAWAL;
+        return ($sub->pending_amount + $dailyAmount) >= config('api.wallet.min_withdrawal');
     }
 
     /**

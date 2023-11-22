@@ -29,7 +29,7 @@ export const HomeMessage = {
             },
             card_community: {
                 title: ["community for miners"],
-                num: ["No.1", "24/7", "1", "4%"],
+                num: ["№1", "24/7", "1", "4%"],
                 text: [
                     "customer service",
                     "fast technical support",
