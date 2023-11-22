@@ -4,7 +4,7 @@
             <landing-headline class="security__headline"
             >{{ $t("safety.button") }}
             </landing-headline>
-            <landing-wrap>
+            <landing-wrap >
                 <template v-slot:title>
                     {{ $t("safety.encryption.title") }}
                 </template>
@@ -15,7 +15,7 @@
                         {{ $t("safety.encryption.text") }}
                     </landing-text>
                 </template>
-            </landing-wrap>
+            </landing-wrap >
             <landing-wrap>
                 <template v-slot:title>
                     {{ $t("safety.updates.title") }}
@@ -28,7 +28,7 @@
                     </landing-text>
                 </template>
             </landing-wrap>
-            <landing-wrap>
+            <landing-wrap >
                 <template v-slot:title>
                     {{ $t("safety.DDoS.title") }}
                 </template>
@@ -96,11 +96,20 @@ export default {
     }
 }
 
+
+
+
+
+
 .security__hidden {
     opacity: 0;
     height: 0;
     max-width: 860px;
     width: 100%;
+}
+
+.security_text {
+    font-size: clamp(14px, 1vw, 20px);
 }
 
 @media (max-width: 767.87px) {

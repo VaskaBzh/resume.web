@@ -84,7 +84,7 @@ export default {
     &_text {
         color: #f5faff;
         font-family: Unbounded, serif;
-        font-size: 55px;
+        font-size: clamp(30px, 2.8vw, 55px);
         font-style: normal;
         font-weight: 600;
         line-height: 120%;
@@ -99,5 +99,12 @@ export default {
     justify-content: center;
     gap: 16px;
     margin-left: 70px;
+}
+
+@media (max-width: 445px) {
+    .connect-withus_btn{
+        width: 40px;
+        height: 40px;
+    }
 }
 </style>

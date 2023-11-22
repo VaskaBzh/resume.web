@@ -63,7 +63,7 @@ export default {
     width: 100vw;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 98;
     background: rgba(0, 0, 0, 0.5);
     cursor: pointer;
 

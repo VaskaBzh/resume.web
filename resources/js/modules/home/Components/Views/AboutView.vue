@@ -172,6 +172,10 @@ export default {
     flex-direction: column;
     gap: clamp(50px, 5vw, 100px);
 
+    @media (max-width: $tablet) {
+        gap: 100px;
+    }
+
     &__headline {
         @media (max-width: 1500.87px) {
             margin-bottom: 135px;
@@ -182,6 +186,10 @@ export default {
         display: flex;
         flex-direction: column;
         gap: clamp(50px, 10vw, 30px);
+
+        @media (max-width: $tablet) {
+            gap: 20px;
+        }
     }
 
     &__wrapper {

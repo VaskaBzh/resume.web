@@ -163,9 +163,11 @@ export default {
     &__content {
         display: flex;
         flex-direction: column;
-        max-width: 536px;
         width: 100%;
         gap: 16px;
+        @media (min-width: 991.98px) {
+            max-width: 536px;
+        }
     }
 
     &_title {
