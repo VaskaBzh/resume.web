@@ -10,6 +10,7 @@
                 v-show="!!link"
                 href="https://t.me/allbtc_support"
                 class="warning_link"
+                target="_blank"
             >
                 {{ $t(link) }}
             </a>

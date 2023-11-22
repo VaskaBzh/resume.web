@@ -57,9 +57,14 @@ export class CabinetService {
                 this.getHashRate(data?.total_referrals_hash_rate)
             ),
             new SelectData(
-                "hashrate",
+                "percent",
                 this.translate("stats.cards[1]"),
                 data?.referral_percent || 0
+            ),
+            new SelectData(
+                "hash_unit",
+                this.translate("stats.cards[1]"),
+                data?.hash_rate_unit || "T"
             ),
         ];
     }
