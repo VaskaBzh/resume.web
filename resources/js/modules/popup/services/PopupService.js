@@ -2,7 +2,6 @@ import { ref } from "vue";
 import anime from "animejs";
 import store from "@/store";
 
-
 export class PopupService {
     constructor(id, emit) {
         this.isOpened = ref(false);
@@ -48,18 +47,6 @@ export class PopupService {
             this.animate.remove(this.popupBlockHtml);
             this.animate.remove(this.popupLogoHtml);
         }
-    }
-
-    animateOnUpdate() {
-        this.animate = anime({
-            targets: this.popupBlockHtml,
-            height: `${this.getClearScrollHeight()}px`,
-            easing: "easeInCubic",
-            duration: 500,
-            complete: () => {
-                this.dropAnimate();
-            },
-        });
     }
 
     closeAnimate() {
@@ -124,7 +111,10 @@ export class PopupService {
         const sidesPaddingValue = paddingWithoutUnit * 2;
         const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
 
-        const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
+        const newHeightValue =
+            this.popupContentHtml.scrollHeight +
+            sidesPaddingValue +
+            sidesBorderWidthValue;
         return newHeightValue;
     }
 
@@ -133,7 +123,7 @@ export class PopupService {
     }
 
     removeLetters(string, letters = "px") {
-        return string.replace(letters, "")
+        return string.replace(letters, "");
     }
 
     dropContentHeight() {
