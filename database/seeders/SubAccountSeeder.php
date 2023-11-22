@@ -20,12 +20,20 @@ class SubAccountSeeder extends Seeder
             'sub' => 'MainTest',
         ]);
 
-        Sub::updateOrcreate([
-            'group_id' => 9999999,
-        ], [
-            'user_id' => User::whereEmail('referral@gmail.com')->first()->id,
-            'group_id' => 9999999,
-            'sub' => 'Referral',
-        ]);
+        User::where('name', 'like', '%Referral%')
+            ->get()
+            ->each(function (User $user) {
+                $groupID = (int) implode('', [$user->id, '1111']);
+
+                $user->subs()->updateOrCreate(['group_id' => $groupID],
+                    [
+                        'group_id' => $groupID,
+                        'sub' => $user->name,
+                        'pending_amount' => 0,
+                        'total_amount' => 0,
+                        'allbtc_fee' => config('api.btc.fee'),
+                    ]);
+            });
+
     }
 }

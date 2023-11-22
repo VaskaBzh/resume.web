@@ -27,6 +27,7 @@ class WorkerHashRateResource extends JsonResource
     public function toArray($request): array
     {
         $hashRate = HashRateConverter::fromPure((int) $this->hash_per_min);
+
         return [
             'id' => $this->id,
             'hash' => $hashRate->value,

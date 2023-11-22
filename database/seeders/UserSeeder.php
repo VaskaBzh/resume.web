@@ -20,18 +20,20 @@ class UserSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ])->assignRole('referrer');
 
-        User::updateOrCreate(['email' => 'referral@gmail.com'], [
-            'name' => 'Referral',
-            'email' => 'referral@gmail.com',
-            'referrer_id' => $user->id,
-            'referral_percent' => $user->referral_percent,
-            'referral_discount' => $user->referral_discount,
-            'password' => bcrypt('12345678'),
-        ])->assignRole('referral');
-
         User::whereEmail('forest@gmail.com')->update([
             'active_sub' => 6001912,
             'referral_code' => ReferralService::generateReferralCode($user),
         ]);
+
+        foreach (str_split('123456789') as $number) {
+            User::updateOrCreate(['email' => $number.'@gmail.com'], [
+                'name' => 'Referral.'.$number,
+                'email' => $number.'@gmail.com',
+                'referrer_id' => $user->id,
+                'referral_percent' => $user->referral_percent,
+                'referral_discount' => $user->referral_discount,
+                'password' => bcrypt('12345678'),
+            ])->assignRole('referral');
+        }
     }
 }
