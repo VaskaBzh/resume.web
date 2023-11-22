@@ -32,7 +32,7 @@ class SubBuilder extends BaseBuilder
         return $this
             ->with('wallets')
             ->has('wallets')
-            ->where('pending_amount', '>=', Wallet::MIN_BITCOIN_WITHDRAWAL);
+            ->where('pending_amount', '>=', config('api.wallet.min_withdrawal'));
     }
 
     public function getActive(Collection $userIds): Builder
