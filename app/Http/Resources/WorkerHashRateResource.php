@@ -30,7 +30,7 @@ class WorkerHashRateResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'hash' => $hashRate->value,
+            'hash' => (int) $hashRate->value,
             'unit' => $hashRate->unit,
             'worker_id' => $this->worker_id,
         ];
