@@ -74,7 +74,9 @@
                                 worker_service.visibleCard
                             "
                             class="workers__card"
-                            :wait="worker_service.waitTargetWorker"
+                            :wait="
+                                worker_service.waitTargetWorker || waitAnimation
+                            "
                             :target_worker="worker_service.target_worker"
                             :graph="worker_service.workers_graph"
                             @closeCard="dropWorkers"
@@ -140,6 +142,8 @@ export default {
             workersDead: 0,
             changedActive: -1,
             removePercent: false,
+            waitAnimation: false,
+            waitTimeout: null,
             worker_service: new WorkerService(
                 this.$t,
                 [0, 1, 3, 4],
@@ -168,9 +172,17 @@ export default {
             await this.worker_service.fillTable();
         },
         async getTargetWorker(data) {
+            clearTimeout(this.waitTimeout);
+
             if (this.viewportWidth > 1200) {
                 this.removePercent = true;
             }
+
+            this.waitAnimation = true;
+
+            this.waitTimeout = setInterval(() => {
+                this.waitAnimation = false;
+            }, 500);
 
             await this.worker_service.getPopup(data.id);
         },
