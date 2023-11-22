@@ -42,8 +42,12 @@ final readonly class SubService
 
     public function getSubList(User $user): Collection
     {
+        $localUserSubs = $user
+            ->subs()
+            ->with('workers')
+            ->get();
+
         $remoteSubs = $this->client->getSubList();
-        $localUserSubs = self::withLocal($user->pluck('id'), $remoteSubs->pluck('gid'));
         $transformed = $this->transformCollection($localUserSubs, $remoteSubs);
 
         return collect([
