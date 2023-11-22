@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Referral\ReferralIncomeResource;
 use App\Models\Income;
 use App\Models\User;
+use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -94,13 +95,14 @@ class IncomeListController extends Controller
             ]
         )
     ]
-    public function __invoke(User $user)
+    public function __invoke(User $user, Request $request)
     {
         $referralsIncomeCollection = Income::join('users', 'referral_id', '=', 'users.id')
-            ->where('incomes.referral_id', $user->referrals()->pluck('id'))
+            ->whereIn('incomes.referral_id', $user->referrals()->pluck('id'))
+            ->where('type', 'referral')
             ->select('users.email', 'incomes.daily_amount', 'incomes.hash', 'incomes.created_at')
             ->latest()
-            ->paginate();
+            ->paginate($request->per_page ?? 15);
 
         return ReferralIncomeResource::collection($referralsIncomeCollection);
     }
