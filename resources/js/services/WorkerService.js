@@ -87,7 +87,7 @@ export class WorkerService {
 
     async fetchList() {
         return await ProfileApi.get(
-            `/workers/${this.group_id}?per_page=100&status=${this.status}`
+            `/workers/${this.group_id}?per_page=1000&status=${this.status}`
         );
     }
 
