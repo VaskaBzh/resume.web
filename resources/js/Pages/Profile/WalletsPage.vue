@@ -36,7 +36,7 @@
                                 name="minWithdrawal"
                                 type="text"
                                 class="input popup__input autopayout-input"
-                                placeholder="0.005"
+                                placeholder="0.0005"
                                 disabled
                             />
                             <label
