@@ -23,6 +23,14 @@ export class CabinetService {
         this.user = user;
     }
 
+    getHashRate(hashrate) {
+        if (!hashrate) {
+            return 0;
+        }
+
+        return hashrate?.length <= 5 ? hashrate : Number(hashrate).toFixed(0);
+    }
+
     getStatsCards(data) {
         this.statsCards.length = 0;
 
@@ -46,7 +54,7 @@ export class CabinetService {
             new SelectData(
                 "hashrate",
                 this.translate("stats.cards[1]"),
-                data?.total_referrals_hash_rate || 0
+                this.getHashRate(data?.total_referrals_hash_rate)
             ),
             new SelectData(
                 "hashrate",
@@ -78,7 +86,7 @@ export class CabinetService {
                 text: response.data.message,
             });
         } catch (err) {
-            console.error(`Error with: ${err}`)
+            console.error(`Error with: ${err}`);
         }
     }
 
