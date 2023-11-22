@@ -8,7 +8,8 @@ export class LineGraphService extends GraphService {
     setDate(nearestIndex) {
         const date = new Date(this.graphData.dates[nearestIndex]);
 
-        this.fullDate = date.getUTCFullYear() +
+        this.fullDate =
+            date.getUTCFullYear() +
             "." +
             date.getDate().toString().padStart(2, "0") +
             "." +
@@ -122,6 +123,7 @@ export class LineGraphService extends GraphService {
     }
 
     appendGradient() {
+        console.log(this.graphData.values);
         this.svg
             .append("path")
             .datum(this.graphData.values)

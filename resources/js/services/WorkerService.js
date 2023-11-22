@@ -184,8 +184,8 @@ export class WorkerService {
     async makeFullValues() {
         const [hashrate, unit] = this.records.slice(-24).reduce(
             (acc, el) => {
-                acc[0].push(el.hashrate);
-                acc[1].push(el.unit);
+                acc[0].push(el.hashrate || 0);
+                acc[1].push(el.unit || "T");
 
                 return acc;
             },
@@ -241,13 +241,17 @@ export class WorkerService {
         if (this.group_id !== -1) {
             this.waitTargetWorker = true;
 
-            this.records = (await this.fetchWorkerGraph()).data.data.map(
-                (el) => {
-                    return new workerHashrateData({
-                        ...el,
-                    });
-                }
-            );
+            try {
+                this.records = (await this.fetchWorkerGraph()).data.data.map(
+                    (el) => {
+                        return new workerHashrateData({
+                            ...el,
+                        });
+                    }
+                );
+            } catch (err) {
+                console.error(`Error with: ${err}`);
+            }
         }
     }
 }

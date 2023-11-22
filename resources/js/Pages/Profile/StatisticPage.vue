@@ -3,9 +3,7 @@
         class="statistic"
         :class="{
             'statistic-center':
-                lineChartService.waitGraph ||
-                lineChartService.records?.filter((a) => a.hashrate > 0)
-                    .length === 0,
+                lineChartService.waitGraph || !getAccount.hash_per_day,
         }"
     >
         <main-preloader
@@ -15,11 +13,7 @@
             :end="!!lineChartService"
         />
         <div
-            v-if="
-                !lineChartService.waitGraph &&
-                lineChartService.records?.filter((a) => a.hashrate > 0)
-                    .length !== 0
-            "
+            v-if="!lineChartService.waitGraph && getAccount.hash_per_day"
             v-scroll="'opacity transition--fast'"
             class="cabinet statistic__cabinet"
         >
@@ -98,11 +92,7 @@
             />
         </div>
         <no-information
-            v-if="
-                !lineChartService.waitGraph &&
-                lineChartService.records?.filter((a) => a.hashrate > 0)
-                    .length === 0
-            "
+            v-if="!lineChartService.waitGraph && !getAccount.hash_per_day"
             v-scroll="'opacity transition--fast'"
             class="cabinet__preloader-bg"
         />

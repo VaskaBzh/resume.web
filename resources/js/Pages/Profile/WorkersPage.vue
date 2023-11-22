@@ -183,7 +183,6 @@ export default {
             this.waitTimeout = setInterval(
                 () => {
                     this.waitAnimation = false;
-                    console.log("false");
                 },
                 this.viewportWidth > 1200 ? 550 : 1050
             );
