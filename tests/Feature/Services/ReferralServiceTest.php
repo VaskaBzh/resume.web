@@ -68,7 +68,7 @@ class ReferralServiceTest extends TestCase
 
         $this->artisan('give:role')
             ->expectsQuestion('What role would you like to assign to the user?', $roleName)
-            ->expectsQuestion('Please type referrer name or email', $this->referrer->email)
+            ->expectsQuestion('Please type owner name or email', $this->referrer->email)
             ->expectsQuestion('Referral percent', '1')
             ->expectsQuestion('Referral discount', '1')
             ->expectsConfirmation('Are your sure?', 'yes')
@@ -85,7 +85,7 @@ class ReferralServiceTest extends TestCase
 
         $this->artisan('give:role')
             ->expectsQuestion('What role would you like to assign to the user?', $roleName)
-            ->expectsQuestion('Please type referrer name or email', $this->referrer->email)
+            ->expectsQuestion('Please type owner name or email', $this->referrer->email)
             ->expectsOutput('ERROR: This user already assigned to role!')
             ->assertExitCode(0);
 

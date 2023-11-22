@@ -19,10 +19,10 @@ class GiveRoleCommand extends Command
         $roleName = $this
             ->choice(
                 question: 'What role would you like to assign to the user?',
-                choices: Role::all()->pluck('name')->toArray(),
+                choices: str_replace('referrer', 'owner', Role::pluck('name')->toArray()),
             );
 
-        match ($roleName) {
+        match (str_replace('owner', 'referrer', $roleName)) {
             Roles::REFERRER->value => $this->createReferralProgram($roleName),
             Roles::REFERRAL->value => $this->createSpecialReferralOffer($roleName),
             default => $this->error('Wrong role')
@@ -69,14 +69,23 @@ class GiveRoleCommand extends Command
     {
         while (true) {
 
-            $referrers = User::role('referrer')->get();
+            $referrers = User::role('referrer')->select('name', 'email')->get();
 
-            $referrerEmail = $this->choice(
+            $formattedChoices = [];
+
+            foreach ($referrers->toArray() as $referrer) {
+                $formattedChoices[] = implode('/', [$referrer['email'], $referrer['name']]);
+            }
+
+            $referrer = $this->choice(
                 question: 'Please choice referrer',
-                choices: $referrers->pluck('name', 'email')->toArray()
+                choices: $formattedChoices
             );
 
-            $referrer = $referrers->where('email', $referrerEmail)->first();
+            $referrer = $referrers
+                ->where('email', $referrer)
+                ->where('')
+                ->first();
 
             $userCredential = $this->ask(question: 'Please type referral name or email');
             $user = User::whereEmail($userCredential)
