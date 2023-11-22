@@ -123,7 +123,6 @@ export class LineGraphService extends GraphService {
     }
 
     appendGradient() {
-        console.log(this.graphData.values);
         this.svg
             .append("path")
             .datum(this.graphData.values)
