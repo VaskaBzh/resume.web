@@ -180,13 +180,18 @@ export default {
 
             this.waitAnimation = true;
 
-            this.waitTimeout = setInterval(() => {
-                this.waitAnimation = false;
-            }, 500);
+            this.waitTimeout = setInterval(
+                () => {
+                    this.waitAnimation = false;
+                    console.log("false");
+                },
+                this.viewportWidth > 1200 ? 550 : 1050
+            );
 
             await this.worker_service.getPopup(data.id);
         },
         dropWorkers() {
+            clearTimeout(this.waitTimeout);
             this.worker_service.dropWorker();
 
             this.viewportWidth > 1200
