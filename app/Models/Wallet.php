@@ -15,8 +15,6 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    public const MIN_BITCOIN_WITHDRAWAL = 0.005;
-
     protected $fillable = [
         'name',
         'group_id',
