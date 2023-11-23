@@ -18,9 +18,7 @@ export class TooltipContentService {
     }
 
     setUnit(graphData, nearestIndex) {
-        this.unit = graphData.unit
-            ? graphData.unit[nearestIndex]
-            : "T";
+        this.unit = graphData.unit ? graphData.unit[nearestIndex] : "T";
     }
 
     setHashrate(graphData, nearestIndex) {
