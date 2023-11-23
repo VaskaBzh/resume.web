@@ -7,8 +7,6 @@ namespace Database\Seeders;
 use App\Actions\Worker\Update;
 use App\Dto\WorkerData;
 use App\Models\Sub;
-use App\Models\User;
-use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcCom\Client;
 use App\Services\External\Contracts\TransformContract;
