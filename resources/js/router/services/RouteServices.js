@@ -78,6 +78,15 @@ export class RouteServices {
                 ],
             },
             {
+                path: "/watcher",
+                name: "watcher",
+                redirect: (to) => {
+                    return {
+                        name: "watcher_statistic",
+                    };
+                },
+            },
+            {
                 path: "/watcher/statistic",
                 name: "watcher_statistic",
                 component: () =>
