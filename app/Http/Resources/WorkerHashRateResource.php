@@ -14,7 +14,7 @@ use OpenApi\Attributes as OA;
     OA\Schema(
         schema: 'WorkerHashRateResource',
         properties: [
-            new OA\Property(property: 'id', type: 'integer'),
+            new OA\Property(property: 'id', type: 'decimal'),
             new OA\Property(property: 'hash', type: 'number', format: 'float'),
             new OA\Property(property: 'unit', type: 'string'),
             new OA\Property(property: 'worker_id', type: 'integer'),
@@ -30,7 +30,7 @@ class WorkerHashRateResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'hash' => (int) $hashRate->value,
+            'hash' => (float) $hashRate->value,
             'unit' => $hashRate->unit,
             'worker_id' => $this->worker_id,
         ];

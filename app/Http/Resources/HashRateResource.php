@@ -12,7 +12,7 @@ use OpenApi\Attributes as OA;
     OA\Schema(
         schema: 'HashRateResource',
         properties: [
-            new OA\Property(property: 'hash', type: 'integer'),
+            new OA\Property(property: 'hash', type: 'decimal'),
             new OA\Property(property: 'unit', type: 'string'),
             new OA\Property(property: 'worker_count', type: 'integer'),
         ],
@@ -26,7 +26,7 @@ class HashRateResource extends JsonResource
         $hashRate = HashRateConverter::fromPure($this->hash);
 
         return [
-            'hash' => (int) $hashRate->value,
+            'hash' => (float) $hashRate->value,
             'unit' => $hashRate->unit,
             'worker_count' => $this->worker_count,
         ];
