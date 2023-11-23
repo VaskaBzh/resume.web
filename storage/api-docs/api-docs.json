@@ -1011,7 +1011,7 @@
                                         "overall": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/GeneralSubsDataResource"
+                                                "$ref": "#/components/schemas/OverallSubsDataResource"
                                             }
                                         }
                                     },
@@ -1782,7 +1782,7 @@
                     {
                         "name": "status",
                         "in": "query",
-                        "description": "Filter workers by status (all, active, inactive)",
+                        "description": "Filter workers by status",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -3029,7 +3029,7 @@
                 },
                 "type": "object"
             },
-            "GeneralSubsDataResource": {
+            "OverallSubsDataResource": {
                 "properties": {
                     "total_hash_per_day": {
                         "type": "number",
