@@ -1,9 +1,9 @@
-import {RoutePublicData} from "../DTO/RoutePublicData";
-import {RouteProfileData} from "../DTO/RouteProfileData";
-import {RouteReferralData} from "../DTO/RouteReferralData";
-import {RouteAuthData} from "../DTO/RouteAuthData";
-import {RouteConfirmData} from "../DTO/RouteConfirmData";
-import {RouteNamesMap} from "@/router/map/RouteNamesMap";
+import { RoutePublicData } from "../DTO/RoutePublicData";
+import { RouteProfileData } from "../DTO/RouteProfileData";
+import { RouteReferralData } from "../DTO/RouteReferralData";
+import { RouteAuthData } from "../DTO/RouteAuthData";
+import { RouteConfirmData } from "../DTO/RouteConfirmData";
+import { RouteNamesMap } from "@/router/map/RouteNamesMap";
 
 export class RouteServices {
     constructor() {
@@ -59,7 +59,7 @@ export class RouteServices {
             {
                 path: "/promo",
                 name: "promo",
-                redirect: "/"
+                redirect: "/",
             },
             {
                 path: "/profile/referral",
@@ -78,61 +78,44 @@ export class RouteServices {
                 ],
             },
             {
-                path: "/watcher",
-                name: "watcher",
-                children: [
-                    {
-                        path: "/statistic",
-                        name: "watcher_statistic",
-                        component: () =>
-                            import("../../Pages/Profile/StatisticPage.vue"),
-                        meta: {
-                            middleware: [
-                                "LoadLayoutMiddleware",
-                                "DropErrorsMiddleware",
-                                "AuthCheckProfileMiddleware",
-                            ],
-                            layout: "ProfileLayoutView",
-                        },
-                    },
-                    {
-                        path: "/workers",
-                        name: "watcher_workers",
-                        component: () => import("../../Pages/Profile/WorkersPage.vue"),
-                        meta: {
-                            middleware: [
-                                "LoadLayoutMiddleware",
-                                "DropErrorsMiddleware",
-                                "AuthCheckProfileMiddleware",
-                            ],
-                            layout: "ProfileLayoutView",
-                        },
-                    },
-                    {
-                        path: "/income",
-                        name: "watcher_income",
-                        component: () => import("../../Pages/Profile/IncomePage.vue"),
-                        meta: {
-                            middleware: [
-                                "LoadLayoutMiddleware",
-                                "DropErrorsMiddleware",
-                                "AuthCheckProfileMiddleware",
-                            ],
-                            layout: "ProfileLayoutView",
-                        },
-                    },
-
-                ],
-                redirect: (to) => {
-                    return {
-                        name: "watcher_statistic",
-                        query: {
-                            access_key: to.query.access_key,
-                            puid: to.query.puid,
-                        },
-                    };
+                path: "/watcher/statistic",
+                name: "watcher_statistic",
+                component: () =>
+                    import("../../Pages/Profile/StatisticPage.vue"),
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "DropErrorsMiddleware",
+                        "AuthCheckProfileMiddleware",
+                    ],
+                    layout: "ProfileLayoutView",
                 },
-
+            },
+            {
+                path: "/watcher/workers",
+                name: "watcher_workers",
+                component: () => import("../../Pages/Profile/WorkersPage.vue"),
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "DropErrorsMiddleware",
+                        "AuthCheckProfileMiddleware",
+                    ],
+                    layout: "ProfileLayoutView",
+                },
+            },
+            {
+                path: "/watcher/income",
+                name: "watcher_income",
+                component: () => import("../../Pages/Profile/IncomePage.vue"),
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "DropErrorsMiddleware",
+                        "AuthCheckProfileMiddleware",
+                    ],
+                    layout: "ProfileLayoutView",
+                },
             },
         ];
     }
