@@ -23,8 +23,6 @@ export class GraphService {
         this.workersCountActive = null;
         this.unit = null;
 
-        this.contentTooltip = null;
-
         this.translate = translate;
 
         this.tooltipHtml = null;
@@ -208,7 +206,9 @@ export class GraphService {
     }
 
     setTooltip() {
-        if (!this.tooltip) this.tooltip = d3.select(this.tooltipHtml);
+        if (!this.tooltip) {
+            this.tooltip = d3.select(this.tooltipHtml);
+        }
 
         return this;
     }
@@ -250,7 +250,9 @@ export class GraphService {
     }
 
     setHashrate(nearestIndex) {
-        this.hashrate = this.graphData.values[nearestIndex];
+        this.hashrate = this.adjustValue(
+            this.graphData.values[nearestIndex]
+        ).val;
     }
 
     setWorkers(nearestIndex) {
@@ -314,8 +316,29 @@ export class GraphService {
         }
     }
 
-    adjustValue(num, unit) {
-        return { val: num.toFixed(0), unit: unit };
+    adjustValue(pureHashRate) {
+        const pureHashRateLength = String(pureHashRate).length;
+
+        let value = 0;
+        let unit = "T";
+
+        if (pureHashRate > 0 && pureHashRateLength < 13) {
+            value = pureHashRate / 1000000000;
+            unit = "G";
+        }
+        if (pureHashRateLength < 16 && pureHashRateLength >= 13) {
+            value = pureHashRate / 1000000000000;
+            unit = "T";
+        }
+        if (pureHashRateLength >= 16) {
+            value = pureHashRate / 1000000000000000;
+            unit = "P";
+        }
+
+        const splitValue = String(value).split(".");
+        const validatedValue = value.toFixed(splitValue[0].length > 2 ? 0 : 2);
+
+        return { val: validatedValue, unit: unit };
     }
 
     formatNumberWithUnit(num, i) {
