@@ -85,7 +85,7 @@ final class PayoutService
                 ->remoteWallet
                 ->sendBalance(
                     wallet: $this->wallet,
-                    balance: $this->sub->pending_amount
+                    balance: (float) $this->sub->pending_amount
                 );
         }
 
@@ -95,7 +95,6 @@ final class PayoutService
     /**
      * Обнуляем накопленный доход
      *
-     * @return void
      */
     public function clearPendingAmount(): PayoutService
     {
@@ -151,6 +150,9 @@ final class PayoutService
         return $this;
     }
 
+    /**
+     *
+     */
     public function lock(): void
     {
         $this->remoteWallet->lock();
@@ -161,10 +163,10 @@ final class PayoutService
     }
 
     /**
-     * Проверяем локальный кошелек на существование и блокировку
+     * Check if local waller is exists and unblocked
      */
     private function isAllowedTransaction(): bool
     {
-        return ! is_null($this->wallet) && $this->wallet->isUnlocked();
+        return ! is_null($this->wallet?->wallet) && $this->wallet->isUnlocked();
     }
 }
