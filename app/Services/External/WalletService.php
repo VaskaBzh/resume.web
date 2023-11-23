@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Models\Wallet;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-class WalletService
+final class WalletService
 {
-    public function __construct()
-    {
+    public function __construct(
+        private PendingRequest $client
+    ) {
         $this->client = Http::withBasicAuth(
             username: config('api.wallet.username'),
             password: config('api.wallet.password')
@@ -47,11 +49,6 @@ class WalletService
         );
     }
 
-    /**
-     * Отправить баланс в сервис кошелька
-     *
-     * @param  float  $balance - баланс кошелька
-     */
     public function sendBalance(Wallet $wallet, float $balance): ?string
     {
         $response = $this->client->post(config('api.wallet.ip'), [
