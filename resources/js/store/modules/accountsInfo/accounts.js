@@ -12,9 +12,7 @@ export default {
         async set_active({ commit, state }, data) {
             if (data.index) {
                 let sub = new accountData(
-                    (
-                        await MainApi.get(`/subs/sub/${data.index}`)
-                    ).data.data
+                    (await MainApi.get(`/subs/sub/${data.index}`)).data
                 );
 
                 commit("updateActive", data.index);
@@ -104,7 +102,9 @@ export default {
             state.activeAccount = { ...account };
         },
         updateActiveAccountInList(state, index) {
-            state.activeAccount = state.accounts.filter(sub => sub.group_id === index)[0];
+            state.activeAccount = state.accounts.filter(
+                (sub) => sub.group_id === index
+            )[0];
         },
     },
     state: {
