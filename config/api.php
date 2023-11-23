@@ -92,6 +92,6 @@ return [
         /**
          * Minimal allowed withdraw for sub-account
          */
-        'min_withdrawal' => 0.0005,
+        'min_withdrawal' => 0.005,
     ],
 ];
