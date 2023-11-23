@@ -10,12 +10,12 @@ class WalletSeeder extends Seeder
     public function run(): void
     {
         Wallet::updateOrCreate(['group_id' => 6001912], [
-                'name' => 'wallet',
-                'minWithdrawal' => 0,
-                'wallet' => 'wallet',
-                'percent' => 100,
-                'wallet_updated_at' => now()->subDays(2),
-            ]
+            'name' => 'wallet',
+            'minWithdrawal' => 0,
+            'wallet' => 'wallet',
+            'percent' => 100,
+            'wallet_updated_at' => now()->subDays(2),
+        ]
         );
     }
 }
