@@ -113,8 +113,13 @@ class ReferralServiceTest extends TestCase
 
         $this->artisan('give:role')
             ->expectsQuestion('What role would you like to assign to the user?', $roleName)
-            ->expectsChoice('Please choice referrer', $this->referrer->email, [$this->referrer->email])
+            ->expectsChoice(
+                'Please choice referrer',
+                $this->referrer->email,
+                ["{$this->referrer->email} {$this->referrer->name}"]
+            )
             ->expectsQuestion('Please type referral name or email', $this->referral->email)
+            ->expectsConfirmation("{$this->referral->email} {$this->referral->name}", 'yes')
             ->expectsQuestion('Enter the special referral percent', $customReferralPercent)
             ->expectsQuestion('Referral discount', $referralDiscount)
             ->expectsConfirmation('Are your sure?', 'yes')

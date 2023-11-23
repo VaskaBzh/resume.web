@@ -22,7 +22,9 @@ class GiveRoleCommand extends Command
                 choices: str_replace('referrer', 'owner', Role::pluck('name')->toArray()),
             );
 
-        match (str_replace('owner', 'referrer', $roleName)) {
+        $roleName = str_replace('owner', 'referrer', $roleName);
+
+        match ($roleName) {
             Roles::REFERRER->value => $this->createReferralProgram($roleName),
             Roles::REFERRAL->value => $this->createSpecialReferralOffer($roleName),
             default => $this->error('Wrong role')
@@ -49,7 +51,6 @@ class GiveRoleCommand extends Command
                 'referral_code' => ReferralService::generateReferralCode($user),
             ];
 
-
             if ($this->confirm('Are your sure?')) {
 
                 $user->assignRole($roleName);
@@ -69,28 +70,33 @@ class GiveRoleCommand extends Command
     {
         while (true) {
 
-            $referrers = User::role('referrer')->select('name', 'email')->get();
+            $referrers = User::role('referrer')->get();
 
             $formattedChoices = [];
 
             foreach ($referrers->toArray() as $referrer) {
-                $formattedChoices[] = implode('/', [$referrer['email'], $referrer['name']]);
+                $formattedChoices[] = implode(' ', [$referrer['email'], $referrer['name']]);
             }
 
-            $referrer = $this->choice(
+            $referrer = explode(' ', $this->choice(
                 question: 'Please choice referrer',
                 choices: $formattedChoices
-            );
+            ));
 
             $referrer = $referrers
-                ->where('email', $referrer)
-                ->where('')
+                ->where('email', head($referrer))
                 ->first();
 
             $userCredential = $this->ask(question: 'Please type referral name or email');
-            $user = User::whereEmail($userCredential)
+            $referral = User::whereEmail($userCredential)
                 ->orWhere('name', $userCredential)
                 ->firstOrFail();
+
+            $confirm = $this->confirm(sprintf('%s %s', $referral->email, $referral->name));
+
+            if (! $confirm) {
+                break;
+            }
 
             $customReferralPercent = $this->ask('Enter the special referral percent');
 
@@ -102,11 +108,11 @@ class GiveRoleCommand extends Command
 
             if ($this->confirm('Are your sure?')) {
 
-                $user->assignRole($roleName);
+                $referral->assignRole($roleName);
 
-                $user->update($referralProgram);
+                $referral->update($referralProgram);
 
-                $this->info('Referral special offer created for '.$user->name.'!');
+                $this->info('Referral special offer created for '.$referral->name.'!');
 
                 break;
             }
