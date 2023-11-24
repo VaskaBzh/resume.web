@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace App\Dto\Income;
 
+use App\Models\Wallet;
+
 final readonly class CompleteData
 {
     public function __construct(
         public string $status,
-        public string $message
+        public string $message,
+        public ?Wallet $wallet,
     ) {
     }
 
-    public static function fromRequest(array $requestData): CompleteData
+    public static function fromArray(array $data): CompleteData
     {
         return new self(
-            status: $requestData['status'],
-            message: $requestData['message'],
+            status: $data['status'],
+            message: $data['message'],
+            wallet: $data['wallet']
         );
     }
 }

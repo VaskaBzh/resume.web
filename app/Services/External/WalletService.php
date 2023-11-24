@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\External;
 
+use App\Enums\Income\Message;
+use App\Exceptions\PayOutException;
 use App\Models\Wallet;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
@@ -21,11 +22,6 @@ final class WalletService
         );
     }
 
-    /**
-     * Разблокировать кошелек
-     *
-     * @throws RequestException
-     */
     public function unlock(): void
     {
         $this->client->post(config('api.wallet.ip'), [
@@ -34,7 +30,7 @@ final class WalletService
             'method' => 'walletpassphrase',
             'params' => [config('api.wallet.walletpassphrase'), 10],
         ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса разблокировки кошелька')
+            new PayOutException('Ошибка при выполнении запроса разблокировки кошелька')
         );
     }
 
@@ -45,18 +41,18 @@ final class WalletService
             'id' => 'lock',
             'method' => 'walletlock',
         ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса блокировки кошелька')
+             new PayOutException('Ошибка при выполнении запроса блокировки кошелька')
         );
     }
 
-    public function sendBalance(Wallet $wallet, float $balance): ?string
+    public function sendBalance(string $wallet, float $balance): ?string
     {
         $response = $this->client->post(config('api.wallet.ip'), [
             'jsonrpc' => '1.0',
             'id' => 'withdrawal',
             'method' => 'sendtoaddress',
             'params' => [
-                $wallet->wallet,
+                $wallet,
                 (float) number_format($balance, 8, '.', ' '),
             ],
         ]);
@@ -65,6 +61,10 @@ final class WalletService
             'wallet' => $wallet->id,
             'response' => $response,
         ]);
+
+        if (! $response['resilt']) {
+            throw new PayOutException(Message::ERROR_PAYOUT->value.$response['error']);
+        }
 
         return $response['result'];
     }

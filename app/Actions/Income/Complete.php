@@ -16,6 +16,7 @@ class Complete
         $incomes->each(static fn ($income) => $income->update([
             'message' => $incomeCompleteData->message,
             'status' => $incomeCompleteData->status,
+            'wallet_id' => $incomeCompleteData->wallet?->wallet_id,
         ]));
     }
 }

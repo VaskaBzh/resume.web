@@ -40,6 +40,11 @@ class PayoutCommand extends Command
         Sub $sub
     ): void {
         $payoutService->init(sub: $sub);
+
+        if (!$payoutService->canTransaction()) {
+            $payoutService->setMessage(Message::)
+        }
+
         $payoutService->unlockRemoteWallet();
         $txId = $payoutService->payOut();
 
@@ -48,19 +53,19 @@ class PayoutCommand extends Command
                 'sub' => $sub->group_id,
             ]);
 
-            $payoutService->setMessage(Message::ERROR_PAYOUT->value);
-            $payoutService->complete();
+            $payoutService->setMessage(Message::ERROR_PAYOUT);
+            $payoutService->updateIncome();
 
             return;
         }
 
         $payoutService
-            ->setStatus(Status::COMPLETED->value)
-            ->setMessage(Message::COMPLETED->value)
+            ->setStatus(Status::COMPLETED)
+            ->setMessage(Message::COMPLETED)
             ->setTxId(txId: $txId)
             ->createPayout()
+            ->updateIncome()
             ->clearPendingAmount()
-            ->complete()
             ->lock();
     }
 }

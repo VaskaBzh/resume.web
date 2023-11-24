@@ -10,7 +10,7 @@ use App\Dto\Income\CompleteData;
 use App\Dto\Sub\SubUpsertData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
-use App\Events\PayoutCompleteEvent;
+use App\Events\PayOutEvent;
 use App\Models\Income;
 use App\Models\Sub;
 use App\Models\Wallet;
@@ -61,9 +61,9 @@ final class PayoutService
     /**
      * Set income message
      */
-    public function setMessage(string $message): PayoutService
+    public function setMessage(Message $message): PayoutService
     {
-        $this->params['message'] = $message;
+        $this->params['message'] = $message->value;
 
         return $this;
     }
@@ -71,9 +71,9 @@ final class PayoutService
     /**
      * Set income status status
      */
-    public function setStatus(string $status): PayoutService
+    public function setStatus(Status $status): PayoutService
     {
-        $this->params['status'] = $status;
+        $this->params['status'] = $status->value;
 
         return $this;
     }
@@ -110,16 +110,13 @@ final class PayoutService
      */
     public function payOut(): ?string
     {
-        if ($this->isAllowedTransaction()) {
-            return $this
-                ->remoteWallet
-                ->sendBalance(
-                    wallet: $this->wallet,
-                    balance: (float) $this->sub->pending_amount
-                );
-        }
-
-        return null;
+        event(new PayOutEvent(sub: $this->sub));
+        return $this
+            ->remoteWallet
+            ->sendBalance(
+                wallet: $this->wallet,
+                balance: (float) $this->sub->pending_amount
+            );
     }
 
     /**
@@ -143,7 +140,7 @@ final class PayoutService
     /**
      * Change incomes status to completed
      */
-    public function complete(): PayoutService
+    public function updateIncome(): PayoutService
     {
         $incomes = Income::getNotCompleted(
             groupId: $this->sub->group_id
@@ -152,15 +149,18 @@ final class PayoutService
         if ($incomes) {
             Complete::execute(
                 incomes: $incomes,
-                incomeCompleteData: CompleteData::fromRequest([
+                incomeCompleteData: CompleteData::fromArray([
                     'status' => $this->params['status'],
                     'message' => $this->params['message'],
+                    'wallet' => $this->wallet,
                 ])
             );
 
-            Log::channel('payouts')->info('INCOMES STATUSES CHANGE TO COMPLETE', [
-                'sub' => $this->sub->id,
+            Log::channel('payouts')->info('INCOMES STATUSES CHANGES', [
+                'sub' => $this->sub->sub,
                 'wallet' => $this->wallet->id,
+                'status' => $this->params['status'],
+                'message' => $this->params['message'],
             ]);
         }
 
@@ -172,7 +172,7 @@ final class PayoutService
      */
     public function createPayout(): PayoutService
     {
-        event(new PayoutCompleteEvent(
+        event(new PayOutEvent(
             sub: $this->sub,
             wallet: $this->wallet,
             payout: (float) $this->sub->pending_amount,
@@ -197,8 +197,20 @@ final class PayoutService
     /**
      * Check if local waller is exists and unblocked
      */
-    private function isAllowedTransaction(): bool
+    public function canTransaction(): bool
     {
-        return ! is_null($this->wallet?->wallet) && $this->wallet->isUnlocked();
+        if (is_null($this->wallet?->wallet)) {
+            $this->setMessage(Message::NO_WALLET);
+
+            return false;
+        }
+
+        if (! $this->wallet->isUnlocked()) {
+            $this->setMessage(Message::ON_VERIFY);
+
+            return false;
+        }
+
+        return true;
     }
 }

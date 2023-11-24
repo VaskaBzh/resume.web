@@ -19,6 +19,7 @@ use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 
 final class IncomeService
@@ -59,9 +60,32 @@ final class IncomeService
     private float $fee;
 
     /**
-     * Income parameters.
+     * @var array{
+     *     mining: array{
+     *         dailyAmount: float,
+     *         pendingAmount: float,
+     *         totalAmount: float
+     *     },
+     *     referral: array{
+     *         dailyAmount: float,
+     *         pendingAmount: float,
+     *         totalAmount: float
+     *     },
+     *     hash: float|null,
+     *     diff: float|null
+     * } $params
      *
-     * @var array<string, string|float[]>
+     * Params:
+     * 'mining': Common mining params.
+     *   'dailyAmount': Daily earn after deducting the commission of allbtc and remote pool
+     *   'pendingAmount': Sub-account amount until withdrawal limit
+     *   'totalAmount': Sub-account total amount for all time
+     * 'referral': Referral income params.
+     *   'dailyAmount': Referrer profit from this referral
+     *   'pendingAmount': Referrer amount until withdrawal limit
+     *   'totalAmount': Referrer total amount
+     * 'hash': Sub-account hash rate
+     * 'diff': Current network difficulty
      */
     private array $params = [
         'mining' => [],

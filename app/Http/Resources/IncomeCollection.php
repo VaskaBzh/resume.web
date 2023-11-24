@@ -25,8 +25,8 @@ use OpenApi\Attributes as OA;
                         new OA\Property(property: 'hash', type: 'integer'),
                         new OA\Property(property: 'status', type: 'string'),
                         new OA\Property(property: 'message', type: 'string'),
-                        new OA\Property(property: 'created_at', type: 'string'),
-                        new OA\Property(property: 'updated_at', type: 'string'),
+                        new OA\Property(property: 'income_at', type: 'date'),
+                        new OA\Property(property: 'payout_at', type: 'date'),
                     ],
                     type: 'object'
                 )
@@ -44,13 +44,15 @@ class IncomeCollection extends ResourceCollection
             'data' => $this->collection->map(static fn (Income $income) => [
                 'type' => $income->type,
                 'amount' => $income->daily_amount,
+                'payout' => $income->payout,
                 'hash' => $income->hash,
                 'status' => $income->status,
                 'message' => __('statuses.'.$income->message),
-                'created_at' => $income->created_at,
-                'updated_at' => $income->updated_at,
-            ]
-            ),
+                'income_at' => $income->created_at,
+                'payout_at' => $income->payout_at,
+                'tx_id' => $income->txid,
+                'wallet' => $income->wallet,
+            ]),
         ];
     }
 }
