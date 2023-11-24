@@ -1,20 +1,18 @@
 <template>
     <div class="slider">
-        <slot
-            name="instruction"
-        />
+        <slot name="instruction" />
         <main-preloader
+            v-if="havePreloader && (wait || empty)"
             class="cabinet__preloader"
             :wait="wait"
             :interval="35"
             :end="!wait"
             :empty="empty"
-            v-if="havePreloader && (wait || empty)"
         />
-        <div class="slider__content" v-if="!wait && !empty">
+        <div v-if="!wait && !empty" class="slider__content">
             <slot />
         </div>
-        <div class="slider__nav" v-if="haveNav && !wait && !empty">
+        <div v-if="haveNav && !wait && !empty" class="slider__nav">
             <!--            <page-info-->
             <!--                :startPage=""-->
             <!--            />-->
@@ -23,10 +21,10 @@
                     :direction="false"
                     @swipe="ajax(meta?.links.prev)"
                 />
-                <div class="slider__slides" v-if="!service.haveMeta">
+                <div v-if="!service.haveMeta" class="slider__slides">
                     <span>...</span>
                 </div>
-                <div class="slider__slides" v-else>
+                <div v-else class="slider__slides">
                     <slider-button
                         v-for="(link, i) in links"
                         :key="i"
@@ -76,6 +74,13 @@ export default {
         },
         meta: Object,
     },
+    data() {
+        return {
+            rowsNumber: this.rowsNum,
+            saveTable: {},
+            service: new SliderService(this.meta),
+        };
+    },
     watch: {
         "service.link"(newLinksArray) {
             this.service.setActiveLink(newLinksArray);
@@ -91,13 +96,6 @@ export default {
 
             this.$emit("changePerPage", this.rowsNumber);
         },
-    },
-    data() {
-        return {
-            rowsNumber: this.rowsNum,
-            saveTable: {},
-            service: new SliderService(this.meta),
-        };
     },
     computed: {
         ...mapGetters(["viewportWidth"]),
@@ -129,7 +127,7 @@ export default {
     &__content {
         width: 100%;
     }
-    @media(max-width: 500px){
+    @media (max-width: 500px) {
         height: auto;
     }
     &.onboarding_block-target {
