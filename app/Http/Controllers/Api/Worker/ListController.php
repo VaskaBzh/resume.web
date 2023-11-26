@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Api\Worker;
 
 use App\Enums\Worker\Status;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\WorkerResource;
+use App\Http\Resources\Worker\WorkerResource;
 use App\Models\Sub;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
