@@ -3,7 +3,7 @@
         class="statistic"
         :class="{
             'statistic-center':
-                lineChartService.waitGraph || !getAccount.hash_per_day,
+                lineChartService.waitGraph || !getAccount.workers_count,
         }"
     >
         <main-preloader
@@ -13,7 +13,7 @@
             :end="!!lineChartService"
         />
         <div
-            v-if="!lineChartService.waitGraph && getAccount.hash_per_day"
+            v-if="!lineChartService.waitGraph && getAccount.workers_count"
             v-scroll="'opacity transition--fast'"
             class="cabinet statistic__cabinet"
         >
@@ -92,7 +92,7 @@
             />
         </div>
         <no-information
-            v-if="!lineChartService.waitGraph && !getAccount.hash_per_day"
+            v-if="!lineChartService.waitGraph && !getAccount.workers_count"
             v-scroll="'opacity transition--fast'"
             class="cabinet__preloader-bg"
         />

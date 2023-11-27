@@ -143,23 +143,29 @@ export class LoginService {
 
             this.waitLogin = false;
         } catch (err) {
+            console.error(err);
+
             this.waitLogin = false;
 
-            console.error(err);
-            if (err.response.status === 422) {
-                this.openTwoFacPopup();
-            } else {
-                if (err.response.status === 403) {
-                    this.router.push({
-                        name: "confirm",
-                        query: {
-                            email: this.form.email,
-                        },
-                    });
+            store.dispatch("setFullErrors", {
+                ...err.response.data.errors,
+            });
+
+            if (err.response.status === 403) {
+                if (
+                    err.response.data.errors.messages[0] === "Pass 2fa code!" ||
+                    err.response.data.errors.messages[0] === "Введите код"
+                ) {
+                    this.openTwoFacPopup();
+
+                    return this;
                 }
 
-                store.dispatch("setFullErrors", {
-                    ...err.response.data.errors,
+                this.router.push({
+                    name: "confirm",
+                    query: {
+                        email: this.form.email,
+                    },
                 });
             }
         }
