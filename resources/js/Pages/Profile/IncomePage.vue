@@ -48,7 +48,14 @@
             rows-num="1000"
             :have-nav="false"
             :table="service.table"
-        ></main-slider>
+        >
+            <main-table
+                :table="service.table"
+                :empty="service.isEmpty"
+                :wait="service.isWait"
+                :component="IncomeRow"
+            />
+        </main-slider>
     </div>
 </template>
 
@@ -58,6 +65,8 @@ import BtcCalculator from "@/modules/common/Components/UI/BTCCalculator.vue";
 import MainBarGraph from "@/modules/graphs/Components/MainBarGraph.vue";
 import MainProgressBar from "@/modules/common/Components/UI/MainProgressBar.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
+import MainTable from "@/modules/table/Components/MainTable.vue";
+import IncomeRow from "@/modules/table/Components/IncomeRow.vue";
 
 import { IncomeMessages } from "@/modules/income/lang/IncomeMessages";
 import { IncomeService } from "@/modules/income/service/IncomeService";
@@ -71,9 +80,14 @@ export default {
         MainTitle,
         MainBarGraph,
         MainProgressBar,
+        MainTable,
+        IncomeRow,
     },
     computed: {
         ...mapGetters(["getAccount", "getActive"]),
+        IncomeRow() {
+            return IncomeRow;
+        },
     },
     i18n: {
         sharedMessages: IncomeMessages,

@@ -1,15 +1,29 @@
 export class IncomeData {
     constructor(incomeRecord) {
         this.incomeDate = incomeRecord.income_at;
-        this.income = incomeRecord.amount;
-        this.hashRate = incomeRecord.hash;
-        this.unit = incomeRecord.unit ?? "T";
-        this.payoutDate = incomeRecord.payout_at;
-        this.walletAddress = incomeRecord.wallet;
-        this.payout = incomeRecord.payout;
-        this.txid = incomeRecord.tx_id;
+        this.income = `${incomeRecord.amount} BTC`;
+        this.hash_per_day = incomeRecord.hash;
+        this.hash_per_day_unit = incomeRecord.unit ?? "T";
+        this.renderHashRate = `${this.hash_per_day} ${this.hash_per_day_unit}H/s`;
+        this.payoutDate = incomeRecord.payout_at || "-";
+        this.walletAddress = this.getCuttedWallet(incomeRecord.wallet);
+        this.payout = incomeRecord.payout
+            ? `${incomeRecord.payout} BTC`
+            : "-";
+        this.txid = incomeRecord.tx_id || "-";
         this.status = incomeRecord.status;
+    }
 
-        // this.renderHashRate = `${this.hashRate} ${this.unit}`;
+    getCuttedWallet(wallet) {
+        let cuttedWallet = "-";
+
+        if (wallet) {
+            cuttedWallet =
+                wallet.substr(0, 6) +
+                "..." +
+                wallet.substr(wallet.length - 6, wallet.length);
+        }
+
+        return cuttedWallet;
     }
 }

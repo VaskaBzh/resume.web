@@ -2,8 +2,9 @@
     <tr class="table__row">
         <row-column
             v-for="(column, i) in service.filteredColumns"
-            :value="column"
-            :title="service.filteredTitles[i]"
+            :key="i"
+            :value="column[1]"
+            :column-key="column[0]"
         />
     </tr>
 </template>
@@ -14,14 +15,13 @@ import { RowService } from "@/modules/table/services/RowService";
 import { mapGetters } from "vuex";
 
 export default {
-    name: "TableRow",
+    name: "IncomeRow",
     components: {
         RowColumn,
     },
     props: {
         columns: Array,
         titles: Array,
-        removePercent: Boolean,
     },
     computed: {
         ...mapGetters(["viewportWidth"]),

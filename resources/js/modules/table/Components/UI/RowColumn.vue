@@ -15,6 +15,7 @@
 <script>
 import { SubsCustomFunctions } from "@/modules/table/functionsMap/SubsCustomFunctions";
 import { ColumnService } from "@/modules/table/services/ColumnService";
+import { IncomeTableMessages } from "@/modules/income/lang/IncomeTableMessages";
 
 export default {
     name: "RowColumn",
@@ -25,6 +26,9 @@ export default {
         },
         title: String,
         columnKey: String,
+    },
+    i18n: {
+        sharedMessages: IncomeTableMessages,
     },
     data() {
         return {
@@ -46,8 +50,9 @@ export default {
     methods: {
         initRenderFunctions() {
             const functionName = SubsCustomFunctions[this.columnKey];
+
             if (functionName) {
-                this.service[functionName](this.value, null);
+                this.service[functionName](this.value, this.$t);
             } else {
                 this.renderedValue = this.value;
             }
@@ -56,7 +61,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .column {
     height: 48px;
     background: var(--background-island, #212327);
@@ -91,32 +96,23 @@ export default {
 .unstable .column_value,
 .ACTIVE .column_value,
 .INACTIVE .column_value,
-.UNSTABLE .column_value,
-.error .column_value,
-.complete .column_value,
-.completed .column_value,
-.pending .column_value,
-.rejected .column_value {
+.UNSTABLE .column_value {
     height: 24px;
     border-radius: 8px;
     padding: 8px;
 }
 .active .column_value,
-.ACTIVE .column_value,
-.complete .column_value,
-.completed .column_value {
+.ACTIVE .column_value {
     color: var(--status-succesfull, #1fb96c);
     background: var(--background-success, #21322e);
 }
 .unstable .column_value,
-.UNSTABLE .column_value,
-.pending .column_value {
+.UNSTABLE .column_value {
     color: var(--status-waiting, #ffb868);
     background: var(--background-waiting, #fff8f0);
 }
 .inactive .column_value,
-.INACTIVE .column_value,
-.rejected .column_value {
+.INACTIVE .column_value {
     color: var(--status-failed, #f1404a);
     background: var(--background-failed, #feeced);
 }

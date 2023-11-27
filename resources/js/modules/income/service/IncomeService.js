@@ -16,7 +16,7 @@ export class IncomeService {
     }
 
     async index() {
-        this.tableService
+        this.tableService.tableModel
             .setTitlesLength(8)
             .setTitleString("income.table.titles")
             .setRowsData(IncomeData);
@@ -30,7 +30,7 @@ export class IncomeService {
     }
 
     get table() {
-        return this.tableService.table;
+        return this.tableService.tableModel.table;
     }
 
     get isWait() {
