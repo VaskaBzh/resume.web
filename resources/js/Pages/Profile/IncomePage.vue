@@ -87,7 +87,7 @@ export default {
         };
     },
     mounted() {
-        this.service.tableProcess();
+        this.service.index();
     },
 };
 </script>

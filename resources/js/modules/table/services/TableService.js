@@ -1,8 +1,11 @@
 import { TableControllService } from "@/modules/table/services/TableControllService";
 import { Client } from "@/api/clients/Client";
 import { ResponseTrait } from "@/traits/ResponseTrait";
+import { document } from "postcss";
 
 export class TableService {
+    GROUP_ID_PARAMS_INDEX = 0;
+
     constructor() {
         this.table = {};
 
@@ -49,6 +52,17 @@ export class TableService {
     }
 
     async fetch(client, ...params) {
+        window.addEventListener("changeGroupId", (event) => {
+            console.log(event);
+        });
+        console.log(...params);
+
+        if (params[this.GROUP_ID_PARAMS_INDEX] === -1) {
+            new Error("Group_id is not available");
+
+            return null;
+        }
+
         this.tableStates.waitResponse();
 
         try {

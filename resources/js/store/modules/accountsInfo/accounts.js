@@ -21,6 +21,13 @@ export default {
         },
         set_active_in_list({ commit, state }, data) {
             if (data.index) {
+                const groupIdEvent = new CustomEvent("changeGroupId", {
+                    detail: { group_id: data.index },
+                });
+
+                console.log(groupIdEvent);
+                document.dispatchEvent(groupIdEvent);
+
                 commit("updateActive", data.index);
                 commit("updateActiveAccountInList", data.index);
             }
@@ -42,6 +49,7 @@ export default {
 
             commit("updateAccounts", subsList);
             commit("updateOverall", overall);
+
             if (state.active === -1) {
                 this.dispatch("set_active_in_list", {
                     index: Object.values(subsList)[firstSubIndex].group_id,
