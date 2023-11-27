@@ -42,10 +42,12 @@
         <!--        }"-->
         <main-slider
             class="onboarding_block"
-            :wait="false"
-            :empty="false"
+            :wait="service.isWait"
+            :empty="service.isEmpty"
+            :end="service.isEnd"
             rows-num="1000"
             :have-nav="false"
+            :table="service.table"
         ></main-slider>
     </div>
 </template>
@@ -75,11 +77,6 @@ export default {
     },
     i18n: {
         sharedMessages: IncomeMessages,
-    },
-    watch: {
-        getActive(newGroupId) {
-
-        }
     },
     data() {
         return {

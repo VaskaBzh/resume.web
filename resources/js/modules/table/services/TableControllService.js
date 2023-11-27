@@ -1,6 +1,6 @@
 export class TableControllService {
     constructor() {
-        this.isWait = false;
+        this.isWait = true;
         this.isEmpty = false;
         this.isEnd = false;
     }

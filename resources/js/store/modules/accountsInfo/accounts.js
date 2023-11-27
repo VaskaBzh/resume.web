@@ -25,7 +25,6 @@ export default {
                     detail: { group_id: data.index },
                 });
 
-                console.log(groupIdEvent);
                 document.dispatchEvent(groupIdEvent);
 
                 commit("updateActive", data.index);

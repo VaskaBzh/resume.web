@@ -4,14 +4,8 @@ export class ResponseTrait {
             return response;
         }
 
-        for (let responseKey in response) {
-            if (
-                typeof response[responseKey] === "object" &&
-                !Array.isArray(response[responseKey]) &&
-                response[responseKey] !== null
-            ) {
-                return this.getResponseData(response[responseKey]);
-            }
+        if (response?.data) {
+            return this.getResponseData(response.data);
         }
     }
 

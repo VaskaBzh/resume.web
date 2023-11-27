@@ -15,10 +15,33 @@ export class IncomeService {
         return new TableService();
     }
 
-    index() {
+    async index() {
         this.tableService
-            .setTitles()
-            .setRowsData(IncomeData)
-            .fetch("incomes", store.getters.getActive, 1, 1222);
+            .setTitlesLength(8)
+            .setTitleString("income.table.titles")
+            .setRowsData(IncomeData);
+
+        await this.tableService.fetch(
+            "incomes",
+            store.getters.getActive,
+            1,
+            1000
+        );
+    }
+
+    get table() {
+        return this.tableService.table;
+    }
+
+    get isWait() {
+        return this.tableService.tableStates.isWait;
+    }
+
+    get isEnd() {
+        return this.tableService.tableStates.isEnd;
+    }
+
+    get isEmpty() {
+        return this.tableService.tableStates.isEmpty;
     }
 }

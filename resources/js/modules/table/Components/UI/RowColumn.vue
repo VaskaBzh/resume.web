@@ -1,8 +1,12 @@
 <template>
     <td class="column">
-        <span class="column_title" v-show="!!title">{{ title }}</span>
-        <span class="column_value" v-show="value !== null" v-html="renderedValue"></span>
-        <span class="column_icon" v-show="!!$slots.icon">
+        <span v-show="!!title" class="column_title">{{ title }}</span>
+        <span
+            v-show="value !== null"
+            class="column_value"
+            v-html="renderedValue"
+        ></span>
+        <span v-show="!!$slots.icon" class="column_icon">
             <slot name="icon" />
         </span>
     </td>
@@ -13,7 +17,7 @@ import { SubsCustomFunctions } from "@/modules/table/functionsMap/SubsCustomFunc
 import { ColumnService } from "@/modules/table/services/ColumnService";
 
 export default {
-    name: "row-column",
+    name: "RowColumn",
     props: {
         value: {
             type: String,
@@ -22,19 +26,22 @@ export default {
         title: String,
         columnKey: String,
     },
+    data() {
+        return {
+            renderedValue: this.value,
+            service: new ColumnService(),
+        };
+    },
     watch: {
         value() {
             this.initRenderFunctions();
         },
         "service.renderedValue"(newRenderedValue) {
             this.renderedValue = newRenderedValue;
-        }
+        },
     },
-    data() {
-        return {
-            renderedValue: this.value,
-            service: new ColumnService(),
-        };
+    mounted() {
+        this.initRenderFunctions();
     },
     methods: {
         initRenderFunctions() {
@@ -44,12 +51,9 @@ export default {
             } else {
                 this.renderedValue = this.value;
             }
-        }
+        },
     },
-    mounted() {
-        this.initRenderFunctions();
-    }
-}
+};
 </script>
 
 <style scoped>
@@ -101,23 +105,23 @@ export default {
 .ACTIVE .column_value,
 .complete .column_value,
 .completed .column_value {
-    color: var(--status-succesfull, #1FB96C);
-    background: var(--background-success, #21322E);
+    color: var(--status-succesfull, #1fb96c);
+    background: var(--background-success, #21322e);
 }
 .unstable .column_value,
 .UNSTABLE .column_value,
 .pending .column_value {
-    color: var(--status-waiting, #FFB868);
-    background: var(--background-waiting, #FFF8F0);
+    color: var(--status-waiting, #ffb868);
+    background: var(--background-waiting, #fff8f0);
 }
 .inactive .column_value,
 .INACTIVE .column_value,
 .rejected .column_value {
-    color: var(--status-failed, #F1404A);
-    background: var(--background-failed, #FEECED);
+    color: var(--status-failed, #f1404a);
+    background: var(--background-failed, #feeced);
 }
 .column_title {
-    color: var(--text-table-title, #98A2B3);
+    color: var(--text-table-title, #98a2b3);
     font-family: NunitoSans, serif;
     font-size: 12px;
     font-weight: 600;
