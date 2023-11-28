@@ -177,7 +177,7 @@ const messages = {
                 ],
                 button: ["Learn more"],
                 tooltip:
-                    "With high capacity, you can get personal commission redused",
+                    "With high capacity, you can <br> get personal commission redused",
             },
         },
         profitability_calculator: {
@@ -195,7 +195,7 @@ const messages = {
                 placeholder: ["Total hashrate", "Commission"],
                 tooltip: [
                     "Average hashrate of all devices",
-                    "The commission depends on the average hashrate: the higher the hashrate, the lower the commission",
+                    "The commission depends on the average hashrate: <br> the higher the hashrate, the lower the commission",
                 ],
                 item: ["Current difficulty", "BTC rate"],
                 segment: ["1 day", "1 month", "3 months"],
@@ -799,7 +799,7 @@ const messages = {
                 },
                 tooltip: [
                     "On your subaccount ",
-                    "Autopayment occurs when the balance is >",
+                    "Autopayment <br> occurs when the balance is >",
                 ],
             },
         },
@@ -930,7 +930,7 @@ const messages = {
                 button_text: "Add",
             },
             tooltip:
-                "As soon as the accrual amount increases the specified value will be automatically paid out to your active wallet",
+                "As soon as the accrual amount increases the specified <br> value will be automatically paid out to your active wallet",
             messages: [
                 "Wait 5 seconds.",
                 "You can delete your wallet through tech support.",
@@ -1198,7 +1198,7 @@ const messages = {
                 ],
                 button: ["Узнать больше"],
                 tooltip:
-                    "При больших мощностях вы можете получить персональную сниженную комиссию",
+                    "При больших мощностях вы можете <br> получить персональную сниженную комиссию",
             },
         },
         profitability_calculator: {
@@ -1216,7 +1216,7 @@ const messages = {
                 placeholder: ["Общий хешрейт", "Комиссия"],
                 tooltip: [
                     "Средний хешрейт всех устройств",
-                    "Комиссия зависит от общего среднего хешрейта: чем больше хешрейт, тем меньше комиссия",
+                    "Комиссия зависит от общего <br> среднего хешрейта: чем больше хешрейт, тем меньше комиссия",
                 ],
                 item: ["Текущая сложность", "Курс BTC"],
                 segment: ["1 день", "1 месяц", "3 месяца"],
@@ -1841,7 +1841,7 @@ const messages = {
                 },
                 tooltip: [
                     "На вашем субаккаунте ",
-                    "Автовыплата происходит при  балансе >",
+                    "Автовыплата <br> происходит при  балансе >",
                 ],
             },
         },
@@ -1964,7 +1964,7 @@ const messages = {
                 button_text: "Добавить",
             },
             tooltip:
-                "Как только сумма начислений станет больше указанного значения произойдет автовыплата на ваш активный кошелек",
+                "Как только сумма начислений станет больше <br> указанного значения произойдет автовыплата <br> на ваш активный кошелек",
             messages: [
                 "Подождите 5 секунд.",
                 "Удалить кошелек можно через тех поддержку.",

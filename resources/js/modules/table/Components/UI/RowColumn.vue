@@ -70,6 +70,7 @@ export default {
     border-style: solid;
     border-color: transparent;
     transition: all 0.5s ease 0s;
+    white-space: nowrap;
 }
 .column:first-child {
     border-radius: 8px 0 0 8px;
@@ -84,11 +85,13 @@ export default {
 }
 @media (max-width: $mobile) {
     .column {
-        display: flex;
-        flex-direction: column;
-    }
-    .column_title {
-        display: inline-flex;
+        &:not(.column-income) {
+            display: flex;
+            flex-direction: column;
+            .column_title {
+                display: inline-flex;
+            }
+        }
     }
 }
 .active .column_value,

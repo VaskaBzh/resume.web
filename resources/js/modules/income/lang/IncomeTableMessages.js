@@ -1,15 +1,15 @@
 export const IncomeTableMessages = {
     en: {
         pending: "Pending",
-        rejected: "Error",
-        completed: "Paid",
+        reject: "Error",
+        complete: "Paid",
         checking: "Checking",
         no_wallet: "No wallet",
     },
     ru: {
         pending: "В ожидании",
-        rejected: "Ошибка",
-        completed: "Выплачено",
+        reject: "Ошибка",
+        complete: "Выплачено",
         checking: "Проверка",
         no_wallet: "Нет кошелька",
     },

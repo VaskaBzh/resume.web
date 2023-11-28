@@ -41,7 +41,7 @@
         <!--        instructionService.step === 2,-->
         <!--        }"-->
         <main-slider
-            class="onboarding_block"
+            class="onboarding_block slider-income"
             :wait="service.isWait"
             :empty="service.isEmpty"
             :end="service.isEnd"
@@ -92,6 +92,11 @@ export default {
     i18n: {
         sharedMessages: IncomeMessages,
     },
+    watch: {
+        "$i18n.locale"() {
+            this.service.index();
+        },
+    },
     data() {
         return {
             service: new IncomeService(),
@@ -104,8 +109,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slider-income {
+    @media (max-width: 998px) {
+        width: calc(100% + clamp(12px, 2vw, 24px) + clamp(12px, 2vw, 24px));
+        margin: 0 calc(clamp(12px, 2vw, 24px) * -1);
+    }
+}
 .income {
     flex: 1 1 auto;
+    width: 100%;
+    @media (min-width: 998px) {
+        max-width: calc(
+            100vw - 320px - clamp(12px, 2vw, 24px) - clamp(12px, 2vw, 24px)
+        );
+    }
     @include columnMixin($gap: 24px);
     &__head {
         display: grid;
@@ -119,6 +136,9 @@ export default {
     &__block {
         grid-column: 1/2;
         grid-row: 3/4;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         &-first {
             grid-column: 1/2;
             grid-row: 1/3;

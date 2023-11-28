@@ -1,7 +1,7 @@
 <template>
     <table class="table">
         <thead class="table__head">
-            <table-titles :titles="titles" />
+            <table-titles class="table__row-income" :titles="titles" />
         </thead>
         <tbody class="table__body" @click="deligateProcess">
             <component
@@ -39,8 +39,12 @@ export default {
         },
     },
     methods: {
-        deligateProcess() {
-            // navigator.clipboard.writeText(value);
+        deligateProcess(event) {
+            if (event.target.closest("[data-copy]")) {
+                navigator.clipboard.writeText(
+                    event.target.closest("[data-copy]").innerText
+                );
+            }
         },
     },
     computed: {
@@ -63,22 +67,10 @@ export default {
 
 <style lang="scss">
 .table {
-    width: 100%;
     text-indent: 0;
     border-collapse: separate;
     border-spacing: 0 8px;
-    @media (max-width: 767.98px) {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    &__body {
-        @media (max-width: 767.98px) {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-    }
+    width: 100%;
     &_column {
         position: relative;
         -moz-user-select: -moz-none;
@@ -86,10 +78,7 @@ export default {
         -khtml-user-select: none;
         -webkit-user-select: none;
         user-select: none;
-        @media (min-width: 767.98px) {
-            height: 48px;
-            padding-left: 16px;
-        }
+        white-space: nowrap;
         &:first-child {
             border-radius: 8px 0 0 8px;
         }
@@ -106,9 +95,6 @@ export default {
         }
     }
     &__head {
-        @media (max-width: 767.98px) {
-            display: none;
-        }
         .table {
             &_column {
                 position: relative;
@@ -143,52 +129,6 @@ export default {
                 &:last-child {
                     border-right-width: 1px;
                 }
-            }
-            svg {
-                @media (min-width: 767.98px) {
-                    display: inline;
-                }
-            }
-            //&:before {
-            //    content: "";
-            //    border-radius: 0 4px 4px 0;
-            //    background: #2E90FA;
-            //    position: absolute;
-            //    left: 0;
-            //    top: 50%;
-            //    transform: translateX(-50%);
-            //    transition: all 0.3s ease 0s;
-            //}
-            //&:active {
-            //    position: relative;
-            //    &:before {
-            //        opacity: 1;
-            //    }
-            //}
-            &:hover {
-                @media (max-width: 767.98px) {
-                    border-color: var(--states-broder-hover, #43474e);
-                }
-                @media (min-width: 767.98px) {
-                    td {
-                        border-color: var(--states-broder-hover, #43474e);
-                    }
-                }
-            }
-        }
-    }
-    &_column {
-        @media (max-width: 767.98px) {
-            display: inline-flex;
-            width: 100%;
-            justify-content: space-between;
-            span {
-                &:last-child {
-                    font-weight: 500;
-                }
-            }
-            &-margin {
-                margin-top: 8px;
             }
         }
     }

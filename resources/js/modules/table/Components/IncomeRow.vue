@@ -3,6 +3,7 @@
         <row-column
             v-for="(column, i) in service.filteredColumns"
             :key="i"
+            class="column-income"
             :value="column[1]"
             :column-key="column[0]"
         />
@@ -45,4 +46,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.column {
+    &-income {
+        padding-right: 24px;
+    }
+}
+</style>

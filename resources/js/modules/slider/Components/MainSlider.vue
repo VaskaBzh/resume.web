@@ -124,8 +124,20 @@ export default {
 .slider {
     height: 100%;
     width: 100%;
+    &-income {
+        .slider__content {
+            @media (max-width: 998px) {
+                padding: 0 clamp(12px, 2vw, 24px);
+            }
+        }
+    }
     &__content {
         width: 100%;
+        overflow-x: scroll;
+        &::-webkit-scrollbar {
+            width: 0;
+            display: none;
+        }
     }
     @media (max-width: 500px) {
         height: auto;
