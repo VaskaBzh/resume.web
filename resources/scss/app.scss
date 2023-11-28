@@ -51,6 +51,7 @@
     padding: 0;
     margin: 0;
     border: 0;
+    scroll-behavior: smooth;
 }
 
 *,
@@ -74,7 +75,7 @@ body {
     height: 100%;
     min-width: $minWidth;
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
 }
 
 body {
@@ -90,6 +91,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: black;
+    scroll-behavior: smooth !important;
 }
 
 input,
