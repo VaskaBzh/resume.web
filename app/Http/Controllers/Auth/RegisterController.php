@@ -1,23 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Dto\UserData;
 use App\Events\Registered;
+use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Internal\SubService;
 use App\Services\Internal\UserService;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
-
     #[
         OA\Post(
             path: '/register',
@@ -110,17 +110,29 @@ class RegisterController extends Controller
         RegisterRequest $request,
         SubService $subService,
     ): JsonResponse {
-        auth()->login($user = UserService::create(userData: UserData::fromRequest($request->all())));
+        try {
+            $remoteSub = $subService->createRemoteSub(subName: $request->name);
 
-        event(new Registered(
-            user: $user,
-            referralCode: $request->referral_code,
-        ));
+            auth()->login($user = UserService::create(userData: UserData::fromRequest($request->all())));
 
-        return new JsonResponse([
-            'message' => 'success',
-            'user' => new UserResource($user),
-            'token' => $user->createAuthToken(),
-        ], Response::HTTP_CREATED);
+            event(new Registered(
+                user: $user,
+                referralCode: $request->referral_code,
+            ));
+
+            $subService->createLocalSub($user, $remoteSub);
+
+            return new JsonResponse([
+                'message' => 'success',
+                'user' => new UserResource($user),
+                'token' => $user->createAuthToken(),
+            ], Response::HTTP_CREATED);
+        } catch (BusinessException $e) {
+            return new JsonResponse([
+                'errors' => [
+                    'name' => [$e->getClientMessage()],
+                ],
+            ], $e->getClientStatusCode());
+        }
     }
 }
