@@ -50,6 +50,7 @@ export default {
     &_icon {
         margin: 0 6px -3px 0;
         cursor: pointer;
+        fill: var(--icons-secondary);
     }
 }
 .column:first-child .column_value {

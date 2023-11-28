@@ -21,6 +21,9 @@ export class IncomeService {
             .setTitleString("income.table.titles")
             .setRowsData(IncomeData);
 
+        this.waitGraphChange = true;
+        this.graphService.setDefaultKeys(60 * 60 * 1000 * 24);
+
         await this.tableService.fetch(
             "incomes",
             store.getters.getActive,

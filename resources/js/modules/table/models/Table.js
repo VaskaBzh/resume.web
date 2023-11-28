@@ -1,12 +1,10 @@
 export class Table {
-    constructor() {
-        this.rows = {};
+    rows;
 
-        this.rowsData = null;
+    rowsData;
 
-        this.titleString = null;
-        this.titlesLength = null;
-    }
+    titleString;
+    titlesLength;
 
     setTitlesLength(newTitlesLength) {
         this.titlesLength = newTitlesLength;

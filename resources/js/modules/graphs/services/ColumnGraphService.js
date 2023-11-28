@@ -15,11 +15,12 @@ export class ColumnGraphService extends GraphService {
     }
 
     getPosition() {
-        if (this.mouseX)
+        if (this.mouseX) {
             return {
                 side: "left",
                 position: this.mouseX - this.tooltipHtml.clientWidth / 2,
             };
+        }
     }
 
     setOtherElements() {}
@@ -123,7 +124,7 @@ export class ColumnGraphService extends GraphService {
                 const width = this.chartHtml.offsetWidth / 30;
                 const height =
                     this.y(0) - this.y(d) <= 1 ? 1 : this.y(0) - this.y(d);
-                const rx = (this.y(0) - this.y(d)) <= 1 ? 0 : 6;
+                const rx = this.y(0) - this.y(d) <= 1 ? 0 : 2;
 
                 return `
                     M ${x + rx} ${y}

@@ -9,7 +9,7 @@ export class ResponseTrait {
         }
     }
 
-    checkResponseLength(responseData) {
+    isEmptyResponse(responseData) {
         return responseData.length === 0;
     }
 }

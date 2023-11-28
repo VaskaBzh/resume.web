@@ -77,7 +77,7 @@ export class TableService {
 
             const responseData = this.responseTrait.getResponseData(response);
 
-            if (this.responseTrait.checkResponseLength(responseData)) {
+            if (this.responseTrait.isEmptyResponse(responseData)) {
                 this.tableStates.emptyResponse();
 
                 return this;
