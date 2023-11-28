@@ -3,29 +3,55 @@
         <main-title class="title-profile">{{ $t("title") }}</main-title>
         <div class="income__head">
             <div
-                class="cabinet__block cabinet__block-card cabinet__block-light income__block income__block-first"
+                class="income__wrap onboarding_block"
+                :class="{
+                    'onboarding_block-target':
+                        instructionService.isVisible &&
+                        instructionService.step === 1,
+                }"
             >
-                <btc-calculator
-                    :title="$t('block.titles.full_income')"
-                    :bitcoin="getAccount.total_amount || 0"
-                />
-                <main-progress-bar
-                    :title="$t('block.titles.income')"
-                    :progress="getAccount.pending_amount || 0"
-                    :final="0.005"
-                    unit="BTC"
+                <div
+                    class="cabinet__block cabinet__block-card cabinet__block-light income__block income__block-first"
+                >
+                    <btc-calculator
+                        :title="$t('block.titles.full_income')"
+                        :bitcoin="getAccount.total_amount || 0"
+                    />
+                    <main-progress-bar
+                        :title="$t('block.titles.income')"
+                        :progress="getAccount.pending_amount || 0"
+                        :final="0.005"
+                        unit="BTC"
+                    />
+                </div>
+                <div
+                    class="cabinet__block cabinet__block-card cabinet__block-light income__block"
+                >
+                    <btc-calculator
+                        :title="$t('block.titles.yesterday_amount')"
+                        :bitcoin="getAccount.yesterday_amount || 0"
+                    />
+                </div>
+                <instruction-step
+                    :step_active="1"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :is-visible="instructionService.isVisible"
+                    text="texts.income[0]"
+                    title="titles.income[0]"
+                    class-name="onboarding__card-top"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
                 />
             </div>
             <div
-                class="cabinet__block cabinet__block-card cabinet__block-light income__block"
-            >
-                <btc-calculator
-                    :title="$t('block.titles.yesterday_amount')"
-                    :bitcoin="getAccount.yesterday_amount || 0"
-                />
-            </div>
-            <div
-                class="cabinet__block cabinet__block-card cabinet__block-light income__block income__block-full"
+                class="cabinet__block onboarding_block cabinet__block-card cabinet__block-light income__block income__block-full"
+                :class="{
+                    'onboarding_block-target':
+                        instructionService.isVisible &&
+                        instructionService.step === 2,
+                }"
             >
                 <btc-calculator
                     :title="$t('block.titles.month_profit')"
@@ -33,15 +59,27 @@
                 />
                 {{ $t("block.titles.month_profit_graph") }}
                 <!--                <main-bar-graph v-if="false" :height="300" :graph-data="{}" />-->
+                <instruction-step
+                    :step_active="2"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :is-visible="instructionService.isVisible"
+                    text="texts.income[1]"
+                    title="titles.income[1]"
+                    class-name="onboarding__card-right"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                />
             </div>
         </div>
-        <!--        :class="{-->
-        <!--        'onboarding_block-target':-->
-        <!--        instructionService.isVisible &&-->
-        <!--        instructionService.step === 2,-->
-        <!--        }"-->
         <main-slider
             class="onboarding_block slider-income"
+            :class="{
+                'onboarding_block-target':
+                    instructionService.isVisible &&
+                    instructionService.step === 3,
+            }"
             :wait="service.isWait"
             :empty="service.isEmpty"
             :end="service.isEnd"
@@ -49,6 +87,20 @@
             :have-nav="false"
             :table="service.table"
         >
+            <template #instruction>
+                <instruction-step
+                    :step_active="3"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :is-visible="instructionService.isVisible"
+                    text="texts.income[2]"
+                    title="titles.income[2]"
+                    class-name="onboarding__card-bottom"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                />
+            </template>
             <main-table
                 :table="service.table"
                 :empty="service.isEmpty"
@@ -57,6 +109,10 @@
             />
         </main-slider>
     </div>
+    <instruction-button
+        hint="incomes"
+        @openInstruction="instructionService.setStep().setVisible()"
+    />
 </template>
 
 <script>
@@ -66,11 +122,14 @@ import MainBarGraph from "@/modules/graphs/Components/MainBarGraph.vue";
 import MainProgressBar from "@/modules/common/Components/UI/MainProgressBar.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import MainTable from "@/modules/table/Components/MainTable.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
 import IncomeRow from "@/modules/table/Components/IncomeRow.vue";
 
 import { IncomeMessages } from "@/modules/income/lang/IncomeMessages";
 import { IncomeService } from "@/modules/income/service/IncomeService";
 import { mapGetters } from "vuex";
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
 
 export default {
     name: "IncomePage",
@@ -81,7 +140,8 @@ export default {
         MainBarGraph,
         MainProgressBar,
         MainTable,
-        IncomeRow,
+        InstructionButton,
+        InstructionStep,
     },
     computed: {
         ...mapGetters(["getAccount", "getActive"]),
@@ -100,10 +160,14 @@ export default {
     data() {
         return {
             service: new IncomeService(),
+            instructionService: new InstructionService(),
         };
     },
     mounted() {
         this.service.index();
+        this.instructionService.setStepsCount(3);
+
+        document.title = this.$t("header.links.income");
     },
 };
 </script>
@@ -118,38 +182,34 @@ export default {
 .income {
     flex: 1 1 auto;
     width: 100%;
+    @include columnMixin($gap: 24px);
     @media (min-width: 998px) {
         max-width: calc(
             100vw - 320px - clamp(12px, 2vw, 24px) - clamp(12px, 2vw, 24px)
         );
     }
-    @include columnMixin($gap: 24px);
     &__head {
-        display: grid;
+        display: flex;
+        flex-wrap: nowrap;
         gap: adaptive-value(8px, 12px);
-        grid-template-columns: 1fr;
-        @media (min-width: $mobile) {
-            grid-template-rows: repeat(3, 1fr);
-            grid-template-columns: repeat(2, 1fr);
+        @media (max-width: $mobile) {
+            flex-wrap: wrap;
         }
     }
+    &__wrap {
+        @include columnMixin($gap: adaptive-value(8px, 12px));
+        width: 100%;
+    }
     &__block {
-        grid-column: 1/2;
-        grid-row: 3/4;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        &-first {
-            grid-column: 1/2;
-            grid-row: 1/3;
-        }
+        width: 100%;
+        gap: adaptive-value(8px, 12px);
         &-full {
-            grid-column: 2/3;
-            grid-row: 1/4;
-        }
-        @media (max-width: $mobile) {
-            grid-column: auto;
-            grid-row: auto;
+            @media (min-width: $mobile) {
+                height: 100%;
+            }
         }
     }
 }
