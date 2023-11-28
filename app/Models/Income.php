@@ -24,6 +24,7 @@ class Income extends Model
         'daily_amount',
         'diff',
         'hash',
+        'unit',
         'status',
         'message',
     ];

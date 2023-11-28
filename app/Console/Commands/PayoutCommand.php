@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Dto\Income\UpdateStatusData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
+use App\Exceptions\PayOutException;
 use App\Models\Sub;
+use App\Services\External\Wallet\Client;
+use App\Services\Internal\IncomeService;
 use App\Services\Internal\PayoutService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class PayoutCommand extends Command
 {
@@ -19,53 +22,40 @@ class PayoutCommand extends Command
 
     public function handle(): void
     {
-        $readyToPayoutSubs = Sub::readyToPayout()
+        Sub::readyToPayout()
             ->with('wallets')
-            ->get();
+            ->get()
+            ->each(static function (Sub $sub) {
+                try {
+                    PayoutService::init($sub)
+                        ->payOut(static function (Client $client) use ($sub) {
+                            $amount = (float) $sub->pending_amount;
 
-        if (! filled($readyToPayoutSubs)) {
-            return;
-        }
+                            //$client->unlock();
 
-        $readyToPayoutSubs->each(static function (Sub $sub) {
-            self::process(
-                payoutService: resolve(PayoutService::class),
-                sub: $sub
-            );
-        });
-    }
+                            $txId = '123';
 
-    public static function process(
-        PayoutService $payoutService,
-        Sub $sub
-    ): void {
-        $payoutService->init(sub: $sub);
+                            //$client->unlock();
 
-        if (!$payoutService->canTransaction()) {
-            $payoutService->setMessage(Message::)
-        }
+                            return [$txId, $amount];
+                        })->clearPendingAmount();
 
-        $payoutService->unlockRemoteWallet();
-        $txId = $payoutService->payOut();
+                    IncomeService::updateIncomes(data: UpdateStatusData::fromArray([
+                        'sub' => $sub,
+                        'status' => Status::COMPLETED,
+                        'message' => Message::COMPLETED,
+                    ]));
+                } catch (PayOutException|\Exception $e) {
+                    IncomeService::updateIncomes(data: UpdateStatusData::fromArray([
+                        'sub' => $sub,
+                        'status' => Status::REJECTED,
+                        'message' => Message::ERROR_PAYOUT,
+                    ]));
 
-        if (! $txId) {
-            Log::channel('payouts')->info('TXID IS EMPTY', [
-                'sub' => $sub->group_id,
-            ]);
+                    report($e);
 
-            $payoutService->setMessage(Message::ERROR_PAYOUT);
-            $payoutService->updateIncome();
-
-            return;
-        }
-
-        $payoutService
-            ->setStatus(Status::COMPLETED)
-            ->setMessage(Message::COMPLETED)
-            ->setTxId(txId: $txId)
-            ->createPayout()
-            ->updateIncome()
-            ->clearPendingAmount()
-            ->lock();
+                    return;
+                }
+            });
     }
 }

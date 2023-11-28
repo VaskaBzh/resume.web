@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Services\External;
+namespace App\Services\External\Wallet;
 
 use App\Enums\Income\Message;
 use App\Exceptions\PayOutException;
-use App\Models\Wallet;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
-final class WalletService
+final class Client
 {
     public function __construct(
         private PendingRequest $client
@@ -22,6 +23,9 @@ final class WalletService
         );
     }
 
+    /**
+     * @throws RequestException
+     */
     public function unlock(): void
     {
         $this->client->post(config('api.wallet.ip'), [
@@ -29,23 +33,25 @@ final class WalletService
             'id' => 'unlock',
             'method' => 'walletpassphrase',
             'params' => [config('api.wallet.walletpassphrase'), 10],
-        ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError(),
-            new PayOutException('Ошибка при выполнении запроса разблокировки кошелька')
-        );
+        ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError());
     }
 
+    /**
+     * @throws RequestException
+     */
     public function lock(): void
     {
         $this->client->post(config('api.wallet.ip'), [
             'jsonrpc' => '1.0',
             'id' => 'lock',
             'method' => 'walletlock',
-        ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError(),
-             new PayOutException('Ошибка при выполнении запроса блокировки кошелька')
-        );
+        ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError());
     }
 
-    public function sendBalance(string $wallet, float $balance): ?string
+    /**
+     * @throws PayOutException
+     */
+    public function sendBalance(string $wallet, float $balance): string
     {
         $response = $this->client->post(config('api.wallet.ip'), [
             'jsonrpc' => '1.0',
@@ -57,12 +63,12 @@ final class WalletService
             ],
         ]);
 
-        info('WALLET RESPONSE', [
-            'wallet' => $wallet->id,
+        Log::channel('payouts')->info('WALLET RESPONSE', [
+            'wallet' => $wallet,
             'response' => $response,
         ]);
 
-        if (! $response['resilt']) {
+        if (! $response['result']) {
             throw new PayOutException(Message::ERROR_PAYOUT->value.$response['error']);
         }
 

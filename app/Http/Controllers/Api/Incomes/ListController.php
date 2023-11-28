@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\IncomeCollection;
 use App\Models\Income;
 use App\Models\Sub;
-use App\Services\Internal\IncomeService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;

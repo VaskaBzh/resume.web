@@ -6,9 +6,11 @@ namespace App\Services\Internal;
 
 use App\Actions\Finance\Create;
 use App\Actions\Income\Create as IncomeCreate;
+use App\Actions\Income\UpdateStatus;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
 use App\Dto\Income\IncomeCreateData;
+use App\Dto\Income\UpdateStatusData;
 use App\Dto\Sub\SubUpsertData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
@@ -19,7 +21,6 @@ use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 
 final class IncomeService
@@ -177,7 +178,6 @@ final class IncomeService
         $this->dailyEarn = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: 0
         );
 
         return $this;
@@ -271,10 +271,15 @@ final class IncomeService
                 'referral_id' => $incomeType->value === 'referral' ? $this->sub->user->id : null,
                 'status' => $this->params[$incomeType->value]['status'],
                 'message' => $this->params[$incomeType->value]['message'],
-                'hash' => (float) HashRateConverter::fromPure($this->params['hash'])->value,
+                'hash' => HashRateConverter::fromPure($this->params['hash']),
                 'diff' => $this->params['diff'],
             ])
         );
+    }
+
+    public static function updateIncomes(UpdateStatusData $data): void
+    {
+        UpdateStatus::execute(updateStatusData: $data);
     }
 
     /**

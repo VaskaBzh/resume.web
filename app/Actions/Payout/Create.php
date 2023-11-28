@@ -12,8 +12,8 @@ class Create
     public static function execute(PayoutData $payoutData): Payout
     {
         return Payout::create([
-            'group_id' => $payoutData->groupId,
-            'wallet_id' => $payoutData->walletId,
+            'group_id' => $payoutData->sub->group_id,
+            'wallet_id' => $payoutData->wallet->id,
             'payout' => $payoutData->payout,
             'txid' => $payoutData->txId,
         ]);

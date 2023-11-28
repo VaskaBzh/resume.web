@@ -7,6 +7,7 @@ namespace App\Dto\Income;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
+use App\Utils\HashRateConverter;
 
 final readonly class IncomeCreateData
 {
@@ -17,7 +18,7 @@ final readonly class IncomeCreateData
      * @param  ?int  $referralId - id рефовода
      * @param  Status  $status - статус транзакции
      * @param  Message  $message - сообщение транзакции
-     * @param  float  $hashrate - хэщрейт
+     * @param  HashRateConverter  $hashrate - обьект конвертера
      * @param  int  $difficulty - сложность сети
      */
     public function __construct(
@@ -27,7 +28,7 @@ final readonly class IncomeCreateData
         public ?int $referralId,
         public Status $status,
         public Message $message,
-        public float $hashrate,
+        public HashRateConverter $hashrate,
         public int $difficulty,
     ) {
     }
