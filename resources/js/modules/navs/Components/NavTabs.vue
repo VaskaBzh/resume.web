@@ -17,7 +17,7 @@
                 <div class="nav__block">
                     <logo-block class="nav_logo" />
                     <div class="header-select-container">
-                        <selecct-theme v-if="!isOpenBurger"/>
+                        <select-theme v-if="!isOpenBurger"/>
                         <select-language />
                     </div>
                     <div class="nav__tabs">
