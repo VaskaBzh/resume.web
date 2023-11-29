@@ -70,13 +70,28 @@ return [
 
     'minerstat' => [
         'uri' => env('MINERSTAT_API_URI'),
+
         'token' => env('MINERSTAT_API_AUTH'),
     ],
 
     'wallet' => [
+        /**
+         * remote wallet ip address
+         */
         'ip' => env('WALLET_ADRESS'),
+
         'username' => env('WALLET_USERNAME'),
+
         'password' => env('WALLET_PASSWORD'),
+
+        /**
+         * Authorization phrase for transaction
+         */
         'walletpassphrase' => env('WALLET_PASSPHRASE'),
+
+        /**
+         * Minimal allowed withdraw for sub-account
+         */
+        'min_withdrawal' => 0.005,
     ],
 ];

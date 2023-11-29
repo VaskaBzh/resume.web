@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
 
 #[
     OA\Schema(
-        schema: 'GeneralSubsDataResource',
+        schema: 'OverallSubsDataResource',
         properties: [
             new OA\Property(property: 'total_hash_per_day', type: 'float'),
             new OA\Property(property: 'total_hash_day_unit', type: 'string'),
@@ -22,7 +22,7 @@ use OpenApi\Attributes as OA;
         type: 'object'
     )
 ]
-class GeneralSubsDataResource extends JsonResource
+class OverallSubsDataResource extends JsonResource
 {
     public function toArray($request): array
     {

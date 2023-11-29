@@ -12,7 +12,7 @@ enum Status: string
     case INACTIVE = 'INACTIVE';
     case DEAD = 'DEAD';
 
-    public static function tryFromInsensitive(string $value): ?self
+    public static function tryFromInsensitive(?string $value): ?self
     {
         return self::tryFrom(Str::upper($value));
     }

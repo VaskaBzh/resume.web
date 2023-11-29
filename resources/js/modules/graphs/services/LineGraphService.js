@@ -8,7 +8,8 @@ export class LineGraphService extends GraphService {
     setDate(nearestIndex) {
         const date = new Date(this.graphData.dates[nearestIndex]);
 
-        this.fullDate = date.getUTCFullYear() +
+        this.fullDate =
+            date.getUTCFullYear() +
             "." +
             date.getDate().toString().padStart(2, "0") +
             "." +

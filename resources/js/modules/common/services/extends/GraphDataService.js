@@ -53,21 +53,12 @@ export class GraphDataService extends DefaultSubsService {
         return Math.random() * (max - min) + min;
     }
 
-    validateHashrate(hash, unit) {
-        let hashrate = hash ?? 0;
-        if (unit === HashrateUnitEnum.petahash) hashrate *= 1000;
-        else if (unit === HashrateUnitEnum.exsahash) hashrate *= 1000000;
-
-        return hashrate;
-    }
-
     async makeFullValues() {
         const [values, amount, unit] = this.records.slice(-this.offset).reduce(
             (acc, el) => {
-                let hashrate = this.validateHashrate(el.hashrate, el.unit);
-                acc[0].push(Number(hashrate));
-                el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                acc[2].push(HashrateUnitEnum.terahash);
+                acc[0].push(el.hashrate || 0);
+                acc[1].push(el.amount || 0);
+                acc[2].push(el.unit || "T");
 
                 return acc;
             },
@@ -90,7 +81,7 @@ export class GraphDataService extends DefaultSubsService {
     async makeFullBarValues() {
         const [amount] = this.records.slice(-this.offset).reduce(
             (acc, el) => {
-                acc[0].push(el.amount);
+                acc[0].push(el.amount || 0);
 
                 return acc;
             },

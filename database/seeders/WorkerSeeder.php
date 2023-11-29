@@ -6,11 +6,12 @@ namespace Database\Seeders;
 
 use App\Actions\Worker\Update;
 use App\Dto\WorkerData;
-use App\Models\Worker;
+use App\Models\Sub;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcCom\Client;
 use App\Services\External\Contracts\TransformContract;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class WorkerSeeder extends Seeder
 {
@@ -30,28 +31,20 @@ class WorkerSeeder extends Seeder
             ]);
         });
 
-        Worker::updateOrCreate([
-            'worker_id' => 1000000000,
-        ], [
-            'worker_id' => 1000000000,
-            'group_id' => 9999999,
-            'name' => 'Referral.1',
-            'hash_per_day' => 89760000000000,
-            'status' => 'ACTIVE',
-            'unit' => 'T',
-            'pool_data' => [],
-        ]);
+        Sub::where('sub', 'like', '%Referral%')
+            ->get()
+            ->each(function (Sub $sub) {
+                $worker = (int) implode('', [$sub->group_id, 000000]);
 
-        Worker::updateOrCreate([
-            'worker_id' => 1100000000,
-        ], [
-            'worker_id' => 1100000000,
-            'group_id' => 9999999,
-            'name' => 'Referral.1',
-            'hash_per_day' => 89760000000000,
-            'status' => 'ACTIVE',
-            'unit' => 'T',
-            'pool_data' => [],
-        ]);
+                $sub->workers()->updateOrCreate(['worker_id' => $worker],
+                    [
+                        'worker_id' => $worker,
+                        'name' => $sub->sub.Str::random(10),
+                        'hash_per_day' => 93020000000000,
+                        'status' => 'ACTIVE',
+                        'unit' => 'T',
+                        'pool_data' => ['fake' => true],
+                    ]);
+            });
     }
 }
