@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {RoutePublicData} from "../DTO/RoutePublicData";
 import {RouteProfileData} from "../DTO/RouteProfileData";
 import {RouteReferralData} from "../DTO/RouteReferralData";
@@ -6,14 +5,8 @@ import {RouteAuthData} from "../DTO/RouteAuthData";
 import {RouteConfirmData} from "../DTO/RouteConfirmData";
 import {RouteNamesMap} from "@/router/map/RouteNamesMap";
 import {RouteFaqData} from "@/router/DTO/RouteFaqData";
-=======
-import { RoutePublicData } from "../DTO/RoutePublicData";
-import { RouteProfileData } from "../DTO/RouteProfileData";
-import { RouteReferralData } from "../DTO/RouteReferralData";
-import { RouteAuthData } from "../DTO/RouteAuthData";
-import { RouteConfirmData } from "../DTO/RouteConfirmData";
-import { RouteNamesMap } from "@/router/map/RouteNamesMap";
->>>>>>> dev-Common
+
+
 
 export class RouteServices {
     constructor() {
