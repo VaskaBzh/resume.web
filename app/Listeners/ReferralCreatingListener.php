@@ -8,13 +8,10 @@ use App\Actions\User\AttachReferral;
 use App\Enums\User\Roles;
 use App\Events\Registered;
 use App\Services\Internal\ReferralService;
-use App\Services\Internal\SubService;
 
-final readonly class SubCreatingListener
+final readonly class ReferralCreatingListener
 {
     /**
-     * Create remote sub-account
-     * Create local sub-account based on remote sub-account group_id
      * Attach referral program on user if referral_code exists
      * Assign referral role to registered user if referral_code exists
      */
@@ -29,10 +26,5 @@ final readonly class SubCreatingListener
 
             $event->user->assignRole(Roles::REFERRAL->value);
         }
-
-        app(SubService::class)->create(
-            user: $event->user,
-            subName: $event->user->name
-        );
     }
 }
