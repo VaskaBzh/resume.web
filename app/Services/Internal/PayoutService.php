@@ -133,6 +133,7 @@ final class PayoutService
                 'group_id' => $this->sub->group_id,
                 'sub_name' => $this->sub->sub,
                 'pending_amount' => 0,
+                'total_amount' => $this->sub->total_amount,
             ]),
             sub: $this->sub
         );

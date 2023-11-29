@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\Incomes\ListController;
 use App\Http\Controllers\Api\MinerStatController;
 use App\Http\Controllers\Api\Payout\ListController as PayoutListController;
+use App\Http\Controllers\Api\PoolStatsController;
 use App\Http\Controllers\Api\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\Api\Referral\ListController as ReferralListController;
 use App\Http\Controllers\Api\Referral\StatisticController as ReferralStatisticController;
@@ -33,6 +34,13 @@ use Illuminate\Support\Facades\Route;
 /* _________________ Public routes ____________________ */
 
 Route::get('/minerstats', MinerStatController::class)->name('miner_stat');
+Route::controller(PoolStatsController::class)
+    ->prefix('/pool/stats')
+    ->group(function () {
+        Route::get('', 'show')->name('show.pool_stat');
+        Route::post('', 'import')->name('import.pool_stat');
+    });
+
 Route::get('/chart', ChartController::class)->name('chart');
 
 /* _________________ End public routes ____________________ */
