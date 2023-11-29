@@ -52,7 +52,7 @@ class MinerStatController
     public function __invoke(): JsonResponse
     {
         return new JsonResponse([
-            'minerstats' => MinerStat::first(),
+            'minerstats' => app('miner_stat'),
         ]);
     }
 }

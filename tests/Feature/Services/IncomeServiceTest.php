@@ -31,14 +31,13 @@ class IncomeServiceTest extends TestCase
     /**
      * @test
      *
-     * @testdox it throw exception if sub account hasn't a hash rate
+     * @testdox it not create income if sub account hasn't a hash rate
      */
     public function hasNotHashRate(): void
     {
         $subWithoutHashRate = Sub::find(2);
 
-        $this->expectException(IncomeCreatingException::class);
-        (new IncomeService)->init($subWithoutHashRate, null);
+        IncomeService::init($this->stat, $subWithoutHashRate, null);
 
         $this->assertDatabaseMissing('incomes', ['group_id' => $subWithoutHashRate->group_id]);
         $this->assertDatabaseMissing('finances', ['group_id' => $subWithoutHashRate->group_id]);
@@ -60,7 +59,7 @@ class IncomeServiceTest extends TestCase
             ->where('group_id', 1)
             ->first();
 
-        $service = resolve(IncomeService::class)->init($subWithHashRate, null);
+        $service = IncomeService::init($this->stat, $subWithHashRate, null);
 
         $service->createIncome($subWithHashRate, Type::MINING);
         $service->updateLocalSub($subWithHashRate, Type::MINING);
@@ -70,14 +69,16 @@ class IncomeServiceTest extends TestCase
 
         $getPureDailyEarning = $this->calculate($hashrate);
         $expectDailyAmount = $this->calculate($hashrate, config('api.btc.fee') + 3.5);
+        $convertedHashRate = HashRateConverter::fromPure($hashrate);
 
         $this->assertDatabaseHas('incomes', [
             'group_id' => $subWithHashRate->group_id,
             'type' => Type::MINING->value,
             'daily_amount' => number_format($expectDailyAmount, 8, '.', ''),
             'status' => Status::PENDING->value,
-            'message' => Message::LESS_MIN_WITHDRAWAL->value,
-            'hash' => HashRateConverter::fromPure($hashrate)->value,
+            'message' => Message::NO_WALLET->value,
+            'hash' => $convertedHashRate->value,
+            'unit' => $convertedHashRate->unit,
         ]);
         $this->assertDatabaseHas('subs', [
             'user_id' => $subWithHashRate->user_id,
@@ -119,7 +120,7 @@ class IncomeServiceTest extends TestCase
 
         $expectDailyAmount = $this->calculate($subWithHashRate->hash_rate, config('api.btc.fee') + 3.5);
 
-        $service = resolve(IncomeService::class)->init($subWithHashRate, null);
+        $service = IncomeService::init($this->stat, $subWithHashRate, null);
 
         $service->createIncome($subWithHashRate, Type::MINING);
         $service->updateLocalSub($subWithHashRate, Type::MINING);
@@ -162,7 +163,7 @@ class IncomeServiceTest extends TestCase
 
         $this->assertEquals($referrerActiveSub->group_id, $referrer->active_sub);
 
-        $service = resolve(IncomeService::class)->init($referralSub, $referralSub);
+        $service = IncomeService::init($this->stat, $referralSub, $referralSub);
 
         $service->createIncome($referrerActiveSub, Type::REFERRAL);
         $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
@@ -182,7 +183,7 @@ class IncomeServiceTest extends TestCase
             'referral_id' => $referralSub->user->id,
             'daily_amount' => $expectReferrerDailyAmount,
             'status' => Status::PENDING->value,
-            'message' => Message::LESS_MIN_WITHDRAWAL->value,
+            'message' => Message::NO_WALLET->value,
             'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
     }
@@ -197,7 +198,7 @@ class IncomeServiceTest extends TestCase
         $referralSub = $this->subsWithHashRate->where('group_id', 3)->first();
         $referralSub->user->update(['referral_discount' => 1]);
 
-        $service = resolve(IncomeService::class)->init($referralSub, null);
+        $service = IncomeService::init($this->stat, $referralSub, null);
 
         $hashrate = $referralSub->hash_rate;
 
@@ -220,7 +221,7 @@ class IncomeServiceTest extends TestCase
             'type' => Type::MINING->value,
             'daily_amount' => $expectDailyAmount,
             'status' => Status::PENDING->value,
-            'message' => Message::LESS_MIN_WITHDRAWAL->value,
+            'message' => Message::NO_WALLET->value,
             'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
         $this->assertDatabaseHas('subs', [
