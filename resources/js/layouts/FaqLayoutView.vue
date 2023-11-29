@@ -1,9 +1,7 @@
 <template>
   <div class="faq__layout">
     <header class="faq-header">
-      <router-link :to="{ name: 'home' }" v-if="viewportWidth>768">
-        <logo-block class="nav_logo"/>
-      </router-link>
+      <logo-block class="nav_logo" v-if="viewportWidth > 768"/>
       <router-link :to="{ name: 'home' }" class="svg-mobile" v-if="viewportWidth<768">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -160,6 +158,7 @@ export default {
   align-items: center;
   padding: 16px 24px;
   background: #212327;
+  height: 72px;
   justify-content: space-between;
   min-height: 72px;
 }
@@ -171,6 +170,10 @@ export default {
   justify-content: flex-start;
   margin-left: 43px;
   padding: 24px 16px;
+}
+
+.nav_logo {
+  height: 40px;
 }
 
 @media (max-width: 768px) {
@@ -185,6 +188,7 @@ export default {
   gap: 122px;
   flex-flow: row nowrap;
   padding: 44px 24px 0;
+  background: #161616;
 }
 
 .faq_dark {
