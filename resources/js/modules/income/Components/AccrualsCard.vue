@@ -7,7 +7,7 @@
         </div>
         <main-progress-bar
             :title="$t('income.income_info.card[1]')"
-            hint="На вашем субаккаунте 0.00051380 BTC Автовыплата происходит при  балансе > 0.005 BTC"
+            hint="На вашем субаккаунте 0.00051380 BTC Автовыплата происходит при  балансе > 0.0005 BTC"
             :progress="pendingAmount"
             :final="0.005"
             unit="BTC"

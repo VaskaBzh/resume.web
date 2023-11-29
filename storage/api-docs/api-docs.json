@@ -1008,10 +1008,10 @@
                                                 "$ref": "#/components/schemas/SubResource"
                                             }
                                         },
-                                        "general_subs_data": {
+                                        "overall": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/GeneralSubsDataResource"
+                                                "$ref": "#/components/schemas/OverallSubsDataResource"
                                             }
                                         }
                                     },
@@ -1782,13 +1782,14 @@
                     {
                         "name": "status",
                         "in": "query",
-                        "description": "Filter workers by status (all, active, inactive)",
+                        "description": "Filter workers by status",
                         "required": false,
                         "schema": {
                             "type": "string",
                             "enum": [
                                 "active",
-                                "inactive"
+                                "inactive",
+                                "dead"
                             ]
                         }
                     },
@@ -2978,6 +2979,9 @@
                                     "type": "number",
                                     "format": "float"
                                 },
+                                "referral_hash_per_day_unit": {
+                                    "type": "string"
+                                },
                                 "total_amount": {
                                     "type": "number",
                                     "format": "float"
@@ -3012,6 +3016,9 @@
                         "type": "number",
                         "format": "float"
                     },
+                    "hash_rate_unit": {
+                        "type": "string"
+                    },
                     "referral_percent": {
                         "type": "number",
                         "format": "float"
@@ -3022,22 +3029,29 @@
                 },
                 "type": "object"
             },
-            "GeneralSubsDataResource": {
+            "OverallSubsDataResource": {
                 "properties": {
-                    "total_hash_rate": {
+                    "total_hash_per_day": {
                         "type": "number",
                         "format": "float"
                     },
-                    "name": {
+                    "total_hash_day_unit": {
                         "type": "string"
                     },
-                    "total_hash_rate_unit": {
+                    "total_hash_per_min": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "total_hash_per_min_unit": {
                         "type": "string"
                     },
                     "total_active_workers": {
                         "type": "integer"
                     },
                     "total_inactive_workers": {
+                        "type": "integer"
+                    },
+                    "total_dead_workers": {
                         "type": "integer"
                     }
                 },
@@ -3057,20 +3071,19 @@
                     "workers_count_inactive": {
                         "type": "integer"
                     },
-                    "workers_count_unstable": {
+                    "workers_count_dead": {
                         "type": "integer"
                     },
                     "hash_per_min": {
-                        "type": "integer"
+                        "type": "number",
+                        "format": "float"
                     },
                     "hash_per_day": {
-                        "type": "integer"
+                        "type": "number",
+                        "format": "float"
                     },
                     "today_forecast": {
                         "type": "integer"
-                    },
-                    "reject_percent": {
-                        "type": "number"
                     },
                     "hash_per_day_unit": {
                         "type": "string"

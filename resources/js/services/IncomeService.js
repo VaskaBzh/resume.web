@@ -198,15 +198,15 @@ export class IncomeService extends TableService {
                 this.graphService.records = response.map((el) => {
                     return new BarGraphData(el);
                 });
+
+                await this.graphService.makeFullBarValues();
+
+                this.incomeBarGraph = this.graphService.graph;
             } catch (e) {
                 console.error(e);
 
                 this.graphService.records = new BarGraphData({ amount: 0 });
             }
-
-            await this.graphService.makeFullBarValues();
-
-            this.incomeBarGraph = this.graphService.graph;
 
             this.waitGraphChange = false;
         }

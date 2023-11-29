@@ -23,8 +23,6 @@ export class GraphService {
         this.workersCountActive = null;
         this.unit = null;
 
-        this.contentTooltip = null;
-
         this.translate = translate;
 
         this.tooltipHtml = null;
@@ -173,7 +171,7 @@ export class GraphService {
     emptyValidationRules() {
         return d3.max(this.graphData.values) !== 0
             ? d3.max(this.graphData.values) +
-            d3.max(this.graphData.values) * 0.2
+                  d3.max(this.graphData.values) * 0.2
             : 120;
     }
 
@@ -208,7 +206,9 @@ export class GraphService {
     }
 
     setTooltip() {
-        if (!this.tooltip) this.tooltip = d3.select(this.tooltipHtml);
+        if (!this.tooltip) {
+            this.tooltip = d3.select(this.tooltipHtml);
+        }
 
         return this;
     }
@@ -250,7 +250,9 @@ export class GraphService {
     }
 
     setHashrate(nearestIndex) {
-        this.hashrate = this.graphData.values[nearestIndex];
+        this.hashrate = this.adjustValue(
+            this.graphData.values[nearestIndex]
+        ).val;
     }
 
     setWorkers(nearestIndex) {
@@ -314,39 +316,40 @@ export class GraphService {
         }
     }
 
-    adjustValue(num) {
-        if (num === 0) {
-            if (d3.max(Object.values(this.graphData.values)) / 900000 > 1) {
-                return { val: (num / 1000000).toFixed(2), unit: "E" };
-            } else if (
-                d3.max(Object.values(this.graphData.values)) / 900 >=
-                1
-            ) {
-                return { val: (num / 1000).toFixed(2), unit: "P" };
-            } else {
-                return { val: Number(num).toFixed(2), unit: "T" };
-            }
+    adjustValue(pureHashRate) {
+        const pureHashRateLength = String(pureHashRate).length;
+
+        let value = 0;
+        let unit = "T";
+
+        if (pureHashRate > 0 && pureHashRateLength < 13) {
+            value = pureHashRate / 1000000000;
+            unit = "G";
         }
-        if (num / 900000 > 1) {
-            return { val: (num / 1000000).toFixed(2), unit: "E" };
-        } else if (num / 900 >= 1) {
-            return { val: (num / 1000).toFixed(2), unit: "P" };
-        } else {
-            return { val: Number(num).toFixed(2), unit: "T" };
+        if (pureHashRateLength < 16 && pureHashRateLength >= 13) {
+            value = pureHashRate / 1000000000000;
+            unit = "T";
         }
+        if (pureHashRateLength >= 16) {
+            value = pureHashRate / 1000000000000000;
+            unit = "P";
+        }
+
+        const splitValue = String(value).split(".");
+        const validatedValue = value.toFixed(splitValue[0].length > 2 ? 0 : 2);
+
+        return { val: validatedValue, unit: unit };
     }
 
     formatNumberWithUnit(num, i) {
-        let val = this.adjustValue(num, this.graphData.unit[i]);
-
-        return (
-            (String(val.val).split(".")[1] === "00"
-                ? Number(val.val).toFixed(0)
-                : Number(val.val).toFixed(1)) +
-            " " +
-            val.unit +
-            "H"
+        let val = this.adjustValue(
+            num,
+            this.graphData.unit[
+                this.graphData.values.indexOf(d3.max(this.graphData.values))
+            ]
         );
+
+        return val.val + " " + val.unit + "H";
     }
 
     formatTime(date) {
@@ -369,8 +372,8 @@ export class GraphService {
             const isRight =
                 this.mouseX >
                 this.chartHtml.clientWidth -
-                this.tooltipHtml.clientWidth -
-                padding;
+                    this.tooltipHtml.clientWidth -
+                    padding;
             let width = this.tooltipHtml.clientWidth;
 
             if (isLeft) {
@@ -392,8 +395,8 @@ export class GraphService {
                 position: isLeft
                     ? this.mouseX + padding
                     : isRight
-                        ? this.mouseX - padding - this.tooltipHtml.clientWidth
-                        : this.mouseX - padding - width,
+                    ? this.mouseX - padding - this.tooltipHtml.clientWidth
+                    : this.mouseX - padding - width,
             };
         }
     }

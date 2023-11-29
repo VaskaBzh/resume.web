@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Builders;
 
 use App\Models\Sub;
-use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -32,7 +31,7 @@ class SubBuilder extends BaseBuilder
         return $this
             ->with('wallets')
             ->has('wallets')
-            ->where('pending_amount', '>=', Wallet::MIN_BITCOIN_WITHDRAWAL);
+            ->where('pending_amount', '>=', config('api.wallet.min_withdrawal'));
     }
 
     public function getActive(Collection $userIds): Builder

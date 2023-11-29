@@ -19,15 +19,36 @@ use Illuminate\Support\Facades\Log;
 
 final class PayoutService
 {
+    /**
+     * Local sub-account
+     */
     private Sub $sub;
 
+    /**
+     * Local sub-account wallet
+     */
     public readonly ?Wallet $wallet;
 
+    /**
+     * @var array{status: Status::*, message: Message::*, txid?: string}
+     *
+     * status @type Status enum Income status
+     *
+     *           @example Status::REJECTED->value
+     *
+     * message @type Message enum Income status message, enum Message.
+     *           @example Message::ERROR_PAYOUT->value
+     *
+     * txid @type ?string Transaction id return from remote wallet
+     */
     private array $params = [
         'status' => Status::REJECTED->value,
         'message' => Message::ERROR_PAYOUT->value,
     ];
 
+    /**
+     * Remote wallet service
+     */
     private readonly WalletService $remoteWallet;
 
     public function init(Sub $sub): void
@@ -37,6 +58,9 @@ final class PayoutService
         $this->remoteWallet = resolve(WalletService::class);
     }
 
+    /**
+     * Set income message
+     */
     public function setMessage(string $message): PayoutService
     {
         $this->params['message'] = $message;
@@ -44,6 +68,9 @@ final class PayoutService
         return $this;
     }
 
+    /**
+     * Set income status status
+     */
     public function setStatus(string $status): PayoutService
     {
         $this->params['status'] = $status;
@@ -51,6 +78,9 @@ final class PayoutService
         return $this;
     }
 
+    /**
+     * Set transaction id
+     */
     public function setTxId(string $txId): PayoutService
     {
         $this->params['txid'] = $txId;
@@ -59,7 +89,7 @@ final class PayoutService
     }
 
     /**
-     * Запрос на открытие удаленного кошелька
+     * Unlock remote wallet
      */
     public function unlockRemoteWallet(): void
     {
@@ -76,7 +106,7 @@ final class PayoutService
     }
 
     /**
-     * Вывод средств в удаленный кошелек
+     * Withdraw sub-account balance from remote wallet to sub-account wallet
      */
     public function payOut(): ?string
     {
@@ -85,7 +115,7 @@ final class PayoutService
                 ->remoteWallet
                 ->sendBalance(
                     wallet: $this->wallet,
-                    balance: $this->sub->pending_amount
+                    balance: (float) $this->sub->pending_amount
                 );
         }
 
@@ -93,9 +123,7 @@ final class PayoutService
     }
 
     /**
-     * Обнуляем накопленный доход
-     *
-     * @return void
+     * Reset sub-account pending amount
      */
     public function clearPendingAmount(): PayoutService
     {
@@ -113,7 +141,7 @@ final class PayoutService
     }
 
     /**
-     * Меняем статусы и сообщения
+     * Change incomes status to completed
      */
     public function complete(): PayoutService
     {
@@ -139,18 +167,24 @@ final class PayoutService
         return $this;
     }
 
+    /**
+     * Create payout record
+     */
     public function createPayout(): PayoutService
     {
         event(new PayoutCompleteEvent(
             sub: $this->sub,
             wallet: $this->wallet,
-            payout: $this->sub->pending_amount,
+            payout: (float) $this->sub->pending_amount,
             txId: $this->params['txid'],
         ));
 
         return $this;
     }
 
+    /**
+     * Lock remote wallet
+     */
     public function lock(): void
     {
         $this->remoteWallet->lock();
@@ -161,10 +195,10 @@ final class PayoutService
     }
 
     /**
-     * Проверяем локальный кошелек на существование и блокировку
+     * Check if local waller is exists and unblocked
      */
     private function isAllowedTransaction(): bool
     {
-        return ! is_null($this->wallet) && $this->wallet->isUnlocked();
+        return ! is_null($this->wallet?->wallet) && $this->wallet->isUnlocked();
     }
 }

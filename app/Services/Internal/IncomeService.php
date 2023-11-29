@@ -17,7 +17,6 @@ use App\Exceptions\IncomeCreatingException;
 use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
-use App\Models\Wallet;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 use Illuminate\Support\Facades\Log;
@@ -179,7 +178,7 @@ final class IncomeService
      */
     public function setPendingAmount(Sub $sub, Type $incomeType): IncomeService
     {
-        $this->params[$incomeType->value]['pendingAmount'] = $sub->pending_amount + $this->params[$incomeType->value]['dailyAmount'];
+        $this->params[$incomeType->value]['pendingAmount'] = (float) $sub->pending_amount + $this->params[$incomeType->value]['dailyAmount'];
 
         return $this;
     }
@@ -211,7 +210,7 @@ final class IncomeService
     {
         $dailyAmount = $this->params[$incomeType->value]['dailyAmount'];
 
-        return ($sub->pending_amount + $dailyAmount) >= Wallet::MIN_BITCOIN_WITHDRAWAL;
+        return ((float) $sub->pending_amount + $dailyAmount) >= config('api.wallet.min_withdrawal');
     }
 
     /**

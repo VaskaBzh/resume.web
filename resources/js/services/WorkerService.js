@@ -80,13 +80,15 @@ export class WorkerService {
                 name: "dead",
                 value: "dead",
             },
-        ]
+        ];
 
         return this;
     }
 
     async fetchList() {
-        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`);
+        return await ProfileApi.get(
+            `/workers/${this.group_id}?per_page=1000&status=${this.status}`
+        );
     }
 
     async fetchWorker() {
@@ -182,8 +184,8 @@ export class WorkerService {
     async makeFullValues() {
         const [hashrate, unit] = this.records.slice(-24).reduce(
             (acc, el) => {
-                acc[0].push(el.hashrate);
-                acc[1].push(el.unit);
+                acc[0].push(el.hashrate || 0);
+                acc[1].push(el.unit || "T");
 
                 return acc;
             },
@@ -239,13 +241,17 @@ export class WorkerService {
         if (this.group_id !== -1) {
             this.waitTargetWorker = true;
 
-            this.records = (await this.fetchWorkerGraph()).data.data.map(
-                (el) => {
-                    return new workerHashrateData({
-                        ...el,
-                    });
-                }
-            );
+            try {
+                this.records = (await this.fetchWorkerGraph()).data.data.map(
+                    (el) => {
+                        return new workerHashrateData({
+                            ...el,
+                        });
+                    }
+                );
+            } catch (err) {
+                console.error(`Error with: ${err}`);
+            }
         }
     }
 }

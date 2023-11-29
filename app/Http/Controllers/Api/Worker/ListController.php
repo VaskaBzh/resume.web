@@ -29,12 +29,12 @@ use Symfony\Component\HttpFoundation\Response;
             ),
             new OA\Parameter(
                 name: 'status',
-                description: 'Filter workers by status (all, active, inactive)',
+                description: 'Filter workers by status',
                 in: 'query',
                 required: false,
                 schema: new OA\Schema(
                     type: 'string',
-                    enum: ['active', 'inactive']
+                    enum: ['active', 'inactive', 'dead']
                 )
             ),
             new OA\Parameter(
@@ -90,7 +90,7 @@ class ListController extends Controller
         return WorkerResource::collection(
             resource: $sub->workers()
                 ->byStatus(Status::tryFromInsensitive($request->status)?->value)
-                ->paginate()
+                ->paginate($request->per_page ?? 15)
         );
     }
 }
