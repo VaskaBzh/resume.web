@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Worker;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\WorkerResource;
+use App\Http\Resources\Worker\WorkerResource;
 use App\Models\Worker;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;

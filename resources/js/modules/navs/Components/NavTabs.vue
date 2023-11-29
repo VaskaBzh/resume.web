@@ -1,7 +1,7 @@
 <template>
     <transition name="burger">
         <div
-            v-show="isOpenBurger || viewportWidth > 998 || !viewportWidth"
+            v-show="(isOpenBurger || !this.$route.path.includes('faq') && viewportWidth > 998) || (isOpenBurger && this.$route.path.includes('faq'))"
             class="nav onboarding_block"
             :class="{
                 'onboarding_block-target':
@@ -17,7 +17,7 @@
                 <div class="nav__block">
                     <logo-block class="nav_logo" />
                     <div class="header-select-container">
-                        <select-theme />
+                        <select-theme/>
                         <select-language />
                     </div>
                     <div class="nav__tabs">
