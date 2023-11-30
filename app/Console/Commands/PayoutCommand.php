@@ -31,11 +31,12 @@ class PayoutCommand extends Command
                         ->payOut(static function (Client $client) use ($sub) {
                             $amount = (float) $sub->pending_amount;
 
-                            //$client->unlock();
-
-                            $txId = '123';
-
-                            //$client->unlock();
+                            $client->unlock();
+                            $txId = $client->sendBalance(
+                                wallet: $sub->wallets->first()->wallet,
+                                balance: $amount,
+                            );
+                            $client->lock();
 
                             return [$txId, $amount];
                         })->clearPendingAmount();

@@ -7,7 +7,6 @@ namespace Tests\Feature\Services;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
-use App\Exceptions\IncomeCreatingException;
 use App\Models\Sub;
 use App\Services\Internal\IncomeService;
 use App\Utils\HashRateConverter;
@@ -51,7 +50,7 @@ class IncomeServiceTest extends TestCase
     /**
      * @test
      *
-     * @testdox it create mining type income and update sub account amounts
+     * @testdox it create mining type income and update sub account amounts if wallet not exists
      */
     public function miningIncomeCase(): void
     {
@@ -147,6 +146,7 @@ class IncomeServiceTest extends TestCase
      * @test
      *
      * @testdox it create referral income without referral discount based on default referral percent
+     * @testdox if wallet on verify
      */
     public function referralIncomeCommonCase()
     {
@@ -183,7 +183,7 @@ class IncomeServiceTest extends TestCase
             'referral_id' => $referralSub->user->id,
             'daily_amount' => $expectReferrerDailyAmount,
             'status' => Status::PENDING->value,
-            'message' => Message::NO_WALLET->value,
+            'message' => Message::ON_VERIFY->value,
             'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
     }
@@ -197,6 +197,7 @@ class IncomeServiceTest extends TestCase
     {
         $referralSub = $this->subsWithHashRate->where('group_id', 3)->first();
         $referralSub->user->update(['referral_discount' => 1]);
+        $referralSub->wallets->first()->update(['wallet_updated_at' => now()->subHours(48)]);
 
         $service = IncomeService::init($this->stat, $referralSub, null);
 
@@ -221,7 +222,7 @@ class IncomeServiceTest extends TestCase
             'type' => Type::MINING->value,
             'daily_amount' => $expectDailyAmount,
             'status' => Status::PENDING->value,
-            'message' => Message::NO_WALLET->value,
+            'message' => Message::LESS_MIN_WITHDRAWAL->value,
             'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
         $this->assertDatabaseHas('subs', [

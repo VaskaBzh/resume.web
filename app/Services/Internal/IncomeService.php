@@ -208,7 +208,7 @@ final class IncomeService
             return;
         }
 
-        $this->params[$incomeType->value]['message'] = Message::LESS_MIN_WITHDRAWAL;
+        $this->params[$incomeType->value]['message'] = Message::READY_TO_PAYOUT;
         $this->params[$incomeType->value]['status'] = Status::READY_TO_PAYOUT;
     }
 

@@ -20,6 +20,7 @@ class IncomeSeeder extends Seeder
                     'status' => Status::PENDING->value,
                     'message' => Message::LESS_MIN_WITHDRAWAL->value,
                     'hash' => 100,
+                    'unit' => 'T',
                     'diff' => 57321508229258,
                 ]);
         });

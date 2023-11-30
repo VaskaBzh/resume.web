@@ -6,7 +6,6 @@ namespace App\Console\Commands;
 
 use App\Enums\Income\Type;
 use App\Exceptions\IncomeCreatingException;
-use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
