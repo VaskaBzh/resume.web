@@ -43,4 +43,9 @@ export default {
     width: 47px;
     height: 23px;
 }
+
+img {
+  max-width: 100%;
+  height: 100%;
+}
 </style>
