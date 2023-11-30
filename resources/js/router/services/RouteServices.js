@@ -1,9 +1,12 @@
-import { RoutePublicData } from "../DTO/RoutePublicData";
-import { RouteProfileData } from "../DTO/RouteProfileData";
-import { RouteReferralData } from "../DTO/RouteReferralData";
-import { RouteAuthData } from "../DTO/RouteAuthData";
-import { RouteConfirmData } from "../DTO/RouteConfirmData";
-import { RouteNamesMap } from "@/router/map/RouteNamesMap";
+import {RoutePublicData} from "../DTO/RoutePublicData";
+import {RouteProfileData} from "../DTO/RouteProfileData";
+import {RouteReferralData} from "../DTO/RouteReferralData";
+import {RouteAuthData} from "../DTO/RouteAuthData";
+import {RouteConfirmData} from "../DTO/RouteConfirmData";
+import {RouteNamesMap} from "@/router/map/RouteNamesMap";
+import {RouteFaqData} from "@/router/DTO/RouteFaqData";
+
+
 
 export class RouteServices {
     constructor() {
@@ -31,7 +34,6 @@ export class RouteServices {
             new RouteProfileData("wallets", "wallets"),
             new RouteProfileData("workers", "workers"),
             new RouteProfileData("watchers", "watchers"),
-            new RouteProfileData("faq", "faq"),
         ];
     }
 
@@ -76,6 +78,27 @@ export class RouteServices {
                     new RouteReferralData("my-referral", "my-referral"),
                     new RouteReferralData("earn-rewards", "earn-rewards"),
                 ],
+            },
+            {
+                path: '/faq',
+                name: 'faq',
+                redirect: ()=> {
+                    return {
+                        name: 'description'
+                    }
+                },
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "AuthCheckProfileMiddleware",
+                        "DropErrorsMiddleware",
+                    ],
+                    layout: "FaqLayoutView",
+                },
+                children: [
+                    new RouteFaqData('description', 'description'),
+                    new RouteFaqData('questions', 'questions'),
+                ]
             },
             {
                 path: "/watcher",

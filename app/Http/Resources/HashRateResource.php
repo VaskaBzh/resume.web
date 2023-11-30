@@ -23,11 +23,9 @@ class HashRateResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $hashRate = HashRateConverter::fromPure($this->hash);
-
         return [
             'hash' => $this->hash,
-            'unit' => $hashRate->unit,
+            'unit' => $this->unit,
             'worker_count' => $this->worker_count,
         ];
     }
