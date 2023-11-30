@@ -29,7 +29,7 @@ class CreateController extends Controller
                             'group_id',
                             'confirmation_code',
                         ],
-                        properties: array(
+                        properties: [
                             new OA\Property(
                                 property: 'wallet_address',
                                 type: 'string',
@@ -51,7 +51,7 @@ class CreateController extends Controller
                                 maxLength: 5,
                                 minLength: 5,
                             ),
-                        ),
+                        ],
                         type: 'object',
                     ),
                 ],
@@ -83,8 +83,8 @@ class CreateController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],

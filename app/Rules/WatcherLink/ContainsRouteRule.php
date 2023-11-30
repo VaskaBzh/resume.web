@@ -17,16 +17,16 @@ class ContainsRouteRule implements InvokableRule
         'v1.allowed-routes',
     ];
 
-   public function __invoke($attribute, $value, $fail)
-   {
-       if (!in_array('v1.sub.show', $value) || !in_array('v1.allowed-routes', $value)) {
-           $fail('Must contains v1.sub.show route & v1.allowed-routes');
-       }
+    public function __invoke($attribute, $value, $fail)
+    {
+        if (! in_array('v1.sub.show', $value) || ! in_array('v1.allowed-routes', $value)) {
+            $fail('Must contains v1.sub.show route & v1.allowed-routes');
+        }
 
-       foreach ($value as $routeName) {
-           if (!in_array($routeName, self::ALLOWABLE_ROUTES)) {
-               $fail('This route can not be allowed');
-           }
-       }
-   }
+        foreach ($value as $routeName) {
+            if (! in_array($routeName, self::ALLOWABLE_ROUTES)) {
+                $fail('This route can not be allowed');
+            }
+        }
+    }
 }

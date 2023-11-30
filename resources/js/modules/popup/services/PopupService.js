@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import anime from "animejs";
-
+import store from "@/store";
 
 export class PopupService {
     constructor(id, emit) {
@@ -30,7 +30,7 @@ export class PopupService {
     }
 
     setBodyHidden() {
-        if (this.pageContainer) {
+        if (this.pageContainer && store.getters.viewportWidth >= 998) {
             this.pageContainer.style.overflowY = "hidden";
         }
     }
@@ -49,18 +49,6 @@ export class PopupService {
         }
     }
 
-    animateOnUpdate() {
-        this.animate = anime({
-            targets: this.popupBlockHtml,
-            height: `${this.getClearScrollHeight()}px`,
-            easing: "easeInCubic",
-            duration: 500,
-            complete: () => {
-                this.dropAnimate();
-            },
-        });
-    }
-
     closeAnimate() {
         this.dropAnimate();
 
@@ -73,7 +61,7 @@ export class PopupService {
 
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: "122px",
+            height: [`${this.getClearScrollHeight()}px`, "122px"],
             width: "280px",
             translateY: 120,
             easing: "easeInCubic",
@@ -123,9 +111,10 @@ export class PopupService {
         const sidesPaddingValue = paddingWithoutUnit * 2;
         const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
 
-        const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
-        console.dir(this.popupContentHtml.scrollHeight)
-        console.dir(this.popupContentHtml)
+        const newHeightValue =
+            this.popupContentHtml.scrollHeight +
+            sidesPaddingValue +
+            sidesBorderWidthValue;
         return newHeightValue;
     }
 
@@ -134,7 +123,11 @@ export class PopupService {
     }
 
     removeLetters(string, letters = "px") {
-        return string.replace(letters, "")
+        return string.replace(letters, "");
+    }
+
+    dropContentHeight() {
+        this.popupBlockHtml.style.height = "auto";
     }
 
     animateHeight() {
@@ -145,6 +138,8 @@ export class PopupService {
             duration: 350,
             complete: () => {
                 this.dropAnimate();
+
+                setTimeout(this.dropContentHeight.bind(this), 500);
 
                 this.animateLogoOpacity();
             },

@@ -58,17 +58,17 @@
             <div class="tabs-block-container">
                 <button
                     class="btn-table"
-                    :class="{ 'tabs-active': !filter }"
-                    @click="changeActiveTab('All')"
-                >
-                    {{ $t("income.table.tabs[0]") }}
-                </button>
-                <button
-                    class="btn-table"
                     :class="{ 'tabs-active': filter }"
                     @click="changeActiveTab('Payots')"
                 >
                     {{ $t("income.table.tabs[1]") }}
+                </button>
+                <button
+                    class="btn-table"
+                    :class="{ 'tabs-active': !filter }"
+                    @click="changeActiveTab('All')"
+                >
+                    {{ $t("income.table.tabs[0]") }}
                 </button>
             </div>
         </article>
@@ -147,7 +147,7 @@ export default {
             date: {},
             per_page: 1000,
             page: 1,
-            filter: "",
+            filter: true,
             incomes: new IncomeService(
                 this.$t,
                 [0, 1, 2, 3, 4, 5, 8],
@@ -187,9 +187,6 @@ export default {
         },
     },
     watch: {
-        "$i18n.locale"() {
-            this.incomes.graphService.setTranslate(this.$t);
-        },
         page() {
             this.initIncomes();
         },
@@ -207,6 +204,7 @@ export default {
             }
         },
         "$i18n.locale"() {
+            this.incomes.graphService.setTranslate(this.$t);
             this.initIncomes();
             document.title = this.$t("header.links.income");
         },
@@ -293,7 +291,8 @@ export default {
         font-weight: 400;
         line-height: 32px; /* 160% */
     }
-    .income-cards-container {
+    .income-cards-container,
+    .income-cards-article {
         gap: 8px;
     }
 }
@@ -303,7 +302,6 @@ export default {
 }
 
 .income {
-    padding: 24px;
     width: 100%;
     flex: 1 1 auto;
     display: flex;
@@ -312,9 +310,6 @@ export default {
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
-    }
-    @media (max-width: 900px) {
-        padding: 24px 12px 24px;
     }
 
     &__slider {

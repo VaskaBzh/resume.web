@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Sub;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SubResource;
+use App\Http\Resources\Sub\SubResource;
 use App\Models\Sub;
-use App\Services\External\BtcComService;
+use App\Services\Internal\SubService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
-
 
 class ShowController extends Controller
 {
@@ -38,7 +37,7 @@ class ShowController extends Controller
                     content: [
                         new OA\JsonContent(
                             ref: '#/components/schemas/SubResource'
-                        )
+                        ),
                     ],
                 ),
                 new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
@@ -50,8 +49,8 @@ class ShowController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -60,16 +59,15 @@ class ShowController extends Controller
         )
     ]
     public function __invoke(
-        Request       $request,
-        Sub           $sub,
-        BtcComService $btcComService,
-    ): JsonResource
-    {
-        if (!$request->attributes->get('access_key_valid')) {
+        Request $request,
+        Sub $sub,
+        SubService $subService,
+    ): JsonResource {
+        if (! $request->attributes->get('access_key_valid')) {
 
             $this->authorize('viewOrChange', $sub);
         }
 
-        return new SubResource($btcComService->transformSub($sub));
+        return new SubResource($subService->getSub($sub));
     }
 }

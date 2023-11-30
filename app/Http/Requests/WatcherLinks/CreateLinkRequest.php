@@ -12,7 +12,7 @@ class CreateLinkRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:16|'
-                . Rule::unique('watcher_links', 'name')->where('user_id', auth()->user()->id),
+                .Rule::unique('watcher_links', 'name')->where('user_id', auth()->user()->id),
             'allowed_routes' => ['required', 'array',  new ContainsRouteRule],
         ];
     }

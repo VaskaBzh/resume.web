@@ -173,7 +173,7 @@ export class GraphService {
     emptyValidationRules() {
         return d3.max(this.graphData.values) !== 0
             ? d3.max(this.graphData.values) +
-            d3.max(this.graphData.values) * 0.2
+                  d3.max(this.graphData.values) * 0.2
             : 120;
     }
 
@@ -314,39 +314,19 @@ export class GraphService {
         }
     }
 
-    adjustValue(num) {
-        if (num === 0) {
-            if (d3.max(Object.values(this.graphData.values)) / 900000 > 1) {
-                return { val: (num / 1000000).toFixed(2), unit: "E" };
-            } else if (
-                d3.max(Object.values(this.graphData.values)) / 900 >=
-                1
-            ) {
-                return { val: (num / 1000).toFixed(2), unit: "P" };
-            } else {
-                return { val: Number(num).toFixed(2), unit: "T" };
-            }
-        }
-        if (num / 900000 > 1) {
-            return { val: (num / 1000000).toFixed(2), unit: "E" };
-        } else if (num / 900 >= 1) {
-            return { val: (num / 1000).toFixed(2), unit: "P" };
-        } else {
-            return { val: Number(num).toFixed(2), unit: "T" };
-        }
+    adjustValue(num, unit) {
+        return { val: num.toFixed(0), unit: unit };
     }
 
     formatNumberWithUnit(num, i) {
-        let val = this.adjustValue(num, this.graphData.unit[i]);
-
-        return (
-            (String(val.val).split(".")[1] === "00"
-                ? Number(val.val).toFixed(0)
-                : Number(val.val).toFixed(1)) +
-            " " +
-            val.unit +
-            "H"
+        let val = this.adjustValue(
+            num,
+            this.graphData.unit[
+                this.graphData.values.indexOf(d3.max(this.graphData.values))
+            ]
         );
+
+        return val.val + " " + val.unit + "H";
     }
 
     formatTime(date) {
@@ -369,8 +349,8 @@ export class GraphService {
             const isRight =
                 this.mouseX >
                 this.chartHtml.clientWidth -
-                this.tooltipHtml.clientWidth -
-                padding;
+                    this.tooltipHtml.clientWidth -
+                    padding;
             let width = this.tooltipHtml.clientWidth;
 
             if (isLeft) {
@@ -392,8 +372,8 @@ export class GraphService {
                 position: isLeft
                     ? this.mouseX + padding
                     : isRight
-                        ? this.mouseX - padding - this.tooltipHtml.clientWidth
-                        : this.mouseX - padding - width,
+                    ? this.mouseX - padding - this.tooltipHtml.clientWidth
+                    : this.mouseX - padding - width,
             };
         }
     }

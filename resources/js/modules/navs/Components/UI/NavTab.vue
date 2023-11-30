@@ -10,7 +10,7 @@
         class="tab"
         :class="{
             burger_link: viewportWidth < 991.98,
-            'tab-active': $route.path === tab.url,
+            'tab-active': $route.path.startsWith(tab.url),
         }"
     >
         <div class="tab_icon" v-html="tab.icon"></div>
@@ -24,7 +24,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-    name: "nav-tab",
+    name: "NavTab",
     props: {
         tab: Object,
     },

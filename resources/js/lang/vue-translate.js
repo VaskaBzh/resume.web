@@ -191,7 +191,7 @@ const messages = {
             ],
             text: "Allows you to evaluate and predict possible approximate income for a certain period. Actual earnings may vary slightly. ",
             form_calculator: {
-                title: "Calculator Light",
+                title: "Calculator",
                 placeholder: ["Total hashrate", "Commission"],
                 tooltip: [
                     "Average hashrate of all devices",
@@ -809,7 +809,6 @@ const messages = {
             block: {
                 titles: [
                     "Current hashrate",
-                    ,
                     "Worker",
                     "Hashrate / 24h",
                     "Total paid out",
@@ -825,6 +824,11 @@ const messages = {
                         name: "Please enter the name",
                     },
                     button: "+ Add",
+                    error: {
+                        empty: "Enter name",
+                        invalid: "3 to 15 Latin letters or numbers in length",
+                        no_space: "The name must not contain spaces.",
+                    },
                 },
                 change: {
                     title: "Change the sub-account name",
@@ -1028,7 +1032,7 @@ const messages = {
     ru: {
         miners_title: ["прозрачный", "и эффективный", "майнинг", "bitcoin"],
         hash: "Хешрейт",
-        currency: "Курст BTC",
+        currency: "Курс BTC",
         costs: "Стоимость электроэнергии",
         miners_offer: {
             title: "что мы предлагаем",
@@ -1208,7 +1212,7 @@ const messages = {
             ],
             text: "Позволяет оценить и спрогнозировать возможный приблизительный доход за определенный период. Фактические доходы могут незначительно отличаться.",
             form_calculator: {
-                title: "Калькулятор Light",
+                title: "Калькулятор",
                 placeholder: ["Общий хешрейт", "Комиссия"],
                 tooltip: [
                     "Средний хешрейт всех устройств",
@@ -1774,7 +1778,7 @@ const messages = {
             referral: "Реферальный кабинет",
             settings: "Аккаунт",
             faq: "FAQ",
-            support: "Поддержка",
+            support: "Служба поддержки",
         },
         days: "Дней",
         hours: "Часа",
@@ -1862,6 +1866,11 @@ const messages = {
                         name: "Введите имя",
                     },
                     button: "Добавить",
+                    error: {
+                        empty: "Введите имя",
+                        invalid: "Длина от 3 до 15 латинских букв или цифр",
+                        no_space: "Имя не должно содержать пробелы",
+                    },
                 },
                 change: {
                     title: "Измените имя субаккаунта",

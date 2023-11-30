@@ -113,7 +113,7 @@ export default {
             }
 
             @media (max-width: 360.98px) {
-                left: -35px;
+                left: -20px;
             }
         }
 
@@ -123,7 +123,7 @@ export default {
             top: 0;
 
             @media (max-width: 360.98px) {
-                left: 35px;
+                left: 20px;
             }
         }
 
@@ -131,6 +131,10 @@ export default {
             position: relative;
             left: 50px;
             top: 0;
+
+            @media (max-width: 360.98px) {
+                left: 30px;
+            }
         }
 
         &_text {

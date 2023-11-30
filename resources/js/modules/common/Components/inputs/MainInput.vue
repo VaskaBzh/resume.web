@@ -1,29 +1,30 @@
 <template>
-    <div
+    <label
+        :for="inputName"
         class="input_row"
         :class="{ 'input_row-error': error, 'input_row-focus': value }"
-        @click="$refs.input.focus()"
     >
-        <label class="input_label" :for="inputName">{{ inputLabel }}</label>
+        <span class="input_label">{{ inputLabel }}</span>
         <input
-            type="text"
             :id="inputName"
             v-model="value"
-            ref="input"
+            type="text"
             class="input"
             :readonly="!editable"
+            :autocomplete="autocomplete"
         />
-    </div>
+    </label>
 </template>
 
 <script>
 export default {
-    name: "main-input",
+    name: "MainInput",
     props: {
         inputName: String,
         inputLabel: String,
         inputValue: String,
         error: String,
+        autocomplete: String,
         editable: {
             type: Boolean,
             default: true,
@@ -60,7 +61,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island-inner-3, #F8FAFD);
+    background: var(--background-island-inner-3, #f8fafd);
     &_row {
         min-height: 56px;
         background: inherit;

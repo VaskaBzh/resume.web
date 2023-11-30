@@ -1,11 +1,12 @@
 import { FormData } from "@/modules/settings/DTO/FormData";
-
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
 import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
 import { BlockData } from "../DTO/BlockData";
+import { PopupControllService } from "@/modules/popup/services/PopupControllService";
+import { Form } from "@/modules/form/models/Form";
 
 export class SettingsService {
     constructor(translate, router) {
@@ -16,6 +17,9 @@ export class SettingsService {
         this.rows = [];
         this.blocks = [];
         this.form = {};
+
+        this.disableFacForm = this.createNewForm();
+
         this.passwordForm = {};
         this.validate = {};
         this.user = null;
@@ -33,10 +37,23 @@ export class SettingsService {
         this.openedFacPopup = false;
         this.closedFacPopup = false;
 
+        this.facDisabledPopup = this.createPopupControllService();
+
         this.openedPasswordPopup = false;
         this.closedPasswordPopup = false;
 
         this.validateService = new ValidateService();
+
+        this.waitFacProcess = false;
+        this.waitPasswordChange = false;
+    }
+
+    createNewForm() {
+        return new Form();
+    }
+
+    createPopupControllService() {
+        return new PopupControllService();
     }
 
     setCode(code) {
@@ -47,28 +64,9 @@ export class SettingsService {
         this.qrCode = qrCode;
     }
 
-    async dropFac() {
-        try {
-            const response = await this.fetchDropFac();
-
-            store.dispatch("setNotification", {
-                status: "success",
-                title: "success",
-                text: response.message,
-            });
-        } catch (err) {
-            console.error(err);
-
-            store.dispatch("setNotification", {
-                status: "error",
-                title: "error",
-                text: err.response.data.message,
-            });
-            store.dispatch("setFullErrors", err.response.data);
-        }
-    }
-
     async sendVerify(form) {
+        this.waitFacProcess = true;
+
         try {
             this.form.code = form.code;
             const response = await this.fetchFac();
@@ -81,7 +79,11 @@ export class SettingsService {
             });
 
             store.dispatch("setUser");
+
+            this.waitFacProcess = false;
         } catch (err) {
+            this.waitFacProcess = false;
+
             console.error(err);
 
             store.dispatch("setNotification", {
@@ -90,7 +92,6 @@ export class SettingsService {
                 text: err.response.data.message || err.response.data.error,
             });
         }
-
     }
 
     removeRouteQuery() {
@@ -113,6 +114,8 @@ export class SettingsService {
     }
 
     async sendPassword() {
+        this.waitPasswordChange = true;
+
         try {
             const response = await this.fetchPassword();
 
@@ -125,7 +128,11 @@ export class SettingsService {
                 title: "changed",
                 text: response.message,
             });
+
+            this.waitPasswordChange = false;
         } catch (err) {
+            this.waitPasswordChange = false;
+
             console.error(err);
 
             store.dispatch("setNotification", {
@@ -163,6 +170,30 @@ export class SettingsService {
         }
     }
 
+    async sendDisableFac() {
+        this.waitFacProcess = true;
+
+        try {
+            const response = await this.fetchDisableFac();
+
+            this.facDisabledPopup.closePopup();
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "changed",
+                text: response.message,
+            });
+
+            this.waitFacProcess = false;
+        } catch (err) {
+            this.waitFacProcess = false;
+
+            console.error(err);
+
+            store.dispatch("setFullErrors", err.response.data.errors);
+        }
+    }
+
     openFacPopup() {
         this.openedFacPopup = true;
 
@@ -179,24 +210,22 @@ export class SettingsService {
         return (
             await ProfileApi.put(
                 `/password/change/${this.user.id}`,
-                this.passwordForm,
-                {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                }
+                this.passwordForm
+            )
+        ).data;
+    }
+
+    async fetchDisableFac() {
+        return (
+            await ProfileApi.put(
+                `/2fac/disable/${this.user.id}`,
+                this.disableFacForm.form
             )
         ).data;
     }
 
     async generateFac() {
-        return (
-            await ProfileApi.get(`/2fac/qrcode/${this.user.id}`, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            })
-        ).data;
+        return (await ProfileApi.get(`/2fac/qrcode/${this.user.id}`)).data;
     }
 
     async fetchFac() {
@@ -207,10 +236,6 @@ export class SettingsService {
                 },
             })
         ).data;
-    }
-
-    async fetchDropFac() {
-        return (await ProfileApi.put(`/2fac/disable/${this.user.id}`)).data;
     }
 
     validateProcess(event) {
@@ -348,7 +373,6 @@ export class SettingsService {
     }
 
     ajaxChange = (data) => {
-
         this.setValue(data.value);
 
         if (data.bool) {

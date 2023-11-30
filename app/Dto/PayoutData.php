@@ -4,27 +4,31 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-readonly final class PayoutData
+use App\Models\Sub;
+use App\Models\Wallet;
+
+final readonly class PayoutData
 {
     /**
-     *
-     * @param string $txId - id транзакции при выводе сердств с кошелька allbtc на внешний сервис
+     * @param  Wallet  $wallet Sub-account local wallet
+     * @param  float  $payout Payout amount
+     * @param  string  $txId Transaction id
      */
     public function __construct(
-        public int $groupId,
-        public int $walletId,
+        public Sub $sub,
+        public Wallet $wallet,
         public float $payout,
         public string $txId,
-    )
-    {}
+    ) {
+    }
 
-    public static function fromRequest(array $requestData): PayoutData
+    public static function fromArray(array $data): PayoutData
     {
         return new self(
-            groupId: $requestData['group_id'],
-            walletId: $requestData['wallet_id'],
-            payout: $requestData['payout'],
-            txId: $requestData['txid'],
+            sub: $data['sub'],
+            wallet: $data['wallet'],
+            payout: $data['payout'],
+            txId: $data['txid'],
         );
     }
 }

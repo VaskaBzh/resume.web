@@ -10,6 +10,7 @@ import {ActionValidateMiddleware} from "@/router/middlewares/ActionValidateMiddl
 
 import routes from "@/router/routes/rotes";
 import { apiService } from "@/api/api";
+import store from "@/store";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -32,12 +33,12 @@ const middlewares = {
 router.beforeEach(async (to, from, next) => {
     apiService.stopAxios();
 
-    const routeMiddleware = to.meta.middleware;
+    const routeMiddleware = to.meta.middleware
 
-    if (to.path.startsWith("/profile") || to.path.startsWith("/watcher/")) {
-        document.querySelector("body").style.overflow = "hidden";
+    if ((to.path.startsWith("/profile") || to.path.startsWith("/watcher/")) && document.body.offsetWidth >= 998) {
+        document.body.style.overflow = "hidden";
     } else {
-        document.querySelector("body").removeAttribute("style");
+        document.body.removeAttribute("style");
     }
 
     if (

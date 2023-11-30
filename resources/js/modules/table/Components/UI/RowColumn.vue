@@ -21,7 +21,6 @@ export default {
         },
         title: String,
         columnKey: String,
-        unit: String,
     },
     watch: {
         value() {
@@ -40,9 +39,8 @@ export default {
     methods: {
         initRenderFunctions() {
             const functionName = SubsCustomFunctions[this.columnKey];
-
             if (functionName) {
-                this.service[functionName](this.value, this.unit);
+                this.service[functionName](this.value, null);
             } else {
                 this.renderedValue = this.value;
             }

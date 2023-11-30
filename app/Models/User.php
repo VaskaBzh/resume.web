@@ -1,27 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Actions\User\DeleteConfirmationCode;
 use App\Builders\UserBuilder;
 use App\Notifications\VerifyEmailNotification;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory,
-        Notifiable,
+    use HasApiTokens,
+        HasFactory,
         HasRoles,
-        HasApiTokens;
+        Notifiable;
 
     protected $fillable = [
         'name',
@@ -29,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'referrer_id',
         'referral_percent',
         'referral_discount',
+        'active_sub',
         'password',
         'referral_code',
         'phone',
@@ -55,6 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'referral_discount' => 'float',
+        'referral_percent' => 'float',
     ];
 
     /* Relations */
@@ -109,6 +113,24 @@ class User extends Authenticatable implements MustVerifyEmail
                 DeleteConfirmationCode::execute($this);
 
                 return $confirmationCode;
+            }
+        );
+    }
+
+    public function totalHashRate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->subs()->getActive(collect($this->id))->get()->sum(function (Sub $sub) {
+                return $sub->hash_rate;
+            })
+        );
+    }
+
+    public function referralPercentage(): Attribute
+    {
+        return Attribute::make(
+            get: function (): ?float {
+                return $this->referral_percent ?? $this->referrer->referral_percent;
             }
         );
     }

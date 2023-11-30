@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Sub;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SubResource;
+use App\Http\Resources\Sub\OverallSubsDataResource;
+use App\Http\Resources\Sub\SubResource;
 use App\Models\User;
-use App\Services\External\BtcComService;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Services\Internal\SubService;
+use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,9 +36,20 @@ class ListController extends Controller
                     description: 'Successful response',
                     content: [
                         new OA\JsonContent(
-                            type: 'array',
-                            items: new OA\Items(ref: '#/components/schemas/SubResource')
-                        )
+                            properties: [
+                                new OA\Property(
+                                    property: 'list',
+                                    type: 'array',
+                                    items: new OA\Items(ref: '#/components/schemas/SubResource'),
+                                ),
+                                new OA\Property(
+                                    property: 'overall',
+                                    type: 'array',
+                                    items: new OA\Items(ref: '#/components/schemas/OverallSubsDataResource')
+                                ),
+                            ],
+                            type: 'object'
+                        ),
                     ],
                 ),
                 new OA\Response(response: 401, description: 'Unauthorized'),
@@ -49,8 +61,8 @@ class ListController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -59,14 +71,16 @@ class ListController extends Controller
         )
     ]
     public function __invoke(
-        User          $user,
-        BtcComService $btcComService
-    ): ResourceCollection
-    {
+        User $user,
+        SubService $subService,
+    ): JsonResponse {
         $this->authorize('viewAny', $user);
 
-        $subCollection = $btcComService->transformSubCollection(subs: $user->subs()->get());
+        $subCollection = $subService->getSubList(user: $user);
 
-        return SubResource::collection($subCollection);
+        return new JsonResponse([
+            'list' => SubResource::collection($subCollection->get('subs')),
+            'overall' => new OverallSubsDataResource($subCollection->get('overall')),
+        ]);
     }
 }

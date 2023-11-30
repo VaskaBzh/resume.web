@@ -499,70 +499,6 @@
                 ]
             }
         },
-        "/referrals/generate/{user}": {
-            "post": {
-                "tags": [
-                    "Referral"
-                ],
-                "summary": "Generate a referral code for a user",
-                "parameters": [
-                    {
-                        "name": "user",
-                        "in": "path",
-                        "description": "User's ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Referral code generated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "referral_url": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error while generating a referral code",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "example": {
-                                    "errors": {
-                                        "property": [
-                                            "message"
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            }
-        },
         "/referrals/incomes/{user}": {
             "get": {
                 "tags": [
@@ -893,6 +829,68 @@
                 ]
             }
         },
+        "/subs/sub/activate/{sub}": {
+            "put": {
+                "tags": [
+                    "Subaccount"
+                ],
+                "summary": "Mark sub as active",
+                "operationId": "25ff62dffdce43779e5a8a98a60129ad",
+                "parameters": [
+                    {
+                        "name": "Sub",
+                        "in": "path",
+                        "description": "Sub's group_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Sub activated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/subs/create/{user}": {
             "post": {
                 "tags": [
@@ -1003,10 +1001,21 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/SubResource"
-                                    }
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SubResource"
+                                            }
+                                        },
+                                        "overall": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OverallSubsDataResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1773,15 +1782,33 @@
                     {
                         "name": "status",
                         "in": "query",
-                        "description": "Filter workers by status (all, active, inactive)",
+                        "description": "Filter workers by status",
                         "required": false,
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "all",
                                 "active",
-                                "inactive"
+                                "inactive",
+                                "dead"
                             ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page (default: 15)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -2552,6 +2579,28 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "secret"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "description": "Google authenticator code",
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 6
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "202": {
                         "description": "Two-factor authentication disabled successfully",
@@ -2864,8 +2913,8 @@
                         "type": "array",
                         "items": {
                             "properties": {
-                                "referral_id": {
-                                    "type": "integer"
+                                "type": {
+                                    "type": "string"
                                 },
                                 "amount": {
                                     "type": "number"
@@ -2930,7 +2979,14 @@
                                     "type": "number",
                                     "format": "float"
                                 },
+                                "referral_hash_per_day_unit": {
+                                    "type": "string"
+                                },
                                 "total_amount": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "referral_percent": {
                                     "type": "number",
                                     "format": "float"
                                 }
@@ -2960,12 +3016,43 @@
                         "type": "number",
                         "format": "float"
                     },
+                    "hash_rate_unit": {
+                        "type": "string"
+                    },
                     "referral_percent": {
                         "type": "number",
                         "format": "float"
                     },
-                    "code": {
+                    "referral_url": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "OverallSubsDataResource": {
+                "properties": {
+                    "total_hash_per_day": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "total_hash_day_unit": {
+                        "type": "string"
+                    },
+                    "total_hash_per_min": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "total_hash_per_min_unit": {
+                        "type": "string"
+                    },
+                    "total_active_workers": {
+                        "type": "integer"
+                    },
+                    "total_inactive_workers": {
+                        "type": "integer"
+                    },
+                    "total_dead_workers": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -2981,25 +3068,27 @@
                     "workers_count_active": {
                         "type": "integer"
                     },
-                    "workers_count_in_active": {
+                    "workers_count_inactive": {
                         "type": "integer"
                     },
-                    "workers_count_unstable": {
+                    "workers_count_dead": {
                         "type": "integer"
                     },
                     "hash_per_min": {
-                        "type": "integer"
+                        "type": "number",
+                        "format": "float"
                     },
                     "hash_per_day": {
-                        "type": "integer"
+                        "type": "number",
+                        "format": "float"
                     },
                     "today_forecast": {
                         "type": "integer"
                     },
-                    "reject_percent": {
-                        "type": "number"
+                    "hash_per_day_unit": {
+                        "type": "string"
                     },
-                    "unit": {
+                    "hash_per_min_unit": {
                         "type": "string"
                     },
                     "total_payout": {
@@ -3010,26 +3099,12 @@
                     },
                     "pending_amount": {
                         "type": "number"
-                    }
-                },
-                "type": "object"
-            },
-            "Role": {
-                "properties": {
-                    "id": {
-                        "type": "integer"
                     },
-                    "name": {
-                        "type": "string"
+                    "last_month_amount": {
+                        "type": "number"
                     },
-                    "guard_name": {
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "type": "string"
-                    },
-                    "updated_at": {
-                        "type": "string"
+                    "total_amount": {
+                        "type": "number"
                     }
                 },
                 "type": "object"
@@ -3057,7 +3132,7 @@
                     "2fa": {
                         "type": "boolean"
                     },
-                    "referral_code": {
+                    "referral_url": {
                         "type": "string"
                     },
                     "has_referral_role": {

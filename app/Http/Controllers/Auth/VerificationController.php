@@ -63,8 +63,8 @@ class VerificationController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -79,8 +79,8 @@ class VerificationController extends Controller
         if ($user->hasVerifiedEmail()) {
             return new JsonResponse([
                 'errors' => [
-                    'auth' => ['already verified']
-                ]
+                    'auth' => ['already verified'],
+                ],
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -88,6 +88,6 @@ class VerificationController extends Controller
             event(new Verified($user));
         }
 
-        return redirect('/' . '?action=email');
+        return redirect('/'.'?action=email');
     }
 }

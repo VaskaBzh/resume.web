@@ -31,6 +31,7 @@ return [
     'env' => env('APP_ENV', 'production'),
     'production_env' => env('APP_ENV') === 'production',
     'dev_env' => env('APP_ENV') === 'dev',
+    'local' => env('APP_ENV') === 'local',
     'testing_env' => env('APP_ENV') === 'testing',
 
     /*
@@ -112,6 +113,8 @@ return [
     */
 
     'faker_locale' => 'en_US',
+
+    'allowed_local' => ['en_US', 'en', 'ru', 'ru-RU'],
 
     /*
     |--------------------------------------------------------------------------

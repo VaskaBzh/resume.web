@@ -17,12 +17,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'id' => 1,
-            'name' => "MainTest",
+            'name' => 'MainTest',
             'email' => 'forest@gmail.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('123'),
             'referral_percent' => 1,
-            'referral_discount' => 1,
+            'referral_discount' => 0,
         ];
     }
 

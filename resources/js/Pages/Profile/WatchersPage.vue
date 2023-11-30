@@ -14,7 +14,10 @@
                     >{{ $t("text") }}
                 </main-description>
             </div>
-            <main-button class="button-md button-white button-stroke" data-popup="#addWatcher">
+            <main-button
+                class="button-md button-white button-stroke"
+                data-popup="#addWatcher"
+            >
                 <template #svg>
                     <plus-icon />
                 </template>
@@ -49,6 +52,7 @@
                     :have-nav="false"
                     :have-preloader="false"
                     :meta="service.meta"
+                    class="watcher_slider"
                 >
                     <watchers-list
                         :blocks="service.table.get('rows')"
@@ -61,7 +65,7 @@
             <transition name="fade">
                 <watchers-card
                     v-if="
-                        viewportWidth > 500 &&
+                        viewportWidth > 850 &&
                         !service.waitTable &&
                         !service.emptyTable
                     "
@@ -73,7 +77,7 @@
         </div>
     </div>
     <watchers-popup-add
-        :wait="service.wait"
+        :wait="service.waitAddWacher"
         :opened="openOnBoardingPopup"
         :closed="service.popupClosed || closeOnBoardingPopup"
         :instruction-config="instructionService"
@@ -88,7 +92,7 @@
         @removeWatcher="removeWatcher($event)"
     />
     <watchers-popup-card
-        v-if="viewportWidth <= 500"
+        v-if="viewportWidth <= 850"
         :wait="service.wait"
         :closed="service.popupCardClosed"
         :opened="service.popupCardOpened"
@@ -242,7 +246,6 @@ export default {
 
 .watchers {
     flex: 1 1 auto;
-    padding: 24px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -289,24 +292,43 @@ export default {
     flex: 1 1 auto;
     display: grid;
     gap: 12px;
-    grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
     position: relative;
 }
 
-@media (max-width: 1256px) {
-    .watchers__wrapper {
-        grid-template-rows: 1fr auto;
-        grid-template-columns: unset;
-    }
+/*  */
+.watcher_slider {
+    height: calc(
+        100vh - 72px - clamp(12px, 2vw, 24px) - clamp(12px, 2vw, 24px) - 60px -
+            32px
+    );
+    grid-column: 1/2;
+    overflow: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
-@media (max-width: 900px) {
-    .watchers {
-        padding: 24px 12px 24px;
+.watcher_slider::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-height: 900px) {
+    .watcher_slider {
+        max-height: 680px;
+        height: auto;
     }
 }
 
 @media (max-width: 700px) {
+    .watcher_slider {
+        height: 100%;
+        max-height: 100%;
+        overflow: visible;
+    }
+}
+
+@media (max-width: 850px) {
     .watchers__wrapper {
         display: flex;
     }
@@ -327,8 +349,5 @@ export default {
         justify-content: center;
         width: 100%;
     }
-}
-
-
 }
 </style>

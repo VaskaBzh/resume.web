@@ -1,24 +1,30 @@
 <template>
-    <div class="wallets__block wallets__block-wallet" @click="changeWalletObj(wallet)">
+    <div
+        class="wallets__block wallets__block-wallet"
+        @click="changeWalletObj(wallet)"
+    >
         <div class="wallets__block_name">
             <div class="wallet-inf">
-                <span class="wallet-fullname">{{ wallet.fullName || wallet.wallet_address }}</span>
-                <span class="wallet-wallet_address">{{ wallet.wallet_address }}</span>
+                <span class="wallet-fullname">{{
+                    wallet.fullName || "Wallet"
+                }}</span>
+                <span class="wallet-wallet_address">{{
+                    wallet.wallet_address
+                }}</span>
             </div>
             <div class="wallets__block_doths">
                 <div></div>
                 <div></div>
                 <div></div>
-<!--                <main-menu-->
-<!--                    className="wallets__block_doths_menu"-->
-<!--                    :options="options"-->
-<!--                    :opened="opened"-->
-<!--                    @remove="$emit('remove', wallet)"-->
-<!--                    @clicked="changeWalletObj(wallet)"-->
-<!--                ></main-menu>-->
+                <!--                <main-menu-->
+                <!--                    className="wallets__block_doths_menu"-->
+                <!--                    :options="options"-->
+                <!--                    :opened="opened"-->
+                <!--                    @remove="$emit('remove', wallet)"-->
+                <!--                    @clicked="changeWalletObj(wallet)"-->
+                <!--                ></main-menu>-->
             </div>
         </div>
-
     </div>
 </template>
 
@@ -28,15 +34,15 @@ import MainMenu from "@/modules/common/Components/UI/MainMenu.vue";
 import { Converter } from "@/Scripts/converter";
 
 export default {
-    name: "wallet-block",
-    props: {wallet: Object },
+    name: "WalletBlock",
+    components: { MainMenu },
+    props: { wallet: Object },
     data() {
         return {
             opened: false,
             converter: null,
         };
     },
-    components: { MainMenu },
     computed: {
         ...mapGetters(["getActive", "btcInfo"]),
     },
@@ -49,14 +55,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wallet-inf{
+.wallet-inf {
     display: flex;
     flex-direction: column;
     gap: 8px;
     width: 100%;
 }
-.wallet-wallet_address{
-    color: var(--text-teritary, #98A2B3);
+.wallet-wallet_address {
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans, serif;
     font-size: 14px;
     font-weight: 400;
@@ -64,7 +70,7 @@ export default {
     width: 100%;
     word-break: break-all;
 }
-.wallet-fullname{
+.wallet-fullname {
     color: var(--light-gray-500, #667085);
     font-family: Unbounded, serif;
     font-size: 16px;
@@ -76,7 +82,7 @@ export default {
     // .wallets__block
     &__block {
         border-radius: 24px;
-        background: var(--background-island-inner-3, #F8FAFD);
+        background: var(--background-island-inner-3, #f8fafd);
         box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
         width: 100%;
         .main__number {

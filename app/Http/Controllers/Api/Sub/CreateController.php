@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Sub;
 
-use App\Dto\UserData;
-use App\Events\SubCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCreateRequest;
 use App\Models\User;
-use App\Services\External\BtcComService;
+use App\Services\Internal\SubService;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,8 +73,8 @@ class CreateController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -86,17 +84,13 @@ class CreateController extends Controller
     ]
     public function __invoke(
         SubCreateRequest $request,
-        User             $user,
-        BtcComService    $btcComService,
-    ): JsonResponse
-    {
-        event(new SubCreatedEvent(
-            user: $user,
-            subName: $request->name
-        ));
+        User $user,
+        SubService $subService,
+    ): JsonResponse {
+        $subService->create($user, $request->name);
 
         return new JsonResponse([
-            'message' => __('actions.success_sub_create')
+            'message' => __('actions.success_sub_create'),
         ], Response::HTTP_CREATED);
     }
 }

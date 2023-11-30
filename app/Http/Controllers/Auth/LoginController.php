@@ -9,13 +9,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Internal\UserService;
+use App\Traits\HasVerify;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -31,6 +32,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    use HasVerify;
 
     #[
         OA\Post(
@@ -47,23 +49,23 @@ class LoginController extends Controller
             responses: [
                 new OA\Response(
                     response: Response::HTTP_OK,
-                    description: "Successful login",
+                    description: 'Successful login',
                     content: new OA\JsonContent(
                         properties: [
                             new OA\Property(
-                                property: "user",
-                                ref: "#/components/schemas/UserResource"
+                                property: 'user',
+                                ref: '#/components/schemas/UserResource'
                             ),
                             new OA\Property(
-                                property: "token",
-                                description: "User access token",
-                                type: "string"
+                                property: 'token',
+                                description: 'User access token',
+                                type: 'string'
                             ),
                             new OA\Property(
-                                property: "expired_at",
-                                description: "Token expiration date",
-                                type: "string",
-                                format: "date-time"
+                                property: 'expired_at',
+                                description: 'Token expiration date',
+                                type: 'string',
+                                format: 'date-time'
                             ),
                         ],
                         type: 'object'
@@ -78,28 +80,28 @@ class LoginController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]
     public function login(LoginRequest $request): JsonResponse
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             throw new BusinessException(
                 clientMessage: __('auth.failed'),
                 statusCode: Response::HTTP_NOT_FOUND
             );
         }
 
-        if (!$request->user()->hasVerifiedEmail()) {
-            throw new BusinessException(
-                clientMessage: __('auth.email.not.verified', ['email' => $request->user->email]),
-                statusCode: Response::HTTP_FORBIDDEN);
+        $this->checkEmailVerification($request);
+
+        if ($request->user()->google2fa_secret) {
+            $this->verifyTwoFa($request->google2fa_code);
         }
 
         $token = UserService::withUser($request->user())
@@ -111,7 +113,6 @@ class LoginController extends Controller
             'expired_at' => $token->accessToken->expires_at,
         ]);
     }
-
 
     #[
         OA\Post(
@@ -136,18 +137,19 @@ class LoginController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]
     public function logout(Request $request): JsonResponse
     {
         PersonalAccessToken::findToken($request->bearerToken())->delete();
+        Auth::guard('web')->logout();
 
         return response()->json('Logged out');
     }
@@ -173,11 +175,11 @@ class LoginController extends Controller
                                     property: 'error',
                                     description: 'Error message',
                                     type: 'string'
-                                )
+                                ),
                             ]
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     ]

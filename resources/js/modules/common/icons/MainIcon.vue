@@ -33,22 +33,22 @@ export default defineComponent({
     height: 32px;
 }
 
-.icon .icon_path {
+.icon {
     fill: var(--icons-primary, #98a2b3);
     stroke: none;
 }
 
-.icon-stroke .icon_path {
+.icon-stroke {
     stroke: var(--icons-primary, #98a2b3);
     fill: none;
 }
 
-.icon-warning .icon_path {
+.icon-warning {
     fill: var(--status-waiting, #ffb868);
     stroke: none;
 }
 
-.icon-warning.icon-stroke .icon_path {
+.icon-warning.icon-stroke {
     stroke: var(--status-waiting, #ffb868);
     fill: none;
 }

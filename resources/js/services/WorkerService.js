@@ -20,7 +20,6 @@ export class WorkerService {
         this.table = new Map();
 
         this.waitWorkers = true;
-        this.emptyWorkers = false;
         this.emptyTableWorkers = false;
 
         this.popupCardOpened = false;
@@ -38,24 +37,6 @@ export class WorkerService {
             this.translate(`workers.table.thead[${index}]`)
         );
     }
-
-    // setFirstRow() {
-    //     return {
-    //         class: "main",
-    //         name: this.translate("workers.table.sub_thead"),
-    //         hashrate:
-    //             store.getters.getAccount.hash_per_min +
-    //             store.getters.getAccount.unit +
-    //             "h/s",
-    //         // unit: store.getters.getAccount.unit,
-    //         hashRate24:
-    //             store.getters.getAccount.hash_per_day +
-    //             store.getters.getAccount.unit +
-    //             "h/s",
-    //         // unit24: store.getters.getAccount.unit,
-    //         rejectRate: store.getters.getAccount.reject_percent + " %",
-    //     };
-    // }
 
     updateGroup_id() {
         this.group_id = store.getters.getActive;
@@ -85,20 +66,29 @@ export class WorkerService {
         this.filterButtons = [
             {
                 name: "all",
+                value: "all",
             },
             {
                 name: "active",
+                value: "active",
             },
             {
                 name: "inactive",
+                value: "inactive",
             },
-        ]
+            {
+                name: "dead",
+                value: "dead",
+            },
+        ];
 
         return this;
     }
 
     async fetchList() {
-        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`);
+        return await ProfileApi.get(
+            `/workers/${this.group_id}?per_page=1000&status=${this.status}`
+        );
     }
 
     async fetchWorker() {
@@ -115,10 +105,7 @@ export class WorkerService {
 
     async getList() {
         if (this.group_id !== -1) {
-
-
             this.useTranslater(this.titleIndexes);
-            this.emptyWorkers = false;
             this.emptyTableWorkers = false;
             this.waitWorkers = true;
 
@@ -131,17 +118,12 @@ export class WorkerService {
 
                 // this.rows.unshift(this.setFirstRow());
                 if (this.rows.length === 0) {
-                    if (this.status === "all") {
-                        this.emptyWorkers = true;
-                    }
                     this.emptyTableWorkers = true;
                 }
 
                 this.waitWorkers = false;
             } catch (e) {
                 console.error(`Error with: ${e}`);
-
-                this.emptyWorkers = true;
             }
         }
     }
@@ -202,8 +184,8 @@ export class WorkerService {
     async makeFullValues() {
         const [hashrate, unit] = this.records.slice(-24).reduce(
             (acc, el) => {
-                acc[0].push(el.hashrate);
-                acc[1].push(el.unit);
+                acc[0].push(el.hashrate || 0);
+                acc[1].push(el.unit || "T");
 
                 return acc;
             },
@@ -243,7 +225,9 @@ export class WorkerService {
         this.updateGroup_id();
 
         this.worker_id = worker_id;
+
         await this.setDefaultKeys();
+        this.openPopupCard();
 
         await this.getWorkerGraph();
 
@@ -257,13 +241,17 @@ export class WorkerService {
         if (this.group_id !== -1) {
             this.waitTargetWorker = true;
 
-            this.records = (await this.fetchWorkerGraph()).data.data.map(
-                (el) => {
-                    return new workerHashrateData({
-                        ...el,
-                    });
-                }
-            );
+            try {
+                this.records = (await this.fetchWorkerGraph()).data.data.map(
+                    (el) => {
+                        return new workerHashrateData({
+                            ...el,
+                        });
+                    }
+                );
+            } catch (err) {
+                console.error(`Error with: ${err}`);
+            }
         }
     }
 }

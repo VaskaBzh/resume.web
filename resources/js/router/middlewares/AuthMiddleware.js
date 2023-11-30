@@ -1,9 +1,9 @@
 import store from "@/store";
 
 export async function AuthMiddleware(_, router) {
-    const user = store.getters.user;
+    const token = store.getters.token;
 
-    if (!!user && Object.entries(user).length > 0) {
+    if (!!token) {
         router.push({ name: "statistic" });
     } else {
         store.dispatch("dropUser");

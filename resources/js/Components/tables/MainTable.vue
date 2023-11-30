@@ -155,6 +155,7 @@ export default {
         &[data-popup="#seeChart"] {
             border-width: 1px;
             border-style: solid;
+	        border-color: transparent;
             td {
                 transition: all 0.3s ease 0s;
                 &:nth-child(4) {
@@ -210,7 +211,7 @@ export default {
             right: 40px;
             margin-top: 25px;
             transform: translateY(-50%);
-            @media (max-width: 900px) {
+            @media (max-width: 998px) {
                 display: none;
             }
         }

@@ -1,6 +1,10 @@
 <template>
     <div class="system__section-wrap" ref="view">
+
         <div class="system__section">
+            <landing-headline class="about__headline">
+                {{ $t("personal_account.button[0]") }}
+            </landing-headline>
         <landing-title tag="h3" class="cabinet_title">
             <span
                 class="cabinet_title_elem cabinet_title_elem-right animation-up_line"
@@ -586,9 +590,11 @@
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import MockupTooltip from "@/modules/hosting/Components/MockupTooltip.vue";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 
 export default {
     components: {
+        LandingHeadline,
         MockupTooltip,
         LandingTitle,
     },
@@ -675,8 +681,8 @@ export default {
 .img-shadow {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 15px;
+    transform: translateX(-50%);
     width: calc(100% - 200px);
 }
 
@@ -729,8 +735,8 @@ export default {
 .img-system {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 15px;
+    transform: translateX(-50%);
     width: 100%;
 }
 
@@ -759,6 +765,9 @@ export default {
 
 .img-mac {
     z-index: 10;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .mobile {
@@ -828,6 +837,7 @@ export default {
         width: 100%;
         max-width: 224px;
         height: 482px;
+        top: 8px;
     }
 
     .note-button {

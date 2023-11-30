@@ -19,7 +19,7 @@ class SendCodeController extends Controller
             ->send(new CodeEmail(UpdateConfirmationCode::execute($user)));
 
         return new JsonResponse([
-            'message' => __('auth.email.verify', ['value' => $user->email])
+            'message' => __('auth.email.verify', ['value' => $user->email]),
         ]);
     }
 }

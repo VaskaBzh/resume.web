@@ -2,8 +2,8 @@
     <div class="cards">
         <cabinet-card
             :title="$t('statistic.info_blocks.hash.titles[0]')"
-            :value="hashPerMin"
-            unit="TH/s"
+            :value="getAccount.hash_per_min ?? 0"
+            :unit="`${getAccount.hash_per_min_unit ?? 'T'}H/s`"
             :page="'worker'"
         >
             <template #svg>
@@ -12,8 +12,8 @@
         </cabinet-card>
         <cabinet-card
             :title="$t('statistic.info_blocks.hash.titles[1]')"
-            :value="hashPerDay"
-            unit="TH/s"
+            :value="getAccount.hash_per_day ?? 0"
+            :unit="`${getAccount.hash_per_day_unit ?? 'T'}H/s`"
             :page="'worker'"
         >
             <template #svg>
@@ -36,16 +36,6 @@ export default {
     },
     computed: {
         ...mapGetters(["getAccount"]),
-        hashPerDay() {
-            return this.getAccount.hash_per_day
-                ? Number(this.getAccount.hash_per_day).toFixed(2)
-                : "0.00";
-        },
-        hashPerMin() {
-            return this.getAccount.hash_per_min
-                ? Number(this.getAccount.hash_per_min).toFixed(2)
-                : "0.00";
-        },
     },
 };
 </script>
@@ -55,5 +45,10 @@ export default {
     gap: 12px;
     align-items: center;
     width: 100%;
+}
+@media (max-width: 767.98px) {
+    .cards {
+        flex-direction: column;
+    }
 }
 </style>

@@ -20,6 +20,9 @@ export class LoginService {
 
         this.validate = {};
         this.validateService = new ValidateService();
+
+        this.waitLogin = false;
+        this.waitPasswordChange = false;
     }
 
     setTranslate(translate) {
@@ -44,10 +47,11 @@ export class LoginService {
             this.form,
             this.validate
         );
-
     }
 
     async sendPassword(form) {
+        this.waitPasswordChange = true;
+
         try {
             const formData = {
                 ...form,
@@ -65,7 +69,11 @@ export class LoginService {
                 title: "changed",
                 text: response.message,
             });
+
+            this.waitPasswordChange = false;
         } catch (err) {
+            this.waitPasswordChange = false;
+
             console.error(err);
 
             store.dispatch("setNotification", {
@@ -110,6 +118,8 @@ export class LoginService {
     }
 
     async login() {
+        this.waitLogin = true;
+
         try {
             const response = await MainApi.post("/login", this.form);
 
@@ -130,7 +140,11 @@ export class LoginService {
             });
 
             this.closeTwoFacPopup();
+
+            this.waitLogin = false;
         } catch (err) {
+            this.waitLogin = false;
+
             console.error(err);
             if (err.response.status === 422) {
                 this.openTwoFacPopup();
@@ -148,9 +162,6 @@ export class LoginService {
                     ...err.response.data.errors,
                 });
             }
-            // store.dispatch("setFullErrors", {
-            //     email: err.response.data.message,
-            // });
         }
     }
 }

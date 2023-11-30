@@ -23,7 +23,7 @@
                     src="../assets/img/Mockup-monitoring-en.png"
                     class="img-monitoring img-system web"
                 />
-    
+
                 <img
                     src="../assets/img/Mockup-iphone.png"
                     class="img-mac img-system mobile"
@@ -102,6 +102,7 @@ export default {
 .img-monitoring {
     max-width: 80%;
     left: 50%;
+    top: calc(50% - 15px);
 }
 
 .get-consultation {

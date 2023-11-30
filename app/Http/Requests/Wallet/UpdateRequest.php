@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name.min' => trans('validation.min.string', ['attribute' => __('validation.attributes.wallet_name'), 'min' => 3]),
-            'name.required' => trans('validation.required', ['attribute' => __('validation.attributes.wallet_name')])
+            'name.required' => trans('validation.required', ['attribute' => __('validation.attributes.wallet_name')]),
         ];
     }
 }

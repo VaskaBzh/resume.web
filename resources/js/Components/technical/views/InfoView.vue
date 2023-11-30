@@ -100,7 +100,7 @@ export default {
     }
 
 
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         .card.sm {
             min-height: 525px;
         }

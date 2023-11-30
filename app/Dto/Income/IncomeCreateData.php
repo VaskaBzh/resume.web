@@ -7,28 +7,31 @@ namespace App\Dto\Income;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
-use Illuminate\Support\Arr;
+use App\Utils\HashRateConverter;
 
-readonly final class IncomeCreateData
+final readonly class IncomeCreateData
 {
     /**
-     * @param int $groupId - id сабаккаунта
-     * @param float $dailyAmount - доход пользователя за сутки
-     * @param Type $type - тип начисления
-     * @param Status $status - статус транзакции
-     * @param Message $message - сообщение транзакции
-     * @param float $hashrate - хэщрейт
-     * @param int $difficulty - сложность сети
+     * @param  int  $groupId  sub-account group_id
+     * @param  float  $dailyAmount  sub-account dalily amount
+     * @param  Type  $type  income type
+     * @param  ?int  $referralId  referrer id
+     * @param  Status  $status  income status
+     * @param  Message  $message  income message
+     * @param  HashRateConverter  $hashrate  converted hash rate
+     * @param  int  $difficulty  network diff
      */
     public function __construct(
         public int $groupId,
         public float $dailyAmount,
         public Type $type,
+        public ?int $referralId,
         public Status $status,
         public Message $message,
-        public float $hashrate,
+        public HashRateConverter $hashrate,
         public int $difficulty,
-    ){}
+    ) {
+    }
 
     public static function fromRequest(array $requestData): IncomeCreateData
     {
@@ -36,6 +39,7 @@ readonly final class IncomeCreateData
             groupId: $requestData['group_id'],
             dailyAmount: $requestData['dailyAmount'],
             type: $requestData['type'],
+            referralId: $requestData['referral_id'],
             status: $requestData['status'],
             message: $requestData['message'],
             hashrate: $requestData['hash'],

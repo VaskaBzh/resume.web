@@ -2,17 +2,17 @@
     <div ref="page" class="settings">
         <main-title class="title-settings">{{ $t("title[2]") }} </main-title>
         <div class="settings__main">
-            <div v-if="!user.email_verified_at" class="settings__card">
-                <main-title class="cabinet_title card_title"
-                    >{{ $t("title[0]") }}
-                </main-title>
-                <div class="settings__content">
-                    <settings-list
-                        :rows="settingsService.rows"
-                        @openPopup="settingsService.getHtml($event)"
-                    />
-                </div>
-            </div>
+            <!--            <div v-if="!user.email_verified_at" class="settings__card">-->
+            <!--                <main-title class="cabinet_title card_title"-->
+            <!--                    >{{ $t("title[0]") }}-->
+            <!--                </main-title>-->
+            <!--                <div class="settings__content">-->
+            <!--                    <settings-list-->
+            <!--                        :rows="settingsService.rows"-->
+            <!--                        @openPopup="settingsService.getHtml($event)"-->
+            <!--                    />-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div
                 class="settings__card onboarding_block"
                 :class="{
@@ -32,7 +32,7 @@
                         <safety-card
                             :card="card"
                             @openFacForm="sendFac"
-                            @dropFac="dropFac"
+                            @dropFac="openFacDisablePopup"
                             @openPasswordForm="openPasswordPopup"
                         />
                     </div>
@@ -56,7 +56,6 @@
         v-if="settingsService.form !== {}"
         :form="settingsService.form"
         :validate="settingsService.validate"
-        :wait="settingsService.waitAjax"
         :closed="settingsService.closed"
         @ajaxChange="settingsService.ajaxChange($event)"
         @validate="
@@ -67,15 +66,21 @@
     />
     <fac-popup
         :opened="settingsService.openedFacPopup"
-        :wait="settingsService.waitAjax"
+        :wait="settingsService.waitFacProcess"
         :closed="settingsService.closedFacPopup"
         :qr-code="settingsService.qrCode"
         :code="settingsService.code"
         @sendVerify="sendVerify($event)"
     />
+    <fac-disable-popup
+        :opened="settingsService.facDisabledPopup.getOpenedState()"
+        :closed="settingsService.facDisabledPopup.getClosedState()"
+        :wait="settingsService.waitFacProcess"
+        @sendDisable="sendDisable($event)"
+    />
     <settings-password-popup
         :opened="settingsService.openedPasswordPopup"
-        :wait="settingsService.waitAjax"
+        :wait="settingsService.waitPasswordChange"
         :closed="settingsService.closedPasswordPopup"
         :validate-service="settingsService"
         :form-data="settingsService.passwordForm"
@@ -95,6 +100,7 @@ import InstructionButton from "@/modules/instruction/Components/UI/InstructionBu
 import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
 import SettingsPasswordPopup from "@/modules/settings/Components/blocks/SettingsPasswordPopup.vue";
+import FacDisablePopup from "@/modules/settings/Components/blocks/FacDisablePopup.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { SettingsService } from "@/modules/settings/services/SettingsService";
@@ -106,6 +112,7 @@ export default {
         sharedMessages: SettingsMessage,
     },
     components: {
+        FacDisablePopup,
         SettingsPasswordPopup,
         MainTitle,
         SettingsList,
@@ -166,6 +173,17 @@ export default {
         this.settingsProcess();
     },
     methods: {
+        openFacDisablePopup() {
+            this.settingsService.facDisabledPopup.openPopup();
+        },
+        async sendDisable(form) {
+            this.settingsService.disableFacForm.setForm(form);
+
+            await this.settingsService.sendDisableFac();
+
+            this.$store.dispatch("setUser");
+            this.settingsService.setBlocks();
+        },
         setPasswordForm(form = null) {
             this.settingsService.setPasswordForm(form);
         },
@@ -174,13 +192,6 @@ export default {
         },
         async sendFac() {
             await this.settingsService.sendFac();
-        },
-        async dropFac() {
-            await this.settingsService.dropFac();
-
-            this.$store.dispatch("setUser");
-
-            this.settingsService.setBlocks();
         },
         async sendPassword(form = null) {
             this.settingsService.setPasswordForm(form);
@@ -238,12 +249,14 @@ export default {
     gap: 16px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 767.98px) {
     .card__container {
         flex-direction: column;
         gap: 16px;
         padding: 0;
     }
+}
+@media (max-width: 998px) {
     .card_title {
         font-size: 16px;
         line-height: 24px; /* 150% */
@@ -259,16 +272,12 @@ export default {
 }
 
 .settings {
-    padding: 24px;
     width: 100%;
     flex: 1 1 auto;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
-    }
-    @media (max-width: 900px) {
-        padding: 24px 12px 24px;
     }
 
     &__main {
@@ -328,7 +337,7 @@ export default {
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         max-width: 711px;
         width: 100%;
-        @media (max-width: 900px) {
+        @media (max-width: 998px) {
             padding: 16px;
         }
     }

@@ -29,7 +29,7 @@ export const HomeMessage = {
             },
             card_community: {
                 title: ["community for miners"],
-                num: ["No.1", "24/7", "1", "4%"],
+                num: ["№1", "24/7", "1", "4%"],
                 text: [
                     "customer service",
                     "fast technical support",
@@ -52,7 +52,7 @@ export const HomeMessage = {
             ],
             text: "Allows you to evaluate and predict possible approximate income for a certain period. Actual earnings may vary slightly. ",
             form_calculator: {
-                title: "Calculator Light",
+                title: "Profitability Calculator",
                 placeholder: ["Total hashrate", "Commission"],
                 tooltip: [
                     "Average hashrate of all devices",
@@ -136,7 +136,7 @@ export const HomeMessage = {
         },
         main: {
             button: "main things",
-            title: ["Values mission goals"],
+            title: ["Values", "Mission", "Destination"],
             text: [
                 "We support honesty, transparency and continuous development in everything we do. We encourage creativity, embrace change and constantly look for new ways to improve our offerings and processes.",
                 "Make Bitcoin mining as efficient and convenient as possible, ensuring high security for customer data and their digital assets.",
@@ -213,7 +213,7 @@ export const HomeMessage = {
             ],
             text: "Позволяет оценить и спрогнозировать возможный приблизительный доход за определенный период. Фактические доходы могут незначительно отличаться. ",
             form_calculator: {
-                title: "Калькулятор Light",
+                title: "Калькулятор Доходности",
                 placeholder: ["Общий хешрейт", "Комиссия"],
                 tooltip: [
                     "Средний хешрейт всех устройств",
@@ -304,7 +304,7 @@ export const HomeMessage = {
         },
         main: {
             button: "главное",
-            title: ["Ценности миссия цели"],
+            title: ["Ценности", "Миссия", "Цели"],
             text: [
                 "Мы поддерживаем честность, прозрачность и постоянное развитие во всем, что мы делаем. Поощряем творчество, принимаем перемены и постоянно ищем новые способы улучшения наших предложений и процессов.и процессов.",
                 "Сделать майнинг биткоина максимально эффективным и удобным, обеспечивая высокую безопасность данных клиентов и их цифровых активов.",

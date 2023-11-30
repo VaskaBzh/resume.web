@@ -1,8 +1,7 @@
 <template>
   <div class="income-card">
-    <MainIncomeCardRow>
+    <MainIncomeCardRow :bitcoinValue="yesterdayProfit">
         <template v-slot:title>{{ $t("income.income_info.titles[2]") }}</template>
-        <template v-slot:num>{{ this.yesterdayProfit }}</template>
       </MainIncomeCardRow>
   </div>
 </template>
@@ -31,6 +30,7 @@ export default {
 .income-card{
   display: flex;
   padding: 16px 24px;
+  height: 100%;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;

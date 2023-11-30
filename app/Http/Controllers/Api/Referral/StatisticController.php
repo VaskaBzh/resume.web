@@ -38,7 +38,7 @@ class StatisticController extends Controller
                                 new OA\Property(
                                     property: 'statistic',
                                     ref: '#/components/schemas/ReferralStatisticResource'
-                                )
+                                ),
                             ],
                             type: 'object',
                         ),
@@ -52,17 +52,19 @@ class StatisticController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ],
         )
     ]
     public function __invoke(User $user)
     {
+        $this->authorize('viewAny', $user);
+
         $statistic = ReferralService::getReferrerStatistic(referrer: $user);
 
         return new ReferralStatisticResource($user, $statistic);

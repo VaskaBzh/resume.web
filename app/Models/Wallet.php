@@ -15,8 +15,6 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    public const MIN_BITCOIN_WITHDRAWAL = 0.005;
-
     protected $fillable = [
         'name',
         'group_id',
@@ -28,7 +26,7 @@ class Wallet extends Model
     ];
 
     protected $casts = [
-        'wallet_updated_at' => 'date'
+        'wallet_updated_at' => 'date',
     ];
 
     public function getRouteKeyName(): string
@@ -66,7 +64,7 @@ class Wallet extends Model
     public function totalPayout(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->payouts()->sum('payout')
+            get: fn () => $this->payouts()->sum('payout')
         );
     }
 

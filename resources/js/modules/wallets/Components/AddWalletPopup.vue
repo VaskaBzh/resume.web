@@ -1,46 +1,52 @@
 <template>
     <main-popup :closed="isClosed" :opened="isOpened" @closed="$emit('closed')">
-        <form class="popup__form" @submit.prevent="$emit('addWallet', form)">
-            <main-title class="title-popup">{{
-                $t("add_popup.title")
-            }}</main-title>
-            <div class="form__content">
-                <main-input
+        <form-popup @submitEvent="$emit('addWallet', form)">
+            <template #head>
+                <main-title class="title-popup">
+                    {{ $t("add_popup.title") }}
+                </main-title>
+            </template>
+            <template #content>
+                <form-popup-input
                     class="form_input"
-                    input-name="code"
-                    :input-label="$t('add_popup.placeholders.address')"
-                    :input-value="form.wallet_address"
-                    @getValue="form.wallet_address = $event"
+                    input-name="walletAddress"
+                    :input-label="$t('add_popup.labels.address')"
+                    :input-value="form.walletAddress"
+                    @inputChange="form.walletAddress = $event"
                 />
-                <main-input
+                <form-popup-input
                     class="form_input"
-                    input-name="code"
-                    :input-label="$t('add_popup.placeholders.name')"
+                    input-name="name"
+                    :input-label="$t('add_popup.labels.name')"
                     :input-value="form.name"
-                    @getValue="form.name = $event"
+                    @inputChange="form.name = $event"
                 />
-            </div>
-            <main-button type="submit">
-                <template #text>{{ $t("add_popup.button") }}</template>
-            </main-button>
-        </form>
+            </template>
+            <template #buttons>
+                <main-button type="submit" class="button-full button-xl">
+                    <template #text>{{ $t("add_popup.button") }}</template>
+                </main-button>
+            </template>
+        </form-popup>
     </main-popup>
 </template>
 
 <script>
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
+import FormPopupInput from "@/modules/form/Components/UI/FormPopupInput.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import FormPopup from "@/modules/form/Components/FormPopup.vue";
 
 import { WalletsMessages } from "@/modules/wallets/lang/WalletsMessages";
 
 export default {
     name: "AddWalletPopup",
     components: {
+        FormPopup,
+        FormPopupInput,
         MainPopup,
         MainTitle,
-        MainInput,
         MainButton,
     },
     i18n: {

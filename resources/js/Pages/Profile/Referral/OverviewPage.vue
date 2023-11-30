@@ -2,19 +2,21 @@
     <div class="referral__content">
         <div class="grid-column">
             <div class="card__block">
-<!--                <InfoCard-->
-<!--                    class="referral__card-info"-->
-<!--                    :title="$t('stats.cards[0]')"-->
-<!--                    :value="service.statsCards[4]?.value ?? 0"-->
-<!--                >-->
-<!--                    <template #svg>-->
-<!--                        <img src="../../../../assets/img/percent-icon.png" />-->
-<!--                    </template>-->
-<!--                </InfoCard>-->
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[0]')"
+                    :value="service.statsCards[4]?.value ?? 0"
+                    unit="%"
+                >
+                    <template #svg>
+                        <img src="../../../../assets/img/percent-icon.png" />
+                    </template>
+                </InfoCard>
                 <InfoCard
                     class="referral__card-info"
                     :title="$t('stats.cards[1]')"
                     :value="service.statsCards[3]?.value ?? 0"
+                    :unit="`${service.statsCards[5]?.value ?? 'T'}H/s`"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/hashrate-icon.png" />
@@ -43,7 +45,7 @@
                     class="referral_select-cabinet"
                     :rows="service.accounts"
                     :active-sub-id="service.activeSubId"
-                    @changeSub="service.generateCode($event)"
+                    @changeSub="service.changeActiveSub($event)"
                 />
             </div>
             <div class="cabinet__block cabinet__block-light referral__block">
@@ -54,11 +56,7 @@
                     {{ $t("referral.text") }}
                 </p>
                 <div class="referral__row">
-                    <main-copy
-                        class="referral_code"
-                        :cut-value="50"
-                        :code="service.code"
-                    />
+                    <main-copy class="referral_code" :code="service.code" />
                 </div>
             </div>
         </div>
@@ -77,6 +75,7 @@
                     class="referral__card-info"
                     :title="$t('stats.cards[3]')"
                     :value="service.statsCards[2]?.value ?? 0"
+                    :hint="$t('stats.hints.active')"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/active-icon.png" />
@@ -144,7 +143,6 @@ export default {
             async handler(newUser) {
                 this.service.setUser(newUser);
                 await this.service.index();
-                this.service.setCode();
             },
             deep: true,
         },
@@ -161,7 +159,7 @@ export default {
         if (this.user.id) {
             this.service.setUser(this.user);
 
-             this.service.index();
+            this.service.index();
         }
         this.service.getGradeList();
 
@@ -266,19 +264,6 @@ export default {
 
         &-mb {
             margin-bottom: 32px;
-        }
-    }
-
-    &_code {
-        @media (max-width: $pc) {
-            max-width: 394px;
-        }
-        @media (max-width: $tablet) {
-            min-width: 394px;
-        }
-        @media (max-width: $mobile) {
-            max-width: 100%;
-            min-width: 0;
         }
     }
 

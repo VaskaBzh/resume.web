@@ -55,6 +55,8 @@ export default {
     methods: {
         change(event) {
             this.isOpenBurger = event;
+
+            document.body.style.overflowY = !!event ? "hidden" : "scroll";
         },
     },
     computed: {
@@ -64,7 +66,6 @@ export default {
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }
-        this.$store.dispatch("setToken");
 
         this.$store.dispatch("set_accounts", {
             route: this.$route,
@@ -106,17 +107,22 @@ export default {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
     border-radius: 40px 0px 0px 0px;
     background: var(--background-globe);
     box-shadow: 0px 1px 4px 0px rgba(16, 24, 40, 0.05) inset;
     width: 100%;
     flex: 1 1 auto;
-    height: calc(100vh - 72px);
     padding: clamp(12px, 2vw, 24px);
 }
 
-@media (max-width: 900px) {
+@media (min-width: 998px) {
+    .page-container {
+        overflow-y: scroll;
+        height: calc(100vh - 72px);
+    }
+}
+
+@media (max-width: 998px) {
     .page-container {
         border-radius: 0;
     }

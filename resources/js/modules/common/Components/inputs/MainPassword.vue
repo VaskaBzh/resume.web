@@ -5,6 +5,7 @@
             class="row_input input"
             v-model="value"
             :placeholder="placeholder"
+            :autocomplete="autocomplete"
         />
         <transition name="fade">
             <svg
@@ -74,7 +75,7 @@
 <script>
 export default {
     name: "main-password",
-    props: ["model", "placeholder"],
+    props: ["model", "placeholder", "autocomplete"],
     data() {
         return {
             value: "",
@@ -90,7 +91,7 @@ export default {
     },
     watch: {
         value(newValue) {
-            this.$emit("change", newValue);
+            this.$emit("changeInput", newValue);
         },
     },
 };
@@ -146,7 +147,7 @@ export default {
             font-size: 16px;
             font-family: Ubuntu, serif;
             line-height: 130%;
-            min-height: 40px;
+            min-height: 48px;
         }
 
         &::placeholder {

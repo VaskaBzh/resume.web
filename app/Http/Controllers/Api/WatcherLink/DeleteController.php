@@ -8,8 +8,8 @@ use App\Actions\WatcherLink\Delete;
 use App\Http\Controllers\Controller;
 use App\Models\WatcherLink;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class DeleteController extends Controller
 {
@@ -39,12 +39,12 @@ class DeleteController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ],
         )
     ]

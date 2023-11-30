@@ -28,6 +28,9 @@ export class WalletsService extends DefaultSubsService {
         this.opened = false;
         this.isCodeSend = false;
 
+        this.waitAddWallet = false;
+        this.waitChangeWallet = false;
+
         this.user = {};
     }
 
@@ -151,8 +154,12 @@ export class WalletsService extends DefaultSubsService {
     }
 
     async addWallet() {
+        this.waitAddWallet = true;
+
         if (this.group_id !== -1) {
             if (this.validateAddress() || this.validateName()) {
+                this.waitAddWallet = false;
+
                 return this;
             }
 
@@ -172,7 +179,11 @@ export class WalletsService extends DefaultSubsService {
                         title: "success",
                         text: response.data.message,
                     });
+
+                    this.waitAddWallet = false;
                 } catch (err) {
+                    this.waitAddWallet = false;
+
                     console.error("Error with: " + err);
                     store.dispatch("setFullErrors", err.response.data.errors);
 
@@ -206,7 +217,11 @@ export class WalletsService extends DefaultSubsService {
                     await this.index();
                     this.clearForm();
                     this.closePopup();
+
+                    this.waitAddWallet = false;
                 } catch (err) {
+                    this.waitAddWallet = false;
+
                     console.error("Error with: " + err);
                     store.dispatch("setFullErrors", err.response.data.errors);
 
@@ -229,6 +244,8 @@ export class WalletsService extends DefaultSubsService {
             this.wait = false;
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
+
+            this.waitAddWallet = false;
         }
     }
 
@@ -242,8 +259,12 @@ export class WalletsService extends DefaultSubsService {
     }
 
     async changeWallet() {
+        this.waitChangeWallet = true;
+
         if (this.group_id !== -1) {
             if (this.validateAddress() || this.validateName()) {
+                this.waitChangeWallet = false;
+
                 return this;
             }
 
@@ -270,7 +291,11 @@ export class WalletsService extends DefaultSubsService {
                         });
 
                         requestCount++;
+
+                        this.waitChangeWallet = false;
                     } catch (err) {
+                        this.waitChangeWallet = false;
+
                         console.error("Error with: " + err);
                         store.dispatch(
                             "setFullErrors",
@@ -306,8 +331,11 @@ export class WalletsService extends DefaultSubsService {
                         this.clearForm();
                         this.closePopup();
 
+                        this.waitChangeWallet = false;
                         return;
                     } catch (err) {
+                        this.waitChangeWallet = false;
+
                         console.error("Error with: " + err);
                         store.dispatch(
                             "setFullErrors",
@@ -319,10 +347,6 @@ export class WalletsService extends DefaultSubsService {
                             title: "error",
                             text: err.response.data.message,
                         });
-
-                        await this.index();
-                        this.clearForm();
-                        this.closePopup();
 
                         return;
                     }
@@ -344,8 +368,11 @@ export class WalletsService extends DefaultSubsService {
 
                         requestCount++;
 
+                        this.waitChangeWallet = false;
                         return;
                     } catch (err) {
+                        this.waitChangeWallet = false;
+
                         console.error("Error with: " + err);
                         store.dispatch(
                             "setFullErrors",
@@ -360,37 +387,26 @@ export class WalletsService extends DefaultSubsService {
                     }
                 }
 
+                this.waitChangeWallet = false;
+
                 if (requestCount > 0) {
                     this.closePopup();
                     await this.index();
                     this.clearForm();
                 }
             } catch (err) {
+                this.waitChangeWallet = false;
+
                 console.error(err);
             }
 
             this.wait = false;
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
+
+            this.waitChangeWallet = false;
         }
     }
-
-    async removeWallet(wallet) {
-        this.setForm(wallet);
-        // await this.form.post("/wallet_delete", {});
-        store.dispatch("getMessage", this.translate("wallets.messages[1]"));
-        // this.index();
-    }
-
-    // async filter(needDrop) {
-    //     if (this.wallets) {
-    //         if (needDrop) {
-    //             this.wallets.filter((wallet) => wallet.payment !== 0);
-    //         } else {
-    //             this.index();
-    //         }
-    //     }
-    // }
 
     async fetch() {
         if (this.group_id !== -1) {
@@ -403,14 +419,6 @@ export class WalletsService extends DefaultSubsService {
                 response = (await ProfileApi.get(`/wallets/${this.group_id}`))
                     .data.data;
             } catch (err) {
-                // store.dispatch("setFullErrors", err?.response?.data?.errors);
-                //
-                // store.dispatch("setNotification", {
-                //     status: "warning",
-                //     title: "warning",
-                //     text: err.response.data.message,
-                // });
-
                 this.emptyTable = true;
                 this.waitWallets = false;
             }

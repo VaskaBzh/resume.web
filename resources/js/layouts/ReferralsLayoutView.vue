@@ -10,9 +10,7 @@
                         :active="viewService.view"
                     />
                 </div>
-                <transition name="page">
-                    <router-view />
-                </transition>
+                <router-view />
             </div>
         </div>
     </div>
@@ -47,6 +45,11 @@ export default {
         $route(newRoute) {
             this.viewService.setView(newRoute);
         },
+        "$i18n.locale"() {
+            this.viewService.setTabs()
+            document.title = this.$t("header.links.referral");
+        },
+
     },
     methods: {
         referralRouting(routeName) {
@@ -54,8 +57,6 @@ export default {
         },
     },
     mounted() {
-        document.title = this.$t("header.links.referral");
-
         this.viewService.setTabs().setView(this.$route);
     },
 };
@@ -73,7 +74,6 @@ export default {
     opacity: 0;
 }
 .referral {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -109,6 +109,7 @@ export default {
         &-list {
             width: fit-content;
             @media (max-width: 497.98px) {
+                width: auto;
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 600;

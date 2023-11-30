@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Enums\Income\Type;
+use App\Exceptions\IncomeCreatingException;
 use App\Models\Sub;
-use Illuminate\Support\Facades\Log;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
-use App\Exceptions\IncomeCreatingException;
+use Illuminate\Support\Facades\Log;
 
 class IncomeCommand extends Command
 {
@@ -19,27 +19,34 @@ class IncomeCommand extends Command
 
     /**
      * Execute the console command.
-     *
      */
     public function handle(): void
     {
         Sub::hasWorkerHashRate()
-            ->with(['user', 'workers'])
+            ->with(['user.referrer', 'wallets'])
             ->each(static function (Sub $sub) {
                 $sub->refresh();
 
                 try {
-                    $referrerSub = $sub->user->referrer?->subs->first();
 
-                    $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerSub);
+                    $referrerActiveSub = $sub->user
+                        ->referrer
+                        ?->activeSub()
+                        ->first();
+
+                    $service = IncomeService::init(
+                        stat: app('miner_stat'),
+                        sub: $sub,
+                        referrerSub: $referrerActiveSub
+                    );
 
                     $income = $service->createIncome($sub, Type::MINING);
                     $service->updateLocalSub($sub, Type::MINING);
                     $service->createFinance();
 
-                    if ($referrerSub) {
-                        $service->createIncome($referrerSub, Type::REFERRAL);
-                        $service->updateLocalSub($referrerSub, Type::REFERRAL);
+                    if ($referrerActiveSub) {
+                        $service->createIncome($referrerActiveSub, Type::REFERRAL);
+                        $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
                     }
 
                     Log::channel('incomes')

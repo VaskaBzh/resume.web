@@ -3,7 +3,6 @@
         id="2fac"
         ref="fac"
         :opened="opened"
-        :wait="wait"
         :closed="closed"
         :make-resize="makeResize"
     >
@@ -11,7 +10,7 @@
             <main-title>{{ $t("fac_popup.title") }}</main-title>
             <main-description>{{ $t("popup.text[4]") }}</main-description>
         </div>
-        <div v-show="!hasCode" class="fac__content">
+        <div v-if="!hasCode" class="fac__content">
             <div class="fac_qrcode" v-html="qrCode"></div>
             <main-copy
                 class="fac_code"
@@ -26,30 +25,31 @@
                 <template #text>{{ $t("fac_popup.button[0]") }}</template>
             </main-button>
         </div>
-        <div v-show="hasCode" class="fac__content">
+        <form v-else class="fac__content" @submit.prevent="closePopup">
             <main-input
                 class="fac_input"
                 input-name="twoFactorSecret"
                 :input-label="$t('fac_popup.label[1]')"
                 :input-value="form.code"
                 :error="errorsExpired.error"
-                @getValue="form.code = $event"
+                @get-value="form.code = $event"
             />
             <div class="fac__buttons">
                 <main-button
                     class="button-reverse fac_button button-full"
-                    @click.prevent="hasCode = false"
+                    @click="returnNoCodeForm"
                 >
                     <template #text>{{ $t("fac_popup.button[1]") }} </template>
                 </main-button>
                 <main-button
                     class="button-blue fac_button button-full"
-                    @click="closePopup"
+                    type="submit"
+                    :wait="wait"
                 >
                     <template #text>{{ $t("fac_popup.button[2]") }} </template>
                 </main-button>
             </div>
-        </div>
+        </form>
     </main-popup>
 </template>
 
@@ -75,6 +75,7 @@ export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
+    emits: ["sendVerify"],
     data() {
         return {
             hasCode: false,
@@ -104,8 +105,15 @@ export default {
         MainInput,
     },
     methods: {
+        returnNoCodeForm(event) {
+            if (event.pointerType === "touch") {
+                this.hasCode = false;
+            }
+        },
         closePopup() {
-            this.$emit("sendVerify", this.form);
+            if (!this.wait) {
+                this.$emit("sendVerify", this.form);
+            }
         },
     },
 };

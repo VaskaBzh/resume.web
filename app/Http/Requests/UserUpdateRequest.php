@@ -15,7 +15,7 @@ class UserUpdateRequest extends FormRequest
             'email' => 'unique:users,email|email|string',
             'phone' => 'regex:/^\+?(\d[\d\-. ]+)?(\([\d\-. ]+\))?[\d\-. ]+\d$/|unique:users,phone|',
             'sms' => 'bool',
-            'auth_2fac' => 'bool'
+            'auth_2fac' => 'bool',
         ];
     }
 

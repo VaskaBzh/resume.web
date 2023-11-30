@@ -1,5 +1,15 @@
 <template>
 	<div class="buttons" v-if="viewportWidth > 768">
+        <button
+            class="buttons_button"
+            :class="{
+				'buttons_button-active': !subsType
+			}"
+            @click.prevent="$emit('changeType', false)"
+        >
+            <table-icon class="button_icon" />
+
+        </button>
 		<button
 			class="buttons_button"
 			:class="{
@@ -8,16 +18,6 @@
 			@click.prevent="$emit('changeType', true)"
 		>
 			<block-icon class="button_icon" />
-		</button>
-		<button
-			class="buttons_button"
-			:class="{
-				'buttons_button-active': !subsType
-			}"
-			@click.prevent="$emit('changeType', false)"
-		>
-			<table-icon class="button_icon" />
-
 		</button>
 	</div>
 </template>

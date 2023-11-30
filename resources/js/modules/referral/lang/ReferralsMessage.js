@@ -8,7 +8,16 @@ export const ReferralsMessage = {
         },
         stats: {
             title: "Overall Statistics",
-            cards: ["Your percentage", "Total hashrate", "Invited", "Active", "Total profit for all time"],
+            cards: [
+                "Your percentage",
+                "Total hashrate",
+                "Invited",
+                "Active",
+                "Total profit for all time",
+            ],
+            hints: {
+                active: "Invited referrals with active workers",
+            },
         },
         incomes: {
             title: "Referral Earnings",
@@ -51,7 +60,16 @@ export const ReferralsMessage = {
         },
         stats: {
             title: "Общая статистика",
-            cards: ["Ваш процент", "Общий хешрейт", "Приглашенные", "Активные", "Общая прибыль за все время"],
+            cards: [
+                "Ваш процент",
+                "Общий хешрейт",
+                "Приглашенные",
+                "Активные",
+                "Общая прибыль за все время",
+            ],
+            hints: {
+                active: "Приглашенные рефералы с активными устройствами",
+            },
         },
         incomes: {
             title: "Начисления за рефералов",

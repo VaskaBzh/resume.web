@@ -12,36 +12,15 @@ export class TabsService {
 
     setLinks(user) {
         this.dropLinks();
+
+        if (user?.has_referrer_role) {
+            this.setReferralTab();
+        } else {
+            this.setWithoutReferralTab();
+        }
+
         this.links = [
             ...this.links,
-            {
-                links: [
-                    new TabsData(
-                        "/profile/statistic",
-                        "statistic",
-                        "statistic",
-                        "statistic"
-                    ),
-                    new TabsData(
-                        "/profile/income",
-                        "income",
-                        "income",
-                        "income"
-                    ),
-                    new TabsData(
-                        "/profile/workers",
-                        "workers",
-                        "workers",
-                        "workers"
-                    ),
-                    new TabsData(
-                        "/profile/accounts",
-                        "accounts",
-                        "accounts",
-                        "accounts"
-                    ),
-                ],
-            },
             {
                 group_name: "tabs.subs_group",
                 links: [
@@ -65,25 +44,26 @@ export class TabsService {
                     ),
                 ],
             },
+            {
+                group_name: "tabs.settings_group",
+                links: [
+                    new TabsData(
+                        "/profile/settings",
+                        "settings",
+                        "settings",
+                        "account"
+                    ),
+                    new TabsData("/profile/faq", "faq", "faq", "faq"),
+                ],
+            },
         ];
-
-        if (user?.has_referrer_role) {
-            this.setReferralTab();
-        } else {
-            this.setWithoutReferralTab();
-        }
     }
 
     async setAllowedRoutes() {
         try {
             this.allowedRoutes = (
                 await ProfileApi.get(
-                    `/allowed/${this.route?.query?.access_key}`,
-                    {
-                        headers: {
-                            "X-Access-Key": this.route?.query?.access_key,
-                        },
-                    }
+                    `/allowed/${this.route?.query?.access_key}`
                 )
             ).data.data.allowed_routes;
         } catch (err) {
@@ -104,6 +84,7 @@ export class TabsService {
         }
 
         this.dropLinks();
+
         this.links = [
             ...this.links,
             {
@@ -146,13 +127,30 @@ export class TabsService {
         this.links = [
             ...this.links,
             {
-                group_name: "tabs.settings_group",
                 links: [
                     new TabsData(
-                        "/profile/settings",
-                        "settings",
-                        "settings",
-                        "account"
+                        "/profile/statistic",
+                        "statistic",
+                        "statistic",
+                        "statistic"
+                    ),
+                    new TabsData(
+                        "/profile/income",
+                        "income",
+                        "income",
+                        "income"
+                    ),
+                    new TabsData(
+                        "/profile/workers",
+                        "workers",
+                        "workers",
+                        "workers"
+                    ),
+                    new TabsData(
+                        "/profile/accounts",
+                        "accounts",
+                        "accounts",
+                        "accounts"
                     ),
                     new TabsData(
                         "/profile/referral",
@@ -160,8 +158,6 @@ export class TabsService {
                         "referral",
                         "referral"
                     ),
-                    new TabsData("/profile/faq", "faq", "faq", "faq"),
-                    // new TabsData("/profile/watchers", "support", "support", "support"),
                 ],
             },
         ];
@@ -171,16 +167,31 @@ export class TabsService {
         this.links = [
             ...this.links,
             {
-                group_name: "tabs.settings_group",
                 links: [
                     new TabsData(
-                        "/profile/settings",
-                        "settings",
-                        "settings",
-                        "account"
+                        "/profile/statistic",
+                        "statistic",
+                        "statistic",
+                        "statistic"
                     ),
-                    new TabsData("/profile/faq", "faq", "faq", "faq"),
-                    // new TabsData("/profile/watchers", "support", "support"),
+                    new TabsData(
+                        "/profile/income",
+                        "income",
+                        "income",
+                        "income"
+                    ),
+                    new TabsData(
+                        "/profile/workers",
+                        "workers",
+                        "workers",
+                        "workers"
+                    ),
+                    new TabsData(
+                        "/profile/accounts",
+                        "accounts",
+                        "accounts",
+                        "accounts"
+                    ),
                 ],
             },
         ];

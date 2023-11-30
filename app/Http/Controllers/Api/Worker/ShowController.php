@@ -6,11 +6,7 @@ namespace App\Http\Controllers\Api\Worker;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WorkerResource;
-use App\Models\Sub;
 use App\Models\Worker;
-use App\Services\External\BtcComService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
                     new OA\JsonContent(
                         ref: '#/components/schemas/WorkerResource',
                         type: 'object',
-                    )
+                    ),
                 ],
             ),
             new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
@@ -49,8 +45,8 @@ use Symfony\Component\HttpFoundation\Response;
                         type: 'object',
                         example: [
                             'errors' => [
-                                'property' => ['message']
-                            ]
+                                'property' => ['message'],
+                            ],
                         ]
                     ),
                 ],
@@ -60,9 +56,8 @@ use Symfony\Component\HttpFoundation\Response;
 ]
 class ShowController extends Controller
 {
-    public function __invoke(Worker $worker, BtcComService $btcComService): WorkerResource
+    public function __invoke(Worker $worker): WorkerResource
     {
         return new WorkerResource($worker);
     }
 }
-

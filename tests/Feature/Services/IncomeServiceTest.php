@@ -4,239 +4,257 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Services;
 
-use App\Utils\Helper;
-use App\Models\MinerStat;
-use App\Models\Sub;
-use App\Models\User;
-use App\Models\Worker;
-use App\Enums\Income\Type;
-use App\Enums\Income\Status;
 use App\Enums\Income\Message;
+use App\Enums\Income\Status;
+use App\Enums\Income\Type;
+use App\Models\Sub;
 use App\Services\Internal\IncomeService;
-use App\Services\External\BtcComService;
-use App\Exceptions\IncomeCreatingException;
-use Illuminate\Database\Eloquent\Factories\Sequence;
+use App\Utils\HashRateConverter;
+use App\Utils\Helper;
+use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 
 class IncomeServiceTest extends TestCase
 {
-    public Sub $subWithHashRate;
-    public Sub $subWithoutHashRate;
-    public MinerStat $stat;
-    public User $referrer;
-    public Sub $referrerSub;
+    public Collection $subsWithHashRate;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        User::factory()->create()->count();
-        $this->referrer = User::create([
-            'name' => 'Referrer',
-            'email' => 'referrer@referrer.com',
-            'password' => bcrypt(123),
-            'referral_percent' => 1,
-            'referral_discount' => 0,
-        ]);
-        $this->referrerSub = Sub::create([
-            'sub' => $this->referrer->name,
-            'group_id' => 9999999,
-            'user_id' => $this->referrer->id,
-        ]);
-        $this->subWithHashRate = Sub::factory()->create();
-        $this->subWithoutHashRate = Sub::factory()->create();
-        $this->stat = MinerStat::factory()->create();
-        Worker::factory()
-            ->count(2)
-            ->state(new Sequence(
-                    [
-                        'status' => 'ACTIVE',
-                        'approximate_hash_rate' => 100,
-                        'group_id' => $this->subWithHashRate->group_id,
-                    ],
-                    [
-                        'status' => 'INACTIVE',
-                        'approximate_hash_rate' => 100,
-                        'group_id' => $this->subWithHashRate->group_id,
-                    ],
-                    [
-                        'status' => 'INACTIVE',
-                        'approximate_hash_rate' => 0,
-                        'group_id' => $this->subWithoutHashRate->group_id,
-                    ]
-                )
-            )
-            ->create();
+        $this->subsWithHashRate = Sub::hasWorkerHashRate()
+            ->with(['user', 'user.referrer'])
+            ->get();
     }
 
     /**
      * @test
      *
+     * @testdox it not create income if sub account hasn't a hash rate
      */
-    public function it_failed_if_sub_without_hash_rate()
+    public function hasNotHashRate(): void
     {
-        $this->expectException(IncomeCreatingException::class);
-        resolve(IncomeService::class)->init($this->subWithoutHashRate, null);
+        $subWithoutHashRate = Sub::find(2);
+
+        IncomeService::init($this->stat, $subWithoutHashRate, null);
+
+        $this->assertDatabaseMissing('incomes', ['group_id' => $subWithoutHashRate->group_id]);
+        $this->assertDatabaseMissing('finances', ['group_id' => $subWithoutHashRate->group_id]);
+        $this->assertDatabaseHas('subs', [
+            'group_id' => $subWithoutHashRate->group_id,
+            'pending_amount' => 0,
+            'total_amount' => 0,
+        ]);
     }
 
     /**
      * @test
+     *
+     * @testdox it create mining type income and update sub account amounts if wallet not exists
      */
-    public function it_create_mining_income_and_update_sub_accounts()
+    public function miningIncomeCase(): void
     {
-        $service = resolve(IncomeService::class)->init($this->subWithHashRate, null);
+        $subWithHashRate = $this->subsWithHashRate
+            ->where('group_id', 1)
+            ->first();
 
-        $service->createIncome($this->subWithHashRate, Type::MINING);
-        $service->updateLocalSub($this->subWithHashRate, Type::MINING);
+        $service = IncomeService::init($this->stat, $subWithHashRate, null);
+
+        $service->createIncome($subWithHashRate, Type::MINING);
+        $service->updateLocalSub($subWithHashRate, Type::MINING);
         $service->createFinance();
 
-        $hashrate = $this->subWithHashRate->total_hash_rate;
-        $expectFirstDayAmount = $this->getDailyAmount($hashrate, BtcComService::FEE + 3.5);
+        $hashrate = $subWithHashRate->hash_rate;
+
+        $getPureDailyEarning = $this->calculate($hashrate);
+        $expectDailyAmount = $this->calculate($hashrate, config('api.btc.fee') + 3.5);
+        $convertedHashRate = HashRateConverter::fromPure($hashrate);
 
         $this->assertDatabaseHas('incomes', [
-            'group_id' => $this->subWithHashRate->group_id,
+            'group_id' => $subWithHashRate->group_id,
             'type' => Type::MINING->value,
-            'daily_amount' => $expectFirstDayAmount,
+            'daily_amount' => number_format($expectDailyAmount, 8, '.', ''),
             'status' => Status::PENDING->value,
-            'message' => Message::LESS_MIN_WITHDRAWAL->value,
-            'hash' => $hashrate,
+            'message' => Message::NO_WALLET->value,
+            'hash' => $convertedHashRate->value,
+            'unit' => $convertedHashRate->unit,
         ]);
         $this->assertDatabaseHas('subs', [
-            'user_id' => $this->subWithHashRate->user_id,
-            'group_id' => $this->subWithHashRate->group_id,
-            'sub' => $this->subWithHashRate->sub,
-            'pending_amount' => $expectFirstDayAmount,
-            'total_amount' => $expectFirstDayAmount,
+            'user_id' => $subWithHashRate->user_id,
+            'group_id' => $subWithHashRate->group_id,
+            'sub' => $subWithHashRate->sub,
+            'pending_amount' => number_format($expectDailyAmount, 8, '.', ''),
+            'total_amount' => number_format($expectDailyAmount, 8, '.', ''),
         ]);
-
-        $this->subWithHashRate->refresh();
-
-        $this->createAdditionalWorkers();
-        $hashrate = $this->subWithHashRate->total_hash_rate;
-        $expectSecondDayAmount = $this->getDailyAmount($hashrate, BtcComService::FEE + 3.5);
-
-
-        $service = resolve(IncomeService::class)->init($this->subWithHashRate, null);
-
-        $service->createIncome($this->subWithHashRate, Type::MINING);
-        $service->updateLocalSub($this->subWithHashRate, Type::MINING);
-        $service->createFinance();
-
-        $this->assertDatabaseHas('incomes', [
-            'group_id' => $this->subWithHashRate->group_id,
-            'type' => Type::MINING->value,
-            'daily_amount' => $expectSecondDayAmount,
-            'status' => Status::READY_TO_PAYOUT->value,
-            'message' => Message::READY_TO_PAYOUT->value,
-            'hash' => $hashrate,
-        ]);
-        $this->assertDatabaseHas('subs', [
-            'user_id' => $this->subWithHashRate->user_id,
-            'group_id' => $this->subWithHashRate->group_id,
-            'sub' => $this->subWithHashRate->sub,
-            'pending_amount' => $expectFirstDayAmount + $expectSecondDayAmount,
-            'total_amount' => $expectFirstDayAmount + $expectSecondDayAmount,
+        $this->assertDatabaseHas('finances', [
+            'group_id' => $subWithHashRate->group_id,
+            'earn' => number_format($getPureDailyEarning - $getPureDailyEarning * (config('api.btc.fee') / 100),
+                8,
+                '.',
+                ''
+            ),
+            'user_total' => number_format($expectDailyAmount, 8, '.', ''),
+            'percent' => $subWithHashRate->allbtc_fee,
+            'profit' => number_format($getPureDailyEarning * ($subWithHashRate->allbtc_fee / 100),
+                8,
+                '.',
+                ''
+            ),
         ]);
     }
 
     /**
      * @test
+     *
+     * @testdox it increment sub account amounts
      */
-    public function it_create_referral_income_and_update_sub_accounts()
+    public function updatedSubAmountsCase()
     {
-        $this->subWithHashRate->user->update([
-            'referrer_id' => $this->referrer->id,
-        ]);
+        $subWithHashRate = $this->subsWithHashRate
+            ->where('group_id', 1)
+            ->first();
 
-        $service = resolve(IncomeService::class)->init(
-            sub: $this->subWithHashRate,
-            referrerSub: $this->referrerSub
+        $subWithHashRate->update(['pending_amount' => 1, 'total_amount' => 1]);
+        $subWithHashRate->save();
+
+        $expectDailyAmount = $this->calculate($subWithHashRate->hash_rate, config('api.btc.fee') + 3.5);
+
+        $service = IncomeService::init($this->stat, $subWithHashRate, null);
+
+        $service->createIncome($subWithHashRate, Type::MINING);
+        $service->updateLocalSub($subWithHashRate, Type::MINING);
+        $service->createFinance();
+
+        $this->assertDatabaseHas('subs', [
+            'user_id' => $subWithHashRate->user_id,
+            'group_id' => $subWithHashRate->group_id,
+            'sub' => $subWithHashRate->sub,
+            'pending_amount' => number_format($expectDailyAmount + 1,
+                8,
+                '.',
+                ''
+            ),
+            'total_amount' => number_format($expectDailyAmount + 1,
+                8,
+                '.',
+                ''
+            ),
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @testdox it create referral income without referral discount based on default referral percent
+     * @testdox if wallet on verify
+     */
+    public function referralIncomeCommonCase()
+    {
+
+        $referralSub = $this->subsWithHashRate
+            ->where('group_id', 3)
+            ->first();
+
+        $referrer = $referralSub->user->referrer;
+
+        $referrerActiveSub = $referrer
+            ->activeSub()
+            ->first();
+
+        $this->assertEquals($referrerActiveSub->group_id, $referrer->active_sub);
+
+        $service = IncomeService::init($this->stat, $referralSub, $referralSub);
+
+        $service->createIncome($referrerActiveSub, Type::REFERRAL);
+        $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
+
+        $hashrate = $referralSub->hash_rate;
+
+        $expectReferrerDailyAmount = number_format(
+            $this->calculate($hashrate) * ($referralSub->user->referral_percent / 100),
+            8,
+            '.',
+            ''
         );
 
-        $service->createIncome($this->referrerSub, Type::REFERRAL);
-        $service->updateLocalSub($this->referrerSub, Type::REFERRAL);
-        $service->createFinance();
-
-        $hashrate = $this->subWithHashRate->total_hash_rate;
-        $expectReferrerDailyAmount = number_format($this->getDailyAmount($hashrate, 0)
-            * ($this->referrer->referral_percent / 100), 8, '.', '');
-
         $this->assertDatabaseHas('incomes', [
-            'group_id' => $this->referrerSub->group_id,
+            'group_id' => $referrerActiveSub->group_id,
             'type' => Type::REFERRAL->value,
+            'referral_id' => $referralSub->user->id,
             'daily_amount' => $expectReferrerDailyAmount,
             'status' => Status::PENDING->value,
-            'message' => Message::LESS_MIN_WITHDRAWAL->value,
-            'hash' => $hashrate,
-        ]);
-        $this->assertDatabaseHas('subs', [
-            'user_id' => $this->referrer->id,
-            'group_id' => $this->referrerSub->group_id,
-            'sub' => $this->referrerSub->sub,
-            'pending_amount' => $expectReferrerDailyAmount,
-            'total_amount' => $expectReferrerDailyAmount,
+            'message' => Message::ON_VERIFY->value,
+            'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
     }
-
 
     /**
      * @test
+     *
+     * @testdox It create income with referral discount
      */
-    public function it_create_income_with_referral_discount_and_update_sub_account()
+    public function referralDiscountCase()
     {
-        $this->subWithHashRate->user->update([
-            'referrer_id' => $this->referrer->id,
-            'referral_discount' => $this->referrer->referral_discount,
-        ]);
+        $referralSub = $this->subsWithHashRate->where('group_id', 3)->first();
+        $referralSub->user->update(['referral_discount' => 1]);
+        $referralSub->wallets->first()->update(['wallet_updated_at' => now()->subHours(48)]);
 
-        $service = resolve(IncomeService::class)->init(
-            sub: $this->subWithHashRate,
-            referrerSub: $this->referrerSub
+        $service = IncomeService::init($this->stat, $referralSub, null);
+
+        $hashrate = $referralSub->hash_rate;
+
+        $subDiscountedFee = $referralSub->allbtc_fee - $referralSub->user->referral_discount;
+        $resultFee = config('api.btc.fee') + $subDiscountedFee;
+
+        $pureDailyEarning = $this->calculate($hashrate);
+        $expectDailyAmount = number_format($this->calculate($hashrate, $resultFee),
+            8,
+            '.',
+            ''
         );
 
-        $hashrate = $this->subWithHashRate->total_hash_rate;
-        $expectedDailyAmount = $this->getDailyAmount(
-            $hashrate,
-            (3.5 - $this->subWithHashRate->referral_percent) + BtcComService::FEE,
-        );
-
-        $service->createIncome($this->subWithHashRate, Type::MINING);
-        $service->updateLocalSub($this->subWithHashRate, Type::MINING);
+        $service->createIncome($referralSub, Type::MINING);
+        $service->updateLocalSub($referralSub, Type::MINING);
         $service->createFinance();
 
         $this->assertDatabaseHas('incomes', [
-            'group_id' => $this->subWithHashRate->group_id,
+            'group_id' => $referralSub->group_id,
             'type' => Type::MINING->value,
-            'daily_amount' => $expectedDailyAmount,
+            'daily_amount' => $expectDailyAmount,
             'status' => Status::PENDING->value,
             'message' => Message::LESS_MIN_WITHDRAWAL->value,
-            'hash' => $hashrate,
+            'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
         $this->assertDatabaseHas('subs', [
-            'user_id' => $this->subWithHashRate->user_id,
-            'group_id' => $this->subWithHashRate->group_id,
-            'sub' => $this->subWithHashRate->sub,
-            'pending_amount' => $expectedDailyAmount,
-            'total_amount' => $expectedDailyAmount,
+            'user_id' => $referralSub->user_id,
+            'group_id' => $referralSub->group_id,
+            'sub' => $referralSub->sub,
+            'pending_amount' => $expectDailyAmount,
+            'total_amount' => $expectDailyAmount,
+        ]);
+        $this->assertDatabaseHas('finances', [
+            'group_id' => $referralSub->group_id,
+            'earn' => number_format($pureDailyEarning - $pureDailyEarning * (config('api.btc.fee') / 100),
+                8,
+                '.',
+                ''
+            ),
+            'user_total' => $expectDailyAmount,
+            'percent' => $resultFee - config('api.btc.fee'),
+            'profit' => number_format($pureDailyEarning * ($subDiscountedFee / 100),
+                8,
+                '.',
+                ''
+            ),
         ]);
     }
 
-    private function getDailyAmount(float $hashRate, $fee): float
+    private function calculate(float $hashRate, $fee = 0): float
     {
-        return (float)number_format(Helper::calculateEarn(
+        return Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $hashRate,
             fee: $fee
-        ), 8);
-    }
-
-    public function createAdditionalWorkers(): void
-    {
-        $this->subWithHashRate->workers()->create([
-            'status' => 'ACTIVE',
-            'approximate_hash_rate' => 2270,
-            'group_id' => $this->subWithHashRate->group_id,
-            'worker_id' => mt_rand(1, 10),
-        ]);
+        );
     }
 }

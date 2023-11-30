@@ -5,20 +5,35 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Services\Internal\ReferralService;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        /*
-         * Заполнит базу тестовым пользователем
-         *
-        */
-        User::updateOrCreate(['email' => 'forest@gmail.com'], [
-            'name' => "MainTest",
+        $user = User::updateOrCreate(['email' => 'forest@gmail.com'], [
+            'name' => 'MainTest',
             'email' => 'forest@gmail.com',
+            'referral_percent' => 1,
+            'referral_discount' => 0,
             'password' => bcrypt('12345678'),
+        ])->assignRole('referrer');
+
+        User::whereEmail('forest@gmail.com')->update([
+            'active_sub' => 6001912,
+            'referral_code' => ReferralService::generateReferralCode($user),
         ]);
+
+        foreach (str_split('123456789') as $number) {
+            User::updateOrCreate(['email' => $number.'@gmail.com'], [
+                'name' => 'Referral.'.$number,
+                'email' => $number.'@gmail.com',
+                'referrer_id' => $user->id,
+                'referral_percent' => $user->referral_percent,
+                'referral_discount' => $user->referral_discount,
+                'password' => bcrypt('12345678'),
+            ])->assignRole('referral');
+        }
     }
 }

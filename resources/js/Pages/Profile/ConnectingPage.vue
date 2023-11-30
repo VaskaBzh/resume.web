@@ -46,7 +46,10 @@
                 <connection-icon class="note_icon" />
                 <span class="note-text">{{ $t("connection.note") }}</span>
             </div>
-            <warning-block text="connecting_text" link="connecting_feedback" />
+            <warning-block
+                :link="$t('connecting_feedback')"
+                :text="$t('connecting_text')"
+            />
         </div>
     </div>
     <instruction-button

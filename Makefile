@@ -46,11 +46,21 @@ optimize:
 tinker:
 	$(ARTISAN) tinker
 test:
-	$(ARTISAN) test --env=testing
+	@if [ -z "$(name)" ]; then \
+		$(ARTISAN) test --testdox --env=testing; \
+	else \
+		$(ARTISAN) test --filter=$(name) --testdox --env=testing; \
+	fi
 remote_test:
 	ssh mainuser@92.205.188.112
 docs:
 	$(ARTISAN) l5-swagger:generate
+lint-test:
+	$(COMPOSE) $(APP) ./vendor/bin/pint --test
+lint:
+	$(COMPOSE) $(APP) ./vendor/bin/pint -v
+analyze:
+	$(COMPOSE) $(APP) ./vendor/bin/phpstan analyse --memory-limit=2G
 
 # app commands
 worker-hashes:

@@ -49,7 +49,6 @@
             :opened-off="openedAddPopup"
             :wait="wait"
             :closed="closed"
-            :errors="errors"
         >
             <form class="form form-popup popup__form" @submit.prevent="addAcc">
                 <main-title class="account-title"
@@ -58,18 +57,25 @@
                 <p class="popup-text">
                     {{ $t("accounts.popups.add.text") }}
                 </p>
-                <transition name="error">
-                    <span class="error-message" :class="{'error-message-active': errorMassage }">Введите не менее 3 символов</span>
-                </transition>
                 <input
                     ref="input"
                     v-model="form.name"
-                    required
                     autofocus
                     type="text"
                     class="input popup__input"
+                    :class="{ 'popup__input-error': !!errorMessage }"
                     :placeholder="$t('accounts.popups.add.placeholders.name')"
                 />
+                <transition name="error">
+                    <span
+                        v-if="!!errorMessage"
+                        class="error-message"
+                        :class="{ 'error-message-active': !!errorMessage }"
+                        >{{
+                            $t(`accounts.popups.add.error.${errorMessage}`)
+                        }}</span
+                    >
+                </transition>
                 <button type="submit" class="all-link blue-button">
                     <svg
                         width="24"
@@ -96,12 +102,11 @@
 </template>
 
 <script>
-import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import store from "../../../../store";
+import store from "@/store";
 import { ref, reactive, watch } from "vue";
 
 import { ProfileApi } from "@/api/api";
@@ -112,7 +117,6 @@ export default {
     components: {
         MainTitle,
         MainPopup,
-        BlueButton,
         MainRadio,
     },
     props: {
@@ -132,7 +136,7 @@ export default {
         let wait = ref(false);
         let closed = ref(false);
         const t = i18n.global.t;
-        let errorMassage = ref(false)
+        let errorMessage = ref(null);
 
         const form = reactive({
             name: "",
@@ -140,53 +144,75 @@ export default {
 
         const addAcc = async () => {
             wait.value = true;
-            if (form.name.length >= 3) {
-                try {
-                    const response = await ProfileApi.post(
-                        `/subs/create/${store.getters.user.id}`,
-                        form
-                    );
+            closed.value = false;
 
-                    store.dispatch("setNotification", {
-                        status: "success",
-                        title: "added",
-                        text: response.data.message,
-                    });
-                    closed.value = true;
+            if (form.name.length === 0) {
+                errorMessage.value = "empty";
 
-                    store.dispatch("accounts_all", store.getters.user.id);
-                } catch (err) {
-                    console.error("Error with: " + err);
+                return;
+            }
 
-                    store.dispatch("setFullErrors", err.response.data.errors);
+            const RUS_LETTERS_REGEXP = /^[а-я,А-Я]/;
+            if (
+                form.name.length > 15 ||
+                form.name.length < 3 ||
+                RUS_LETTERS_REGEXP.test(form.name)
+            ) {
+                errorMessage.value = "invalid";
 
-                    store.dispatch("setNotification", {
-                        status: "error",
-                        title: "error",
-                        text: err.response.data.error,
-                    });
-                }
-            } else {
-                errorMassage.value = true
+                return;
+            }
+
+            if (form.name.split(" ").length > 1) {
+                errorMessage.value = "no_space";
+
+                return;
+            }
+
+            try {
+                const response = await ProfileApi.post(
+                    `/subs/create/${store.getters.user.id}`,
+                    form
+                );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "added",
+                    text: response.data.message,
+                });
+                closed.value = true;
+
+                store.dispatch("accounts_all", store.getters.user.id);
+                form.name = "";
+            } catch (err) {
+                console.error("Error with: " + err);
+
+                store.dispatch("setFullErrors", err.response.data.errors);
+
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.error,
+                });
             }
             wait.value = false;
         };
 
         watch(
-            ()=> form.name,
+            () => form.name,
             (newVal, old) => {
-                if (errorMassage.value && newVal !== old) {
-                    errorMassage.value = false
+                if (errorMessage.value && newVal !== old) {
+                    errorMessage.value = null;
                 }
-        },
-        )
+            }
+        );
 
         return {
             form,
             addAcc,
             wait,
             closed,
-            errorMassage
+            errorMessage,
         };
     },
     data() {
@@ -332,6 +358,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.form {
+    display: flex;
+    flex-flow: column nowrap;
+}
 .popup-text {
     color: var(--text-teritary);
     font-family: NunitoSans;
@@ -362,7 +392,7 @@ export default {
 
 .error-enter-active,
 .error-leave-active {
-    transition: all .35s ease-in-out;
+    transition: all 0.35s ease-in-out;
 }
 .error-enter-from,
 .error-leave-to {
@@ -375,7 +405,7 @@ export default {
 .error-message {
     max-height: 0;
     overflow: hidden;
-    color: #F1404A;
+    color: #f1404a;
     left: 0;
     top: -10%;
     font-family: NunitoSans, serif;
@@ -386,182 +416,191 @@ export default {
     transition: max-height 1s ease-in;
 }
 
-    .error-message-active {
-        padding: 5px;
-        max-height: 100%;
-        transition: all .35s ease-in;
-    }
+.error-message-active {
+    padding: 5px;
+    max-height: 100%;
+    transition: all 0.35s ease-in;
+}
 
-    .account-title {
-        font-family: Unbounded, serif;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 32px; /* 160% */
-    }
+.account-title {
+    font-family: Unbounded, serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+}
 
-    .popup__input {
-        border-radius: var(--surface-border-radius-radius-s-md, 12px);
-        background: var(--background-modal-input, #fff);
-        padding: var(--py-4, 16px) var(--px-4, 16px);
-        color: var(--select-text-no-value, #d0d5dd);
-        font-family: NunitoSans, serif;
-        font-size: 16px;
-        font-weight: 400;
-        outline: none;
-        border: 1px solid transparent;
-        line-height: 24px;
-    }
+.popup__input {
+    border: 1px solid transparent;
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-modal-input, #fff);
+    padding: var(--py-4, 16px) var(--px-4, 16px);
+    color: var(--select-text-no-value, #d0d5dd);
+    font-family: NunitoSans, serif;
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    border: 1px solid transparent;
+    line-height: 24px;
+}
 
-    .popup__input:focus {
-        border: 1px solid #2e90fa;
-    }
+.popup__input-error {
+    border: 1px solid #f1404a;
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+    border-radius: 12px;
+    transition: all 0.5s ease 0s;
+    outline: none;
+}
 
-    .popup__input::placeholder {
-        color: var(--select-text-no-value, var(--gray-3100, #d0d5dd));
-        font-family: NunitoSans;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px; /* 150% */
-    }
+.popup__input:focus {
+    border: 1px solid #2e90fa;
+}
 
-    .blue-button {
-        border-radius: 12px;
-        background: var(--buttons-primary-fill-border-default, #2e90fa);
-        /* shadow-btn-xl */
-        box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
-        padding: 12px 16px;
-        color: var(--buttons-primary-text, #fff);
-        /* Body 1/Nunito Sans 10pt/18/Bold */
-        font-family: NunitoSans;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 32px; /* 177.778% */
-        margin: 80px 0 0px;
-    }
+.popup__input::placeholder {
+    color: var(--select-text-no-value, var(--gray-3100, #d0d5dd));
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
 
-    .button {
-        position: relative;
-        margin-bottom: 16px;
+.blue-button {
+    border-radius: 12px;
+    background: var(--buttons-primary-fill-border-default, #2e90fa);
+    /* shadow-btn-xl */
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 12px 16px;
+    color: var(--buttons-primary-text, #fff);
+    /* Body 1/Nunito Sans 10pt/18/Bold */
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px; /* 177.778% */
+    margin: 80px 0 0px;
+}
+
+.button {
+    position: relative;
+    margin-bottom: 16px;
+    width: 100%;
+    @media (max-width: 500px) {
         width: 100%;
-        @media (max-width: 500px) {
-            width: 100%;
-        }
+    }
 
-        &_name {
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.5s ease 0s;
-            border-radius: 16px;
-            background: var(
-                    --gradient-v-1,
-                    linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
-            );
-            box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
+    &_name {
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.5s ease 0s;
+        border-radius: 16px;
+        background: var(
+            --gradient-v-1,
+            linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
+        );
+        box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
             0px 8px 24px -6px rgba(0, 0, 0, 0.16);
-            display: flex;
-            padding: 16px;
-            color: var(--background-island, #fff);
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 150%; /* 24px */
-            align-items: center;
-            gap: 16px;
-            align-self: stretch;
-            min-height: 73px;
+        display: flex;
+        padding: 16px;
+        color: var(--background-island, #fff);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 24px */
+        align-items: center;
+        gap: 16px;
+        align-self: stretch;
+        min-height: 73px;
 
-            &_text {
-                display: flex;
-                flex-direction: column;
-                min-height: 44px;
-                justify-content: flex-end;
-            }
-
-            &-target {
-                svg {
-                    &:last-child {
-                        transform: rotate(180deg);
-                    }
-                }
-            }
-
-            svg {
-                transition: all 0.5s ease 0s;
-
-                &:last-child {
-                    margin-left: auto;
-                }
-            }
-        }
-
-        .list_button {
-            a {
-                text-decoration: none;
-            }
-        }
-
-        .mini {
-            height: fit-content;
-        }
-
-        .target {
-            &.button {
-                &__menu {
-                    visibility: visible;
-                    opacity: 1;
-                    transition: all 0.5s ease 0s;
-                }
-            }
-        }
-
-        &__row {
-            cursor: pointer;
-            position: relative;
-
-            &:not(:first-child) {
-                height: 40px;
-            }
-
-            &:not(:last-child) {
-                &:after {
-                    content: "";
-                    width: 100%;
-                    height: 1px;
-                    background: #c5c5c5;
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                }
-            }
-        }
-
-        &_title {
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 143.1%;
-            color: #969797;
-        }
-
-        &__menu {
-            visibility: hidden;
-            opacity: 0;
-            height: fit-content;
+        &_text {
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            border-radius: 16px;
-            background: var(--background-sub-dropdown, #fff);
-            box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
-            min-width: 100%;
-            padding: 4px;
-            position: absolute;
-            color: var(--text-secondary);
-            right: 0;
-            top: 80px;
+            min-height: 44px;
+            justify-content: flex-end;
+        }
+
+        &-target {
+            svg {
+                &:last-child {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        svg {
             transition: all 0.5s ease 0s;
+
+            &:last-child {
+                margin-left: auto;
+            }
         }
     }
+
+    .list_button {
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .mini {
+        height: fit-content;
+    }
+
+    .target {
+        &.button {
+            &__menu {
+                visibility: visible;
+                opacity: 1;
+                transition: all 0.5s ease 0s;
+            }
+        }
+    }
+
+    &__row {
+        cursor: pointer;
+        position: relative;
+
+        &:not(:first-child) {
+            height: 40px;
+        }
+
+        &:not(:last-child) {
+            &:after {
+                content: "";
+                width: 100%;
+                height: 1px;
+                background: #c5c5c5;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+            }
+        }
+    }
+
+    &_title {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 143.1%;
+        color: #969797;
+    }
+
+    &__menu {
+        visibility: hidden;
+        opacity: 0;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-radius: 16px;
+        background: var(--background-sub-dropdown, #fff);
+        box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
+        min-width: 100%;
+        padding: 4px;
+        position: absolute;
+        color: var(--text-secondary);
+        right: 0;
+        top: 80px;
+        transition: all 0.5s ease 0s;
+    }
+}
 </style>

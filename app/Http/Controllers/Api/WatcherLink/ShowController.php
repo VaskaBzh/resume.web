@@ -7,8 +7,8 @@ namespace App\Http\Controllers\Api\WatcherLink;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WatcherLinkResource;
 use App\Models\WatcherLink;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ShowController extends Controller
 {
@@ -37,7 +37,7 @@ class ShowController extends Controller
                             items: new OA\Items(
                                 ref: '#/components/schemas/WatcherLinkResource'
                             )
-                        )
+                        ),
                     ],
                 ),
                 new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
@@ -49,12 +49,12 @@ class ShowController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ],
         )
     ]

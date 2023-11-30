@@ -28,17 +28,22 @@ export default {
             }
         },
         async accounts_all({ commit, state }, user_id) {
-            let subsList = (
+            const response = (
                 await MainApi.get(`/subs/${user_id}`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 })
-            ).data.data.map((el) => {
+            ).data;
+
+            const subsList = response.list.map((el) => {
                 return new accountData(el);
             });
 
+            const overall = response.overall;
+
             commit("updateAccounts", subsList);
+            commit("updateOverall", overall);
             if (state.active === -1) {
                 this.dispatch("set_active_in_list", {
                     index: Object.values(subsList)[firstSubIndex].group_id,
@@ -90,7 +95,10 @@ export default {
             state.valid = validState;
         },
         updateAccounts(state, accounts) {
-            state.accounts = [ ...accounts ];
+            state.accounts = accounts;
+        },
+        updateOverall(state, overall) {
+            state.overall = overall;
         },
         updateActiveAccount(state, account) {
             state.activeAccount = { ...account };
@@ -103,6 +111,7 @@ export default {
         valid: true,
         active: -1,
         accounts: [],
+        overall: [],
         activeAccount: {},
         interval: null,
     },
@@ -112,6 +121,9 @@ export default {
         },
         getAccount(state) {
             return state.activeAccount;
+        },
+        overall(state) {
+            return state.overall;
         },
         getValid(state) {
             return state.valid;

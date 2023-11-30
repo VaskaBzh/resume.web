@@ -15,8 +15,8 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
-        \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
+        \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \App\Http\Middleware\SetLocale::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -72,6 +72,5 @@ class Kernel extends HttpKernel
         'watcher-link' => \App\Http\Middleware\WatcherLinkMiddleware::class,
         'verify-expiration' => \App\Http\Middleware\EmailVerificationExpirationMiddleware::class,
         'verify-confirm' => \App\Http\Middleware\VerifyEmailConfirmationMiddleware::class,
-        'two-factor' => \App\Http\Middleware\TwoFactorMiddleware::class,
     ];
 }

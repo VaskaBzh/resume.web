@@ -1,16 +1,6 @@
 <template>
     <div class="workers">
-        <main-preloader
-            class="cabinet__preloader"
-            :wait="worker_service.waitWorkers"
-            :interval="35"
-            :end="!worker_service.waitWorkers"
-            :empty="worker_service.emptyWorkers"
-        />
-        <div
-            v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
-            class="workers__wrapper"
-        >
+        <div class="workers__wrapper">
             <main-title class="title-worker"
                 >{{ $t("workers.title") }}
             </main-title>
@@ -51,7 +41,7 @@
                                 instructionService.step === 2,
                         }"
                         :wait="worker_service.waitWorkers"
-                        :empty="worker_service.emptyWorkers"
+                        :empty="worker_service.emptyTableWorkers"
                         rows-num="1000"
                         :have-nav="false"
                     >
@@ -84,7 +74,9 @@
                                 worker_service.visibleCard
                             "
                             class="workers__card"
-                            :wait="worker_service.waitTargetWorker"
+                            :wait="
+                                worker_service.waitTargetWorker || waitAnimation
+                            "
                             :target_worker="worker_service.target_worker"
                             :graph="worker_service.workers_graph"
                             @closeCard="dropWorkers"
@@ -102,7 +94,6 @@
         @dropWatcher="dropWorkers"
     >
         <worker-card
-            v-if="Object.entries(worker_service.target_worker).length > 0"
             class="workers__card"
             :target_worker="worker_service.target_worker"
             :graph="worker_service.workers_graph"
@@ -151,6 +142,8 @@ export default {
             workersDead: 0,
             changedActive: -1,
             removePercent: false,
+            waitAnimation: false,
+            waitTimeout: null,
             worker_service: new WorkerService(
                 this.$t,
                 [0, 1, 3, 4],
@@ -179,14 +172,25 @@ export default {
             await this.worker_service.fillTable();
         },
         async getTargetWorker(data) {
+            clearTimeout(this.waitTimeout);
+
             if (this.viewportWidth > 1200) {
                 this.removePercent = true;
             }
 
+            this.waitAnimation = true;
+
+            this.waitTimeout = setInterval(
+                () => {
+                    this.waitAnimation = false;
+                },
+                this.viewportWidth > 1200 ? 550 : 1050
+            );
+
             await this.worker_service.getPopup(data.id);
-            this.worker_service.openPopupCard();
         },
         dropWorkers() {
+            clearTimeout(this.waitTimeout);
             this.worker_service.dropWorker();
 
             this.viewportWidth > 1200
@@ -251,7 +255,7 @@ export default {
     margin-bottom: 32px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .cards-container {
         flex-direction: column;
         gap: 16px;
@@ -268,12 +272,14 @@ export default {
 }
 
 .workers {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    @media (max-width: 900px) {
-        padding: 24px 12px 24px;
+
+    &__wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
     }
 
     .form .title {
@@ -284,39 +290,21 @@ export default {
         display: flex;
         gap: 12px;
         flex-direction: column;
+        flex: 1 1 auto;
     }
 
     &__table {
         display: flex;
         gap: 12px;
+        flex: 1 1 auto;
     }
 
     &__card {
         min-width: calc(50% - 6px);
-        min-height: 440px;
+        min-height: 300px;
 
-        @media (max-width: 1340px) {
-            min-height: 480px;
-        }
-        @media (max-width: 1200px) {
-            min-height: unset;
-        }
-        @media (max-width: 900px) {
-            min-height: 450px;
-            position: absolute;
-            width: calc(100% - 20px);
-        }
-        @media (max-width: 500px) {
-            min-height: 380px;
-        }
-        @media (max-width: 490px) {
-            width: 100%;
-        }
-        @media (max-width: 410px) {
-            min-height: 550px;
-        }
-        @media (max-width: 390px) {
-            min-height: 490px;
+        @media (min-width: 1200px) {
+            margin-top: 64px;
         }
     }
 

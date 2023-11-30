@@ -439,7 +439,7 @@ h6 {
 
 .statistic_graph {
     .y-axis-container {
-        @media(max-width: 900px) {
+        @media(max-width: 998px) {
             left: 10px;
             top: 100px;
         }
@@ -464,7 +464,7 @@ h6 {
         color: #818c99;
     }
 
-    @media(max-width: 900px) {
+    @media(max-width: 998px) {
         left: 10px;
         top: 360px;
     }
@@ -812,7 +812,7 @@ h6 {
 }
 
 .card__content .y-axis-container {
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         left: 2px;
         top: 53px;
     }
@@ -837,3 +837,12 @@ h6 {
 }
 
 //========================================================================================================================================================
+
+
+.popup__block [class*=_title],
+.popup__block .title,
+.popup__block [class*=-title] {
+    &:first-child {
+        width: 90%;
+    }
+}

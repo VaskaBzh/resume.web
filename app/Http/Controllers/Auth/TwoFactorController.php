@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TwoFactorVerifyRequest;
+use App\Http\Requests\GoogleTwoFactor\DisableRequest;
+use App\Http\Requests\GoogleTwoFactor\EnableRequest;
 use App\Models\User;
+use App\Traits\HasVerify;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
 use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
-use OpenApi\Attributes as OA;
 
 class TwoFactorController extends Controller
 {
+    use HasVerify;
+
     #[
         OA\Get(
             path: '/2fac/qrcode/{user}',
@@ -46,7 +51,7 @@ class TwoFactorController extends Controller
                                     type: 'string'
                                 ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(
@@ -57,8 +62,8 @@ class TwoFactorController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -81,16 +86,15 @@ class TwoFactorController extends Controller
             report($e);
 
             return new JsonResponse([
-                'errors' => ['auth' => [__('actions.failed')]]
+                'errors' => ['auth' => [__('actions.failed')]],
             ], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse([
             'qrCode' => $QRImage,
-            'secret' => $secretKey
+            'secret' => $secretKey,
         ]);
     }
-
 
     #[
         OA\Put(
@@ -116,7 +120,7 @@ class TwoFactorController extends Controller
                                 type: 'string',
                             ),
                         ]
-                    )
+                    ),
                 ]
             ),
             tags: ['Auth'],
@@ -141,7 +145,7 @@ class TwoFactorController extends Controller
                                     type: 'string'
                                 ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Not found'),
@@ -153,8 +157,8 @@ class TwoFactorController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -163,42 +167,52 @@ class TwoFactorController extends Controller
         )
     ]
     public function enable(
-        TwoFactorVerifyRequest $request,
-        User                   $user,
-        Google2FA              $googleTwoFactor,
-    ): JsonResponse
-    {
-        try {
-            $isValid = $googleTwoFactor->verifyKey($request->secret, $request->code);
+        EnableRequest $request,
+        User $user,
+        Google2FA $google2FA,
+    ): JsonResponse {
+        $isValid = $google2FA->verifyKey(
+            $request->secret,
+            $request->code
+        );
 
-            if (!$isValid) {
-                return new JsonResponse([
-                    'errors' => [
-                        'auth' => ['Не верный код']
-                    ]
-                ], Response::HTTP_FORBIDDEN);
-            }
+        if (! $isValid) {
 
-            $user->update(['google2fa_secret' => $request->secret]);
+            auth()->guard('web')->logout();
 
-            return new JsonResponse([
-                    'message' => __('actions.two_fa_enabled')]
+            throw new BusinessException(
+                clientMessage: __('auth.two_fa'),
+                statusCode: Response::HTTP_FORBIDDEN,
             );
-        } catch (\Throwable $e) {
-            report($e);
-
-            return new JsonResponse([
-                'message' => 'Something went wrong'
-            ], Response::HTTP_BAD_REQUEST);
         }
-    }
 
+        auth()->user()->update(['google2fa_secret' => $request->secret]);
+
+        return new JsonResponse(['message' => __('actions.two_fa_enabled')]);
+    }
 
     #[
         OA\Put(
             path: '/2fac/disable/{user}',
             summary: 'Disable two-factor authentication',
             security: [['bearer' => []]],
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: [
+                    new OA\JsonContent(
+                        required: ['code', 'secret'],
+                        properties: [
+                            new OA\Property(
+                                property: 'code',
+                                description: 'Google authenticator code',
+                                type: 'string',
+                                maxLength: 6,
+                                minLength: 6,
+                            ),
+                        ]
+                    ),
+                ]
+            ),
             tags: ['Auth'],
             parameters: [
                 new OA\Parameter(
@@ -226,7 +240,7 @@ class TwoFactorController extends Controller
                                     type: 'string'
                                 ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(
@@ -237,8 +251,8 @@ class TwoFactorController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -246,11 +260,13 @@ class TwoFactorController extends Controller
             ]
         )
     ]
-    public function disable(User $user): JsonResponse
+    public function disable(DisableRequest $request, User $user): JsonResponse
     {
+        $this->verifyTwoFa($request->code);
+
         return new JsonResponse([
             'status' => $user->update(['google2fa_secret' => null]),
-            'message' => __('actions.two_fa_disabled')
+            'message' => __('actions.two_fa_disabled'),
         ]);
     }
 }

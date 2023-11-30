@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Builders;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UserBuilder extends BaseBuilder
 {
-    public function getOwner(int $userId): Builder
+    public function activeSub(): HasMany
     {
-        return $this->find($userId);
+        return $this->model
+            ->subs()
+            ->where('group_id', $this->model->active_sub);
     }
 }

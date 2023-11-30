@@ -1,5 +1,5 @@
 <template>
-    <form class="form">
+    <form class="form" @submit.prevent="$emit('submitForm')">
         <div class="form__head" v-show="$slots.head">
             <slot name="head" />
         </div>
@@ -28,7 +28,23 @@ export default {
     width: 100%;
     height: auto;
     &__head {
-
+        margin-bottom: adaptive-value(24px, 40px);
+        width: inherit;
+    }
+    &__content {
+        margin-bottom: adaptive-value(48px, 64px);
+        @include columnMixin($gap: adaptive-value(8px, 16px));
+        width: inherit;
+    }
+    &__info {
+        margin-bottom: adaptive-value(24px, 12px);
+        width: inherit;
+    }
+    &__buttons {
+        display: flex;
+        flex-wrap: wrap;
+        width: inherit;
+        gap: 8px;
     }
 }
 </style>

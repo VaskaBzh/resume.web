@@ -6,6 +6,7 @@ namespace App\Services\External;
 
 use App\Actions\MinerStat\Upsert;
 use App\Models\MinerStat;
+use App\Services\External\Contracts\ClientContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -22,28 +23,26 @@ class MinerStatService
     private function call(string $url): ?string
     {
         return Http::get($url)
-            ->throwIf(static fn($response) => $response->failed())
+            ->throwIf(static fn ($response) => $response->failed())
             ->body();
     }
 
     private function import(): ?Collection
     {
         $stats = [
-            'fpps_rate' => resolve(BtcComService::class)->getFppsRate(),
+            'fpps_rate' => resolve(ClientContract::class)->getFppsRate(),
             'network_hashrate' => (float) number_format(
                 (int) $this->call(self::$urls['network_hashrate']) / 1000000000,
                 2,
                 '.',
                 ''
             ),
-            'network_difficulty' => (int)$this->call(self::$urls['network_difficulty']),
+            'network_difficulty' => (int) $this->call(self::$urls['network_difficulty']),
             'reward_block' => (float) number_format(
                 (float) $this->call(self::$urls['reward_block']),
-                7, '.'
-                , ' '),
-            'price_USD' => (int) $this->call(self::$urls['price_USD'])
+                7, '.', ' '),
+            'price_USD' => (int) $this->call(self::$urls['price_USD']),
         ];
-
 
         return $this->filter($stats);
     }
@@ -52,7 +51,7 @@ class MinerStatService
     {
         $stats = $this->import();
 
-        if (!is_null($stats)) {
+        if (! is_null($stats)) {
             return Upsert::execute(stats: $stats);
         }
 
@@ -63,7 +62,7 @@ class MinerStatService
     {
         $stats = collect($stats)->filter();
 
-        if (!Arr::has($stats, array_keys(self::$urls))) {
+        if (! Arr::has($stats, array_keys(self::$urls))) {
             throw new \Exception('Mining stats request is empty');
         }
 

@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
@@ -99,10 +99,24 @@ return [
         ],
 
         'commands' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/commands/commands.log'),
-            'level' => 'debug',
-            'days' => 30,
+            'subs' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/commands/subs/commands.log'),
+                'level' => 'debug',
+                'days' => 30,
+            ],
+            'workers' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/commands/workers/commands.log'),
+                'level' => 'debug',
+                'days' => 30,
+            ],
+            'blockchain' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/commands/blockchain/commands.log'),
+                'level' => 'debug',
+                'days' => 30,
+            ],
         ],
 
         'slack' => [

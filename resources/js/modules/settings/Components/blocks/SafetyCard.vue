@@ -9,6 +9,9 @@
     <div class="btn_container">
         <button
             class="btn_content"
+            :class="{
+                'btn_content-ghost': card.emit === 'dropFac',
+            }"
             :data-popup="'#' + card.id"
             @mousedown="$emit(card.emit)"
         >
@@ -57,11 +60,10 @@ export default {
 }
 .card__text {
     color: var(--text-teritary, #98a2b3);
-    font-family: NunitoSans;
+    font-family: NunitoSans, serif;
     font-size: 14px;
-    font-style: normal;
     font-weight: 400;
-    line-height: 145%; /* 20.3px */
+    line-height: 145%;
 }
 
 .card_inf_block {
@@ -70,7 +72,7 @@ export default {
     align-items: flex-start;
     gap: 2px;
 }
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .card_inf_block {
         width: 100%;
     }
@@ -83,16 +85,20 @@ export default {
     font-weight: 400;
     line-height: 150%; /* 24px */
 }
-@media (min-width: 768.98px) {
+@media (min-width: 767.98px) {
     .card__title {
         white-space: nowrap;
+    }
+}
+@media (min-width: 767.98px) {
+    .card__subcontainer {
+        max-width: 62%;
     }
 }
 .card__subcontainer {
     display: flex;
     align-items: center;
     gap: 12px;
-    max-width: 62%;
     width: 100%;
     min-width: 300px;
 }
@@ -106,21 +112,28 @@ export default {
     min-width: 163px;
     padding: 8px 16px;
     border-radius: 12px;
-    border: 1px solid var(--primary-500, #2e90fa);
     background: var(--primary-500, #2e90fa);
     box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
         0px 8px 12px -6px rgba(0, 0, 0, 0.05);
     font-family: NunitoSans, serif;
     font-size: 18px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 767;
     color: var(--buttons-primary-text, var(--main-gohan, #fff));
     line-height: 175%; /* 31.5px */
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid transparent;
+    transition: all 0.3s ease 0s;
 }
-@media (max-width: 900px) {
+.btn_content-ghost {
+    background: transparent;
+    border-color: var(--buttons-stroke-border-default, #98A2B3);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.40), 0px 8px 12px -6px rgba(0, 0, 0, 0.05);
+    color: var(--text-secondary, #475467);
+}
+@media (max-width: 767.98px) {
     .card__subcontainer {
         width: 100%;
         flex-direction: column;

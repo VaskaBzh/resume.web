@@ -5,7 +5,6 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import { PercentSvgEnum } from "@/modules/referral/enums/PercentSvgEnum";
 
 import { ProfileApi } from "@/api/api";
-import store from "@/store";
 
 export class ReferralsService extends TableService {
     constructor(translate, titleIndexes) {
@@ -20,11 +19,9 @@ export class ReferralsService extends TableService {
             referral["referral_active_workers_count"],
             referral["referral_inactive_workers_count"],
             referral["referral_hash_per_day"],
-            "T",
+            referral["referral_hash_per_day_unit"],
             // this.dateFormatter(referral["created_at"]),
-            referral["total_amount"] === 0
-                ? "0.00000000"
-                : referral["total_amount"]
+            referral["total_amount"]
         );
     }
 

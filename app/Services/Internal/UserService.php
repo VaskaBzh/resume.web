@@ -17,8 +17,7 @@ final readonly class UserService
 {
     private function __construct(
         private User $user,
-    )
-    {
+    ) {
     }
 
     public static function withUser(User $user): UserService
@@ -37,7 +36,7 @@ final readonly class UserService
 
     public function changePassword(array $credentials): void
     {
-        if (!Hash::check($credentials['old_password'], $this->user->password)) {
+        if (! Hash::check($credentials['old_password'], $this->user->password)) {
             throw new BusinessException('Wrong credentials', Response::HTTP_FORBIDDEN);
         }
 

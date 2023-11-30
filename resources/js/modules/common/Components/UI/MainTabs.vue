@@ -2,8 +2,8 @@
     <div class="cabinet__buttons">
         <button
             class="cabinet_button referal-btns"
-            :key="tab.title + i"
             v-for="(tab, i) in tabs"
+            :key="tab.title"
             :class="{
                 active:
                     (tab.value?.length
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+
 export default {
     name: "main-tabs",
     props: {

@@ -22,7 +22,7 @@ class ChangeAddressRequest extends FormRequest
         return [
             'wallet_address.required' => __('validation.required', ['attribute' => __('validation.attributes.wallet_address')]),
             'wallet_address.string' => __('validation.string', ['attribute' => __('validation.attributes.wallet_address')]),
-            'confirmation_code.exists' => __('validation.custom.attribute-name.confirmation_code_exists')
+            'confirmation_code.exists' => __('validation.custom.attribute-name.confirmation_code_exists'),
         ];
     }
 

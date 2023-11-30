@@ -23,6 +23,14 @@ export class CabinetService {
         this.user = user;
     }
 
+    getHashRate(hashrate) {
+        if (!hashrate) {
+            return 0;
+        }
+
+        return hashrate?.length <= 5 ? hashrate : Number(hashrate).toFixed(0);
+    }
+
     getStatsCards(data) {
         this.statsCards.length = 0;
 
@@ -46,12 +54,17 @@ export class CabinetService {
             new SelectData(
                 "hashrate",
                 this.translate("stats.cards[1]"),
-                data?.total_referrals_hash_rate || 0
+                this.getHashRate(data?.total_referrals_hash_rate)
             ),
             new SelectData(
-                "hashrate",
+                "percent",
                 this.translate("stats.cards[1]"),
                 data?.referral_percent || 0
+            ),
+            new SelectData(
+                "hash_unit",
+                this.translate("stats.cards[1]"),
+                data?.hash_rate_unit || "T"
             ),
         ];
     }
@@ -64,37 +77,26 @@ export class CabinetService {
         store.dispatch("getMessage", message);
     }
 
-    async generateCode(id) {
-        let result = {};
+    async fetchActivateSub(group_id) {
+        return await ProfileApi.put(`/subs/sub/activate/${group_id}`);
+    }
 
+    async changeActiveSub(group_id) {
         try {
-            result = await ProfileApi.post(
-                `/referrals/generate/${this.user.id}`,
-                {
-                    group_id: id,
-                }
-            );
+            const response = await this.fetchActivateSub(group_id);
+
             store.dispatch("setNotification", {
                 status: "success",
                 title: "success",
-                text: result.data.message,
+                text: response.data.message,
             });
         } catch (err) {
-            // store.dispatch("setNotification", {
-            //     status: "error",
-            //     title: "error",
-            //     text: err.response.data.message,
-            // });
+            console.error(`Error with: ${err}`);
         }
-
-        await this.index();
     }
 
     setCode(code = null) {
-        this.code =
-            code ??
-            (`${window.location.host}/registration?referral_code=${this.user.referral_code}` ||
-                "...");
+        this.code = code || "...";
     }
 
     setActiveSub(group_id) {
@@ -106,13 +108,20 @@ export class CabinetService {
         return `${window.location.host}/registration${url.search}`;
     }
 
-    async index() {
-        let response = {};
+    async fetchReferralStatistic() {
+        return await ProfileApi.get(`/referrals/statistic/${this.user.id}`);
+    }
 
+    async index() {
         try {
-            response = (
-                await ProfileApi.get(`/referrals/statistic/${this.user.id}`)
-            ).data;
+            const response = (await this.fetchReferralStatistic()).data.data;
+
+            let code = this.transformCode(response.referral_url);
+            this.setCode(code || "...");
+
+            this.setActiveSub(response.group_id);
+
+            this.getStatsCards(response);
         } catch (err) {
             console.error(`FetchError: ${err}`);
 
@@ -126,15 +135,6 @@ export class CabinetService {
                 });
             }
         }
-
-        const result = response.data;
-
-        let code = this.transformCode(result.code);
-        this.setCode(code || "...");
-
-        this.setActiveSub(result.group_id);
-
-        this.getStatsCards(result);
     }
 
     getGradeList() {

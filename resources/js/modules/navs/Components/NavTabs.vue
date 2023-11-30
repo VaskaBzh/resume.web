@@ -1,7 +1,7 @@
 <template>
     <transition name="burger">
         <div
-            v-show="isOpenBurger || viewportWidth > 900 || !viewportWidth"
+            v-show="isOpenBurger || viewportWidth > 998 || !viewportWidth"
             class="nav onboarding_block"
             :class="{
                 'onboarding_block-target':
@@ -32,6 +32,17 @@
                         </nav>
                     </div>
                 </div>
+                <a
+                    href="https://t.me/allbtc_support"
+                    class="nav_tab nav_tab-support"
+                    target="_blank"
+                >
+                    <main-icon
+                        class="nav_tab_icon nav_tab_icon-stroke icon-md icon-stroke"
+                        name="chat"
+                    />
+                    <p class="nav_tab_text">{{ $t(`tabs.support`) }}</p>
+                </a>
                 <logout-link
                     v-show="!$route?.query?.access_key"
                     class="nav_logout"
@@ -68,9 +79,11 @@ import NavGroup from "@/modules/navs/Components/UI/NavGroup.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import MainIcon from "@/modules/common/icons/MainIcon.vue";
 
 export default defineComponent({
     components: {
+        MainIcon,
         InstructionStep,
         LogoutLink,
         AccountMenu,
@@ -93,28 +106,27 @@ export default defineComponent({
     },
     watch: {
         user: {
-            handler(newUserData) {
-                this.$route?.query?.access_key
-                    ? this.service.setWatcherLinks()
-                    : this.service.setLinks(newUserData);
+            handler() {
+                this.setLinks();
             },
             deep: true,
         },
     },
     mounted() {
-        this.$route?.query?.access_key
-            ? this.service.setWatcherLinks()
-            : this.service.setLinks(this.user);
+        this.setLinks();
     },
     beforeUpdate() {
-        this.$route?.query?.access_key
-            ? this.service.setWatcherLinks()
-            : this.service.setLinks(this.user);
+        this.setLinks();
     },
     unmounted() {
         this.service.dropLinks();
     },
     methods: {
+        setLinks() {
+            this.$route?.query?.access_key
+                ? this.service.setWatcherLinks()
+                : this.service.setLinks(this.user);
+        },
         endCommonInstruction() {
             this.instructionConfig.nextStep(6);
 
@@ -128,7 +140,7 @@ export default defineComponent({
     },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .onboarding_block-target {
     background: var(--background-island);
 }
@@ -146,6 +158,57 @@ export default defineComponent({
 .nav {
     min-width: 320px;
     position: relative;
+}
+
+.nav_tab {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 16px;
+    min-height: 48px;
+    transition: all 0.5s ease 0s;
+    border-radius: 12px;
+    background: transparent;
+    gap: 16px;
+}
+
+.nav_tab-support {
+    margin-top: auto;
+}
+
+.nav_tab:hover {
+    background: var(--primary-4007, rgba(83, 177, 253, 0.07));
+}
+
+.nav_tab_text {
+    color: var(--text-secondary, #475467);
+    font-family: NunitoSans, serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 32px;
+    transition: all 0.5s ease 0s;
+}
+
+.nav_tab_icon {
+    width: 24px;
+    height: 24px;
+}
+
+.nav_tab_icon-stroke {
+    fill: none;
+    stroke: var(--text-teritary, #98a2b3);
+}
+
+.nav_tab:hover .nav_tab_text {
+    color: var(--primary-500, #2e90fa);
+}
+
+.nav_tab:hover .nav_tab_icon-stroke {
+    stroke: var(--primary-500, #2e90fa) !important;
+}
+
+.nav__column {
+    @include columnMixin($gap: 24px);
 }
 
 .nav::before {
@@ -181,9 +244,10 @@ export default defineComponent({
     height: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .nav__content {
-        padding: 0 16px 112px;
+        height: 100%;
+        padding: 0 0 24px;
     }
 }
 
@@ -197,13 +261,15 @@ export default defineComponent({
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .nav {
         position: fixed;
         right: 0;
-        top: 71px;
-        padding: 20px 24px 24px;
-        z-index: 100;
+        top: 0;
+        height: 100%;
+        max-height: 100vh;
+        padding: 92px clamp(12px, 2vw, 24px) 0;
+        z-index: 99;
         background: var(--background-island);
         box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
     }

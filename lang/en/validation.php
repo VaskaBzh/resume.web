@@ -179,6 +179,7 @@ return [
     'attributes' => [
         'password' => 'password',
         'name' => 'name',
+        'user' => 'user',
         'subaccount' => 'subaccount',
         'referral_code' => 'referral code',
         'wallet_address' => 'wallet address',

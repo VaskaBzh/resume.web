@@ -65,6 +65,12 @@ export const SettingsMessage = {
             title: "2FA connection",
             button: ["Continue", "Back", "Connect"],
             label: ["Settings key", "Code from application"],
+            disable: {
+                title: "Disable 2FA",
+                text: "To disable, enter a temporary code from the Google Authenticator app",
+                placeholder: "6-digit confirmation code",
+                button: "Disable"
+            }
         },
         password_popup: {
             title: "Change Password",
@@ -144,6 +150,12 @@ export const SettingsMessage = {
             title: "Подключение 2FA",
             button: ["Продолжить", "Назад", "Подключить"],
             label: ["Ключ настройки", "Код из приложения"],
+            disable: {
+                title: "Отключить 2FA",
+                text: "Для отключения введите временный код из приложения Google Authenticator",
+                placeholder: "6-знычный код подтверждения",
+                button: "Отключить",
+            }
         },
         password_popup: {
             title: "Смена пароля",

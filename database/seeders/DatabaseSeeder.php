@@ -1,12 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Sub;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RoleAndPermissionsSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(SubAccountSeeder::class);
         $this->call(WorkerSeeder::class);
-        $this->call(RoleAndPermissionsSeeder::class);
+        $this->call(WalletSeeder::class);
+        $this->call(IncomeSeeder::class);
+        $this->call(PayoutSeeder::class);
     }
 }

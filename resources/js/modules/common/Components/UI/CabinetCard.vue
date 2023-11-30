@@ -3,17 +3,18 @@
         class="cabinet__block cabinet__block-light cabinet__block-card card"
         :class="[page == 'worker' ? 'max-width' : '']"
     >
-        <div class="card_icon" v-show="this.$slots.svg">
+        <div v-show="$slots.svg" class="card_icon">
             <slot name="svg" />
         </div>
         <div class="card__content">
-            <main-title class="headline">
+            <main-title class="headline card_title">
                 {{ title }}
+                <tooltip-card v-show="hint" :text="hint" :position="hint_position" />
             </main-title>
             <p class="card_num">
-                {{ value }}
-                <span class="card_unit" v-show="unit">
-                    {{ unit }}
+                {{ currentValue }}
+                <span v-show="unit" class="card_unit">
+                    {{ currentUnit }}
                 </span>
             </p>
         </div>
@@ -21,17 +22,59 @@
 </template>
 <script>
 import MainTitle from "./MainTitle.vue";
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
 
 export default {
+    components: {
+        TooltipCard,
+        MainTitle,
+    },
     props: {
         title: String,
         value: String,
         unit: String,
         page: String,
+        hint: {
+            type: String,
+            default: "",
+        },
+        hint_position: {
+            type: String,
+            default: "left",
+        },
     },
-    components: {
-        MainTitle,
-    }
+    data() {
+        return {
+            currentValue: this.value,
+            currentUnit: this.unit,
+        };
+    },
+    watch: {
+        value() {
+            this.setConvertedValue();
+        },
+    },
+    mounted() {
+        this.setConvertedValue();
+    },
+    methods: {
+        getUnitLetter() {
+            const MAIN_UNIT_LETTER_INDEX = 0;
+            return this.currentUnit.split("")[MAIN_UNIT_LETTER_INDEX];
+        },
+        setConvertedValue() {
+            this.currentValue = this.value;
+            this.currentUnit = this.unit;
+            if (
+                !!this.currentUnit &&
+                this.getUnitLetter() === "T" &&
+                this.value >= 1000
+            ) {
+                this.currentValue = (this.currentValue / 1000).toFixed(2);
+                this.currentUnit = "PH/s";
+            }
+        },
+    },
 };
 </script>
 <style scoped>
@@ -39,9 +82,12 @@ export default {
     background: var(--background-island, #ffffff);
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
     gap: 24px;
     width: 100%;
+}
+.card_title {
+    display: flex;
+    gap: 6px;
 }
 
 .card_icon {
@@ -58,6 +104,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 4px;
+	width: 100%;
 }
 
 .card-active .card_num {
@@ -80,7 +127,7 @@ export default {
     opacity: 0.8;
     flex-wrap: wrap;
 }
-.workers__card .card_num{
+.workers__card .card_num {
     font-size: 27px;
     line-height: 40px; /* 148.148% */
 }
@@ -92,7 +139,7 @@ export default {
     font-weight: 400;
     line-height: 147%;
 }
-.workers__card .card_unit{
+.workers__card .card_unit {
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -119,12 +166,12 @@ export default {
         font-size: 14px;
     }
 }
-@media(max-width: 900px){
+@media (max-width: 998px) {
     .card_num {
         font-size: 27px;
     }
     .card_unit {
-        color: var(--text-fourth, #595E68);
+        color: var(--text-fourth, #595e68);
         font-family: Unbounded;
         font-size: 18px;
         font-style: normal;
@@ -137,10 +184,10 @@ export default {
         display: none;
     }
     /* Почему не работает?? */
-    .workers__card .card_unit{
+    .workers__card .card_unit {
         font-size: 12px;
     }
-    .workers__card .card_num{
+    .workers__card .card_num {
         font-size: 20px;
     }
 }

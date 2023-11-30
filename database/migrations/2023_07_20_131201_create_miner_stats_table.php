@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('miner_stats', function (Blueprint $table) {
@@ -14,7 +15,7 @@ return new class extends Migration {
 
             $table->unsignedBigInteger('network_difficulty');
             $table->unsignedBigInteger('next_difficulty');
-            $table->string("change_difficulty");
+            $table->string('change_difficulty');
 
             $table->decimal('reward_block', 8, 7);
             $table->unsignedBigInteger('price_USD');

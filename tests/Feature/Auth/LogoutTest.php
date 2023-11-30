@@ -10,24 +10,23 @@ use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
-    public User $user;
-
-    protected function setUp(): void
+    /**
+     * @test
+     *
+     * @testdox logout
+     *
+     * @return void
+     */
+    public function logout()
     {
-        parent::setUp();
+        $user = User::first();
+        Sanctum::actingAs($user);
+        $token = $user->createToken('test-token');
 
-        $this->user = User::factory()->create();
-    }
-
-    public function test_logout()
-    {
-        Sanctum::actingAs($this->user);
-        $token = $this->user->createToken('test-token');
-
-        $this->assertAuthenticatedAs($this->user);
+        $this->assertAuthenticatedAs($user);
 
         $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token->plainTextToken,
+            'Authorization' => 'Bearer '.$token->plainTextToken,
         ])
             ->postJson(route('v1.logout'))
             ->assertOk()

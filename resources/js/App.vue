@@ -25,20 +25,24 @@ export default {
         await this.$store.dispatch("setCurrency");
 
         window.addEventListener("resize", this.handleResize);
-        window.addEventListener(
-            "visibilitychange",
-            this.handleVisibilityChange
-        );
-        window.addEventListener("beforeunload", this.onClose);
+        // window.addEventListener(
+        //     "visibilitychange",
+        //     this.handleVisibilityChange
+        // );
+        // window.addEventListener("beforeunload", this.onClose);
         this.handleResize();
+
+        document.addEventListener("validationError", (event) => this.$store.dispatch("setFullErrors", event.detail));
     },
     async unmounted() {
         window.removeEventListener("resize", this.handleResize);
-        window.removeEventListener(
-            "visibilitychange",
-            this.handleVisibilityChange
-        );
-        window.removeEventListener("beforeunload", this.onClose);
+        // window.removeEventListener(
+        //     "visibilitychange",
+        //     this.handleVisibilityChange
+        // );
+        // window.removeEventListener("beforeunload", this.onClose);
+
+        document.removeEventListener("validationError", (event) => this.$store.dispatch("setFullErrors", event.detail));
     },
     methods: {
         handleResize() {

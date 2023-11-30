@@ -6,13 +6,16 @@
             @searched="$emit('searched', $event)"
         />
         <div class="head__buttons">
-            <main-button class="button-md button-white" data-popup="#addAcc">
+            <main-button
+                class="button-md button-white"
+                @click="$emit('open_add_popup')"
+            >
                 <template #svg>
-                    <add-sub-icon class="head_icon"/>
+                    <add-sub-icon class="head_icon" />
                 </template>
             </main-button>
             <sub-type-buttons
-                :subsType="subsType"
+                :subs-type="subsType"
                 @changeType="$emit('changeType', $event)"
             />
         </div>
@@ -25,10 +28,10 @@ import AddSubIcon from "@/modules/subs/icons/AddSubIcon.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import SubTypeButtons from "@/modules/subs/Components/UI/SubTypeButtons.vue";
 
-import {SubMessages} from "@/modules/subs/lang/SubMessages";
+import { SubMessages } from "@/modules/subs/lang/SubMessages";
 
 export default {
-    name: "sub-header",
+    name: "SubHeader",
     components: {
         SubTypeButtons,
         AddSubIcon,
@@ -40,8 +43,9 @@ export default {
     },
     i18n: {
         sharedMessages: SubMessages,
-    }
-}
+    },
+    emits: ["open_add_popup", "searched", "changeType"],
+};
 </script>
 
 <style scoped>
@@ -66,6 +70,6 @@ export default {
 }
 
 .head_icon:hover {
-    fill: var(--buttons-tabs-text-focus, #2E90FA);
+    fill: var(--buttons-tabs-text-focus, #2e90fa);
 }
 </style>

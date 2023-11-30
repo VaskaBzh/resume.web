@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Builders\SubBuilder;
+use App\Enums\Worker\Status;
 use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sub extends Model
@@ -18,6 +18,7 @@ class Sub extends Model
     use HasFactory;
 
     protected $primaryKey = 'group_id';
+
     public $incrementing = false;
 
     protected $fillable = [
@@ -76,6 +77,11 @@ class Sub extends Model
     {
         return $this->hasMany(Wallet::class, 'group_id');
     }
+
+    public function watcherLinks(): HasMany
+    {
+        return $this->hasMany(WatcherLink::class, 'group_id');
+    }
     /* end relations */
 
     /* Custom builder */
@@ -84,33 +90,31 @@ class Sub extends Model
         return new SubBuilder($query);
     }
 
-    public function watcherLinks(): HasMany
-    {
-        return $this->hasMany(WatcherLink::class, 'group_id');
-    }
-
     /* Attributes */
     public function totalPayout(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->payouts()->sum('payout')
+            get: fn () => $this->payouts()->sum('payout')
         );
     }
 
-    public function totalHashRate(): Attribute
+    /**
+     * Total hash rate per 24 h
+     */
+    public function hashRate(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this
+            get: fn (): int => (int) $this
                 ->workers()
-                ->onlyActive()
-                ->sum('approximate_hash_rate')
+                ->byStatus(Status::ACTIVE->value)
+                ->sum('hash_per_day')
         );
     }
 
     public function yesterdayAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => Income::getYesterDayIncome($this->group_id)
+            get: fn () => Income::getYesterDayIncome($this->group_id)
                 ->latest()
                 ->first()
                 ?->daily_amount
@@ -119,10 +123,6 @@ class Sub extends Model
 
     /**
      * Прогноз дохода на сегодня
-     *
-     * @param float $hashPerDay
-     * @param float $fee
-     * @return string
      */
     public function todayForecast(float $hashPerDay, float $fee): string
     {

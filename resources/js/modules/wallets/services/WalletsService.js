@@ -1,7 +1,8 @@
-import { StatesService } from "@/modules/common/services/extends/base/StatesService";
 import { WalletFormData } from "@/modules/wallets/DTO/WalletFormData";
-import {PopupControllService} from "@/modules/popup/services/PopupControllService";
-import {VerifyFormControllService} from "@/modules/verify/services/VerifyFormControllService";
+import { PopupControllService } from "@/modules/popup/services/PopupControllService";
+import { VerifyFormControllService } from "@/modules/verify/services/VerifyFormControllService";
+import { Form } from "@/modules/form/models/Form";
+import { ProfileApi } from "@/api/api";
 
 export class WalletsService {
     constructor() {
@@ -11,7 +12,11 @@ export class WalletsService {
         this.addVerifyForm = this.createVerifyFormControllService();
         this.changeVerifyForm = this.createVerifyFormControllService();
 
-        this.form = {};
+        this.form = this.createFormModel();
+    }
+
+    createFormModel() {
+        return new Form();
     }
 
     createPopupControllService() {
@@ -22,16 +27,17 @@ export class WalletsService {
         return new VerifyFormControllService();
     }
 
-    // createStatesService() {
-    //     return new StatesService();
-    // }
-
-    setForm(form = {}) {
-        this.form = {
-            ...new WalletFormData(),
-            ...form,
-        };
+    setFormData(formData = WalletFormData) {
+        this.form.setFormData(formData).setClearForm();
 
         return this;
+    }
+
+    index() {
+
+    }
+
+    async fetchWallets() {
+        await ProfileApi.get(`/wallets/${this.group_id}`);
     }
 }

@@ -4,170 +4,65 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Actions\Income\Complete;
-use App\Actions\Sub\Update;
-use App\Dto\Income\IncomeCompleteData;
-use App\Dto\SubData;
-use App\Enums\Income\Message;
-use App\Enums\Income\Status;
-use App\Events\PayoutCompleteEvent;
-use App\Models\Income;
+use App\Actions\Payout\Create;
+use App\Actions\Sub\ResetPending;
+use App\Dto\PayoutData;
+use App\Exceptions\PayOutException;
 use App\Models\Sub;
 use App\Models\Wallet;
-use App\Services\External\WalletService;
-use Illuminate\Support\Facades\Log;
+use App\Services\External\Wallet\Client;
+use Illuminate\Http\Client\RequestException;
 
-class PayoutService
+final readonly class PayoutService
 {
-    private Sub $sub;
-    public readonly ?Wallet $wallet;
-    private array $params = [
-        'status' => Status::REJECTED->value,
-        'message' => Message::ERROR_PAYOUT->value
-    ];
-    private readonly WalletService $remoteWallet;
-
-    public function init(Sub $sub): void
-    {
-        $this->sub = $sub;
-        $this->wallet = $sub->wallets()->first();
-        $this->remoteWallet = resolve(WalletService::class);
+    /**
+     * @param  Sub  $sub Local sub-account
+     * @param  Wallet  $wallet Sub-account wallet
+     */
+    private function __construct(
+        private Sub $sub,
+        private Wallet $wallet,
+    ) {
     }
 
-    public function setMessage(string $message): PayoutService
+    public static function init(Sub $sub): PayoutService
     {
-        $this->params['message'] = $message;
-
-        return $this;
-    }
-
-    public function setStatus(string $status): PayoutService
-    {
-        $this->params['status'] = $status;
-
-        return $this;
-    }
-
-    public function setTxId(string $txId): PayoutService
-    {
-        $this->params['txid'] = $txId;
-
-        return $this;
+        return new self(
+            sub: $sub,
+            wallet: $sub->wallets->first(),
+        );
     }
 
     /**
-     * Запрос на открытие удаленного кошелька
+     * Withdraw sub-account balance from remote wallet to sub-account wallet
      *
-     * @return void
+     * @throw
+     *
+     * @throws PayOutException
      */
-    public function unlockRemoteWallet(): void
+    public function payOut(callable $callback): PayoutService
     {
         try {
-            $this->remoteWallet->unlock();
+            [$txId, $amount] = $callback(app(Client::class));
 
-            Log::channel('payouts')->info('WALLET UNLOCKED', [
-                'sub' => $this->sub->id
-            ]);
+            Create::execute(PayoutData::fromArray([
+                'sub' => $this->sub,
+                'wallet' => $this->wallet,
+                'payout' => $amount,
+                'txid' => $txId,
+            ]));
 
-        } catch (\Exception $e) {
-            report($e);
+            return $this;
+        } catch (PayOutException|RequestException $e) {
+            throw new PayOutException($e->getMessage());
         }
     }
 
     /**
-     * Вывод средств в удаленный кошелек
-     *
-     * @return string|null
+     * Reset sub-account pending amount
      */
-    public function payOut(): ?string
+    public function clearPendingAmount(): void
     {
-        if ($this->isAllowedTransaction()) {
-            return $this
-                ->remoteWallet
-                ->sendBalance(
-                    wallet: $this->wallet,
-                    balance: $this->sub->pending_amount
-                );
-        }
-
-        return null;
-    }
-
-    /**
-     * Обнуляем накопленный доход
-     *
-     * @return void
-     */
-    public function clearPendingAmount(): PayoutService
-    {
-        Update::execute(
-            subData: SubData::fromRequest([
-                'user_id' => $this->sub->user_id,
-                'group_id' => $this->sub->group_id,
-                'sub_name' => $this->sub->sub,
-                'pending_amount' => 0,
-            ]),
-            sub: $this->sub
-        );
-
-        return $this;
-    }
-
-    /**
-     * Меняем статусы и сообщения
-     */
-    public function complete(): PayoutService
-    {
-        $incomes = Income::getNotCompleted(
-            groupId: $this->sub->group_id
-        )->get();
-
-        if ($incomes) {
-            Complete::execute(
-                incomes: $incomes,
-                incomeCompleteData: IncomeCompleteData::fromRequest([
-                    'status' => $this->params['status'],
-                    'message' => $this->params['message']
-                ])
-            );
-
-            Log::channel('payouts')->info('INCOMES STATUSES CHANGE TO COMPLETE', [
-                'sub' => $this->sub->id,
-                'wallet' => $this->wallet->id
-            ]);
-        }
-
-        return $this;
-    }
-
-    public function createPayout(): PayoutService
-    {
-        event(new PayoutCompleteEvent(
-            sub: $this->sub,
-            wallet: $this->wallet,
-            payout: $this->sub->pending_amount,
-            txId: $this->params['txid'],
-        ));
-
-        return $this;
-    }
-
-    public function lock(): void
-    {
-        $this->remoteWallet->lock();
-
-        Log::channel('payouts')->info('WALLET LOCKED', [
-            'sub' => $this->sub->id,
-        ]);
-    }
-
-    /**
-     * Проверяем локальный кошелек на существование и блокировку
-     *
-     * @return bool
-     */
-    private function isAllowedTransaction(): bool
-    {
-        return !is_null($this->wallet) && $this->wallet->isUnlocked();
+        ResetPending::execute(sub: $this->sub);
     }
 }

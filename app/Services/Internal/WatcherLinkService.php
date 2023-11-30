@@ -8,16 +8,16 @@ use App\Actions\WatcherLink\Create;
 use App\Dto\WatcherLinkData;
 use App\Models\WatcherLink;
 
-class WatcherLinkService
+readonly class WatcherLinkService
 {
     private function __construct(
         private WatcherLinkData $watcherLinkData,
-    )
-    {}
+    ) {
+    }
 
     public static function withParams(WatcherLinkData $watcherLinkData): WatcherLinkService
     {
-       return new self(watcherLinkData: $watcherLinkData);
+        return new self(watcherLinkData: $watcherLinkData);
     }
 
     private function createToken(): string

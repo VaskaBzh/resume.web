@@ -1,13 +1,15 @@
 <template>
-    <div class="row" :class="{ error: error }">
+    <label :for="name" class="row" :class="{ error: error }">
         <input
             :name="name"
-            v-model="value"
+            :id="name"
             :type="type"
+            :autocomplete="autocomplete"
+            v-model="value"
             class="row_input"
             :placeholder="placeholder"
         />
-    </div>
+    </label>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ export default {
         placeholder: String,
         name: String,
         type: String,
+        autocomplete: String,
     },
     data() {
         return {
@@ -27,7 +30,7 @@ export default {
     },
     watch: {
         value() {
-            this.$emit("change", this.value);
+            this.$emit("changeInput", this.value);
         },
     },
 };
@@ -88,7 +91,7 @@ export default {
             font-size: 16px;
             font-family: Ubuntu, serif;
             line-height: 130%;
-            min-height: 40px;
+            min-height: 48px;
         }
         &:active,
         &:focus {

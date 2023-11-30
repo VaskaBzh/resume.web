@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-readonly final class WorkerHashRateData
+final readonly class WorkerHashRateData
 {
     public function __construct(
         public int $workerId,

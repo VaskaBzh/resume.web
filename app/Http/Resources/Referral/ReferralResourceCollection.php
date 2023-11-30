@@ -8,7 +8,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use OpenApi\Attributes as OA;
 
 /** @see Sub */
-
 #[
     OA\Schema(
         schema: 'ReferralResourceCollection',
@@ -22,22 +21,23 @@ use OpenApi\Attributes as OA;
                         new OA\Property(property: 'referral_active_workers_count', type: 'integer'),
                         new OA\Property(property: 'referral_inactive_workers_count', type: 'integer'),
                         new OA\Property(property: 'referral_hash_per_day', type: 'float'),
+                        new OA\Property(property: 'referral_hash_per_day_unit', type: 'string'),
                         new OA\Property(property: 'total_amount', type: 'float'),
+                        new OA\Property(property: 'referral_percent', type: 'float'),
                     ],
                     type: 'object'
                 )
-            )
+            ),
         ],
         type: 'object'
     )
 ]
 class ReferralResourceCollection extends ResourceCollection
 {
-
     public function toArray($request): array
     {
         return [
-            'data' => $this->collection
+            'data' => $this->collection,
         ];
     }
 }

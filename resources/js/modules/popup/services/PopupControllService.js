@@ -1,4 +1,4 @@
-import {StatesService} from "@/modules/common/services/extends/base/StatesService";
+import { StatesService } from "@/modules/common/services/extends/base/StatesService";
 
 export class PopupControllService {
     constructor() {
@@ -17,16 +17,16 @@ export class PopupControllService {
     }
 
     closePopup() {
-        this.isPopupClosed.setTemporaryState(false);
+        this.isPopupClosed.setTemporaryState(true);
 
         return this;
     }
 
-    popupOpenedState() {
+    getOpenedState() {
         return this.isPopupOpened.state;
     }
 
-    popupClosedState() {
+    getClosedState() {
         return this.isPopupClosed.state;
     }
 }

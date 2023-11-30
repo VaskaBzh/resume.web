@@ -1,10 +1,20 @@
 <template>
     <div class="warning">
-        <main-icon class="warning_icon icon-md icon-warning" name="warning" />
-        <main-description
-            v-i18n="$t(text, { time: time })"
-            class="warning_text text-warning text-md"
+        <main-icon
+            class="warning_icon icon-md icon-warning"
+            name="cabinet-help"
         />
+        <main-description class="warning_text text-warning text-md">
+            <p v-i18n="$t(text)" class="warning_text"></p>
+            <a
+                v-show="!!link"
+                href="https://t.me/allbtc_support"
+                class="warning_link"
+                target="_blank"
+            >
+                {{ $t(link) }}
+            </a>
+        </main-description>
     </div>
 </template>
 
@@ -23,11 +33,11 @@ export default {
     props: {
         text: {
             type: String,
-            default: "connecting_feedback",
+            default: "connecting_text",
         },
-        time: {
+        link: {
             type: String,
-            default: "24 часа.",
+            default: "",
         },
     },
     i18n: {
@@ -47,5 +57,9 @@ export default {
 }
 .warning_icon {
     min-width: 24px;
+}
+
+.warning_link {
+    border-bottom: 0.5px solid #ffb26b;
 }
 </style>

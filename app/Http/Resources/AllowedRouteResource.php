@@ -11,7 +11,6 @@ use OpenApi\Attributes as OA;
 /**
  * @see WatcherLink
  */
-
 #[
     OA\Schema(
         schema: 'AllowedRouteResource',
@@ -30,7 +29,7 @@ class AllowedRouteResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'allowed_routes' => $this->allowed_routes
+            'allowed_routes' => $this->allowed_routes,
         ];
     }
 }
