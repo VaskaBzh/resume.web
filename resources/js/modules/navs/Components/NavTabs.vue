@@ -17,7 +17,7 @@
                 <div class="nav__block">
                     <logo-block class="nav_logo" />
                     <div class="header-select-container">
-                        <select-theme/>
+                        <select-theme v-show="!this.$route.path.includes('faq')"/>
                         <select-language />
                     </div>
                     <div class="nav__tabs">

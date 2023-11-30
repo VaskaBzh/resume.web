@@ -107,10 +107,17 @@ class ListController extends Controller
     public function __invoke(Sub $sub, Request $request): JsonResource
     {
         return new IncomeCollection(
-            Income::getByGroupId($sub->group_id)
-                ->between('created_at', $request->from_date, $request->to_date)
-                ->latest()
-                ->paginate($request->per_page ?? 15)
+            Income::withPayouts($sub)
+                ->select('incomes.group_id',
+                    'incomes.*',
+                    'wallets.wallet',
+                    'payouts.payout',
+                    'payouts.created_at as payout_at',
+                    'payouts.txid',
+                )
+                ->between('incomes.created_at', $request->from, $request->to)
+                ->latest('incomes.created_at')
+                ->paginate($request->per_page)
         );
     }
 }

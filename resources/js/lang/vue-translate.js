@@ -50,7 +50,7 @@ const messages = {
                     "constant",
                     "commission",
                     "Total hashrate",
-                    "Allbtc Pool",
+                    "allbtc pool",
                 ],
             },
         },
@@ -150,7 +150,7 @@ const messages = {
             ],
         },
         title: ["Exp", "ert", "approach", "to min", "ing", "Bitcoin"],
-        text: "Allbtc pool is a private mining pool optimized for BTC mining, with transparent analytics and timely payments.",
+        text: "allbtc pool is a private mining pool optimized for BTC mining, with transparent analytics and timely payments.",
         button: "try demo version",
         who_we_are: {
             button: "who we are",
@@ -309,7 +309,7 @@ const messages = {
             error: "",
             login: {
                 head: "Log in",
-                title: "Log into Allbtc account",
+                title: "Log into allbtc account",
                 placeholders: ["Enter e-mail", "Enter password"],
                 checkbox: "Remember me",
                 button: "Log in",
@@ -318,7 +318,7 @@ const messages = {
             },
             reg: {
                 head: "Registration",
-                title: "Create Allbtc account",
+                title: "Create allbtc account",
                 placeholders: [
                     "Enter e-mail",
                     "Enter username",
@@ -354,7 +354,7 @@ const messages = {
                     link_email_confirm: "Confirm the address.",
                 },
                 login: {
-                    title: "Log into Allbtc account",
+                    title: "Log into allbtc account",
                     placeholders: {
                         email: "Please enter the Email",
                         password: "Please enter the password",
@@ -371,21 +371,21 @@ const messages = {
                         link: "Log in",
                     },
                     email: {
-                        title: "Create account Allbtc",
+                        title: "Create account allbtc",
                         placeholders: {
                             email: "Please enter the email",
                         },
                         button: "Continue",
                     },
                     name: {
-                        title: "Create account Allbtc",
+                        title: "Create account allbtc",
                         placeholders: {
                             name: "Please enter the name",
                         },
                         button: "Continue",
                     },
                     password: {
-                        title: "Create account Allbtc",
+                        title: "Create account allbtc",
                         placeholders: {
                             password: "Please enter the ",
                             password_confirmation: "Please confirm the ",
@@ -514,7 +514,7 @@ const messages = {
                     "<b>Manage device parameters</b> – restart the device and start/stop mining.",
                     "<b>Instant Performance System Notifications</b> via Telegram",
                     "<b>Track Mining</b> Equipment Status",
-                    "<b>Convenient Pool Monitoring</b> – the process of overseeing all client equipment connected to the pool.",
+                    "<b>Convenient pool Monitoring</b> – the process of overseeing all client equipment connected to the pool.",
                 ],
             },
             security: {
@@ -553,30 +553,30 @@ const messages = {
         },
         faq: [
             {
-                title: "How to Start Mining on Allbtc Pool",
+                title: "How to start mining with allbtc pool?",
                 description: "Find answers to your most pressing questions.",
                 list: {
                     0: {
-                        title: "What is Allbtc Pool?",
-                        text: `Allbtc Pool is a mining pool that provides the opportunity to mine various cryptocurrencies collectively with other miners. The mining pool combines the computational resources of miners, allowing them to increase their chances of finding a block and receiving a reward. <br> <br>
+                        title: "What is allbtc pool?",
+                        text: `allbtc pool is a mining pool that provides the opportunity to mine various cryptocurrencies collectively with other miners. The mining pool combines the computational resources of miners, allowing them to increase their chances of finding a block and receiving a reward. <br> <br>
 
-                                                Miners who join Allbtc Pool can utilize their mining devices to connect to the pool and participate in collective computations. When the pool finds a block, the reward is distributed among all miners based on their contribution to the mining operation. <br> <br>
+                                                Miners who join allbtc pool can utilize their mining devices to connect to the pool and participate in collective computations. When the pool finds a block, the reward is distributed among all miners based on their contribution to the mining operation. <br> <br>
 
-                                                Allbtc Pool offers a variety of cryptocurrencies for mining, providing miners with choice and the ability to diversify their mining operations. We also ensure pool stability, account security, and fair distribution of rewards among participants. <br> <br>
+                                                allbtc pool offers a variety of cryptocurrencies for mining, providing miners with choice and the ability to diversify their mining operations. We also ensure pool stability, account security, and fair distribution of rewards among participants. <br> <br>
 
-                                                Join Allbtc Pool today and start mining cryptocurrencies with us!
+                                                Join allbtc pool today and start mining cryptocurrencies with us!
                                                 `,
                     },
                     1: {
-                        title: "How Do Payouts Work in Allbtc Pool?",
-                        text: `Allbtc Pool utilizes the FPPS+ (Full Pay Per Share Plus) payout scheme. With FPPS+, each submitted share is instantly rewarded, providing a predictable payout for miners regardless of whether a block is found or not. The payout is calculated based on the contributed shares and the current block reward. Payouts occur automatically and are typically processed every few hours.`,
+                        title: "How do payouts work in allbtc pool?",
+                        text: `allbtc pool utilizes the FPPS+ (Full Pay Per Share Plus) payout scheme. With FPPS+, each submitted share is instantly rewarded, providing a predictable payout for miners regardless of whether a block is found or not. The payout is calculated based on the contributed shares and the current block reward. Payouts occur automatically and are typically processed every few hours.`,
                     },
                     2: {
-                        title: "What is Staking?",
+                        title: "What is staking?",
                         text: `Staking in mining refers to the holding of a certain amount of cryptocurrency in a miner's account or in a pool. It may be necessary to ensure network stability, protection against malicious actions, or participation in Proof of Stake (PoS) or Proof of Importance (PoI) protocols, where staking coins in the account increases the probability of finding the next block and receiving rewards. Staking plays an important role in the stability and efficiency of cryptocurrency mining.`,
                     },
                     3: {
-                        title: "What is the Difference Between Actual Hashrate and Reported Hashrate?",
+                        title: "What is the difference between actual hashrate and reported hashrate?",
                         text: `Actual hashrate refers to the real computational speed achieved by mining equipment during the cryptocurrency mining process. It is measured in hashes per second (H/s), kilohashes per second (kH/s), megahashes per second (MH/s), gigahashes per second (GH/s), terahashes per second (TH/s), and so on. <br> <br>
 
                                                 Reported hashrate, on the other hand, is the value stated by the manufacturer of the mining equipment in its specifications or promotional materials. It usually represents the maximum possible computational speed the equipment can achieve under ideal conditions. <br> <br>
@@ -589,22 +589,22 @@ const messages = {
                 },
             },
             {
-                title: "Account Security",
+                title: "Account security",
                 list: {
                     0: {
-                        title: "How to Secure Your Account in Allbtc Pool?",
-                        text: `Ensuring the security of your account in Allbtc Pool is an important aspect of protecting your funds and data. Here are some recommendations to secure your account:
+                        title: "How to secure your account in allbtc pool?",
+                        text: `Ensuring the security of your account in allbtc pool is an important aspect of protecting your funds and data. Here are some recommendations to secure your account:
                                             <ul class="list"><li class="list_item">Strong Password: Use a unique password consisting of a combination of letters, numbers, and special characters. Avoid using easily guessable passwords and reusing passwords on other platforms.</li>
                                             <li class="list_item">Two-Factor Authentication (2FA): Enable 2FA for an additional layer of protection. This verifies your identity with an additional code or app, in addition to your password.</li>
                                             <li class="list_item">Caution with Public Wi-Fi: Avoid using public Wi-Fi networks to access your account. Such networks may be insecure, and your data could be compromised.</li>
                                             <li class="list_item">Keep Software Updated: Regularly update the software on your device, including the operating system, antivirus programs, and other security-related software.</li>
                                             <li class="list_item">Beware of Phishing Attacks: Be cautious of suspicious emails, messages, or websites that may attempt to obtain your credentials. Never provide your passwords or sensitive information through unverified sources.</li>
-                                            <li class="list_item">Monitor Account Activity: Regularly check your account activity to spot any suspicious actions. If you notice any unusual activity, contact the Allbtc Pool support team immediately.</li></ul>
-                                            Remember, securing your account is a shared responsibility. Follow good security practices and stay vigilant to secure your account in Allbtc Pool.
+                                            <li class="list_item">Monitor Account Activity: Regularly check your account activity to spot any suspicious actions. If you notice any unusual activity, contact the allbtc pool support team immediately.</li></ul>
+                                            Remember, securing your account is a shared responsibility. Follow good security practices and stay vigilant to secure your account in allbtc pool.
                                             `,
                     },
                     1: {
-                        title: "How to Secure Your Wallet?",
+                        title: "How to secure your wallet?",
                         text: `Protecting your wallet is a crucial aspect of cryptocurrency security. Here are a few simple steps to help secure your wallet:
                                             <ul class="list"><li class="list_item">Backup Your Wallet: Regularly create backups of your wallet and store them in a secure location. This will help restore access to your funds in case of wallet loss or damage.</li>
                                             <li class="list_item">Strong Password: Set a strong password for your wallet. Use a complex combination of letters, numbers, and special characters to ensure a high level of security.</li>
@@ -616,7 +616,7 @@ const messages = {
                                             `,
                     },
                     2: {
-                        title: "How to Protect Yourself Against Fraud?",
+                        title: "How to protect yourself against fraud?",
                         text: `To protect yourself against fraud, it is recommended to take the following measures:
                                             <ul class="list"><li class="list_item">Exercise caution when providing personal information online, especially to unverified sources.</li>
                                             <li class="list_item">Do not disclose passwords or other confidential information to third parties.</li>
@@ -684,7 +684,7 @@ const messages = {
             blocks: [
                 {
                     title: "Security and transparency",
-                    text: "The hashrate is displayed in real-time while the Allbtc security team protects your assets.",
+                    text: "The hashrate is displayed in real-time while the allbtc security team protects your assets.",
                 },
                 {
                     title: "Stable income",
@@ -702,7 +702,7 @@ const messages = {
             img: "about-panel-img-en",
         },
         info: {
-            title: "Start mining with Allbtc pool",
+            title: "Start mining with allbtc pool",
             link: "Start Mining",
             blocks: [
                 {
@@ -914,7 +914,7 @@ const messages = {
             },
         },
         connection: {
-            title: "Pool URLs",
+            title: "pool URLs",
             note: "If connected correctly, the device will appear in 1-10 minutes",
             block: {
                 title: "Configure your device according to the data provided below:",
@@ -1058,7 +1058,7 @@ const messages = {
                     "Успешно работают ",
                     "с нами",
                     "Общий хешрейт",
-                    "Allbtc Pool",
+                    "allbtc pool",
                 ],
             },
         },
@@ -1073,7 +1073,7 @@ const messages = {
                     "постоянная",
                     "комиссия",
                     "Общий хешрейт",
-                    "Allbtc Pool",
+                    "allbtc pool",
                 ],
             },
         },
@@ -1171,7 +1171,7 @@ const messages = {
             ],
         },
         title: ["Экспер", "тный", "подход", "к майн", "ингу", "Bitcoin "],
-        text: "Allbtc pool  — приватный майнинг-пул, оптимизированный для добычи BTC, с прозрачной аналитикой и своевременными выплатами.",
+        text: "allbtc pool  — приватный майнинг-пул, оптимизированный для добычи BTC, с прозрачной аналитикой и своевременными выплатами.",
         button: "попробовать демо кабинет",
         who_we_are: {
             button: "кто мы",
@@ -1342,7 +1342,7 @@ const messages = {
         auth: {
             login: {
                 head: "Вход",
-                title: "Войти в аккаунт Allbtc",
+                title: "Войти в аккаунт allbtc",
                 placeholders: ["Введите e-mail", "Введите пароль"],
                 checkbox: "Запомнить меня",
                 button: "Войти",
@@ -1351,7 +1351,7 @@ const messages = {
             },
             reg: {
                 head: "Регистрация",
-                title: "Создать аккаунт Allbtc",
+                title: "Создать аккаунт allbtc",
                 placeholders: [
                     "Введите e-mail",
                     "Введите имя пользователя",
@@ -1390,7 +1390,7 @@ const messages = {
                     link_email_confirm: "Подтвердите адрес.",
                 },
                 login: {
-                    title: "Войти в аккаунт Allbtc",
+                    title: "Войти в аккаунт allbtc",
                     placeholders: {
                         email: "Введите ваш Email",
                         password: "Введите пароль",
@@ -1407,21 +1407,21 @@ const messages = {
                         link: "Войти",
                     },
                     email: {
-                        title: "Создать аккаунт Allbtc",
+                        title: "Создать аккаунт allbtc",
                         placeholders: {
                             email: "Введите ваш Email",
                         },
                         button: "Дальше",
                     },
                     name: {
-                        title: "Создать аккаунт Allbtc",
+                        title: "Создать аккаунт allbtc",
                         placeholders: {
                             name: "Введите название аккаунта",
                         },
                         button: "Дальше",
                     },
                     password: {
-                        title: "Создать аккаунт Allbtc",
+                        title: "Создать аккаунт allbtc",
                         placeholders: {
                             password: "Введите пароль",
                             password_confirmation: "Подтвердите пароль",
@@ -1593,23 +1593,23 @@ const messages = {
         },
         faq: [
             {
-                title: "Как начать майнить на Allbtc Pool",
+                title: "Как начать майнить на allbtc pool?",
                 description: "Найдите ответы на самые волнующие вас вопросы.",
                 list: {
                     0: {
-                        title: "Что такое Allbtc Pool?",
-                        text: `Allbtc Pool - это майнинг-пул, который предоставляет возможность майнить различные криптовалюты совместно с другими майнерами. Майнинг-пул объединяет вычислительные ресурсы майнеров, позволяя им увеличить шансы на нахождение блока и получение награды. <br> <br>
+                        title: "Что такое allbtc pool?",
+                        text: `allbtc pool - это майнинг-пул, который предоставляет возможность майнить различные криптовалюты совместно с другими майнерами. Майнинг-пул объединяет вычислительные ресурсы майнеров, позволяя им увеличить шансы на нахождение блока и получение награды. <br> <br>
 
-                                                Майнеры, присоединившиеся к Allbtc Pool, могут использовать свои майнинговые устройства для подключения к пулу и совместного выполнения вычислений. Когда пул находит блок, награда делится между всеми майнерами, учитывая их вклад в майнинговую операцию. <br> <br>
+                                                Майнеры, присоединившиеся к allbtc pool, могут использовать свои майнинговые устройства для подключения к пулу и совместного выполнения вычислений. Когда пул находит блок, награда делится между всеми майнерами, учитывая их вклад в майнинговую операцию. <br> <br>
 
-                                                Allbtc Pool предлагает различные криптовалюты для майнинга, обеспечивая майнерам выбор и возможность диверсификации их майнинговых операций. Мы также обеспечиваем стабильность работы пула, безопасность аккаунтов и честное распределение награды между участниками. <br> <br>
+                                                allbtc pool предлагает различные криптовалюты для майнинга, обеспечивая майнерам выбор и возможность диверсификации их майнинговых операций. Мы также обеспечиваем стабильность работы пула, безопасность аккаунтов и честное распределение награды между участниками. <br> <br>
 
-                                                Присоединяйтесь к Allbtc Pool уже сегодня и начните майнить криптовалюты вместе с нами!
+                                                Присоединяйтесь к allbtc pool уже сегодня и начните майнить криптовалюты вместе с нами!
                                                 `,
                     },
                     1: {
                         title: "Как работают выплаты в allbtc pool?",
-                        text: `Allbtc Pool использует схему выплаты FPPS+ (Full Pay Per Share Plus). С FPPS+ каждый представленный шар мгновенно вознаграждается, что обеспечивает предсказуемую выплату майнерам независимо от того, был найден блок или нет. Расчет выплаты основан на предоставленных шарах и текущей награде за блок. Выплаты происходят автоматически и обычно обрабатываются каждые несколько часов.`,
+                        text: `allbtc pool использует схему выплаты FPPS+ (Full Pay Per Share Plus). С FPPS+ каждый представленный шар мгновенно вознаграждается, что обеспечивает предсказуемую выплату майнерам независимо от того, был найден блок или нет. Расчет выплаты основан на предоставленных шарах и текущей награде за блок. Выплаты происходят автоматически и обычно обрабатываются каждые несколько часов.`,
                     },
                     2: {
                         title: "Что такое фиксация?",
@@ -1632,16 +1632,16 @@ const messages = {
                 title: "Безопасность аккаунта",
                 list: {
                     0: {
-                        title: "Как обезопасить свой аккаунт в Allbtc Pool?",
-                        text: `Как обезопасить свой аккаунт в Allbtc Pool?
-                                            Обеспечение безопасности аккаунта в Allbtc Pool является важным аспектом защиты ваших средств и данных. Вот несколько рекомендаций, как обеспечить безопасность вашего аккаунта:
+                        title: "Как обезопасить свой аккаунт в allbtc pool?",
+                        text: `Как обезопасить свой аккаунт в allbtc pool?
+                                            Обеспечение безопасности аккаунта в allbtc pool является важным аспектом защиты ваших средств и данных. Вот несколько рекомендаций, как обеспечить безопасность вашего аккаунта:
                                             <ul class="list"><li class="list_item">Сильный пароль: Используйте уникальный пароль, состоящий из комбинации букв, цифр и специальных символов. Избегайте использования легко угадываемых паролей и повторного использования пароля на других платформах.</li>
                                             <li class="list_item">Двухфакторная аутентификация (2FA): Включите 2FA для дополнительного слоя защиты. Это позволяет проверить вашу личность с помощью дополнительного кода или приложения, помимо пароля.</li>
                                             <li class="list_item">Аккуратность при публичном Wi-Fi: Избегайте использования общедоступных Wi-Fi сетей для доступа к своему аккаунту. Такие сети могут быть небезопасными и ваши данные могут быть украдены.</li>
                                             <li class="list_item">Обновление программного обеспечения: Регулярно обновляйте программное обеспечение на вашем устройстве, включая операционную систему, антивирусные программы и другие программы, связанные с безопасностью.</li>
                                             <li class="list_item">Осторожность с фишинговыми атаками: Будьте внимательны к подозрительным электронным письмам, сообщениям или веб-сайтам, которые могут пытаться получить ваши учетные данные. Никогда не предоставляйте свои пароли или чувствительную информацию по непроверенным источникам.</li>
-                                            <li class="list_item">Мониторинг активности аккаунта: Регулярно проверяйте свою активность аккаунта, чтобы заметить любые подозрительные действия. Если вы заметите необычную активность, немедленно свяжитесь с командой поддержки Allbtc Pool.</li></ul>
-                                            Помните, что безопасность аккаунта - это общая ответственность. Следуйте хорошим практикам безопасности и будьте бдительны, чтобы обезопасить свой аккаунт в Allbtc Pool.
+                                            <li class="list_item">Мониторинг активности аккаунта: Регулярно проверяйте свою активность аккаунта, чтобы заметить любые подозрительные действия. Если вы заметите необычную активность, немедленно свяжитесь с командой поддержки allbtc pool.</li></ul>
+                                            Помните, что безопасность аккаунта - это общая ответственность. Следуйте хорошим практикам безопасности и будьте бдительны, чтобы обезопасить свой аккаунт в allbtc pool.
                                             `,
                     },
                     1: {
@@ -1726,7 +1726,7 @@ const messages = {
             blocks: [
                 {
                     title: "Безопасность и прозрачность",
-                    text: " Хешрейт отображается в режиме реального времени, пока команда безопасности Allbtc защищает ваши активы ",
+                    text: " Хешрейт отображается в режиме реального времени, пока команда безопасности allbtc защищает ваши активы ",
                 },
                 {
                     title: "Стабильный заработок",

@@ -31,7 +31,7 @@ class GiveRoleCommand extends Command
         };
     }
 
-    private function createReferralProgram(string $roleName)
+    private function createReferralProgram(string $roleName): void
     {
         while (true) {
             $userCredential = $this->ask(question: 'Please type owner name or email');
@@ -45,21 +45,26 @@ class GiveRoleCommand extends Command
                 break;
             }
 
-            $referralProgram = [
-                'referral_percent' => $this->ask('Referral percent'),
-                'referral_discount' => $this->ask('Referral discount'),
-                'referral_code' => ReferralService::generateReferralCode($user),
-            ];
+            if (! $activeSub = $user->subs()?->first()) {
+                $this->error('ERROR: User sub-account not exists!');
+            } else {
+                $referralProgram = [
+                    'referral_percent' => $this->ask('Referral percent'),
+                    'referral_discount' => $this->ask('Referral discount'),
+                    'referral_code' => ReferralService::generateReferralCode($user),
+                    'active_sub' => $activeSub->group_id,
+                ];
 
-            if ($this->confirm('Are your sure?')) {
+                if ($this->confirm('Are your sure?')) {
 
-                $user->assignRole($roleName);
+                    $user->assignRole($roleName);
 
-                $user->update($referralProgram);
+                    $user->update($referralProgram);
 
-                $this->info('Referrer role has assigned to '.$user->name.'!');
+                    $this->info('Referrer role has assigned to '.$user->name.'!');
 
-                break;
+                    break;
+                }
             }
 
             $this->error('ERROR: USER NOT FOUND');

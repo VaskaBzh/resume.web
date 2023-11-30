@@ -8,6 +8,7 @@ use App\Enums\Hash\Unit;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
+use App\Models\Wallet;
 use App\Models\Worker;
 use App\Utils\HashRateConverter;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -150,5 +151,7 @@ class TestingSeeder extends Seeder
                     'group_id' => 5,
                 ]
             )->create();
+
+        Wallet::factory()->create(['group_id' => 3]);
     }
 }

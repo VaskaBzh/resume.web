@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Events\PayoutCompleteEvent;
+use App\Events\PayOutEvent;
 use App\Events\Registered;
 use App\Listeners\PayoutCompleteListener;
 use App\Listeners\ReferralCreatingListener;
@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             ReferralCreatingListener::class,
         ],
-        PayoutCompleteEvent::class => [
+        PayOutEvent::class => [
             PayoutCompleteListener::class,
         ],
     ];

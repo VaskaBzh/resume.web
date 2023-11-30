@@ -29,7 +29,7 @@ export default {
     padding: 16px;
     border-radius: 12px;
     background: rgba(83, 177, 253, 0.07);
-    color: #53B1FD;
+    color: #2E90FA;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;

@@ -23,7 +23,7 @@ class IncomeCommand extends Command
     public function handle(): void
     {
         Sub::hasWorkerHashRate()
-            ->with(['user.referrer', 'workers'])
+            ->with(['user.referrer', 'wallets'])
             ->each(static function (Sub $sub) {
                 $sub->refresh();
 
@@ -34,7 +34,11 @@ class IncomeCommand extends Command
                         ?->activeSub()
                         ->first();
 
-                    $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerActiveSub);
+                    $service = IncomeService::init(
+                        stat: app('miner_stat'),
+                        sub: $sub,
+                        referrerSub: $referrerActiveSub
+                    );
 
                     $income = $service->createIncome($sub, Type::MINING);
                     $service->updateLocalSub($sub, Type::MINING);
