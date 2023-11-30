@@ -108,7 +108,6 @@ class Sub extends Model
                 ->workers()
                 ->byStatus(Status::ACTIVE->value)
                 ->sum('hash_per_day')
-
         );
     }
 

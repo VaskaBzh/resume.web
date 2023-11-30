@@ -21,7 +21,8 @@ class Create
             'daily_amount' => $incomeCreateData->dailyAmount,
             'status' => $incomeCreateData->status->value,
             'message' => $incomeCreateData->message->value,
-            'hash' => $incomeCreateData->hashrate,
+            'hash' => $incomeCreateData->hashrate->value,
+            'unit' => $incomeCreateData->hashrate->unit,
             'diff' => $incomeCreateData->difficulty,
         ]);
     }

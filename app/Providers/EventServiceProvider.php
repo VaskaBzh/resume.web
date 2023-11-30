@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\PayoutCompleteEvent;
+use App\Events\PayOutEvent;
 use App\Events\Registered;
 use App\Listeners\PayoutCompleteListener;
 use App\Listeners\SubCreatingListener;
@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             SubCreatingListener::class,
         ],
-        PayoutCompleteEvent::class => [
+        PayOutEvent::class => [
             PayoutCompleteListener::class,
         ],
     ];
