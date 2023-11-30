@@ -3,7 +3,7 @@
         <main-title>{{ $t(title) }}</main-title>
         <main-description>{{ $t(text) }}</main-description>
     </div>
-    <div class="verify__content">
+    <form class="verify__content" @submit.prevent="sendFormWithCode">
         <!--	    <two-fac-input-->
         <!--		    class="verify_input"-->
         <!--		    :inputLabel="$t(placeholder)"-->
@@ -32,15 +32,15 @@
         <!--		    </main-button>-->
         <main-button
             class="button-blue verify_button button-full"
+            type="submit"
             :wait="wait"
-            @click="sendFormWithCode"
         >
             <template #text>
                 {{ $t(button_text) }}
             </template>
         </main-button>
         <!--	    </div>-->
-    </div>
+    </form>
 </template>
 
 <script>
