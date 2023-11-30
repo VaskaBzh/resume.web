@@ -14,8 +14,16 @@ import store from "@/store";
 
 export const router = createRouter({
     history: createWebHistory(),
-    scrollBehavior() {
-        document.body.scrollTo(0, 0);
+    scrollBehavior(to, from, savedPosition) {
+        if(window.document && to.hash) {
+            return {
+                el: to.hash.slice(1),
+                behavior: 'smooth',
+            }
+        }
+        if(savedPosition) {
+            return savedPosition
+        }
     },
     routes,
 });

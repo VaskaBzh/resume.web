@@ -4,6 +4,7 @@ export const LayoutsViewEnum = {
     CalculatorLayoutView: "CalculatorLayoutView",
     ProfileLayoutView: "ProfileLayoutView",
     ReferralsLayoutView: "ReferralsLayoutView",
+    FaqLayoutView: 'FaqLayoutView',
 
     getLayout: function (layoutName) {
         return this[layoutName] || this.LayoutView;
