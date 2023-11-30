@@ -1,12 +1,10 @@
-import {RoutePublicData} from "../DTO/RoutePublicData";
-import {RouteProfileData} from "../DTO/RouteProfileData";
-import {RouteReferralData} from "../DTO/RouteReferralData";
-import {RouteAuthData} from "../DTO/RouteAuthData";
-import {RouteConfirmData} from "../DTO/RouteConfirmData";
-import {RouteNamesMap} from "@/router/map/RouteNamesMap";
-import {RouteFaqData} from "@/router/DTO/RouteFaqData";
-
-
+import { RoutePublicData } from "../DTO/RoutePublicData";
+import { RouteProfileData } from "../DTO/RouteProfileData";
+import { RouteReferralData } from "../DTO/RouteReferralData";
+import { RouteAuthData } from "../DTO/RouteAuthData";
+import { RouteConfirmData } from "../DTO/RouteConfirmData";
+import { RouteNamesMap } from "@/router/map/RouteNamesMap";
+import { RouteFaqData } from "@/router/DTO/RouteFaqData";
 
 export class RouteServices {
     constructor() {
@@ -80,12 +78,12 @@ export class RouteServices {
                 ],
             },
             {
-                path: '/faq',
-                name: 'faq',
-                redirect: ()=> {
+                path: "/faq",
+                name: "faq",
+                redirect: () => {
                     return {
-                        name: 'description'
-                    }
+                        name: "description",
+                    };
                 },
                 meta: {
                     middleware: [
@@ -96,9 +94,9 @@ export class RouteServices {
                     layout: "FaqLayoutView",
                 },
                 children: [
-                    new RouteFaqData('description', 'description'),
-                    new RouteFaqData('questions', 'questions'),
-                ]
+                    new RouteFaqData("description", "description"),
+                    new RouteFaqData("questions", "questions"),
+                ],
             },
             {
                 path: "/watcher",
