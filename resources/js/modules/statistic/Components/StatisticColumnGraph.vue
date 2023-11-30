@@ -2,7 +2,8 @@
     <div
         class="cabinet__block onboarding_block cabinet__block-card cabinet__block-graph cabinet__block-light statistic__block"
         :class="{
-            'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 4
+            'onboarding_block-target':
+                instructionConfig.isVisible && instructionConfig.step === 4,
         }"
     >
         <main-progress-bar
@@ -12,23 +13,23 @@
             :final="0.005"
             unit="BTC"
         />
-<!--        <wait-preloader :wait="waitGraphChange" :interval="35" />-->
+        <!--        <wait-preloader :wait="waitGraphChange" :interval="35" />-->
         <main-column-graph
             v-if="!waitGraphChange"
             :height="height"
-            :graphData="graph"
+            :graph-data="graph"
         />
         <instruction-step
-            @next="instructionConfig.nextStep()"
-            @prev="instructionConfig.prevStep()"
-            @close="instructionConfig.nextStep(6)"
             :step_active="4"
             :steps_count="instructionConfig.steps_count"
             :step="instructionConfig.step"
-            :isVisible="instructionConfig.isVisible"
+            :is-visible="instructionConfig.isVisible"
             text="texts.statistic[3]"
             title="titles.statistic[3]"
-            className="onboarding__card-bottom"
+            class-name="onboarding__card-bottom"
+            @next="instructionConfig.nextStep()"
+            @prev="instructionConfig.prevStep()"
+            @close="instructionConfig.nextStep(6)"
         />
     </div>
 </template>
@@ -42,7 +43,7 @@ import InstructionStep from "@/modules/instruction/Components/InstructionStep.vu
 import { mapGetters } from "vuex";
 
 export default {
-    name: "statistic-column-graph",
+    name: "StatisticColumnGraph",
     components: {
         WaitPreloader,
         MainColumnGraph,
