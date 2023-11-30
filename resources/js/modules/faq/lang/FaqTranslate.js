@@ -1,13 +1,13 @@
 export const faqTranslate = {
     en: {
-        comeback: 'Back to personal cabinet',
+        comeback: 'Back to my account',
         "faq-links": ["FAQ", "Functional Description"],
         scroll_tabs: ['Sub-account selection','Statistic','Income','Workers','Subaccounts','Connecting','Wallets','Watchers mode','Account','Course BTC and USD','Change interface theme','Language change'],
         title_scroll_tabs: 'Sections',
         title: "Description of allbtc pool functionality",
         titles_texts: {
             titles: ['Choosing a subaccount','Menu item «Statistic»','Menu item «Income»','Menu item «Workers»','Menu item «Subaccounts»','Menu item «Connecting»',
-                'Menu item «Wallets»','Menu item «Watchers mode»','Menu item «Accounts»','Course BTC and USD','Change interface theme','Language change'],
+                'Menu item «Wallets»','Menu item «Watchers»','Menu item «Accounts»','Course BTC and USD','Change interface theme','Language change'],
             subtitles: ['Hashrate graph','Performance metrics','Accrual for mining','Auto-payment and graph schedule','Step 1 - Pool URLs','Step 2 - Worker Name','Adding wallet','Wallet change']
         },
         texts: {
@@ -78,7 +78,7 @@ export const faqTranslate = {
         title: "Описание функционала allbtc pool",
         titles_texts: {
             titles: ['Выбор суббаккаунта', 'Пункт меню «Статистика»', 'Пункт меню «Доходы»', 'Пункт меню «Воркеры»', 'Пункт меню «Субаккаунты»', 'Пункт меню «Подключение» ',
-                'Пункт меню «Кошелек»', 'Пункт меню «Режим наблюдателя»', 'Пункт меню «Аккаунт"', 'Курс BTC/USD и USD/RUB', 'Смена темы интерфейса', 'Смена языка интерфейса'],
+                'Пункт меню «Кошелек»', 'Пункт меню «Наблюдатели»', 'Пункт меню «Аккаунт"', 'Курс BTC/USD и USD/RUB', 'Смена темы интерфейса', 'Смена языка интерфейса'],
             subtitles: ['График хешрейта', 'Показатели производительности', 'Начисление за майнинг', 'Автовыплата и график доходности', 'Шаг 1 — URL-адреса пула ', 'Шаг 2 — Имя воркера', 'Добавление кошелька', 'Изменение кошелька'],
         },
         texts: {
@@ -119,7 +119,7 @@ export const faqTranslate = {
                 'Кошелек',
                 ' - это адрес кошелька, на который произведена выплата за майнинг.',
                 'Выплата',
-                ' - это сумма начислений за майнинг.',
+                ' - это сумма начислений, которая достигла минимального порога для осуществления автовыплаты на кошелек.',
                 'TxID',
                 ' - это уникальный идентификатор транзакции в блокчейне Bitcoin. С его помощью вы можете\n' +
                 '                    отследить статус вашей транзакции в сети.',
@@ -130,7 +130,7 @@ export const faqTranslate = {
                 '                вашими устройствами.\n' +
                 '                Таблица воркеров показывает состояние каждого воркера: текущий хешрейт, средний хешрейт за 24 часа и\n' +
                 '                процент\n' +
-                '                реджекта за последние 24 часа. При нажатии на кнопку, можно увидеть детальную информацию о\n' +
+                '                реджекта за последние 24 часа. При клике на строку в таблице, можно увидеть детальную информацию о\n' +
                 '                динамике\n' +
                 '                изменения хешрейта воркера за определенный промежуток времени.',
                 'С помощью данного меню вы можете посмотреть статистику среднего хешрейта, количество воркеров, сколько монет было всего выплачено на ваш кошелек, а также переключаться между субаккаунтами и создавать дополнительные субаккаунты.',
