@@ -96,7 +96,7 @@ final class PayoutService
         try {
             $this->remoteWallet->unlock();
 
-            Log::channel('payouts')->info('WALLET UNLOCKED', [
+            Log::channel('commands.payouts')->info('WALLET UNLOCKED', [
                 'sub' => $this->sub->id,
             ]);
 
@@ -159,7 +159,7 @@ final class PayoutService
                 ])
             );
 
-            Log::channel('payouts')->info('INCOMES STATUSES CHANGE TO COMPLETE', [
+            Log::channel('commands.payouts')->info('INCOMES STATUSES CHANGE TO COMPLETE', [
                 'sub' => $this->sub->id,
                 'wallet' => $this->wallet->id,
             ]);
@@ -190,7 +190,7 @@ final class PayoutService
     {
         $this->remoteWallet->lock();
 
-        Log::channel('payouts')->info('WALLET LOCKED', [
+        Log::channel('commands.payouts')->info('WALLET LOCKED', [
             'sub' => $this->sub->id,
         ]);
     }

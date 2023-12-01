@@ -19,7 +19,7 @@ final readonly class PayoutCompleteListener
             'txid' => $event->txId,
         ]));
 
-        Log::channel('payouts')->info('PAYOUT COMPLETE', [
+        Log::channel('commands.payouts')->info('PAYOUT COMPLETE', [
             'sub_name' => $event->sub->sub,
             'group_id' => $event->sub->group_id,
             'payout_id' => $payout->id,

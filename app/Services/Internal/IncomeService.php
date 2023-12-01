@@ -90,7 +90,7 @@ final class IncomeService
 
         $this->setParams();
 
-        Log::channel('incomes')->info('INIT UPDATE INCOME PROCESS '.$sub->sub);
+        Log::channel('commands.incomes')->info('INIT UPDATE INCOME PROCESS '.$sub->sub);
 
         return $this;
     }

@@ -45,7 +45,7 @@ class IncomeCommand extends Command
                         $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
                     }
 
-                    Log::channel('incomes')
+                    Log::channel('commands.incomes')
                         ->info(message: 'INCOME CREATE', context: $income->toArray());
                 } catch (IncomeCreatingException) {
                     return;
