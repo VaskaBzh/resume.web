@@ -125,15 +125,13 @@ export class ColumnGraphService extends GraphService {
                     this.y(0) - this.y(d) <= 1 ? 1 : this.y(0) - this.y(d);
                 const rx = (this.y(0) - this.y(d)) <= 1 ? 0 : 6;
 
-                return `
-                    M ${x + rx} ${y}
+                return `M ${x + rx} ${y}
                     h ${width - 2 * rx}
                     a ${rx} ${rx} 0 0 1 ${rx} ${rx}
                     v ${height - rx}
                     h -${width}
-                    v -${height - rx}
-                    a ${rx} ${rx} 0 0 1 ${rx} -${rx}
-                `;
+                    v ${-(height - rx)}
+                    a ${rx} ${rx} 0 0 1 ${rx} -${rx}`;
             });
 
         return this;

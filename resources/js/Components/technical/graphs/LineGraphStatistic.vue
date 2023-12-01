@@ -625,6 +625,8 @@ export default {
                 this.graphInit();
             }
         }
+
+
     },
 };
 </script>
@@ -640,6 +642,7 @@ export default {
         margin: 0;
     }
 }
+
 .y-axis-container {
     display: flex;
     flex-direction: column-reverse;
