@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\User;
 
 use App\Enums\User\Roles;
 use App\Models\User;

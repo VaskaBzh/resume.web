@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Sub;
 
 use App\Models\Sub;
 use Illuminate\Console\Command;
