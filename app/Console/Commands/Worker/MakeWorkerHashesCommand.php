@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Worker;
 
 use App\Services\Internal\WorkerService;
 use Illuminate\Console\Command;

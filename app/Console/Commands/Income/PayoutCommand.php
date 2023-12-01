@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Income;
 
 use App\Dto\Income\UpdateStatusData;
 use App\Enums\Income\Message;

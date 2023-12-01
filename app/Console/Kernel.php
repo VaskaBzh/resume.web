@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Console\Commands\EmailVerifyNotificationCommand;
-use App\Console\Commands\GiveRoleCommand;
-use App\Console\Commands\IncomeCommand;
-use App\Console\Commands\MakeHashesCommand;
-use App\Console\Commands\MakeWorkerHashesCommand;
-use App\Console\Commands\ObserveCustomPercentTimeCommand;
-use App\Console\Commands\PayoutCommand;
-use App\Console\Commands\SetSubCustomPercentCommand;
+use App\Console\Commands\Income\IncomeCommand;
+use App\Console\Commands\Income\PayoutCommand;
+use App\Console\Commands\PoolStatCommand;
+use App\Console\Commands\Sub\MakeHashesCommand;
+use App\Console\Commands\Sub\ObserveCustomPercentTimeCommand;
+use App\Console\Commands\Sub\SetSubCustomPercentCommand;
 use App\Console\Commands\UpdateMinerStatCommand;
+use App\Console\Commands\User\EmailVerifyNotificationCommand;
+use App\Console\Commands\User\GiveRoleCommand;
+use App\Console\Commands\Worker\MakeWorkerHashesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
         EmailVerifyNotificationCommand::class,
         SetSubCustomPercentCommand::class,
         ObserveCustomPercentTimeCommand::class,
+        PoolStatCommand::class,
     ];
 
     /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Income;
 
 use App\Enums\Income\Type;
 use App\Exceptions\IncomeCreatingException;

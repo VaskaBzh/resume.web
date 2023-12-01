@@ -6,7 +6,6 @@ namespace Tests\Feature\Services;
 
 use App\Models\Payout;
 use App\Models\Sub;
-use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -39,6 +38,7 @@ class PayoutServiceTest extends TestCase
      * @test
      *
      * @testdox it not payout if pending amount limit not reached
+     *
      * @return void
      */
     public function limitNotReached()
@@ -55,6 +55,7 @@ class PayoutServiceTest extends TestCase
      * @test
      *
      * @testdox it not payout if pending amount limit reached and wallet not exists
+     *
      * @return void
      */
     public function walletNotExists()
@@ -97,6 +98,7 @@ class PayoutServiceTest extends TestCase
      * @test
      *
      * @testdox it payout and reset pending amount
+     *
      * @return void
      */
     public function payout()

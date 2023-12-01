@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Sub;
 
 use App\Services\Internal\SubService;
 use Illuminate\Console\Command;
