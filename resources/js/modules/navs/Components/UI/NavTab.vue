@@ -32,6 +32,9 @@ export default {
     computed: {
         ...mapGetters(["viewportWidth"]),
     },
+    mounted() {
+        console.log(this.tab)
+    }
 };
 </script>
 
