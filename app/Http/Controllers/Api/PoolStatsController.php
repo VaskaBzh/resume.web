@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PoolStatsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,9 +34,9 @@ class PoolStatsController extends Controller
     ]
     public function show(): JsonResource
     {
-        $stats = json_decode(Storage::disk('public')->get('poolstats.json'), true);
+        abort_if(! File::exists(public_path('poolstats.json')), Response::HTTP_NOT_FOUND);
 
-        abort_if(! $stats, Response::HTTP_NOT_FOUND);
+        $stats = json_decode(File::get(public_path('poolstats.json')), true);
 
         return new PoolStatsResource($stats);
     }
