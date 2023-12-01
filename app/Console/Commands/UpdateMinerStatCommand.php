@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Services\External\MinerStatService;
@@ -31,5 +33,7 @@ class UpdateMinerStatCommand extends Command
             report($e);
             $this->error('Stats not imported, check logs');
         }
+
+        $this->call('pool:stat');
     }
 }

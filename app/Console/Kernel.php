@@ -11,6 +11,7 @@ use App\Console\Commands\MakeHashesCommand;
 use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\ObserveCustomPercentTimeCommand;
 use App\Console\Commands\PayoutCommand;
+use App\Console\Commands\PoolStatCommand;
 use App\Console\Commands\SetSubCustomPercentCommand;
 use App\Console\Commands\UpdateMinerStatCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
         EmailVerifyNotificationCommand::class,
         SetSubCustomPercentCommand::class,
         ObserveCustomPercentTimeCommand::class,
+        PoolStatCommand::class,
     ];
 
     /**
