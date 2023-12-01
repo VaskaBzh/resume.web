@@ -12,6 +12,7 @@
             burger_link: viewportWidth < 991.98,
             'tab-active': $route.path.startsWith(tab.url),
         }"
+        :target="this.tab.name === 'faq' ? '_blank':''"
     >
         <div class="tab_icon" v-html="tab.icon"></div>
         <span class="tab_text">
@@ -31,6 +32,9 @@ export default {
     computed: {
         ...mapGetters(["viewportWidth"]),
     },
+    mounted() {
+        console.log(this.tab)
+    }
 };
 </script>
 

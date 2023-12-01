@@ -80,7 +80,7 @@ export class RouteServices {
             {
                 path: "/faq",
                 name: "faq",
-                redirect: () => {
+                redirect: (to) => {
                     return {
                         name: "description",
                     };

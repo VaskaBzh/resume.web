@@ -27,9 +27,10 @@
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainAccordion from "@/modules/common/Components/UI/MainAccordion.vue";
+import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 
 export default {
-    components: { MainTitle, BlueButton, MainAccordion },
+    components: {LandingTitle, MainTitle, BlueButton, MainAccordion },
     data() {
         return {
             searchQuery: "",

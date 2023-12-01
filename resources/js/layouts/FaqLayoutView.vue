@@ -82,7 +82,7 @@
             <faq-tabs v-show="this.$route.name === 'description'">
                 <h2 class="fat__tabs_title">{{ $t("title_scroll_tabs") }}</h2>
             </faq-tabs>
-            <div class="faq__main_items">
+            <div class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
                 <faq-navs-tabs/>
                 <keep-alive>
                     <router-view/>
@@ -130,6 +130,7 @@ export default {
         ...mapGetters(['viewportWidth', 'user']),
     },
     async mounted() {
+        console.log(this.$route)
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }
@@ -139,6 +140,7 @@ export default {
             user_id: this.user?.id,
         });
         document.title = "FAQ";
+
 
     },
 
@@ -203,11 +205,34 @@ export default {
     gap: 36px;
     flex: 1 1 0;
     height: calc(100vh - 144px);
-    max-width: 690px;
+    max-width: 1170px;
+    margin-left: 375px;
+    transition: all .3s ease;
+}
+
+@media (max-width: 999.99px) {
+    .faq__main_items {
+        margin: 0 auto;
+        max-width: unset;
+        width: 100%;
+    }
+
+}
+
+.faq_questions {
+    max-width: 100%;
+    margin: unset;
+}
+
+@media (min-width: 1440px) {
+    .faq_questions {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 }
 
 .fat__tabs_title {
-    font-size: 27px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 40px;

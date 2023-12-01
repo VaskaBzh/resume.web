@@ -115,6 +115,10 @@ export default {
     padding: clamp(12px, 2vw, 24px);
 }
 
+.page-container::-webkit-scrollbar {
+    display: none;
+}
+
 @media (min-width: 998px) {
     .page-container {
         overflow-y: scroll;
