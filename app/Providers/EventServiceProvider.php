@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Events\PayOutEvent;
 use App\Events\Registered;
 use App\Listeners\PayoutCompleteListener;
-use App\Listeners\SubCreatingListener;
+use App\Listeners\ReferralCreatingListener;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -19,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            SubCreatingListener::class,
+            ReferralCreatingListener::class,
         ],
         PayOutEvent::class => [
             PayoutCompleteListener::class,

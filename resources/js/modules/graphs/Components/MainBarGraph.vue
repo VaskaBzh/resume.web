@@ -87,11 +87,7 @@ export default {
                     .graphAppends()
                     .setTooltip();
 
-                // if (this.service.isMobile) {
-                // 	this.service.setSvgEventsMobile();
-                // } else {
                 this.service.setSvgEvents().setTooltipEvents();
-                // }
             }
         },
     },

@@ -33,7 +33,7 @@ export default {
         TooltipCard,
     },
     props: {
-        BTC: {
+        bitcoin: {
             type: Number,
             default: 0,
         },
@@ -65,7 +65,7 @@ export default {
     methods: {
         async updateConversion() {
             this.converter = new Converter(
-                this.BTC,
+                this.bitcoin,
                 this.btcInfo?.btc?.price ?? 0
             );
             await this.converter.convert();

@@ -12,13 +12,18 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .title {
     color: var(--text-primary, #1d2939);
     font-family: Unbounded, serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 32px;
+    &-profile {
+        @media (min-width: $mobile) {
+            display: none;
+        }
+    }
 }
 
 .title-popup {
