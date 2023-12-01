@@ -9,7 +9,7 @@ class SetLocale
 {
     public function handle($request, Closure $next)
     {
-        $locale = $this->parseAcceptLanguageHeader($request->header('Accept-Language'));
+        $locale = $this->parseAcceptLanguageHeader($request->header('Accept-Language') ?? '');
 
         app()->setLocale($locale['lang'] ?? config('app.fallback_locale'));
 

@@ -80,6 +80,12 @@ class Handler extends ExceptionHandler
                     'errors' => ['messages' => [$e->getMessage()]],
                 ], Response::HTTP_FORBIDDEN);
             }
+
+            if ($e instanceof NotFoundHttpException) {
+                return new JsonResponse([
+                    'errors' => ['messages' => ['Resource not found']],
+                ], Response::HTTP_FORBIDDEN);
+            }
         });
     }
 }
