@@ -332,8 +332,15 @@ export default {
     overflow-y: scroll;
     padding-bottom: 44px;
     scrollbar-width: thin;
-    max-width: 690px;
+    max-width: 1170px;
     height: 100%;
+}
+
+@media (max-width: 999.99px) {
+    .faq-info_items {
+        max-width: unset;
+        width: 100%;
+    }
 }
 
 .faq-info_items::-webkit-scrollbar {
@@ -400,8 +407,15 @@ export default {
 }
 
 .faq_item_images {
-    max-width: 690px;
+    max-width: 1170px;
     height: auto;
+}
+
+@media (max-width: 999.99px) {
+    .faq_item_images {
+        max-width: unset;
+        width: 100%;
+    }
 }
 
 .faq-image {
