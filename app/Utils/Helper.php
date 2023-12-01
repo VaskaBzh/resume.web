@@ -50,4 +50,23 @@ class Helper
          */
         return $totalWithFpps - ($totalWithFpps * ($fee / 100));
     }
+
+    public static function regenerateHashRate(int $pureHashRate): int
+    {
+        $numbers = str_split((string) $pureHashRate);
+
+        $regenerated[] = (int) head($numbers);
+
+        $tail = array_slice($numbers, 4);
+
+        $regenerated[] = mt_rand(5, 9);
+        $regenerated[] = mt_rand(5, 8);
+        $regenerated[] = mt_rand(4, 9);
+
+        foreach ($tail as $number) {
+            $regenerated[] = mt_rand(0, 9);
+        }
+
+        return (int) implode('', $regenerated);
+    }
 }
