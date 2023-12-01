@@ -23,6 +23,6 @@ class MakeHashesCommand extends Command
     ): void {
         $subService->createHash();
 
-        Log::channel('commands')->info('SUB HASHRATE IMPORT COMPLETE');
+        Log::channel('commands.subs')->info('SUB HASHRATE IMPORT COMPLETE');
     }
 }

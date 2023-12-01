@@ -105,21 +105,19 @@ final readonly class SubService
         $transformed = $this->transformCollection($localSubList, $remoteSubList);
 
         $transformed->each(function (SubViewData $subData) {
-            if ($subData->hashPerMinPure > 0) {
 
-                // TODO: CreateNewAndDeleteOld action
-                DeleteOldHashrates::execute(
-                    groupId: $subData->groupId,
-                    date: now()->subMonths(2)->toDateTimeString()
-                );
+            // TODO: CreateNewAndDeleteOld action
+            DeleteOldHashrates::execute(
+                groupId: $subData->groupId,
+                date: now()->subMonths(2)->toDateTimeString()
+            );
 
-                Hash::create([
-                    'group_id' => $subData->groupId,
-                    'hash' => $subData->hashPerMinPure,
-                    'unit' => $subData->hashPerMinUnit,
-                    'worker_count' => $subData->activeWorkersCount,
-                ]);
-            }
+            Hash::create([
+                'group_id' => $subData->groupId,
+                'hash' => $subData->hashPerMinPure,
+                'unit' => $subData->hashPerMinUnit,
+                'worker_count' => $subData->activeWorkersCount,
+            ]);
         });
     }
 }

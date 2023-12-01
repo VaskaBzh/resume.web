@@ -44,7 +44,7 @@ class PayoutCommand extends Command
         $txId = $payoutService->payOut();
 
         if (! $txId) {
-            Log::channel('payouts')->info('TXID IS EMPTY', [
+            Log::channel('commands.payouts')->info('TXID IS EMPTY', [
                 'sub' => $sub->group_id,
             ]);
 
