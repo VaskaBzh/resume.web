@@ -1,6 +1,6 @@
 <template>
     <div class="faq__layout">
-        <header class="faq-header">
+        <header  class="faq-header">
             <logo-block class="nav_logo" v-if="viewportWidth > 768"/>
             <router-link :to="{ name: 'home' }" class="svg-mobile" v-if="viewportWidth<768">
                 <svg
@@ -83,11 +83,16 @@
                 <h2 class="fat__tabs_title">{{ $t("title_scroll_tabs") }}</h2>
             </faq-tabs>
             <div class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
-                <faq-navs-tabs/>
+                <faq-navs-tabs id="faq_navs"/>
                 <keep-alive>
                     <router-view/>
                 </keep-alive>
             </div>
+        </div>
+        <div class="layout__block-fixed">
+            <a href="#faq_navs" class="layout_button">
+                <arrow-up-icon class="layout_icon" />
+            </a>
         </div>
     </div>
 </template>
@@ -107,10 +112,12 @@ import FaqTabs from "@/modules/faq/Components/UI/FaqTabs.vue";
 import {faqTranslate} from "@/modules/faq/lang/FaqTranslate";
 import NavTabs from "@/modules/navs/Components/NavTabs.vue";
 import {InstructionService} from "@/modules/instruction/services/InstructionService";
+import ArrowUpIcon from "@/modules/common/icons/ArrowUpIcon.vue";
 
 export default {
     name: "FaqLayoutView",
     components: {
+        ArrowUpIcon,
         NavTabs,
         FaqTabs,
         FaqNavsTabs,
@@ -193,6 +200,37 @@ export default {
     background: #161616;
 }
 
+.layout_button {
+    border: 0.5px solid rgba(192, 228, 255, 0.6);
+    background: rgba(13, 13, 13, 0.7);
+    backdrop-filter: blur(10px);
+    width: clamp(40px, 3vw, 80px);
+    height: clamp(40px, 3vw, 80px);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #e4e7ec;
+    font-family: Unbounded, serif;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 400;
+    line-height: 120%;
+    text-transform: uppercase;
+}
+
+.layout_icon {
+    width: clamp(20px, 5vw, 32px);
+    height: clamp(20px, 5vw, 32px);
+}
+
+.layout__block-fixed {
+    position: fixed;
+    right: clamp(16px, 5vw, 100px);
+    bottom: clamp(16px, 5vw, 100px);
+    z-index: 12;
+    max-width: 100%;
+}
+
 .faq_dark {
     background: #2C2F34;
     margin-left: auto;
@@ -205,30 +243,46 @@ export default {
     gap: 36px;
     flex: 1 1 0;
     height: calc(100vh - 144px);
-    max-width: 1170px;
-    margin-left: 375px;
-    transition: all .3s ease;
+    max-width: 690px;
+    margin: 0 auto;
+    padding: 0;
+    overflow-y: scroll;
+}
+
+.faq__main_items::-webkit-scrollbar {
+    display: none;
+}
+
+
+@media (min-width: 1920px) {
+    .faq__main_items {
+        max-width: 1170px;
+    }
+}
+
+@media (max-width: 1440px) {
+    .faq__main_items{
+        max-width: unset;
+        margin: 0;
+        padding: 0 275px;
+    }
+
+}
+
+@media (max-width: 1200px) {
+    .faq__main_items{
+        padding: 0 0 0 275px;
+    }
 }
 
 @media (max-width: 999.99px) {
     .faq__main_items {
         margin: 0 auto;
-        max-width: unset;
+        max-width: 100%;
         width: 100%;
+        padding: 0;
     }
 
-}
-
-.faq_questions {
-    max-width: 100%;
-    margin: unset;
-}
-
-@media (min-width: 1440px) {
-    .faq_questions {
-        max-width: 1000px;
-        margin: 0 auto;
-    }
 }
 
 .fat__tabs_title {

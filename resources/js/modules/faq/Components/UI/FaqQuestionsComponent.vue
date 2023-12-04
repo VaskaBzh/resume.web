@@ -142,7 +142,7 @@ export default {
 
 .description-text {
     color: #98a2b3;
-    font-family: NunitoSans;
+    font-family: NunitoSans, serif;
     margin: 8px 0 40px;
     font-size: 16px;
     font-style: normal;
@@ -174,7 +174,7 @@ export default {
 }
 
 .faq {
-    flex: 1 1 auto;
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
 
