@@ -174,6 +174,12 @@ export default {
     min-height: 72px;
 }
 
+@media (max-width: 475px) {
+    .faq-header {
+        padding: 8px 12px;
+    }
+}
+
 .faq_current {
     display: flex;
     align-items: center;
@@ -191,6 +197,7 @@ export default {
     .faq_current {
         z-index: 999;
         padding: unset;
+        margin-left: 0;
     }
 }
 
@@ -244,6 +251,12 @@ export default {
     width: 100%;
 }
 
+@media (max-width: 475px) {
+    .faq_main_blocks {
+        padding: 12px;
+    }
+}
+
 .faq_main_blocks::-webkit-scrollbar {
     display: none;
 }
@@ -287,6 +300,14 @@ export default {
         max-width: 100%;
         width: 100%;
         padding: 0;
+    }
+
+}
+
+@media (max-width: 475px) {
+    .faq__main_items {
+        height: calc(100vh - 100px);
+        gap: 16px;
     }
 
 }

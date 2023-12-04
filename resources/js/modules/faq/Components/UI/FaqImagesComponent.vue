@@ -352,6 +352,12 @@ export default {
     margin-bottom: 40px;
 }
 
+@media (max-width: 475px) {
+    .faq_item_title {
+        margin-bottom: 16px;
+    }
+}
+
 .faq-info-sub_item {
     display: flex;
     flex-flow: column nowrap;
