@@ -75,6 +75,7 @@ export default {
     overflow: hidden;
     overflow-y: scroll;
     position: fixed;
+    padding: 44px 24px;
 }
 
 .faq__tabs::-webkit-scrollbar {
