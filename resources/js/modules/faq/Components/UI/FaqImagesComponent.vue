@@ -329,7 +329,6 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     gap: 58px;
-    overflow-y: scroll;
     padding-bottom: 44px;
     scrollbar-width: thin;
     max-width: 1170px;
@@ -342,11 +341,6 @@ export default {
         width: 100%;
     }
 }
-
-.faq-info_items::-webkit-scrollbar {
-    display: none;
-}
-
 .faq_item_title {
     color: #F1F1F2;
     font-family: Unbounded, serif;
