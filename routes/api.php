@@ -84,16 +84,17 @@ Route::group([
     Route::group([
         'prefix' => 'wallets',
     ], function () {
+        Route::post('/create', WalletCreateController::class)
+            ->middleware('throttle:6,1')
+            ->name('wallet.create');
+        Route::get('/{sub}', WalletListController::class)
+            ->name('wallet.list');
         Route::put('/update/{wallet}', WalletUpdateController::class)
             ->middleware('throttle:6,1')
             ->name('wallet.update');
         Route::put('/change/address/{wallet}', WalletChangeAddressController::class)
             ->middleware('throttle:6,1')
             ->name('wallet.change.address');
-        Route::post('/create', WalletCreateController::class)
-            ->middleware('throttle:6,1')
-            ->name('wallet.create');
-        Route::get('/{sub}', WalletListController::class)->name('wallet.list');
     });
 
     Route::group([

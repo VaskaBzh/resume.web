@@ -49,7 +49,7 @@ class IncomeCollection extends ResourceCollection
                 'hash' => $income->hash,
                 'unit' => $income->unit,
                 'status' => __('statuses.'.$income->message),
-                'income_at' => $income->created_at,
+                'income_at' => $income->created_at->toDateTimeString(),
                 'payout_at' => $income->payout_at,
                 'tx_id' => $income->txid,
                 'wallet' => $income->wallet,

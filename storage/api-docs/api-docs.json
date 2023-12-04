@@ -835,6 +835,7 @@
                     "Subaccount"
                 ],
                 "summary": "Mark sub as active",
+                "description": "Referrer role required for this action",
                 "operationId": "25ff62dffdce43779e5a8a98a60129ad",
                 "parameters": [
                     {
@@ -2896,7 +2897,7 @@
             "HashRateResource": {
                 "properties": {
                     "hash": {
-                        "type": "integer"
+                        "type": "decimal"
                     },
                     "unit": {
                         "type": "string"
@@ -2922,17 +2923,22 @@
                                 "hash": {
                                     "type": "integer"
                                 },
+                                "unit": {
+                                    "type": "string"
+                                },
                                 "status": {
                                     "type": "string"
                                 },
                                 "message": {
                                     "type": "string"
                                 },
-                                "created_at": {
-                                    "type": "string"
+                                "income_at": {
+                                    "type": "string",
+                                    "format": "date"
                                 },
-                                "updated_at": {
-                                    "type": "string"
+                                "payout_at": {
+                                    "type": "string",
+                                    "format": "date"
                                 }
                             },
                             "type": "object"
@@ -3199,7 +3205,7 @@
             "WorkerHashRateResource": {
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "type": "decimal"
                     },
                     "hash": {
                         "type": "number",
