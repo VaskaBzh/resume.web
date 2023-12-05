@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace App\Actions\WatcherLink;
 
-use App\Models\WatcherLink;
+use App\Dto\WatcherLink\UpdateData;
 
 class ToggleRoute
 {
     public static function execute(
-        WatcherLink $watcherLink,
-        array $allowedRoutes,
+        UpdateData $updateData,
     ): void {
-        $watcherLink->update(['allowed_routes' => $allowedRoutes]);
+        $updateData->watcherLink->update(['allowed_routes' => $updateData->allowedRoutes]);
+
+        if ($updateData->name) {
+            $updateData->watcherLink->update([
+                'name' => $updateData->name,
+            ]);
+        }
     }
 }

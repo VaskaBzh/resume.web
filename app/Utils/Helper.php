@@ -57,11 +57,9 @@ class Helper
 
         $regenerated[] = (int) head($numbers);
 
-        $tail = array_slice($numbers, 4);
+        $tail = array_slice($numbers, 2);
 
         $regenerated[] = mt_rand(5, 9);
-        $regenerated[] = mt_rand(5, 8);
-        $regenerated[] = mt_rand(4, 9);
 
         foreach ($tail as $number) {
             $regenerated[] = mt_rand(0, 9);

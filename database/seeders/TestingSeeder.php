@@ -153,5 +153,7 @@ class TestingSeeder extends Seeder
             )->create();
 
         Wallet::factory()->create(['group_id' => 3]);
+
+        $this->call(HashSeeder::class);
     }
 }
