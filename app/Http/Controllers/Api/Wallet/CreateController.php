@@ -8,7 +8,7 @@ use App\Actions\Wallet\Create;
 use App\Dto\WalletData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Wallet\CreateRequest;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -92,12 +92,12 @@ class CreateController extends Controller
             ],
         )
     ]
-    public function __invoke(CreateRequest $request): JsonResource
+    public function __invoke(CreateRequest $request): JsonResponse
     {
         Create::execute(
             walletData: WalletData::fromRequest($request->all())
         );
 
-        return new JsonResource(['message' => trans('actions.wallet_create')]);
+        return new JsonResponse(['message' => trans('actions.wallet_create')], Response::HTTP_CREATED);
     }
 }

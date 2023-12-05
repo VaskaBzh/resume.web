@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Referral;
+namespace Feature;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;

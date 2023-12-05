@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Sub;
@@ -18,5 +20,10 @@ class SubPolicy
     public function viewAny(User $user, User $targetUser): bool
     {
         return $user->id === $targetUser->id;
+    }
+
+    public function activate(User $user): bool
+    {
+        return $user->hasRole('referrer');
     }
 }

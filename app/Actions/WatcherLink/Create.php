@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions\WatcherLink;
 
-use App\Dto\WatcherLinkData;
+use App\Dto\WatcherLink\CreateData;
 use App\Models\WatcherLink;
 
 class Create
 {
-    public static function execute(WatcherLinkData $watcherLinkData, string $token): WatcherLink
+    public static function execute(CreateData $watcherLinkData, string $token): WatcherLink
     {
         return WatcherLink::create([
             'name' => $watcherLinkData->name,

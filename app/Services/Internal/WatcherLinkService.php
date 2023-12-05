@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\Services\Internal;
 
 use App\Actions\WatcherLink\Create;
-use App\Dto\WatcherLinkData;
+use App\Dto\WatcherLink\CreateData;
 use App\Models\WatcherLink;
 
 readonly class WatcherLinkService
 {
     private function __construct(
-        private WatcherLinkData $watcherLinkData,
+        private CreateData $watcherLinkData,
     ) {
     }
 
-    public static function withParams(WatcherLinkData $watcherLinkData): WatcherLinkService
+    public static function withParams(CreateData $watcherLinkData): WatcherLinkService
     {
         return new self(watcherLinkData: $watcherLinkData);
     }
