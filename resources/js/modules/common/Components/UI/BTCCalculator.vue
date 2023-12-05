@@ -160,7 +160,7 @@ export default {
 
     &__value {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: space-between;
         flex-wrap: wrap;
         gap: 5px;

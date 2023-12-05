@@ -107,7 +107,7 @@ export default {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    border-radius: 40px 0px 0px 0px;
+    border-radius: 64px 0px 0px 0px;
     background: var(--background-globe);
     box-shadow: 0px 1px 4px 0px rgba(16, 24, 40, 0.05) inset;
     width: 100%;

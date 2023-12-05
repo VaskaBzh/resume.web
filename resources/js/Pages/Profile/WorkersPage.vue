@@ -101,10 +101,12 @@
             @closeCard="dropWorkers"
         />
     </workers-popup-card>
-    <instruction-button
-        hint="workers"
-        @openInstruction="instructionService.setStep().setVisible()"
-    />
+    <teleport to=".header_button-instruction" v-if="isMounted">
+        <instruction-button
+            hint="workers"
+            @openInstruction="instructionService.setStep().setVisible()"
+        />
+    </teleport>
 </template>
 <script>
 import MainHashrateCards from "@/modules/common/Components/UI/MainHashrateCards.vue";
@@ -150,6 +152,7 @@ export default {
                 this.$route
             ),
             instructionService: new InstructionService(),
+            isMounted: false
         };
     },
     watch: {
@@ -217,6 +220,7 @@ export default {
         },
     },
     mounted() {
+        this.isMounted = true
         this.instructionService.setStepsCount(2);
 
         this.worker_service.setFilterButtons();
