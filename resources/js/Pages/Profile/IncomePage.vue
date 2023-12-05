@@ -112,10 +112,12 @@
             />
         </main-slider>
     </div>
-    <instruction-button
-        hint="incomes"
-        @openInstruction="instructionService.setStep().setVisible()"
-    />
+    <teleport to=".header_button-instruction" v-if="isMounted">
+        <instruction-button
+            hint="income"
+            @openInstruction="instructionService.setStep().setVisible()"
+        />
+    </teleport>
 </template>
 
 <script>
@@ -184,9 +186,11 @@ export default {
         return {
             service: new IncomeService(),
             instructionService: new InstructionService(),
+            isMounted: false
         };
     },
     async mounted() {
+        this.isMounted = true
         document.title = this.$t("header.links.income");
         this.instructionService.setStepsCount(3);
         await this.service.index();

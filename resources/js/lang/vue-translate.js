@@ -788,7 +788,7 @@ const messages = {
                     titles: ["Today", "For month"],
                 },
                 hash: {
-                    titles: ["Current hashrate", "Avg.hashrate / 24"],
+                    titles: ["Current hashrate", "Hashrate / 24"],
                 },
                 hashrate: {
                     title: "Total hash rate",
@@ -1464,7 +1464,7 @@ const messages = {
                 workers: "Воркеры",
                 income: "Доходы",
                 connecting: "Подключение",
-                wallets: "Кошельки",
+                wallets: "Кошелек",
                 watchers: "Наблюдатели",
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
@@ -1774,7 +1774,7 @@ const messages = {
             income: "Доходы",
             connecting: "Подключение",
             watchers: "Наблюдатели",
-            wallets: "Кошельки",
+            wallets: "Кошелек",
             referral: "Реферальный кабинет",
             settings: "Аккаунт",
             faq: "FAQ",
@@ -1812,7 +1812,7 @@ const messages = {
                 title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
-            graph: ["График дохода за месяц", "Майнинг", "Начислено"],
+            graph: ["График дохода за месяц", "Майнинг", "Текущий баланс"],
             info_blocks: {
                 title: "Начисления",
                 title_clear: "Чистая прибыль",
@@ -1830,7 +1830,7 @@ const messages = {
                     titles: ["Сегодня", "За месяц"],
                 },
                 hash: {
-                    titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],
+                    titles: ["Текущий хешрейт", "Хешрейт / 24"],
                 },
                 hashrate: {
                     title: "Общий хешрейт",

@@ -64,6 +64,14 @@ export class LineGraphService extends GraphService {
             .select(".domain")
             .remove();
 
+        this.svg.append("text").attr("x", -25) .attr("y", 0)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("font-weight", "100")
+            .attr('fill', '#6F7682')
+            .attr('stroke-width', '.8')
+            .text('TH/s');
+        console.log(this.graphData.unit)
         return this;
     }
 
