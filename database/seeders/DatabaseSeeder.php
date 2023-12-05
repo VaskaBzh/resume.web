@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(SubAccountSeeder::class);
         $this->call(WorkerSeeder::class);
+        $this->call(HashSeeder::class);
         $this->call(WalletSeeder::class);
         $this->call(IncomeSeeder::class);
         $this->call(PayoutSeeder::class);

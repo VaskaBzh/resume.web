@@ -31,7 +31,7 @@ class WalletResource extends JsonResource
         return [
             'id' => $this->id,
             'percent' => $this->percent,
-            'minWithdrawal' => $this->minWithdrawal,
+            'minWithdrawal' => (float) $this->minWithdrawal,
             'wallet' => $this->wallet,
             'name' => $this->name,
             'total_payout' => $this->total_payout,

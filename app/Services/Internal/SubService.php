@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Actions\Hashes\DeleteOldHashrates;
+use App\Actions\Hashes\Create as CreateNew;
 use App\Actions\Sub\Create;
 use App\Dto\Sub\SubsOverallData;
 use App\Dto\Sub\SubUpsertData;
 use App\Dto\Sub\SubViewData;
-use App\Models\Hash;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\Contracts\ClientContract;
@@ -99,27 +98,16 @@ final readonly class SubService
     public function createHash(): void
     {
         $remoteSubList = $this->client->getSubList();
-
         $localSubList = self::withLocal(User::pluck('id'), $remoteSubList->pluck('gid'));
 
         $transformed = $this->transformCollection($localSubList, $remoteSubList);
-
-        $transformed->each(function (SubViewData $subData) {
-            if ($subData->hashPerMinPure > 0) {
-
-                // TODO: CreateNewAndDeleteOld action
-                DeleteOldHashrates::execute(
-                    groupId: $subData->groupId,
-                    date: now()->subMonths(2)->toDateTimeString()
-                );
-
-                Hash::create([
-                    'group_id' => $subData->groupId,
-                    'hash' => $subData->hashPerMinPure,
-                    'unit' => $subData->hashPerMinUnit,
-                    'worker_count' => $subData->activeWorkersCount,
-                ]);
-            }
+        $transformed->each(static function (SubViewData $subData) {
+            CreateNew::execute(
+                groupId: $subData->groupId,
+                hashRate: $subData->hashPerMinPure,
+                unit: $subData->hashPerMinUnit,
+                workerCount: $subData->activeWorkersCount
+            );
         });
     }
 }

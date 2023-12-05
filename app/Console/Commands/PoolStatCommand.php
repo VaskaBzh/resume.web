@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Utils\Helper;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class PoolStatCommand extends Command
 {
@@ -14,15 +14,17 @@ class PoolStatCommand extends Command
 
     public function handle(): void
     {
-        $poolStats = Storage::disk('public')->get('poolstats.json');
+        if (File::exists('poolstats.json')) {
+            $poolStats = File::get('poolstats.json');
 
-        if ($poolStats = json_decode($poolStats)) {
-            if (property_exists($poolStats, 'hashrate')) {
-                $regeneratePoolHashRate = Helper::regenerateHashRate($poolStats->hashrate);
-                $poolStats->hashrate = $regeneratePoolHashRate;
+            if ($poolStats = json_decode($poolStats)) {
+                if (property_exists($poolStats, 'hashrate')) {
+                    $regeneratePoolHashRate = Helper::regenerateHashRate($poolStats->hashrate);
+                    $poolStats->hashrate = $regeneratePoolHashRate;
+                }
+
+                File::put('poolstats.json', json_encode($poolStats));
             }
-
-            Storage::disk('public')->put('poolstats.json', json_encode($poolStats));
         }
     }
 }

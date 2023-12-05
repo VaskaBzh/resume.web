@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Dto;
+namespace App\Dto\WatcherLink;
 
 use App\Models\Sub;
 use App\Models\User;
 
-final readonly class WatcherLinkData
+final readonly class CreateData
 {
     public function __construct(
         public string $name,
@@ -17,7 +17,7 @@ final readonly class WatcherLinkData
     ) {
     }
 
-    public static function fromRequest(array $requestData): WatcherLinkData
+    public static function fromRequest(array $requestData): CreateData
     {
         return new self(
             name: $requestData['name'],
