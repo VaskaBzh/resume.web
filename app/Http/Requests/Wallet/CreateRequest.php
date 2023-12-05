@@ -20,7 +20,7 @@ class CreateRequest extends FormRequest
             'wallet_address' => 'required|string|min:20|max:191',
             'group_id' => 'required|unique:wallets',
             'name' => 'string|min:3|nullable',
-            'confirmation_code' => ['required', 'digits:5', 'numeric', new ConfirmationCodeRule],
+            'confirmation_code' => ['required', 'numeric', new ConfirmationCodeRule],
         ];
     }
 
