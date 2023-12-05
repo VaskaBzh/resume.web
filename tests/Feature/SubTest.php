@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Tests\Feature\Services;
+namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
@@ -10,7 +8,7 @@ use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class SubServiceTest extends TestCase
+class SubTest extends TestCase
 {
     private User $user;
 
@@ -93,9 +91,6 @@ class SubServiceTest extends TestCase
     public function itThrowException(): void
     {
         $this->makeFakeRequestToRemotePool(['exist']);
-
-        // $this->expectException(BusinessException::class);
-        //$this->expectExceptionMessage(__('actions.sub_account_already_exist'));
 
         $this->postJson(route('v1.sub.create', $this->user), [
             'name' => 'TestName',

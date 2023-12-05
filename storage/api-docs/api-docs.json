@@ -2947,6 +2947,37 @@
                 },
                 "type": "object"
             },
+            "IncomeResource": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "hash": {
+                        "type": "integer"
+                    },
+                    "unit": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "income_at": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "payout_at": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                },
+                "type": "object"
+            },
             "PayoutResource": {
                 "properties": {
                     "wallet": {

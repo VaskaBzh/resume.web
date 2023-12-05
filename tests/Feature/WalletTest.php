@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Wallet;
+namespace Feature;
 
 use App\Mail\User\CodeEmail;
 use App\Models\Sub;

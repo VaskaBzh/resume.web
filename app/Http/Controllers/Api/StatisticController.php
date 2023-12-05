@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\HashRateResource;
-use App\Http\Resources\IncomeCollection;
+use App\Http\Resources\IncomeResource;
 use App\Models\Hash;
 use App\Models\Income;
 use App\Models\Sub;
@@ -87,7 +87,7 @@ class StatisticController extends Controller
                     ->select('hash', 'unit', 'worker_count')
                     ->get()
             ),
-            'incomes' => new IncomeCollection(
+            'incomes' => IncomeResource::collection(
                 Income::getByGroupId($sub->group_id)
                     ->latest()
                     ->take(30)

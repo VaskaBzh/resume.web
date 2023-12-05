@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Income;
+namespace Feature;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
