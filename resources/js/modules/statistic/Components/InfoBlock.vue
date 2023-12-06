@@ -7,15 +7,15 @@
     >
         <btc-calculator
             :title="$t('statistic.info_blocks.payment.titles[0]')"
-            :BTC="todayAmount"
+            :bitcoin="todayAmount"
         />
         <btc-calculator
             :title="$t('statistic.info_blocks.payment.titles[1]')"
-            :BTC="yesterdayAmount"
+            :bitcoin="yesterdayAmount"
         />
         <btc-calculator
             :title="$t('statistic.info_blocks.payment.titles[2]')"
-            :BTC="monthAmount"
+            :bitcoin="monthAmount"
         />
         <instruction-step
             @next="instructionConfig.nextStep()"

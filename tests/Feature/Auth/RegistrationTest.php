@@ -47,8 +47,7 @@ class RegistrationTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => $credentials['name'],
             'email' => $credentials['email'],
-        ]
-        );
+        ]);
 
         $user = User::whereEmail($credentials['email'])->first();
 

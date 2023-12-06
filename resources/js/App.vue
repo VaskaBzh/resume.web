@@ -19,7 +19,6 @@ export default {
         };
     },
 
-
     async mounted() {
         this.$store.dispatch("setToken");
         await this.$store.dispatch("setCurrency");
@@ -32,7 +31,9 @@ export default {
         // window.addEventListener("beforeunload", this.onClose);
         this.handleResize();
 
-        document.addEventListener("validationError", (event) => this.$store.dispatch("setFullErrors", event.detail));
+        document.addEventListener("validationError", (event) =>
+            this.$store.dispatch("setFullErrors", event.detail)
+        );
     },
     async unmounted() {
         window.removeEventListener("resize", this.handleResize);
@@ -42,7 +43,9 @@ export default {
         // );
         // window.removeEventListener("beforeunload", this.onClose);
 
-        document.removeEventListener("validationError", (event) => this.$store.dispatch("setFullErrors", event.detail));
+        document.removeEventListener("validationError", (event) =>
+            this.$store.dispatch("setFullErrors", event.detail)
+        );
     },
     methods: {
         handleResize() {
@@ -63,4 +66,5 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>

@@ -53,7 +53,7 @@ export class TabsService {
                         "settings",
                         "account"
                     ),
-                    new TabsData("/profile/faq", "faq", "faq", "faq"),
+                    new TabsData("/faq", "faq", 'faq', "faq"),
                 ],
             },
         ];

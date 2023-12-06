@@ -23,8 +23,6 @@ export class GraphService {
         this.workersCountActive = null;
         this.unit = null;
 
-        this.contentTooltip = null;
-
         this.translate = translate;
 
         this.tooltipHtml = null;
@@ -87,7 +85,6 @@ export class GraphService {
 
     setTooltipHtml(newTooltipHtml) {
         this.tooltipHtml = newTooltipHtml;
-
         return this;
     }
 
@@ -208,7 +205,9 @@ export class GraphService {
     }
 
     setTooltip() {
-        if (!this.tooltip) this.tooltip = d3.select(this.tooltipHtml);
+        if (!this.tooltip) {
+            this.tooltip = d3.select(this.tooltipHtml);
+        }
 
         return this;
     }
@@ -250,7 +249,9 @@ export class GraphService {
     }
 
     setHashrate(nearestIndex) {
-        this.hashrate = this.graphData.values[nearestIndex];
+        this.hashrate = this.adjustValue(
+            this.graphData.values[nearestIndex]
+        ).val;
     }
 
     setWorkers(nearestIndex) {
@@ -314,8 +315,28 @@ export class GraphService {
         }
     }
 
-    adjustValue(num, unit) {
-        return { val: num.toFixed(0), unit: unit };
+    adjustValue(pureHashRate) {
+        const pureHashRateLength = String(pureHashRate).length;
+
+        let value = 0;
+        let unit = "T";
+
+        if (pureHashRate > 0 && pureHashRateLength < 13) {
+            value = pureHashRate / 1000000000;
+            unit = "G";
+        }
+        if (pureHashRateLength < 16 && pureHashRateLength >= 13) {
+            value = pureHashRate / 1000000000000;
+            unit = "T";
+        }
+        if (pureHashRateLength >= 16) {
+            value = pureHashRate / 1000000000000000;
+            unit = "P";
+        }
+
+        const validatedValue = value.toFixed();
+
+        return { val: validatedValue, unit: unit };
     }
 
     formatNumberWithUnit(num, i) {
@@ -469,6 +490,9 @@ export class GraphService {
 
     setSvgEvents() {
         this.svg.on("mousemove", (event) => {
+            if(event.target.innerHTML.includes('H')) {
+                Array.from(event.currentTarget.children).forEach(item => item.style.pointerEvents = 'none')
+            }
             const mouseX = d3.pointer(event)[0];
             const position = this.getClosestPoint(mouseX);
             this.updateLineAndDot(event, position);

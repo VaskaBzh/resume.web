@@ -1,39 +1,13 @@
 <template>
     <div class="accordion" ref="accordion">
-        <p class="accordion_title" @click="accordionFunc"
+        <p class="accordion_title" @click="accordionFunc" ref="accordionTitle"
             >{{ accordion.title }}
-            <!-- <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="!isOpen">
-               <path d="M13 1.00005C13 1.00005 8.58107 6.99999 6.99995 7C5.41884 7.00001 1 1 1 1" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  v-show="!isOpen" class="svg-faq">
                 <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <!-- <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                v-show="!isOpen"
-            >
-                <path
-                    d="M13.125 4.375V13.125H4.375V14.875H13.125V23.625H14.875V14.875H23.625V13.125H14.875V4.375H13.125Z"
-                    fill="#343434"
-                />
-            </svg> -->
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="isOpen" class="svg-faq">
                 <path d="M18 15C18 15 13.5811 9.00001 12 9C10.4188 8.99999 6 15 6 15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <!-- <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                v-show="isOpen"
-            >
-                <path d="M4 13V14.75H23.25V13H4Z" fill="#343434" />
-            </svg> -->
         </p>
         <transition name="slide-fade">
             <div
@@ -71,10 +45,9 @@ export default {
             }, 100);
         },
         close() {
-            // this.$refs.accordion.style.height = this.height + "px";
-            this.$refs.accordion.style.height =  64 + "px";
+            this.$refs.accordion.style.height =  70 + "px";
             if(window.innerWidth < 500){
-                this.$refs.accordion.style.height =  56 + "px";
+                this.$refs.accordion.style.height =  70 + "px";
             }
 
         },
@@ -83,7 +56,7 @@ export default {
         accordion: Object,
     },
     mounted() {
-        this.height = this.$refs.accordion.scrollHeight;
+        this.height = this.$refs.accordion.clientHeight;
         this.close();
     },
     name: "main-accordion",
@@ -110,18 +83,13 @@ export default {
     overflow: hidden;
     height: fit-content;
     transition: all 0.8s ease 0s;
-    // @media (max-width: 991.98px) {
-    //     padding: 16px 0;
-    // }
-    // @media (max-width: 479.98px) {
-    //     padding: 10px 0;
-    // }
+
     &:not(:last-child) {
-        border-bottom: 1px solid var(--text-fourth);
+        border-bottom: 1px solid #2f2f2f;
     }
     &_title {
-        color: var(--text-secondary, #475467);
-        font-family: NunitoSans;
+        color: #C5C8CD;
+        font-family: NunitoSans, serif;
         font-size: 18px;
         font-style: normal;
         font-weight: 600;
@@ -155,6 +123,7 @@ export default {
     }
     .description {
         height: fit-content;
+        color: #6F7682;
         @media (max-width: 767.98px) {
             font-size: 14px;
         }

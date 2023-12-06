@@ -74,21 +74,23 @@ final readonly class SubService
             })->filter();
     }
 
-    /**
-     * Create remote sub-account
-     * Create local sub-account based on remote sub-account group_id
-     */
-    public function create(
-        User $user,
-        string $subName,
-    ): void {
-        $remoteSub = $this->client->createRemoteSub(subName: $subName);
+    public function createRemoteSub(string $subName): Collection
+    {
+        return $this->client->createRemoteSub(subName: $subName);
+    }
 
+    /**
+     * Create local sub-account based on remote sub-account group_id and name
+     */
+    public function createLocalSub(
+        User $user,
+        Collection $remoteSub,
+    ): void {
         Create::execute(
             subData: SubUpsertData::fromRequest([
                 'user_id' => $user->id,
                 'group_id' => $remoteSub['gid'],
-                'sub_name' => $subName,
+                'sub_name' => $remoteSub['group_name'],
             ])
         );
     }
