@@ -22,7 +22,7 @@ class SubBuilder extends BaseBuilder
     public function hasWorkerHashRate(): Builder
     {
         return $this->whereHas('workers', fn (Builder $query) => $query
-            ->where('status', 'ACTIVE')
+            ->where('hash_per_day', '>', 0)
         );
     }
 
