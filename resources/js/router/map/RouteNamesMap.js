@@ -19,11 +19,15 @@ export const RouteNamesMap = {
         wallets: "WalletsPage",
         workers: "WorkersPage",
         watchers: "WatchersPage",
-        faq: "FaqPage",
         referral: {
             overview: "OverviewPage",
             "my-referral": "MyReferralPage",
             "earn-rewards": "EarnRewardsPage",
         },
     },
+    faq: {
+        description: 'FaqImagesComponent',
+        questions: 'FaqQuestionsComponent'
+
+    }
 };

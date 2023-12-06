@@ -6,4 +6,5 @@ export class BarGraphData {
             this.amount = Number(miningRecond.amount);
         }
     }
+
 }

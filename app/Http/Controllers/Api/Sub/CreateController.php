@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Sub;
 
+use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCreateRequest;
 use App\Models\User;
@@ -87,10 +88,19 @@ class CreateController extends Controller
         User $user,
         SubService $subService,
     ): JsonResponse {
-        $subService->create($user, $request->name);
+        try {
+            $remoteSub = $subService->createRemoteSub($request->name);
+            $subService->createLocalSub($user, $remoteSub);
 
-        return new JsonResponse([
-            'message' => __('actions.success_sub_create'),
-        ], Response::HTTP_CREATED);
+            return new JsonResponse([
+                'message' => __('actions.success_sub_create'),
+            ], Response::HTTP_CREATED);
+        } catch (BusinessException $e) {
+            return new JsonResponse([
+                'errors' => [
+                    'name' => [$e->getClientMessage()],
+                ],
+            ], $e->getClientStatusCode());
+        }
     }
 }

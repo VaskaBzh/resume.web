@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Models\WorkerHashrate;
-use App\Utils\HashRateConverter;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 
@@ -26,12 +25,10 @@ class WorkerHashRateResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $hashRate = HashRateConverter::fromPure((int) $this->hash_per_min);
-
         return [
             'id' => $this->id,
             'hash' => $this->hash_per_min,
-            'unit' => $hashRate->unit,
+            'unit' => $this->unit,
             'worker_id' => $this->worker_id,
         ];
     }
