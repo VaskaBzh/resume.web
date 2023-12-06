@@ -9,6 +9,7 @@ use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Models\WatcherLink;
 use App\Models\Worker;
 use App\Utils\HashRateConverter;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -119,40 +120,66 @@ class TestingSeeder extends Seeder
                     'status' => 'INACTIVE',
                     'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 1,
+                    'pool_data' => [],
                 ],
                 [
                     'worker_id' => 11111,
                     'status' => 'ACTIVE',
                     'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 1,
+                    'pool_data' => [],
                 ],
                 [
                     'worker_id' => 2222,
                     'status' => 'INACTIVE',
                     'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 2,
+                    'pool_data' => [],
                 ],
                 [
                     'worker_id' => 3333,
                     'status' => 'ACTIVE',
                     'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 3,
+                    'pool_data' => [],
                 ],
                 [
                     'worker_id' => 333333,
                     'status' => 'INACTIVE',
                     'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 3,
+                    'pool_data' => [],
                 ],
                 [
                     'worker_id' => 4444,
                     'status' => 'ACTIVE',
                     'hash_per_day' => HashRateConverter::toPure(100, Unit::TERA_HASH)->value,
                     'group_id' => 5,
+                    'pool_data' => [],
                 ]
             )->create();
 
         Wallet::factory()->create(['group_id' => 3]);
+
+        WatcherLink::create([
+            'user_id' => 1,
+            'name' => 'Test',
+            'group_id' => 1,
+            'token' => base64_encode(json_encode([
+                'name' => 'Test',
+                'group_id' => 1,
+            ])),
+            'allowed_routes' => [
+                'v1.sub.show',
+                'v1.statistic.show',
+                'v1.worker.show',
+                'v1.worker.list',
+                'v1.worker_hashrate.list',
+                'v1.income.list',
+                'v1.payout.list',
+                'v1.allowed-routes',
+            ],
+        ]);
 
         $this->call(HashSeeder::class);
     }
