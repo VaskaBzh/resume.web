@@ -849,3 +849,11 @@ h6 {
         width: 90%;
     }
 }
+
+.bar {
+    fill: var(--background-island-inner-2, rgba(83, 177, 253, 0.15));
+}
+
+.chart-bar svg {
+    overflow: hidden;
+}

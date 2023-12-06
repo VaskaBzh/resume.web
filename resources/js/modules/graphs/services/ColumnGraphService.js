@@ -1,11 +1,39 @@
-import { GraphService } from "@/modules/graphs/services/extends/GraphService";
+import { NewGraphService } from "@/modules/graphs/services/extends/NewGraphService";
 import * as d3 from "d3";
 
-export class ColumnGraphService extends GraphService {
-    constructor(graphData, translate) {
-        super(graphData, translate);
+export class ColumnGraphService extends NewGraphService {
+    tooltipIconHtml = null;
+    d3TooltipIcon = null;
 
-        this.mining = null;
+    mining = null;
+    barData = null;
+
+    /* Setters start */
+
+    setTooltipIconHtml(newTooltipIconHtml) {
+        this.tooltipIconHtml = newTooltipIconHtml;
+
+        return this;
+    }
+
+    createTooltipIcon() {
+        this.d3TooltipIcon = d3.select(this.tooltipIconHtml);
+
+        return this;
+    }
+
+    /* Setters end */
+
+    /* Polymorph methods start */
+
+    setX() {
+        this.x = d3
+            .scaleBand()
+            .domain(this.graphData.dates.map((_, i) => i))
+            .range([0, this.containerWidth])
+            .padding(0.12);
+
+        return this;
     }
 
     emptyValidationRules() {
@@ -14,16 +42,48 @@ export class ColumnGraphService extends GraphService {
             : 0.005;
     }
 
-    getPosition() {
-        if (this.mouseX) {
-            return {
-                side: "left",
-                position: this.mouseX - this.tooltipHtml.clientWidth / 2,
-            };
-        }
+    /* Polymorph methods end */
+
+    getBarHeight(yAxisData) {
+        return this.containerHeight - this.y(yAxisData) + 8;
     }
 
-    setOtherElements() {}
+    appendBars() {
+        this.svg
+            .selectAll("rect")
+            .data(this.graphData.values)
+            .join("rect")
+            .attr("x", (_, i) => this.x(i))
+            .attr("y", (yAxisData) => this.y(yAxisData) - 2)
+            .attr("width", this.x.bandwidth())
+            .attr("height", this.getBarHeight.bind(this))
+            .attr("ry", 6)
+            .attr("class", "bar");
+
+        return this;
+    }
+
+    graphAppends() {
+        this.appendBars();
+
+        return this;
+    }
+
+    /* Custom events methods start */
+
+    mouseEnterEventAction(event, mouseX) {
+        const position = this.getClosestPoint(mouseX);
+        this.setMouseX(mouseX);
+
+        this.updateTooltip(event, position);
+    }
+
+    mouseLeaveEventAction() {
+        this.d3TooltipIcon.style("opacity", 0);
+        this.dropBarsStyles();
+    }
+
+    /* Custom events methods end */
 
     setMining(nearestIndex) {
         this.mining = this.graphData.values[nearestIndex];
@@ -35,34 +95,117 @@ export class ColumnGraphService extends GraphService {
     }
 
     updateTooltip(event, position) {
-        this.tooltipInit(event);
+        this.tooltipInit(event, position);
 
         if (position?.y) {
-            this.tooltip
-                .style("top", position.y - this.tooltipHtml.clientHeight + "px")
+            this.d3Tooltip
+                .style(
+                    "top",
+                    position.y - this.tooltipHtml.clientHeight - 4 + "px"
+                )
                 .style("opacity", 1);
+
+            this.d3TooltipIcon
+                .style("opacity", 1)
+                .style("top", position.y - 4 + "px");
+        }
+    }
+
+    getPosition() {
+        if (this.mouseX) {
+            let tooltipWidth = this.tooltipHtml.clientWidth;
+
+            const isLeft = this.mouseX < tooltipWidth;
+            const isRight = this.mouseX > this.containerWidth - tooltipWidth;
+
+            const tooltipLeftPosition =
+                this.barData.index * this.barData.width +
+                this.barData.width / 2;
+
+            return {
+                side: "left",
+                position: isLeft
+                    ? 0
+                    : isRight
+                    ? this.containerWidth - tooltipWidth
+                    : tooltipLeftPosition - tooltipWidth / 2,
+            };
+        }
+    }
+
+    tooltipInit(event) {
+        try {
+            event?.touches
+                ? (this.clientX = event.touches[0].clientX)
+                : (this.clientX = event.clientX);
+
+            this.setMouseX(this.mouseX);
+
+            const nearestIndex = this.barData.index;
+
+            this.setActualValues(nearestIndex);
+
+            const position = this.getPosition();
+
+            if (
+                new Date(
+                    this.graphData.dates[nearestIndex]
+                ).toLocaleTimeString() !== "Invalid Date"
+            ) {
+                this.d3Tooltip
+                    .style("opacity", 1)
+                    .style(position.side, position.position + "px");
+
+                const tooltipIconLeftPosition =
+                    this.barData.index * this.barData.width +
+                    this.barData.width / 2;
+
+                this.d3TooltipIcon
+                    .style("left", tooltipIconLeftPosition)
+                    .style("right", "auto");
+
+                if (
+                    tooltipIconLeftPosition < 18 ||
+                    tooltipIconLeftPosition > this.containerWidth - 18
+                ) {
+                    this.d3TooltipIcon.style("display", "none");
+                } else {
+                    this.d3TooltipIcon.style("display", "flex");
+                }
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
     dropBarsStyles() {
-        const bars = this.svg.selectAll("path").nodes();
+        const bars = this.svg.selectAll(".bar").nodes();
 
         bars.forEach((bar) => {
             bar.setAttribute("style", "transition: all 0.1s ease 0s;");
         });
     }
 
+    getBarData(touchX) {
+        const barWidth =
+            this.containerWidth / this.svg.selectAll(".bar").nodes().length;
+
+        return {
+            width: barWidth,
+            index: Math.floor(touchX / barWidth),
+        };
+    }
+
     getClosestPoint(touchX) {
         const bars = this.svg.selectAll(".bar").nodes();
         let closestBar = null;
 
+        this.barData = this.getBarData(touchX);
+
         bars.forEach((bar, i) => {
             bar.setAttribute("style", "transition: all 0.1s ease 0s;");
 
-            const barWidth = (this.chartHtml.offsetWidth + 18) / bars.length;
-            const barIndex = Math.floor(touchX / barWidth);
-
-            if (barIndex === i) {
+            if (this.barData.index === i) {
                 closestBar = bar;
 
                 bar.setAttribute(
@@ -74,79 +217,13 @@ export class ColumnGraphService extends GraphService {
 
         if (closestBar) {
             const rect = closestBar.getBoundingClientRect();
+
             return {
                 x: touchX,
-                y: this.chartHtml.offsetHeight - rect.height - 16,
+                y: this.containerHeight - rect.height,
             };
         }
 
         return null;
-    }
-
-    setSvgEvents() {
-        this.svg.on("mousemove", (event) => {
-            const mouseX = d3.pointer(event)[0];
-            const position = this.getClosestPoint(mouseX);
-
-            this.updateTooltip(event, position);
-        });
-
-        this.svg.on("mouseleave", () => {
-            this.tooltip.style("opacity", 0);
-            this.dropBarsStyles();
-        });
-
-        return this;
-    }
-
-    dropGraph() {
-        if (this.svg) {
-            this.svg.selectAll("*").remove();
-            this.svg._groups[0][0].remove();
-        }
-    }
-
-    appendBars() {
-        this.svg
-            .append("g")
-            .attr("fill", "rgba(83, 177, 253, 0.15)")
-            .selectAll("path")
-            .style("transition", "all 0.3s ease 0s")
-            .data(this.graphData.values)
-            .join("path")
-            .attr("class", "bar")
-            .attr("d", (d, i) => {
-                const x = this.x(i);
-                const y =
-                    this.y(d) >= this.containerHeight - 1
-                        ? this.containerHeight - 1
-                        : this.y(d);
-                const width = this.chartHtml.offsetWidth / 30;
-                const height =
-                    this.y(0) - this.y(d) <= 1 ? 1 : this.y(0) - this.y(d);
-                const rx = this.y(0) - this.y(d) <= 1 ? 0 : 2;
-
-                return `M ${x + rx} ${y}
-                    h ${width - 2 * rx}
-                    a ${rx} ${rx} 0 0 1 ${rx} ${rx}
-                    v ${height - rx}
-                    h -${width}
-                    v ${-(height - rx)}
-                    a ${rx} ${rx} 0 0 1 ${rx} -${rx}`;
-            });
-
-        return this;
-    }
-
-    svgNode() {
-        this.svg.node();
-
-        return this;
-    }
-
-    graphAppends() {
-        this.appendBars().svgNode();
-
-        return this;
     }
 }
