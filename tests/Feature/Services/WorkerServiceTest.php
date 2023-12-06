@@ -7,7 +7,6 @@ namespace Tests\Feature\Services;
 use App\Enums\Hash\Unit;
 use App\Models\Sub;
 use App\Models\User;
-use App\Models\Worker;
 use App\Services\Internal\WorkerService;
 use App\Utils\HashRateConverter;
 use Illuminate\Support\Collection;

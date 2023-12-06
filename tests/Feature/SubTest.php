@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
+namespace Tests\Feature;
 
-namespace Tests\Feature\Services;
-
-use App\Exceptions\BusinessException;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Laravel\Sanctum\Sanctum;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class SubServiceTest extends TestCase
+class SubTest extends TestCase
 {
     private User $user;
 
@@ -94,9 +92,6 @@ class SubServiceTest extends TestCase
     {
         $this->makeFakeRequestToRemotePool(['exist']);
 
-        // $this->expectException(BusinessException::class);
-        //$this->expectExceptionMessage(__('actions.sub_account_already_exist'));
-
         $this->postJson(route('v1.sub.create', $this->user), [
             'name' => 'TestName',
         ]);
@@ -104,7 +99,29 @@ class SubServiceTest extends TestCase
         $this->assertDatabaseMissing('subs', ['user_id' => $this->user->id, 'sub' => 'TestName']);
     }
 
-    public function subCreateDataProvider()
+    /**
+     * @test
+     *
+     * @testdox it activate referrer sub
+     */
+    public function activateSub(): void
+    {
+        $sub = $this->user->subs()->first();
+        $this->putJson(route('v1.sub.activate', $sub))
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->user->assignRole('referrer');
+
+        $this->putJson(route('v1.sub.activate', $sub))
+            ->assertOk();
+
+        $this->assertDatabaseHas('users', [
+            'id' => $this->user->id,
+            'active_sub' => $sub->group_id,
+        ]);
+    }
+
+    public function subCreateDataProvider(): array
     {
         return [
             'success btc.com creating response' => [
