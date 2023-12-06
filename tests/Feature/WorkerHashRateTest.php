@@ -41,7 +41,9 @@ class WorkerHashRateTest extends TestCase
                     $hashRate = HashRateConverter::fromPure((int) $workerHashrate->hash_per_min);
 
                     return [
+                        'day_at' => $workerHashrate->created_at->format('Y.m.d'),
                         'hash' => (float) $hashRate->value,
+                        'hour_at' => $workerHashrate->created_at->format('H:m'),
                         'id' => $workerHashrate->id,
                         'unit' => $hashRate->unit,
                         'worker_id' => $workerHashrate->worker_id,
