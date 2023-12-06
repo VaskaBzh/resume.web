@@ -168,13 +168,6 @@ export class GraphService {
         return this;
     }
 
-    emptyValidationRules() {
-        return d3.max(this.graphData.values) !== 0
-            ? d3.max(this.graphData.values) +
-                  d3.max(this.graphData.values) * 0.2
-            : 120;
-    }
-
     setY() {
         this.y = d3
             .scaleLinear()
@@ -182,6 +175,13 @@ export class GraphService {
             .range([this.containerHeight, 0]);
 
         return this;
+    }
+
+    emptyValidationRules() {
+        return d3.max(this.graphData.values) !== 0
+            ? d3.max(this.graphData.values) +
+                  d3.max(this.graphData.values) * 0.2
+            : 120;
     }
 
     setAreaGenerator() {
