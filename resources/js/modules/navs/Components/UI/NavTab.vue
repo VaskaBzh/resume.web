@@ -66,10 +66,10 @@ export default {
 }
 .tab_icon-stroke {
     fill: none;
-    stroke: var(--text-teritary, #98a2b3);
+    stroke: var(--text-teritary);
 }
 .tab_icon-fill {
-    fill: var(--text-teritary, #98a2b3);
+    fill: var(--text-teritary);
     stroke: none;
 }
 .tab:hover .tab_text,

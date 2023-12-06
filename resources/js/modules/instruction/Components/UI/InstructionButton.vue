@@ -27,11 +27,6 @@ export default {
     props: {
         hint: String,
     },
-    data() {
-        return {
-            isMounted: false
-        }
-    },
 }
 </script>
 
@@ -48,7 +43,7 @@ export default {
     cursor: pointer;
 }
 
-@media (max-width: 1279.98px) {
+@media (max-width: 768px) {
     .button {
         display: none;
     }

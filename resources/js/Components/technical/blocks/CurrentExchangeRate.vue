@@ -120,7 +120,7 @@ export default {
     color: var(--text-teritary);
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: bold;
     line-height: 20px; /* 142.857% */
 }
 

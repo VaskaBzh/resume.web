@@ -202,12 +202,13 @@ export default {
 @media (max-width: 500px) {
     .title-statistic {
         display: inline-block;
-        padding: 0 0 8px 16px;
+        padding: 8px 0 8px 16px;
         color: var(--text-primary);
         font-family: Unbounded, serif !important;
         font-size: 20px !important;
         font-style: normal;
         font-weight: 400;
+        min-height: 40px;
         line-height: 32px; /* 160% */
     }
 }
