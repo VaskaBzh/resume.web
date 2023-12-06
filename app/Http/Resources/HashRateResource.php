@@ -29,3 +29,4 @@ class HashRateResource extends JsonResource
         ];
     }
 }
+
