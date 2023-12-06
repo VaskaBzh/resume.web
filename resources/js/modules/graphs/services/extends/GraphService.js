@@ -347,7 +347,7 @@ export class GraphService {
             ]
         );
 
-        return val.val + " " + val.unit + "H";
+        return val.val;
     }
 
     formatTime(date) {
