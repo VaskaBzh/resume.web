@@ -59,7 +59,7 @@ class Helper
 
         $tail = array_slice($numbers, 2);
 
-        $regenerated[] = mt_rand(5, 9);
+        $regenerated[] = mt_rand(0, 5);
 
         foreach ($tail as $number) {
             $regenerated[] = mt_rand(0, 9);
