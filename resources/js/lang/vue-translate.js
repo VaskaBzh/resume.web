@@ -1026,7 +1026,7 @@ const messages = {
             confidence: "Privacy policy",
         },
         preloader: {
-            text: "Nothing was found for your request",
+            text: "There's no record here yet",
         },
     },
     ru: {
@@ -2056,7 +2056,7 @@ const messages = {
             confidence: "Конфиденциальность",
         },
         preloader: {
-            text: "По вашему запросу ничего не найдено",
+            text: "Здесь пока что нет записей",
         },
     },
 };

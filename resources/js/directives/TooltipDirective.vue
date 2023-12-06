@@ -3,10 +3,12 @@ import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light-border.css";
 import "tippy.js/animations/shift-away-extreme.css";
+import {mapGetters} from "vuex";
+import viewportWidth from "@/store/modules/ViewportWidth";
 
 export default {
     mounted(el, binding) {
-        const maxWidth = binding.value.maxWidth || "auto";
+        const maxWidth = '100%';
 
         tippy(el, {
             content: binding.value.content || "",
@@ -16,6 +18,7 @@ export default {
             theme: "custom-theme",
             maxWidth: maxWidth,
             allowHTML: true,
+            margin: '0 auto',
         });
     },
     updated(el, binding) {
@@ -23,6 +26,7 @@ export default {
             el._tippy.setContent(binding.value.content || "");
         }
     },
+
     unmounted(el) {
         if (el._tippy) {
             el._tippy.destroy();
