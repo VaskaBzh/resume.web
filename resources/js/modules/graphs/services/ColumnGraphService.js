@@ -154,7 +154,7 @@ export class ColumnGraphService extends NewGraphService {
             ) {
                 this.d3Tooltip
                     .style("opacity", 1)
-                    .style(position?.side, position?.position + "px");
+                    .style(position.side, position.position + "px");
 
                 const tooltipIconLeftPosition =
                     this.barData.index * this.barData.width +
