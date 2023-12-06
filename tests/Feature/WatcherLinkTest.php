@@ -16,6 +16,9 @@ class WatcherLinkTest extends TestCase
         $this->user = User::first();
         $this->user->markEmailAsVerified();
         $this->sub = $this->user->subs()->first();
+        $this->watcherLink = User::first()
+            ->watcherLinks()
+            ->first();
         Sanctum::actingAs($this->user);
     }
 
@@ -48,15 +51,15 @@ class WatcherLinkTest extends TestCase
      *
      * @testdox it creating watcher links
      */
-    public function create()
+    public function create(): void
     {
         $token = base64_encode(json_encode([
-            'name' => 'Test',
+            'name' => 'TestTwo',
             'group_id' => $this->sub->group_id,
         ]));
 
         $this->postJson(route('v1.watcher.crate', $this->sub), [
-            'name' => 'Test',
+            'name' => 'TestTwo',
             'allowed_routes' => [
                 'v1.sub.show',
                 'v1.statistic.show',
@@ -71,9 +74,13 @@ class WatcherLinkTest extends TestCase
             ->assertCreated()
             ->assertExactJson([
                 'data' => [
-                    'id' => 1,
+                    'id' => $this->user
+                        ->watcherLinks()
+                        ->whereName('TestTwo')
+                        ->first()
+                        ->id,
                     'user_id' => $this->user->id,
-                    'name' => 'Test',
+                    'name' => 'TestTwo',
                     'allowed_routes' => [
                         'v1.sub.show',
                         'v1.statistic.show',
@@ -102,9 +109,7 @@ class WatcherLinkTest extends TestCase
      */
     public function update()
     {
-        $watcher = $this->createWatcherLink();
-
-        $this->putJson(route('v1.watcher.toggle', $watcher), [
+        $this->putJson(route('v1.watcher.toggle', $this->watcherLink), [
             'name' => 'UpdatedName',
             'allowed_routes' => [
                 'v1.sub.show',
@@ -116,7 +121,7 @@ class WatcherLinkTest extends TestCase
         ])
             ->assertOk()
             ->assertExactJson(['message' => 'success']);
-        $watcher->refresh();
+        $this->watcherLink->refresh();
 
         $this->assertEqualsCanonicalizing([
             'v1.sub.show',
@@ -124,8 +129,8 @@ class WatcherLinkTest extends TestCase
             'v1.income.list',
             'v1.payout.list',
             'v1.allowed-routes',
-        ], $watcher->allowed_routes);
-        $this->assertEquals('UpdatedName', $watcher->name);
+        ], $this->watcherLink->allowed_routes);
+        $this->assertEquals('UpdatedName', $this->watcherLink->name);
     }
 
     /**
@@ -135,33 +140,10 @@ class WatcherLinkTest extends TestCase
      */
     public function deleteWatcher(): void
     {
-        $watcher = $this->createWatcherLink();
-        $this->deleteJson(route('v1.watcher.delete', $watcher))
+        $this->deleteJson(route('v1.watcher.delete', $this->watcherLink))
             ->assertOk()
             ->assertExactJson(['message' => 'success']);
 
-        $this->assertDatabaseMissing('watcher_links', ['id' => $watcher->id, 'group_id' => $watcher->group_id]);
-    }
-
-    private function createWatcherLink(): WatcherLink
-    {
-        return $this->sub->watcherLinks()->create([
-            'name' => 'Test',
-            'user_id' => $this->user->id,
-            'token' => base64_encode(json_encode([
-                'name' => 'Test',
-                'group_id' => $this->sub->group_id,
-            ])),
-            'allowed_routes' => [
-                'v1.sub.show',
-                'v1.statistic.show',
-                'v1.worker.show',
-                'v1.worker.list',
-                'v1.worker_hashrate.list',
-                'v1.income.list',
-                'v1.payout.list',
-                'v1.allowed-routes',
-            ],
-        ]);
+        $this->assertDatabaseMissing('watcher_links', ['id' => $this->watcherLink->id, 'group_id' => $this->watcherLink->group_id]);
     }
 }

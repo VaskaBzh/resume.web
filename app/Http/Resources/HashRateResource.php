@@ -24,6 +24,7 @@ class HashRateResource extends JsonResource
     public function toArray($request): array
     {
         $hashRate = HashRateConverter::fromPure($this->hash);
+
         return [
             'hash' => (float) $hashRate->value,
             'unit' => $hashRate->unit,
