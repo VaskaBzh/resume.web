@@ -90,6 +90,8 @@ export class NewGraphService {
             this.svg.selectAll("*").remove();
             this.svg._groups[0][0].remove();
         }
+
+        return this;
     }
 
     /* Destroyer end */
