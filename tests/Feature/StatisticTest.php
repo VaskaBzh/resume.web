@@ -50,7 +50,6 @@ class StatisticTest extends TestCase
         ]);
         $this->hashes = $this->sub
             ->hashes()
-            ->select('hash', 'unit', 'worker_count')
             ->get();
     }
 
@@ -69,7 +68,9 @@ class StatisticTest extends TestCase
                     $hashRate = HashRateConverter::fromPure($hash->hash);
 
                     return [
+                        'day_at' => $hash->created_at->format('Y.m.d'),
                         'hash' => (float) $hashRate->value,
+                        'hour_at' => $hash->created_at->format('H:m'),
                         'unit' => $hashRate->unit,
                         'worker_count' => $hash->worker_count,
                     ];

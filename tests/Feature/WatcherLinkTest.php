@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Models\WatcherLink;
 use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
