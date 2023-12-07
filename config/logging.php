@@ -70,34 +70,6 @@ return [
             'days' => 30,
         ],
 
-        'incomes' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/incomes/incomes.log'),
-            'level' => 'debug',
-            'days' => 30,
-        ],
-
-        'btc_com' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/btc/btc.log'),
-            'level' => 'debug',
-            'days' => 30,
-        ],
-
-        'payouts' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/payouts/payouts.log'),
-            'level' => 'debug',
-            'days' => 30,
-        ],
-
-        'btc_com' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/btc/btc.log'),
-            'level' => 'debug',
-            'days' => 30,
-        ],
-
         'commands' => [
             'subs' => [
                 'driver' => 'daily',
@@ -114,6 +86,24 @@ return [
             'blockchain' => [
                 'driver' => 'daily',
                 'path' => storage_path('logs/commands/blockchain/commands.log'),
+                'level' => 'debug',
+                'days' => 30,
+            ],
+            'incomes' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/commands/incomes/incomes.log'),
+                'level' => 'debug',
+                'days' => 30,
+            ],
+            'btc_com' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/commands/btc/btc.log'),
+                'level' => 'debug',
+                'days' => 30,
+            ],
+            'payouts' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/commands/payouts/payouts.log'),
                 'level' => 'debug',
                 'days' => 30,
             ],

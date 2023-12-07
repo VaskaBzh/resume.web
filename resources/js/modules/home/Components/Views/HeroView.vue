@@ -32,7 +32,7 @@
 
             <a
                 class="hero_link"
-                href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
+                href="https://all-btc.com/watcher?access_key=eyJuYW1lIjoiXHUwNDMyXHUwNDQ0XHUwNDRiXHUwNDMyXHUwNDRiXHUwNDQ0XHUwNDMyXHUwNDRiXHUwNDQ0IiwiZ3JvdXBfaWQiOjYwMDE5MTJ9&puid=6001912"
                 target="_blank"
             >
                 <landing-button class="hero_button">

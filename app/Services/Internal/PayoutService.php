@@ -36,8 +36,6 @@ final readonly class PayoutService
     /**
      * Withdraw sub-account balance from remote wallet to sub-account wallet
      *
-     * @throw
-     *
      * @throws PayOutException
      */
     public function payOut(callable $callback): PayoutService

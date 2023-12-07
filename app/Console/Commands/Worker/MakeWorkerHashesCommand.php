@@ -24,7 +24,7 @@ class MakeWorkerHashesCommand extends Command
     ): void {
         $workerService->createHashes(config('api.btc.all_groups'));
 
-        Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE');
+        Log::channel('commands.workers')->info('WORKER HASHRATE IMPORT COMPLETE');
 
         Artisan::call('make:sub-hashes');
     }

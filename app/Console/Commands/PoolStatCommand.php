@@ -14,17 +14,21 @@ class PoolStatCommand extends Command
 
     public function handle(): void
     {
-        if (File::exists('poolstats.json')) {
-            $poolStats = File::get('poolstats.json');
+        if (! File::exists('poolstats.json')) {
+            $this->error('File not exists');
 
-            if ($poolStats = json_decode($poolStats)) {
-                if (property_exists($poolStats, 'hashrate')) {
-                    $regeneratePoolHashRate = Helper::regenerateHashRate($poolStats->hashrate);
-                    $poolStats->hashrate = $regeneratePoolHashRate;
-                }
+            return;
+        }
 
-                File::put('poolstats.json', json_encode($poolStats));
+        $poolStats = File::get('poolstats.json');
+
+        if ($poolStats = json_decode($poolStats)) {
+            if (property_exists($poolStats, 'hashrate')) {
+                $regeneratePoolHashRate = Helper::regenerateHashRate($poolStats->hashrate);
+                $poolStats->hashrate = $regeneratePoolHashRate;
             }
+
+            File::put('poolstats.json', json_encode($poolStats));
         }
     }
 }
