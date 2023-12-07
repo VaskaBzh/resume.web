@@ -40,7 +40,7 @@ final class IncomeService
      * } $params
      *
      * Params:
-     * 'mining': Common mining params.
+     * 'mining': Common mining income params.
      *   'dailyAmount': Daily earn after deducting the commission of allbtc and remote pool
      *   'pendingAmount': Sub-account amount until withdrawal limit
      *   'totalAmount': Sub-account total amount for all time

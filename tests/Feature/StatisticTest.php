@@ -65,13 +65,11 @@ class StatisticTest extends TestCase
             ->assertExactJson([
                 'hashes' => $this->hashes->map(function (Hash $hash) {
 
-                    $hashRate = HashRateConverter::fromPure($hash->hash);
-
                     return [
                         'day_at' => $hash->created_at->format('Y.m.d'),
-                        'hash' => (float) $hashRate->value,
+                        'hash' => $hash->hash,
                         'hour_at' => $hash->created_at->format('H:m'),
-                        'unit' => $hashRate->unit,
+                        'unit' => HashRateConverter::fromPure($hash->hash)->unit,
                         'worker_count' => $hash->worker_count,
                     ];
                 }),
@@ -82,7 +80,7 @@ class StatisticTest extends TestCase
                         'payout' => null,
                         'hash' => 100,
                         'unit' => 'T',
-                        'status' => 'done',
+                        'status' => 'Paid',
                         'income_at' => now()->toDateTimeString(),
                         'payout_at' => null,
                         'tx_id' => null,
@@ -94,7 +92,7 @@ class StatisticTest extends TestCase
                         'payout' => null,
                         'hash' => 100,
                         'unit' => 'T',
-                        'status' => 'done',
+                        'status' => 'Paid',
                         'income_at' => now()->subDay()->toDateTimeString(),
                         'payout_at' => null,
                         'tx_id' => null,

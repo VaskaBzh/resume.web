@@ -10,8 +10,8 @@ use App\Actions\WorkerHashRate\CreateNewAndDeleteOld;
 use App\Dto\WorkerData;
 use App\Models\Sub;
 use App\Models\Worker;
-use App\Services\External\Contracts\ClientContract;
-use App\Services\External\Contracts\TransformContract;
+use App\Services\External\BtcCom\ClientContract;
+use App\Services\External\BtcCom\TransformContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 

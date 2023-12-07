@@ -16,17 +16,22 @@ class SetLocale
         return $next($request);
     }
 
+    /**
+     * @return array|null{
+     *     preference: float|string,
+     *     lang: string
+     * }
+     */
     public function parseAcceptLanguageHeader(string $header): ?array
     {
         return collect(explode(',', $header))
-            ->map(function (string $item) {
-                if (Str::contains($item, ';q=')) {
-                    [$lang, $preference] = explode(';q=', $item);
+            ->map(function (string $locale) {
+                if (Str::contains($locale, ';q=')) {
+                    [$lang, $preference] = explode(';q=', $locale);
 
                     return ['preference' => $preference, 'lang' => $lang];
                 }
-            })
-            ->sortByDesc('preference')
+            })->sortByDesc('preference')
             ->filter(fn ($locale) => $locale && in_array($locale['lang'], config('app.allowed_local')))
             ->first();
     }
