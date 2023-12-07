@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\WatcherLink;
 
 use App\Actions\WatcherLink\ToggleRoute;
+use App\Dto\WatcherLink\UpdateData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WatcherLinks\UpdateLinkRequest;
 use App\Models\WatcherLink;
@@ -81,15 +82,11 @@ class UpdateController extends Controller
     ) {
         $this->authorize('viewOrChange', $watcher);
 
-        ToggleRoute::execute(
-            watcherLink: $watcher,
-            allowedRoutes: $request->allowed_routes
-        );
-
-        // TODO: Переписать на DTO & Action
-        if ($request->name) {
-            $watcher->update(['name' => $request->name]);
-        }
+        ToggleRoute::execute(UpdateData::fromRequest([
+            'watcher_link' => $watcher,
+            'allowed_routes' => $request->allowed_routes,
+            'name' => $request->name ?? $watcher->name,
+        ]));
 
         return new JsonResponse(['message' => 'success']);
     }

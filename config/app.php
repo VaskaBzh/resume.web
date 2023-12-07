@@ -114,6 +114,8 @@ return [
 
     'faker_locale' => 'en_US',
 
+    'allowed_local' => ['en_US', 'en', 'ru', 'ru-RU'],
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

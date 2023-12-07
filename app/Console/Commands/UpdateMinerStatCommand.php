@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Services\External\MinerStatService;
@@ -19,7 +21,7 @@ class UpdateMinerStatCommand extends Command
             $stats = $minerStatService->store();
 
             if (! is_null($stats)) {
-                Log::channel('commands')->info('MINER STATS COMMAND', [
+                Log::channel('commands.blockchain')->info('MINER STATS COMMAND', [
                     'minerstats' => $stats,
                 ]);
 
@@ -31,5 +33,7 @@ class UpdateMinerStatCommand extends Command
             report($e);
             $this->error('Stats not imported, check logs');
         }
+
+        $this->call('pool:stat');
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Builders\WalletBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,14 +51,6 @@ class Wallet extends Model
     }
 
     /* end relations */
-
-    /*
-     * Создаем кастомный билдер
-    */
-    public function newEloquentBuilder($query): WalletBuilder
-    {
-        return new WalletBuilder($query);
-    }
 
     public function totalPayout(): Attribute
     {

@@ -1,6 +1,6 @@
 <template>
     <div class="accordion" ref="accordion">
-        <p class="accordion_title" @click="accordionFunc"
+        <p class="accordion_title" @click="accordionFunc" ref="accordionTitle"
             >{{ accordion.title }}
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  v-show="!isOpen" class="svg-faq">
                 <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -45,9 +45,9 @@ export default {
             }, 100);
         },
         close() {
-            this.$refs.accordion.style.height =  64 + "px";
+            this.$refs.accordion.style.height =  70 + "px";
             if(window.innerWidth < 500){
-                this.$refs.accordion.style.height =  56 + "px";
+                this.$refs.accordion.style.height =  70 + "px";
             }
 
         },
@@ -56,7 +56,7 @@ export default {
         accordion: Object,
     },
     mounted() {
-        this.height = this.$refs.accordion.scrollHeight;
+        this.height = this.$refs.accordion.clientHeight;
         this.close();
     },
     name: "main-accordion",
@@ -83,14 +83,9 @@ export default {
     overflow: hidden;
     height: fit-content;
     transition: all 0.8s ease 0s;
-    // @media (max-width: 991.98px) {
-    //     padding: 16px 0;
-    // }
-    // @media (max-width: 479.98px) {
-    //     padding: 10px 0;
-    // }
+
     &:not(:last-child) {
-        border-bottom: 1px solid #595E68;
+        border-bottom: 1px solid #2f2f2f;
     }
     &_title {
         color: #C5C8CD;
@@ -128,7 +123,7 @@ export default {
     }
     .description {
         height: fit-content;
-        color: #C5C8CD;
+        color: #6F7682;
         @media (max-width: 767.98px) {
             font-size: 14px;
         }

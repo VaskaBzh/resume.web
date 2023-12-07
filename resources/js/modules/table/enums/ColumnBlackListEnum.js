@@ -20,4 +20,4 @@ export const ColumnBlackListEnum = {
     hash_per_min_unit: true,
     hash_per_day: true,
     hash_per_min: true,
-}
+};

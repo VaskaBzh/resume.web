@@ -1,0 +1,50 @@
+.column_value {
+    &-copy {
+        color: var(--text-accent, #53b1fd);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 105px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+    &_icon {
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        &-copy {
+            stroke: var(--icons-accent, #53b1fd);
+        }
+    }
+    &-status {
+        padding: 4px 15.5px;
+        border-radius: 8px;
+        color: var(--icons-focus, #2E90FA);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16px;
+        min-width: 100px;
+        text-align: center;
+        &-complete {
+            color: var(--status-succesfull, #1FB96C);
+            background: var(--background-success, #E9F8F1);
+        }
+        &-pending {
+            color: var(--icons-focus, #2E90FA);
+            background: var(--background-island-inner-1, rgba(83, 177, 253, 0.07));
+        }
+        &-reject {
+            color: var(--status-failed, #F1404A);
+            background: var(--background-failed, #FEECED);
+        }
+        &-checking {
+            color: var(--status-waiting, #FFB868);
+            background: var(--background-waiting, #FFF8F0);
+        }
+        &-no_wallet {
+            background: var(--background-island-inner-3, #f6f6f6);
+            color: var(--status-death, #667085);
+        }
+    }
+}

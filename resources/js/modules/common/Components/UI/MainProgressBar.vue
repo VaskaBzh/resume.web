@@ -60,6 +60,7 @@ export default {
     },
     mounted() {
         this.initProgress();
+
     },
 }
 </script>
