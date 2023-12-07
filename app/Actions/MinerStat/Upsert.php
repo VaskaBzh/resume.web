@@ -11,15 +11,6 @@ class Upsert
 {
     public static function execute(Collection $stats): ?MinerStat
     {
-        return MinerStat::updateOrCreate(
-            ['network_unit' => 'E'],
-            array_merge(
-                $stats->all(),
-                [
-                    'next_difficulty' => 0,
-                    'change_difficulty' => 0,
-                    'time_remain' => 0,
-                ]
-            ));
+        return MinerStat::updateOrCreate(['id' => 1], $stats->all());
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\External;
 
-use App\Utils\ApiRequest;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
@@ -16,8 +15,8 @@ abstract class BaseClient
         return $this->getBaseRequest()
             ->withHeaders($request->getHeaders())
             ->{$request->getMethod()}(
-                uri: $request->getUri(),
-                method: $request->getMethod() === 'get'
+                $request->getUri(),
+                $request->getMethod() === 'get'
                     ? $request->getQuery()
                     : $request->getBody()
             );
