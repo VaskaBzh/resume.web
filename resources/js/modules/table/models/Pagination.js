@@ -4,24 +4,19 @@ export class Pagination {
     FIRST_ELEMENT_INDEX = 0;
     CLEAR_URL_INDEX = 1;
 
-    perPage = null;
-    page = null;
-
     meta = null;
     links = null;
 
     pagination = null;
-    buttonPrev = null;
-    buttonNext = null;
+    prevLink = null;
+    nextLink = null;
 
     setLinks() {
         const metaLinksLastIndex = this.meta.links.length - 1;
 
         this.links = this.meta.links.filter(
-            (_, i) => i !== 0 && i !== metaLinksLastIndex
+            (link, index) => index !== 0 && index !== metaLinksLastIndex
         );
-
-        console.log(this.links);
 
         return this;
     }
@@ -32,25 +27,13 @@ export class Pagination {
         return this;
     }
 
-    setPage() {
-        this.page = this.meta.current_page;
-
-        return this;
-    }
-
-    setPerPage() {
-        this.perPage = this.meta.per_page;
-
-        return this;
-    }
-
-    setButtons() {
+    setButtonsLinks() {
         const metaLinksLastIndex = this.meta.links.length - 1;
 
-        this.buttonPrev = this.getClearUrl(
+        this.prevLink = this.getClearUrl(
             this.meta.links[this.FIRST_ELEMENT_INDEX].url
         );
-        this.buttonNext = this.getClearUrl(
+        this.nextLink = this.getClearUrl(
             this.meta.links[metaLinksLastIndex].url
         );
 
@@ -66,15 +49,14 @@ export class Pagination {
     }
 
     getClearUrl(url) {
-        return url.split("v1/")[this.CLEAR_URL_INDEX];
+        if (url) {
+            return url.split("v1/")[this.CLEAR_URL_INDEX];
+        }
+
+        return url;
     }
 
     paginationProcess(meta) {
-        this.setMeta(meta)
-            .setButtons()
-            .setPage()
-            .setPerPage()
-            .setLinks()
-            .setPagination();
+        this.setMeta(meta).setButtonsLinks().setLinks().setPagination();
     }
 }

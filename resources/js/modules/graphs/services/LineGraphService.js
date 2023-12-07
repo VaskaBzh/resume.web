@@ -1,4 +1,4 @@
-import {GraphService} from "@/modules/graphs/services/extends/GraphService";
+import { GraphService } from "@/modules/graphs/services/extends/GraphService";
 
 export class LineGraphService extends GraphService {
     constructor(graphData, translate) {
@@ -58,41 +58,45 @@ export class LineGraphService extends GraphService {
 
     appendYAxis() {
         const clientHashrates = {
-            'T': 'TH/s',
-            'P': 'PH/s',
-            'E': 'EH/s'
-        }
-        let hash = ''
+            T: "TH/s",
+            P: "PH/s",
+            E: "EH/s",
+        };
+        let hash = "";
 
-        this.graphData.unit.forEach(item => {
-            hash = clientHashrates[item]
-        })
+        this.graphData.unit.forEach((item) => {
+            hash = clientHashrates[item];
+        });
 
+        this.svg
+            .append("g")
+            .attr("transform", `translate(-5, 0)`)
+            .call(this.yAxis)
+            .select(".domain")
+            .remove();
 
-
-            this.svg
-                .append("g")
-                .attr("transform", `translate(-5, 0)`)
-                .call(this.yAxis)
-                .select(".domain")
-                .remove();
-
-        this.svg.append("text").attr("x", -25).attr("y", 0)
+        this.svg
+            .append("text")
+            .attr("x", -25)
+            .attr("y", 0)
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("font-weight", "100")
-            .attr('fill', '#6F7682')
-            .attr('stroke-width', '.8')
+            .attr("fill", "#6F7682")
+            .attr("stroke-width", ".8")
             .text(`${hash}`);
 
-        this.svg.append("text").attr("x", -25) .attr("y", 0)
+        this.svg
+            .append("text")
+            .attr("x", -25)
+            .attr("y", 0)
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("font-weight", "100")
-            .attr('fill', '#6F7682')
-            .attr('stroke-width', '.8')
-            .text('TH/s');
-        console.log(this.graphData.unit)
+            .attr("fill", "#6F7682")
+            .attr("stroke-width", ".8")
+            .text("TH/s");
+
         return this;
     }
 
