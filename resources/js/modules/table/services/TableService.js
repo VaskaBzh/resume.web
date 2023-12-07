@@ -2,6 +2,7 @@ import { TableControllService } from "@/modules/table/services/TableControllServ
 import { Client } from "@/api/clients/Client";
 import { ResponseTrait } from "@/traits/ResponseTrait";
 import { Table } from "@/modules/table/models/Table";
+import { Pagination } from "@/modules/table/models/Pagination";
 
 export class TableService {
     GROUP_ID_PARAMS_INDEX = 0;
@@ -9,6 +10,7 @@ export class TableService {
     constructor() {
         this.client = this.createClient();
         this.tableModel = this.createTableModel();
+        this.paginationModel = this.createPaginationModel();
         this.responseTrait = this.useResponseTrait();
         this.tableStates = this.createTableControllService();
 
@@ -16,6 +18,10 @@ export class TableService {
         this.savedClent = null;
 
         this.eventsCount = 0;
+    }
+
+    createPaginationModel() {
+        return new Pagination();
     }
 
     createTableModel() {
@@ -84,6 +90,8 @@ export class TableService {
             }
 
             this.tableModel.setRows(responseData);
+
+            // this.paginationModel.paginationProcess(responseData);
 
             this.tableStates.endResponse();
 
