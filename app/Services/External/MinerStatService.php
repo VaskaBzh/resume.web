@@ -6,7 +6,7 @@ namespace App\Services\External;
 
 use App\Actions\MinerStat\Upsert;
 use App\Models\MinerStat;
-use App\Services\External\Contracts\ClientContract;
+use App\Services\External\BtcCom\ClientContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
