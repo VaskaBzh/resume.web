@@ -2,7 +2,6 @@
 
 namespace Feature;
 
-use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Models\Income;

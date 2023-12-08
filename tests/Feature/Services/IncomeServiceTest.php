@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Services;
 
-use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Models\Sub;

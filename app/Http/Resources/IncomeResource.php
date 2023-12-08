@@ -7,7 +7,6 @@ namespace App\Http\Resources;
 use App\Models\Income;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
-use const _PHPStan_c6b09fbdf\__;
 
 /** @mixin Income */
 #[
