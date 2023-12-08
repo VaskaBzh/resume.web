@@ -168,7 +168,6 @@ export default {
             deep: true,
             handler(newVal) {
                 if(newVal) {
-                    console.log(newVal)
                     this.worker_service.setFilterButtons();
                 }
 

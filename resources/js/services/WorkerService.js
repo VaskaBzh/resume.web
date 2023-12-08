@@ -63,7 +63,6 @@ export class WorkerService {
     }
 
     setFilterButtons() {
-        console.log(store.getters.getAccount)
         let active = store.getters.getAccount?.workers_count_active
         let inActive = store.getters.getAccount?.workers_count_in_active
         let dead = store.getters.getAccount?.workers_count_unstable

@@ -50,7 +50,6 @@ export default {
 		},
 	},
 	mounted() {
-        console.log(ge)
 		this.service.rowProcess(this.columns, this.titles);
 	},
 };

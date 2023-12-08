@@ -108,9 +108,6 @@ export default {
             }
         },
     },
-    mounted() {
-        console.log(this.service)
-    }
 };
 </script>
 <style lang="scss" scoped>

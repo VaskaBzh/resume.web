@@ -139,7 +139,6 @@ export default {
         ...mapGetters(['viewportWidth', 'user']),
     },
     async mounted() {
-        console.log(this.$route)
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }
