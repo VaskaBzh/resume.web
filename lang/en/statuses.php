@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'ready to payout' => 'Pending',
-    'less minWithdrawal' => 'Pending',
-    'completed' => 'Paid',
-    'error' => 'Error',
-    'verification' => 'Verification',
-    'no wallet' => 'Wallet needed',
+    'ready to payout' => 'pending',
+    'pending' => 'pending',
+    'completed' => 'paid',
+    'error' => 'error',
+    'verification' => 'verification',
+    'wallet needed' => 'wallet needed',
 ];

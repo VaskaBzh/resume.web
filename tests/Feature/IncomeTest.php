@@ -34,7 +34,6 @@ class IncomeTest extends TestCase
             'type' => Type::MINING->value,
             'daily_amount' => 0.00400000,
             'status' => Status::PENDING->value,
-            'message' => Message::LESS_MIN_WITHDRAWAL->value,
             'hash' => 100,
             'unit' => 'T',
             'diff' => 57321508229258,
@@ -49,9 +48,10 @@ class IncomeTest extends TestCase
                         'amount' => '0.00400000',
                         'payout' => null,
                         'hash' => 100,
+                        'status' => __('statuses.'.$income->status, locale: 'en'),
+                        'trans_status' => __('statuses.'.$income->status),
+                        'income_at' => $income->created_at->format('d.m.Y'),
                         'unit' => 'T',
-                        'status' => __('statuses.'.Message::LESS_MIN_WITHDRAWAL->value),
-                        'income_at' => $income->created_at->toDateTimeString(),
                         'payout_at' => null,
                         'tx_id' => null,
                         'wallet' => null,
@@ -111,8 +111,7 @@ class IncomeTest extends TestCase
                 'group_id' => $this->sub->group_id,
                 'type' => Type::MINING->value,
                 'daily_amount' => 0.00400000,
-                'status' => Status::COMPLETED->value,
-                'message' => Message::COMPLETED->value,
+                'status' => 'pending',
                 'hash' => 100,
                 'unit' => 'T',
                 'diff' => 57321508229258,
@@ -122,8 +121,7 @@ class IncomeTest extends TestCase
                 'group_id' => $this->sub->group_id,
                 'type' => Type::MINING->value,
                 'daily_amount' => 0.00400000,
-                'status' => Status::COMPLETED->value,
-                'message' => Message::COMPLETED->value,
+                'status' => 'pending',
                 'hash' => 100,
                 'unit' => 'T',
                 'diff' => 57321508229258,
@@ -132,12 +130,18 @@ class IncomeTest extends TestCase
         ]);
 
         $txId = Str::random(40);
-        $this->sub->payouts()->create([
+        $payout = $this->sub->payouts()->create([
             'wallet_id' => $wallet->id,
             'payout' => 0.00500000,
             'txid' => $txId,
             'created_at' => now(),
         ]);
+
+        Income::getNotCompleted($this->sub->group_id)
+            ->update([
+                'payout_id' => $payout->id,
+                'status' => 'completed',
+            ]);
 
         $this->getJson(route('v1.income.list', $this->sub))
             ->assertOk()
@@ -149,23 +153,25 @@ class IncomeTest extends TestCase
                         'payout' => '0.00500000',
                         'hash' => 100,
                         'unit' => 'T',
-                        'status' => __('statuses.'.Message::COMPLETED->value),
-                        'income_at' => now()->toDateTimeString(),
-                        'payout_at' => now()->toDateTimeString(),
+                        'status' => __('statuses.'.Status::COMPLETED->value, locale: 'en'),
+                        'trans_status' => __('statuses.'.Status::COMPLETED->value),
+                        'income_at' => now()->format('d.m.Y'),
+                        'payout_at' => now()->format('d.m.Y'),
                         'tx_id' => $txId,
                         'wallet' => $wallet->wallet,
                     ],
                     [
                         'type' => Type::MINING->value,
                         'amount' => '0.00400000',
-                        'payout' => null,
+                        'payout' => '0.00500000',
                         'hash' => 100,
                         'unit' => 'T',
-                        'status' => __('statuses.'.Message::COMPLETED->value),
-                        'income_at' => now()->subDay()->toDateTimeString(),
-                        'payout_at' => null,
-                        'tx_id' => null,
-                        'wallet' => null,
+                        'status' => __('statuses.'.Status::COMPLETED->value, locale: 'en'),
+                        'trans_status' => __('statuses.'.Status::COMPLETED->value),
+                        'income_at' => now()->subDay()->format('d.m.Y'),
+                        'payout_at' => now()->format('d.m.Y'),
+                        'tx_id' => $txId,
+                        'wallet' => $wallet->wallet,
                     ],
                 ],
                 'links' => [

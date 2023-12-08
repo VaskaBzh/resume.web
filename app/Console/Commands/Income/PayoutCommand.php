@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Income;
 
+use App\Actions\Sub\ResetPending;
 use App\Dto\Income\UpdateStatusData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
@@ -12,6 +13,7 @@ use App\Models\Sub;
 use App\Services\External\Wallet\Client;
 use App\Services\Internal\IncomeService;
 use App\Services\Internal\PayoutService;
+use App\Services\Internal\SubService;
 use Illuminate\Console\Command;
 
 class PayoutCommand extends Command
@@ -27,7 +29,7 @@ class PayoutCommand extends Command
             ->get()
             ->each(static function (Sub $sub) {
                 try {
-                    PayoutService::init($sub)
+                    $payout = PayoutService::init($sub)
                         ->payOut(static function (Client $client) use ($sub) {
                             $amount = (float) $sub->pending_amount;
 
@@ -39,18 +41,18 @@ class PayoutCommand extends Command
                             $client->lock();
 
                             return [$txId, $amount];
-                        })->clearPendingAmount();
+                        });
 
+                    SubService::resetPending(sub: $sub);
                     IncomeService::updateIncomes(data: UpdateStatusData::fromArray([
                         'sub' => $sub,
+                        'payout' => $payout,
                         'status' => Status::COMPLETED,
-                        'message' => Message::COMPLETED,
                     ]));
                 } catch (PayOutException|\Exception $e) {
                     IncomeService::updateIncomes(data: UpdateStatusData::fromArray([
                         'sub' => $sub,
-                        'status' => Status::REJECTED,
-                        'message' => Message::ERROR_PAYOUT,
+                        'status' => Status::ERROR,
                     ]));
 
                     report($e);

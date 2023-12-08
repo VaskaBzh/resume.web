@@ -74,8 +74,7 @@ class IncomeServiceTest extends TestCase
             'group_id' => $subWithHashRate->group_id,
             'type' => Type::MINING->value,
             'daily_amount' => number_format($expectDailyAmount, 8, '.', ''),
-            'status' => Status::PENDING->value,
-            'message' => Message::NO_WALLET->value,
+            'status' => Status::NO_WALLET->value,
             'hash' => $convertedHashRate->value,
             'unit' => $convertedHashRate->unit,
         ]);
@@ -182,8 +181,7 @@ class IncomeServiceTest extends TestCase
             'type' => Type::REFERRAL->value,
             'referral_id' => $referralSub->user->id,
             'daily_amount' => $expectReferrerDailyAmount,
-            'status' => Status::PENDING->value,
-            'message' => Message::ON_VERIFY->value,
+            'status' => Status::ON_VERIFY->value,
             'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
     }
@@ -222,7 +220,6 @@ class IncomeServiceTest extends TestCase
             'type' => Type::MINING->value,
             'daily_amount' => $expectDailyAmount,
             'status' => Status::PENDING->value,
-            'message' => Message::LESS_MIN_WITHDRAWAL->value,
             'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
         $this->assertDatabaseHas('subs', [

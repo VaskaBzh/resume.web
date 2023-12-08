@@ -39,7 +39,7 @@ class WorkerHashRateTest extends TestCase
                 'data' => $worker->workerHashrates->map(static function (WorkerHashrate $workerHashrate) {
 
                     return [
-                        'day_at' => $workerHashrate->created_at->format('Y.m.d'),
+                        'day_at' => $workerHashrate->created_at->format('d.m.Y'),
                         'hash' => $workerHashrate->hash_per_min,
                         'hour_at' => $workerHashrate->created_at->format('H:m'),
                         'id' => $workerHashrate->id,

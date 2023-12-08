@@ -12,7 +12,6 @@ use App\Dto\FinanceData;
 use App\Dto\Income\IncomeCreateData;
 use App\Dto\Income\UpdateStatusData;
 use App\Dto\Sub\SubUpsertData;
-use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Models\Income;
@@ -28,12 +27,16 @@ final class IncomeService
      *     mining: array{
      *         dailyAmount: float,
      *         pendingAmount: float,
-     *         totalAmount: float
+     *         totalAmount: float,
+     *         status: string,
+     *         message?: string
      *     },
      *     referral: array{
      *         dailyAmount: float,
      *         pendingAmount: float,
-     *         totalAmount: float
+     *         totalAmount: float,
+     *         status: string,
+     *         message?: string,
      *     },
      *     hash: float|null,
      *     diff: float|null
@@ -188,27 +191,23 @@ final class IncomeService
         Type $incomeType
     ): void {
         if ($sub->wallets->isEmpty()) {
-            $this->params[$incomeType->value]['message'] = Message::NO_WALLET;
-            $this->params[$incomeType->value]['status'] = Status::PENDING;
+            $this->params[$incomeType->value]['status'] = Status::NO_WALLET;
 
             return;
         }
 
         if (! $sub->wallets->first()->isUnlocked()) {
-            $this->params[$incomeType->value]['message'] = Message::ON_VERIFY;
-            $this->params[$incomeType->value]['status'] = Status::PENDING;
+            $this->params[$incomeType->value]['status'] = Status::ON_VERIFY;
 
             return;
         }
 
         if (! $this->isReadyToPayOut($sub, $incomeType)) {
-            $this->params[$incomeType->value]['message'] = Message::LESS_MIN_WITHDRAWAL;
             $this->params[$incomeType->value]['status'] = Status::PENDING;
 
             return;
         }
 
-        $this->params[$incomeType->value]['message'] = Message::READY_TO_PAYOUT;
         $this->params[$incomeType->value]['status'] = Status::READY_TO_PAYOUT;
     }
 
@@ -225,7 +224,6 @@ final class IncomeService
                 'type' => $incomeType,
                 'referral_id' => $incomeType->value === 'referral' ? $this->sub->user->id : null,
                 'status' => $this->params[$incomeType->value]['status'],
-                'message' => $this->params[$incomeType->value]['message'],
                 'hash' => HashRateConverter::fromPure($this->hashRate),
                 'diff' => $this->stat->network_difficulty,
             ])

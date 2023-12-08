@@ -12,6 +12,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+// TODO: Refactor to BaseClient implementation
 final class Client
 {
     public function __construct(

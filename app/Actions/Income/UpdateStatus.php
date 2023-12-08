@@ -14,8 +14,8 @@ class UpdateStatus
     ): void {
         Income::getNotCompleted($updateStatusData->sub->group_id)
             ->each(static fn (Income $income) => $income->update([
-                'message' => $updateStatusData->message,
-                'status' => $updateStatusData->status,
+                'payout_id' => $updateStatusData->payout->id,
+                'status' => $updateStatusData->status->value,
                 'wallet_id' => $updateStatusData->wallet?->wallet_id,
             ]));
     }

@@ -15,7 +15,7 @@ class Client extends BaseClient
         return config('api.minerstat.uri');
     }
 
-    private function import(array $properties): Collection
+    private function import(array $properties): Client
     {
         $paths = config('api.minerstat.paths');
 
@@ -29,11 +29,11 @@ class Client extends BaseClient
             }
         }
 
-        return $imports;
+        return $this;
     }
 
     public function getImport(array $properties): Collection
     {
-        return $this->import($properties);
+        return $this->import($properties)->stats;
     }
 }

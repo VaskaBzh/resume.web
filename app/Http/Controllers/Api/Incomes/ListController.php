@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\Incomes;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\IncomeResource;
 use App\Models\Income;
+use App\Models\Payout;
 use App\Models\Sub;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -107,14 +108,7 @@ class ListController extends Controller
     public function __invoke(Sub $sub, Request $request): JsonResource
     {
         return IncomeResource::collection(
-            Income::withPayouts($sub)
-                ->select('incomes.group_id',
-                    'incomes.*',
-                    'wallets.wallet',
-                    'payouts.payout',
-                    'payouts.created_at as payout_at',
-                    'payouts.txid',
-                )
+            Income::with(['payout.wallet'])
                 ->between('incomes.created_at', $request->from, $request->to)
                 ->latest('incomes.created_at')
                 ->paginate($request->per_page)
