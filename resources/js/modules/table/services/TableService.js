@@ -88,10 +88,10 @@ export class TableService {
             const response = await this.client[client](...params);
 
             const responseData = this.responseTrait.getResponseData(response);
-            const responseMeta = this.objectTrait.findValueByKey(
-                response,
-                "meta"
-            );
+            // const responseMeta = this.objectTrait.findValueByKey(
+            //     response,
+            //     "meta"
+            // );
 
             if (this.responseTrait.isEmptyResponse(responseData)) {
                 this.tableStates.emptyResponse();
@@ -101,10 +101,10 @@ export class TableService {
 
             this.tableModel.setRows(responseData);
 
-            if (responseMeta) {
-                this.paginationModel.paginationProcess(responseMeta);
-                console.log(this.paginationModel);
-            }
+            // if (responseMeta) {
+            //     this.paginationModel.paginationProcess(responseMeta);
+            //     console.log(this.paginationModel);
+            // }
 
             this.tableStates.endResponse();
 
