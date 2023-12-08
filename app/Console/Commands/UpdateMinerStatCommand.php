@@ -14,11 +14,10 @@ class UpdateMinerStatCommand extends Command
 
     protected $description = 'Command description';
 
-    public function handle(
-        MinerStatService $minerStatService,
-    ) {
+    public function handle(): void
+    {
         try {
-            $stats = $minerStatService->store();
+            $stats = MinerStatService::store();
 
             if (! is_null($stats)) {
                 Log::channel('commands.blockchain')->info('MINER STATS COMMAND', [
@@ -26,8 +25,6 @@ class UpdateMinerStatCommand extends Command
                 ]);
 
                 $this->info('Stats updated');
-
-                return 0;
             }
         } catch (\Exception $e) {
             report($e);

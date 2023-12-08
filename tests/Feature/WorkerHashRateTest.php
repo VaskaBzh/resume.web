@@ -6,7 +6,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\WorkerHashrate;
-use App\Utils\HashRateConverter;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -38,12 +37,13 @@ class WorkerHashRateTest extends TestCase
             ->assertOk()
             ->assertExactJson([
                 'data' => $worker->workerHashrates->map(static function (WorkerHashrate $workerHashrate) {
-                    $hashRate = HashRateConverter::fromPure((int) $workerHashrate->hash_per_min);
 
                     return [
-                        'hash' => (float) $hashRate->value,
+                        'day_at' => $workerHashrate->created_at->format('d.m.Y'),
+                        'hash' => $workerHashrate->hash_per_min,
+                        'hour_at' => $workerHashrate->created_at->format('H:m'),
                         'id' => $workerHashrate->id,
-                        'unit' => $hashRate->unit,
+                        'unit' => $workerHashrate->unit,
                         'worker_id' => $workerHashrate->worker_id,
                     ];
                 }),

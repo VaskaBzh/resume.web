@@ -8,6 +8,7 @@ use App\Actions\Payout\Create;
 use App\Actions\Sub\ResetPending;
 use App\Dto\PayoutData;
 use App\Exceptions\PayOutException;
+use App\Models\Payout;
 use App\Models\Sub;
 use App\Models\Wallet;
 use App\Services\External\Wallet\Client;
@@ -38,29 +39,19 @@ final readonly class PayoutService
      *
      * @throws PayOutException
      */
-    public function payOut(callable $callback): PayoutService
+    public function payOut(callable $callback): Payout
     {
         try {
             [$txId, $amount] = $callback(app(Client::class));
 
-            Create::execute(PayoutData::fromArray([
+            return Create::execute(PayoutData::fromArray([
                 'sub' => $this->sub,
                 'wallet' => $this->wallet,
                 'payout' => $amount,
                 'txid' => $txId,
             ]));
-
-            return $this;
         } catch (PayOutException|RequestException $e) {
             throw new PayOutException($e->getMessage());
         }
-    }
-
-    /**
-     * Reset sub-account pending amount
-     */
-    public function clearPendingAmount(): void
-    {
-        ResetPending::execute(sub: $this->sub);
     }
 }

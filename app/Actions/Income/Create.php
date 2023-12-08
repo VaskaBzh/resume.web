@@ -20,7 +20,7 @@ class Create
             'referral_id' => $incomeCreateData->referralId,
             'daily_amount' => $incomeCreateData->dailyAmount,
             'status' => $incomeCreateData->status->value,
-            'message' => $incomeCreateData->message->value,
+            'message' => $incomeCreateData->message?->value,
             'hash' => $incomeCreateData->hashrate->value,
             'unit' => $incomeCreateData->hashrate->unit,
             'diff' => $incomeCreateData->difficulty,

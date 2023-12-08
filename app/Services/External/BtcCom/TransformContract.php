@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\External\Contracts;
+namespace App\Services\External\BtcCom;
 
 use App\Dto\Sub\SubViewData;
 use App\Dto\WorkerData;

@@ -9,7 +9,7 @@ use App\Dto\WorkerData;
 use App\Models\Sub;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcCom\Client;
-use App\Services\External\Contracts\TransformContract;
+use App\Services\External\BtcCom\TransformContract;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 

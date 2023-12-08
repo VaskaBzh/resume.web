@@ -8,7 +8,6 @@ use App\Dto\Sub\SubViewData;
 use App\Dto\WorkerData;
 use App\Enums\Hash\Unit;
 use App\Models\Sub;
-use App\Services\External\Contracts\TransformContract;
 use App\Utils\HashRateConverter;
 use Illuminate\Support\Arr;
 

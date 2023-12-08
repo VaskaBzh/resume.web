@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Utils\HashRateConverter;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
+use const _PHPStan_c6b09fbdf\__;
 
 class StatisticTest extends TestCase
 {
@@ -30,7 +31,6 @@ class StatisticTest extends TestCase
                 'type' => Type::MINING->value,
                 'daily_amount' => 0.00400000,
                 'status' => Status::COMPLETED->value,
-                'message' => Message::COMPLETED->value,
                 'hash' => 100,
                 'unit' => 'T',
                 'diff' => 57321508229258,
@@ -40,8 +40,7 @@ class StatisticTest extends TestCase
                 'group_id' => $this->sub->group_id,
                 'type' => Type::MINING->value,
                 'daily_amount' => 0.00400000,
-                'status' => Status::COMPLETED->value,
-                'message' => Message::COMPLETED->value,
+                'status' => Status::READY_TO_PAYOUT->value,
                 'hash' => 100,
                 'unit' => 'T',
                 'diff' => 57321508229258,
@@ -50,7 +49,6 @@ class StatisticTest extends TestCase
         ]);
         $this->hashes = $this->sub
             ->hashes()
-            ->select('hash', 'unit', 'worker_count')
             ->get();
     }
 
@@ -66,11 +64,11 @@ class StatisticTest extends TestCase
             ->assertExactJson([
                 'hashes' => $this->hashes->map(function (Hash $hash) {
 
-                    $hashRate = HashRateConverter::fromPure($hash->hash);
-
                     return [
-                        'hash' => (float) $hashRate->value,
-                        'unit' => $hashRate->unit,
+                        'day_at' => $hash->created_at->format('d.m.Y'),
+                        'hash' => $hash->hash,
+                        'hour_at' => $hash->created_at->format('H:m'),
+                        'unit' => HashRateConverter::fromPure($hash->hash)->unit,
                         'worker_count' => $hash->worker_count,
                     ];
                 }),
@@ -81,8 +79,9 @@ class StatisticTest extends TestCase
                         'payout' => null,
                         'hash' => 100,
                         'unit' => 'T',
-                        'status' => 'done',
-                        'income_at' => now()->toDateTimeString(),
+                        'status' => 'pending',
+                        'trans_status' => __('statuses.ready to payout'),
+                        'income_at' => now()->format('d.m.Y'),
                         'payout_at' => null,
                         'tx_id' => null,
                         'wallet' => null,
@@ -93,8 +92,9 @@ class StatisticTest extends TestCase
                         'payout' => null,
                         'hash' => 100,
                         'unit' => 'T',
-                        'status' => 'done',
-                        'income_at' => now()->subDay()->toDateTimeString(),
+                        'status' => 'paid',
+                        'trans_status' => __('statuses.completed'),
+                        'income_at' => now()->subDay()->format('d.m.Y'),
                         'payout_at' => null,
                         'tx_id' => null,
                         'wallet' => null,

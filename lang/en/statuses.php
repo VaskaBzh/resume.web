@@ -2,9 +2,9 @@
 
 return [
     'ready to payout' => 'pending',
-    'less minWithdrawal' => 'pending',
-    'completed' => 'done',
+    'pending' => 'pending',
+    'completed' => 'paid',
     'error' => 'error',
     'verification' => 'verification',
-    'no wallet' => 'wallet needed',
+    'wallet needed' => 'wallet needed',
 ];

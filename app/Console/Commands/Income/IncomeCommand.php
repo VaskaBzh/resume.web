@@ -28,7 +28,6 @@ class IncomeCommand extends Command
                 $sub->refresh();
 
                 try {
-
                     $referrerActiveSub = $sub->user
                         ->referrer
                         ?->activeSub()
