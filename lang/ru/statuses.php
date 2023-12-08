@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'less minWithdrawal' => 'В ожидании',
-    'completed' => 'Выплачено',
     'ready to payout' => 'В ожидании',
+    'pending' => 'В ожидании',
+    'completed' => 'Выплачено',
     'error' => 'Ошибка',
     'verification' => 'Проверка',
-    'no wallet' => 'Нет пошелька',
+    'wallet needed' => 'Нет пошелька',
 ];

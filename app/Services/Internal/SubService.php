@@ -6,6 +6,7 @@ namespace App\Services\Internal;
 
 use App\Actions\Hashes\Create as CreateNew;
 use App\Actions\Sub\Create;
+use App\Actions\Sub\ResetPending;
 use App\Dto\Sub\SubsOverallData;
 use App\Dto\Sub\SubUpsertData;
 use App\Dto\Sub\SubViewData;
@@ -109,5 +110,15 @@ final readonly class SubService
                 workerCount: $subData->activeWorkersCount
             );
         });
+    }
+
+    /**
+     * Set pending amount to 0 if balance is withdraw
+     *
+     * @param Sub $sub
+     */
+    public static function resetPending(Sub $sub): void
+    {
+        ResetPending::execute(sub: $sub);
     }
 }

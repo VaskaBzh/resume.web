@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
+// TODO: Refactor to BaseClient implementation
 class Client implements ClientContract
 {
     /**

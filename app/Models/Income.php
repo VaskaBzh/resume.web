@@ -46,6 +46,11 @@ class Income extends Model
         return $this->belongsTo(Wallet::class);
     }
 
+    public function payout(): BelongsTo
+    {
+        return $this->belongsTo(Payout::class);
+    }
+
     /* end relations */
 
     public function newEloquentBuilder($query): IncomeBuilder

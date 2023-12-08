@@ -32,7 +32,7 @@ class WorkerHashRateResource extends JsonResource
             'hash' => $this->hash_per_min,
             'unit' => $this->unit,
             'worker_id' => $this->worker_id,
-            'day_at' => $this->created_at->format('Y.m.d'),
+            'day_at' => $this->created_at->format('d.m.Y'),
             'hour_at' => $this->created_at->format('H:m'),
         ];
     }
