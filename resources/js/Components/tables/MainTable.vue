@@ -217,7 +217,7 @@ export default {
         }
         svg {
             transition: all 0.3s ease 0s;
-            stroke: #6F7682;
+            stroke: var(--text-teritary, #98A2B3);
             position: absolute;
             right: 40px;
             margin-top: 25px;
