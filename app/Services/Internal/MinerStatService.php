@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\External;
+namespace App\Services\Internal;
 
 use App\Actions\MinerStat\Upsert;
 use App\Models\MinerStat;
@@ -22,7 +22,7 @@ class MinerStatService
             'change_difficulty' => 0,
             'fpps_rate' => app(BtcComClient::class)->getFppsRate(),
         ]);
-        $stats->merge(app(MinerStatsClient::class)->getImport(properties: $properties));
+        $stats->merge(app(MinerStatsClient::class)(properties: $properties));
 
         return Upsert::execute($stats);
     }
