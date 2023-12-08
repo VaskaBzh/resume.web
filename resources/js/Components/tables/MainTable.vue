@@ -2,7 +2,7 @@
     <table class="table">
         <thead class="table__head">
             <tr class="table__row">
-                <th class="table_column" v-for="(title, i) in titles" :key="i">
+                <th class="table_column" v-for="(title, i) in titles" :key="i" >
                     <span>{{ title }}</span>
                 </th>
             </tr>
@@ -91,7 +91,7 @@ export default {
 <style lang="scss">
 .table {
     width: 100%;
-    border-spacing: 0 8px;
+    border-spacing: 0 4px;
     text-indent: 0;
     border-collapse: separate;
     @media (max-width: 767.98px) {
@@ -130,6 +130,17 @@ export default {
             -webkit-user-select: text;
             user-select: text;
             display: inline-flex;
+        }
+
+        &__active_row_table:before {
+            content: '';
+            width: 2px;
+            height: 20px;
+            background: deepskyblue;
+            position: absolute;
+            top: 0;
+            left: 0;
+
         }
     }
     &__head {
@@ -206,7 +217,7 @@ export default {
         }
         svg {
             transition: all 0.3s ease 0s;
-            stroke: #818c99;
+            stroke: #6F7682;
             position: absolute;
             right: 40px;
             margin-top: 25px;
@@ -232,4 +243,6 @@ export default {
         }
     }
 }
+
+
 </style>

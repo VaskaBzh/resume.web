@@ -848,9 +848,9 @@ const messages = {
                 thead: [
                     "Worker name",
                     "Current hashrate",
-                    "Hashrate/1h",
-                    "Hashrate/24h",
-                    "Failure rate/24h",
+                    "Hashrate / 1h",
+                    "Hashrate / 24h",
+                    "Reject / 24h",
                 ],
                 thead_short: [
                     "Name",
@@ -1889,10 +1889,10 @@ const messages = {
             table: {
                 thead: [
                     "Имя воркера",
-                    "Текущий",
-                    "Хешрейт/1ч",
-                    "Хешрейт/24ч",
-                    "Частота отказов/24ч",
+                    "Текущий хешрейт",
+                    "Хешрейт / 1ч",
+                    "Хешрейт / 24ч",
+                    "Реджект / 24ч",
                 ],
                 thead_short: ["Имя", "Текущий", "Ср.хешрейт/1д", "Отказы/1д"],
                 sub_thead: "Общий хешрейт",

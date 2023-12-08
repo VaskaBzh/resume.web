@@ -57,16 +57,22 @@ export class LineGraphService extends GraphService {
     }
 
     appendYAxis() {
-        const clientHashrates = {
-            'T': 'TH/s',
-            'P': 'PH/s',
-            'E': 'EH/s'
-        }
-        let hash = ''
+        const HashrateUnitEnum = {
+            T: "TH/s",
+            P: "PH/s",
+            E: "EH/s",
+        };
+        let includedUnit = HashrateUnitEnum["T"];
 
-        this.graphData.unit.forEach(item => {
-            hash = clientHashrates[item]
-        })
+        if (this.graphData.unit.includes("E")) {
+
+            includedUnit = HashrateUnitEnum["E"];
+
+        } else if (this.graphData.unit.includes("P")) {
+
+            includedUnit = HashrateUnitEnum["P"];
+        }
+
 
 
 
@@ -83,7 +89,7 @@ export class LineGraphService extends GraphService {
             .style("font-weight", "100")
             .attr('fill', '#6F7682')
             .attr('stroke-width', '.8')
-            .text(`${hash}`);
+            .text(`${includedUnit}`);
 
         return this;
     }

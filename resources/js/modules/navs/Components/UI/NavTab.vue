@@ -41,7 +41,7 @@ export default {
     display: inline-flex;
     align-items: center;
     padding: 0 16px;
-    min-height: 48px;
+    min-height: 40px;
     transition: all 0.5s ease 0s;
     border-radius: 12px;
     background: transparent;

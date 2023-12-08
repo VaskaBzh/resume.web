@@ -63,22 +63,33 @@ export class WorkerService {
     }
 
     setFilterButtons() {
+        console.log(store.getters.getAccount)
+        let active = store.getters.getAccount?.workers_count_active
+        let inActive = store.getters.getAccount?.workers_count_in_active
+        let dead = store.getters.getAccount?.workers_count_unstable
+        let sumWorkers = store.getters.getAccount?.workers_count
         this.filterButtons = [
             {
                 name: "all",
                 value: "all",
+                count: sumWorkers
+
             },
             {
                 name: "active",
                 value: "active",
+                count: active
             },
             {
                 name: "inactive",
                 value: "inactive",
+                count: inActive
             },
             {
                 name: "dead",
                 value: "dead",
+                count: dead
+
             },
         ];
 

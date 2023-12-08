@@ -164,6 +164,16 @@ export default {
             this.initWorkers();
             document.title = this.$t("header.links.workers");
         },
+        "getAccount": {
+            deep: true,
+            handler(newVal) {
+                if(newVal) {
+                    console.log(newVal)
+                    this.worker_service.setFilterButtons();
+                }
+
+            }
+        }
     },
     methods: {
         setStatus(status) {
@@ -220,9 +230,9 @@ export default {
         },
     },
     mounted() {
+
         this.isMounted = true
         this.instructionService.setStepsCount(2);
-
         this.worker_service.setFilterButtons();
 
         this.initWorkers();

@@ -9,7 +9,7 @@
             }"
             @click="$emit('changeStatus', tab.value)"
         >
-            {{ $t(tab.name) }}
+            {{ $t(tab.name) }} ({{tab.count ?? 0}})
         </div>
     </div>
 </template>
@@ -25,7 +25,8 @@ export default {
     },
     i18n: {
         sharedMessages: WorkerMessages,
-    }
+    },
+
 }
 </script>
 
