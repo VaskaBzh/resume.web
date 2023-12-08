@@ -1,0 +1,17 @@
+import{M as p}from"./MainSearch-cc3f8f4b.js";import{G as a,P as _}from"./GradeData-86a3feeb.js";import{T as m}from"./TableService-ecb32e12.js";import{P as d,_ as u,m as w,r as c,o as f,c as v,d as l,h as b}from"./app-7a3a58ff.js";import{R as g,a as y}from"./ReferralsLayoutView-cd624d01.js";import{M as T}from"./MainTable-a3e08966.js";import{M}from"./MainSlider-cf396ea1.js";import"./MainTitle-5abaae33.js";/* empty css                                                                  */import"./MainTabs-a2f87367.js";import"./MainPreloader-edb92089.js";import"./StatesService-a0d6c34c.js";import"./anime.es-de4e5aa0.js";class k{constructor(e,t,i,s,o,n){this.mail=e,this.workers_stats=`${t} / ${i}`,this.hashrate=`${s} ${o}h/s`,this.amount=`${n} BTC`}}const $={svg:`<circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke-width="1.5"
+                />
+                <path
+                    d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 9.39815 13.8837 9.76913 13.6831 10.0808C13.0854 11.0097 12 11.8954 12 13V13.5"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M11.992 17H12.001"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />`};class x extends m{constructor(e,t){super(e,t),this.user=null}setter(e){return new k(e.email,e.referral_active_workers_count,e.referral_inactive_workers_count,e.referral_hash_per_day,e.referral_hash_per_day_unit,e.total_amount)}setUser(e){this.user=e}useTranslater(e){return e.map(t=>this.translate(`referrals_titles[${t}]`))}async fetchReferrals(e,t){return await d.get(`/referrals/${this.user.id}`)}async index(e=1,t=15){this.emptyTable=!1,this.waitTable=!0;let i={};try{i=await this.fetchReferrals(e,t),this.rows=i.data.data.map(s=>this.setter(s)),this.rows.length===0&&(this.emptyTable=!0),this.titles=this.useTranslater([0,1,2,4])}catch(s){console.error(`FetchError: ${s}`),this.emptyTable=!0}return this}async setTable(e=1,t=15){return await this.index(e,t),this.table.set("titles",this.titles),this.table.set("rows",this.rows),this.waitTable=!1,this}getGradeList(){this.gradeList=[],this.gradeList=[new a("0.8","> 30"),new a("0.9","30 - 49"),new a("1.0","75 - 99"),new a("1.25","75 - 99"),new a("1.5","100 - 199"),new a("2.0","200 - 299"),new a("< 3","300 - 500")]}getPercent(){this.percent=0,this.percentSvg="",this.percentSvg=$.svg,this.percent=.8}}const P={name:"referrals-view",i18n:{sharedMessages:g},computed:{...w(["user"])},components:{MainSearch:p,PercentCard:_,ReferralsLayoutView:y,MainSlider:M,MainTable:T},data(){return{service:new x(this.$t,[0,1,2,3,4])}},watch:{user:{async handler(r){this.service.setUser(r),await this.service.setTable()},deep:!0},"$i18n.locale"(){this.service.getGradeList()}},async mounted(){var r;(r=this.user)!=null&&r.id&&(this.service.setUser(this.user),await this.service.setTable()),this.service.getGradeList(),this.service.getPercent()}},R={class:"referral__content"};function C(r,e,t,i,s,o){const n=c("main-table"),h=c("main-slider");return f(),v("div",R,[l(h,{class:"referral__slider",wait:s.service.waitTable,empty:s.service.emptyTable,rowsNum:"1000",haveNav:!1},{default:b(()=>[l(n,{table:s.service.table},null,8,["table"])]),_:1},8,["wait","empty"])])}const I=u(P,[["render",C],["__scopeId","data-v-8b7db24b"]]);export{I as default};

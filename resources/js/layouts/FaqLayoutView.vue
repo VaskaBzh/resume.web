@@ -82,12 +82,19 @@
             <faq-tabs v-show="this.$route.name === 'description'">
                 <h2 class="fat__tabs_title">{{ $t("title_scroll_tabs") }}</h2>
             </faq-tabs>
-            <div class="faq__main_items">
-                <faq-navs-tabs/>
-                <keep-alive>
-                    <router-view/>
-                </keep-alive>
+            <div class="faq_main_blocks">
+                <div class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
+                    <faq-navs-tabs id="faq_navs"/>
+                    <keep-alive>
+                        <router-view/>
+                    </keep-alive>
+                </div>
             </div>
+        </div>
+        <div class="layout__block-fixed">
+            <a href="#faq_navs" class="layout_button">
+                <arrow-up-icon class="layout_icon"/>
+            </a>
         </div>
     </div>
 </template>
@@ -107,10 +114,12 @@ import FaqTabs from "@/modules/faq/Components/UI/FaqTabs.vue";
 import {faqTranslate} from "@/modules/faq/lang/FaqTranslate";
 import NavTabs from "@/modules/navs/Components/NavTabs.vue";
 import {InstructionService} from "@/modules/instruction/services/InstructionService";
+import ArrowUpIcon from "@/modules/common/icons/ArrowUpIcon.vue";
 
 export default {
     name: "FaqLayoutView",
     components: {
+        ArrowUpIcon,
         NavTabs,
         FaqTabs,
         FaqNavsTabs,
@@ -140,6 +149,7 @@ export default {
         });
         document.title = "FAQ";
 
+
     },
 
 }
@@ -163,6 +173,12 @@ export default {
     min-height: 72px;
 }
 
+@media (max-width: 475px) {
+    .faq-header {
+        padding: 8px 12px;
+    }
+}
+
 .faq_current {
     display: flex;
     align-items: center;
@@ -180,6 +196,7 @@ export default {
     .faq_current {
         z-index: 999;
         padding: unset;
+        margin-left: 0;
     }
 }
 
@@ -187,8 +204,38 @@ export default {
     display: flex;
     gap: 122px;
     flex-flow: row nowrap;
-    padding: 44px 24px 0;
     background: #161616;
+}
+
+.layout_button {
+    border: 0.5px solid rgba(192, 228, 255, 0.6);
+    background: rgba(13, 13, 13, 0.7);
+    backdrop-filter: blur(10px);
+    width: clamp(40px, 3vw, 80px);
+    height: clamp(40px, 3vw, 80px);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #e4e7ec;
+    font-family: Unbounded, serif;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 400;
+    line-height: 120%;
+    text-transform: uppercase;
+}
+
+.layout_icon {
+    width: clamp(20px, 5vw, 32px);
+    height: clamp(20px, 5vw, 32px);
+}
+
+.layout__block-fixed {
+    position: fixed;
+    right: clamp(16px, 5vw, 100px);
+    bottom: clamp(16px, 5vw, 100px);
+    z-index: 12;
+    max-width: 100%;
 }
 
 .faq_dark {
@@ -197,17 +244,75 @@ export default {
     margin-right: 0;
 }
 
+.faq_main_blocks {
+    padding: 44px 24px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+@media (max-width: 475px) {
+    .faq_main_blocks {
+        padding: 12px;
+    }
+}
+
+.faq_main_blocks::-webkit-scrollbar {
+    display: none;
+}
+
 .faq__main_items {
     display: flex;
     flex-flow: column nowrap;
     gap: 36px;
     flex: 1 1 0;
-    height: calc(100vh - 144px);
+    height: calc(100vh - 165px);
     max-width: 690px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+@media (min-width: 1920px) {
+    .faq__main_items {
+        max-width: 1170px;
+    }
+}
+
+@media (max-width: 1440px) {
+    .faq__main_items {
+        max-width: unset;
+        margin: 0;
+        padding: 0 275px;
+    }
+
+}
+
+@media (max-width: 1200px) {
+    .faq__main_items {
+        padding: 0 0 0 275px;
+    }
+}
+
+@media (max-width: 999.99px) {
+    .faq__main_items {
+        margin: 0 auto;
+        max-width: 100%;
+        width: 100%;
+        padding: 0;
+    }
+
+}
+
+@media (max-width: 475px) {
+    .faq__main_items {
+        height: calc(100vh - 100px);
+        gap: 16px;
+    }
+
 }
 
 .fat__tabs_title {
-    font-size: 27px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 40px;

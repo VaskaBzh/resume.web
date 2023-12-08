@@ -9,7 +9,7 @@
         >
             <path
                 d="M28.6663 18.7713C27.0668 19.6254 25.2399 20.1096 23.2999 20.1096C16.9985 20.1096 11.8902 15.0013 11.8902 8.69997C11.8902 6.75998 12.3744 4.93307 13.2285 3.3335C7.55654 4.66281 3.33301 9.75367 3.33301 15.831C3.33301 22.92 9.07981 28.6668 16.1688 28.6668C22.2462 28.6668 27.337 24.4433 28.6663 18.7713Z"
-                stroke="#98A2B3"
+                stroke="#595E68"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -25,7 +25,7 @@
         >
             <path
                 d="M12 2V3.5M12 20.5V22M19.0708 19.0713L18.0101 18.0106M5.98926 5.98926L4.9286 4.9286M22 12H20.5M3.5 12H2M19.0713 4.92871L18.0106 5.98937M5.98975 18.0107L4.92909 19.0714M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z"
-                stroke="#6F7682"
+                stroke="#595E68"
                 stroke-width="1.5"
                 stroke-linecap="round"
             />
@@ -117,7 +117,7 @@ export default {
 .checkbox {
     width: 60px;
     height: 32px;
-    background: var(--buttons-fourth-fill-border-default, #f2f4f7);
+    background: var(--buttons-fourth-fill-border-default);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: 24px;
     position: relative;
@@ -146,8 +146,8 @@ export default {
         }
     }
     svg {
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
     }
 }
 </style>

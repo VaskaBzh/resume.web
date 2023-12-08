@@ -105,7 +105,7 @@ export default {
     height: 40px;
     padding: 8px 12px;
     border-radius: 12px;
-    background: var(--buttons-fourth-fill-border-default, #f2f4f7);
+    background: var(--buttons-fourth-fill-border-default);
     position: relative;
     cursor: pointer;
     @media (max-width: 767.98px) {
@@ -120,7 +120,7 @@ export default {
         gap: 8px;
         border-radius: 14px;
         transition: all 0.5s ease 0s;
-        color: var(--gray-400, #98a2b3);
+        color: #6F7682;
         text-align: center;
 
         /* Label 1/Nunito Sans 10pt/14/SemiBold */

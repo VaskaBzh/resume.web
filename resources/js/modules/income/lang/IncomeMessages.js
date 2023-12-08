@@ -20,7 +20,7 @@ export const IncomeMessages = {
         block: {
             titles: {
                 full_income: "Начислено за все время",
-                income: "Начислено",
+                income: "Текущий баланс",
                 yesterday_amount: "Вчерашний доход",
                 month_profit: "Доход за месяц",
                 month_profit_graph: "График дохода за месяц",

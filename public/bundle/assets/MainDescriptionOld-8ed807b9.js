@@ -1,0 +1,1 @@
+import{_ as t,o as s,c as n,i as o}from"./app-7a3a58ff.js";const c={name:"MainDescription"},_={class:"text"};function a(e,r,i,d,p,l){return s(),n("p",_,[o(e.$slots,"default",{},void 0,!0)])}const f=t(c,[["render",a],["__scopeId","data-v-bed4904c"]]);export{f as M};

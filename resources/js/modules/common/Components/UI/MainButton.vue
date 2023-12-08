@@ -32,7 +32,6 @@ export default {
     props: {
         wait: {
             type: Boolean,
-            default: false,
         },
     },
 	// data() {
@@ -83,6 +82,7 @@ export default {
     padding: 0 16px;
     font-family: NunitoSans, serif;
     font-size: clamp(16px, 3vw, 18px);
+    font-weight: 600;
     line-height: 32px;
 }
 

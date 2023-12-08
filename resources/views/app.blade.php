@@ -21,6 +21,7 @@
     <meta name="title" content="All-btc mining pool">
     <link rel="icon" href="/favicon.ico">
     <title>All-btc mining pool</title>
+    @include('head.fonts')
     @vite(["resources/scss/app.scss", "resources/js/app.js"])
 </head>
 <body>

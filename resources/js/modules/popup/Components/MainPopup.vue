@@ -152,7 +152,7 @@ export default {
     height: 122px;
     transform: translateY(220px);
     transition: all 0.5s ease 0s;
-    padding: 32px;
+    padding: 40px;
     position: relative;
     overflow: hidden;
 }
@@ -178,7 +178,7 @@ export default {
     flex-direction: column;
     position: relative;
     opacity: 0;
-    min-width: 492px;
+    min-width: 480px;
 }
 .popup_close {
     position: absolute;

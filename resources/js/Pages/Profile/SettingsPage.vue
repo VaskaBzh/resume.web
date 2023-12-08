@@ -86,10 +86,12 @@
         :form-data="settingsService.passwordForm"
         @sendPassword="sendPassword($event)"
     />
-    <instruction-button
-        hint="settings"
-        @openInstruction="instructionService.setStep().setVisible()"
-    />
+    <teleport to=".header_button-instruction" v-if="isMounted">
+        <instruction-button
+            hint="settings"
+            @openInstruction="instructionService.setStep().setVisible()"
+        />
+    </teleport>
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
@@ -144,6 +146,7 @@ export default {
             password_confirmation: "",
             clearProfit: "",
             profit: "",
+            isMounted: false
         };
     },
     watch: {
@@ -162,6 +165,7 @@ export default {
         },
     },
     mounted() {
+        this.isMounted = true
         this.instructionService.setStepsCount(1);
 
         document.title = this.$t("header.links.settings");

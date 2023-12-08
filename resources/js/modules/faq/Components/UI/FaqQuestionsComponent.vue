@@ -27,9 +27,10 @@
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainAccordion from "@/modules/common/Components/UI/MainAccordion.vue";
+import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 
 export default {
-    components: { MainTitle, BlueButton, MainAccordion },
+    components: {LandingTitle, MainTitle, BlueButton, MainAccordion },
     data() {
         return {
             searchQuery: "",
@@ -141,7 +142,7 @@ export default {
 
 .description-text {
     color: #98a2b3;
-    font-family: NunitoSans;
+    font-family: NunitoSans, serif;
     margin: 8px 0 40px;
     font-size: 16px;
     font-style: normal;
@@ -173,7 +174,7 @@ export default {
 }
 
 .faq {
-    flex: 1 1 auto;
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
 

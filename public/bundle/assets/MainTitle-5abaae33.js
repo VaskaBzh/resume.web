@@ -1,0 +1,1 @@
+/* empty css                                                                  */import{_ as t,o,c as s,i as a}from"./app-7a3a58ff.js";const n={name:"MainTitle",props:{tag:String}},r={class:"title"};function c(e,i,p,_,d,l){return o(),s("div",r,[a(e.$slots,"default",{},void 0,!0)])}const u=t(n,[["render",c],["__scopeId","data-v-05a9781a"]]);export{u as M};

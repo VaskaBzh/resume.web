@@ -329,17 +329,18 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     gap: 58px;
-    overflow-y: scroll;
     padding-bottom: 44px;
     scrollbar-width: thin;
-    max-width: 690px;
+    max-width: 1170px;
     height: 100%;
 }
 
-.faq-info_items::-webkit-scrollbar {
-    display: none;
+@media (max-width: 999.99px) {
+    .faq-info_items {
+        max-width: unset;
+        width: 100%;
+    }
 }
-
 .faq_item_title {
     color: #F1F1F2;
     font-family: Unbounded, serif;
@@ -349,6 +350,12 @@ export default {
     line-height: 40px;
     text-transform: none;
     margin-bottom: 40px;
+}
+
+@media (max-width: 475px) {
+    .faq_item_title {
+        margin-bottom: 16px;
+    }
 }
 
 .faq-info-sub_item {
@@ -400,8 +407,15 @@ export default {
 }
 
 .faq_item_images {
-    max-width: 690px;
+    max-width: 1170px;
     height: auto;
+}
+
+@media (max-width: 999.99px) {
+    .faq_item_images {
+        max-width: unset;
+        width: 100%;
+    }
 }
 
 .faq-image {

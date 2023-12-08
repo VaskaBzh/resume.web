@@ -1,5 +1,5 @@
 <template>
-    <div class="faq__tabs" v-if="viewportWidth > 768">
+    <div class="faq__tabs" v-if="viewportWidth > 1000">
         <slot></slot>
         <div class="faq_lists" >
             <a
@@ -20,9 +20,12 @@
 <script>
 import { mapGetters } from "vuex";
 import {faqTranslate} from "@/modules/faq/lang/FaqTranslate";
+import ArrowBackIcon from "@/modules/faq/icons/ArrowBackIcon.vue";
+import LandingText from "@/modules/common/Components/UI/LandingText.vue";
 
 export default {
     name: "FaqTabs",
+    components: {LandingText, ArrowBackIcon},
     i18n: {
         sharedMessages: faqTranslate
     },
@@ -67,9 +70,17 @@ export default {
     justify-content: flex-start;
     max-width: fit-content;
     gap: 16px;
+    height: calc(100vh - 144px);
     transition: all .3s ease;
+    overflow: hidden;
+    overflow-y: scroll;
+    position: fixed;
+    padding: 44px 24px;
 }
 
+.faq__tabs::-webkit-scrollbar {
+    display: none;
+}
 
 
 .faq_lists {

@@ -1,0 +1,1 @@
+import{_ as n,o as a,g as s,h as o,i as _,u as d}from"./app-7a3a58ff.js";const r={name:"landing-text",props:{tag:String}};function c(e,i,t,p,l,f){return a(),s(d(t.tag??"div"),{class:"text"},{default:o(()=>[_(e.$slots,"default",{},void 0,!0)]),_:3})}const g=n(r,[["render",c],["__scopeId","data-v-45847f5d"]]);export{g as L};

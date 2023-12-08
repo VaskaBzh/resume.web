@@ -1,5 +1,5 @@
 <template>
-    <div class="chart">
+    <div class="chart chart-bar">
         <main-title class="headline">{{ $t("statistic.graph[0]") }}</main-title>
         <div ref="chart" class="container-chart">
             <div ref="tooltip" class="tooltip" style="opacity: 0">
@@ -21,9 +21,13 @@
                             {{ service.mining || 0 }} BTC
                         </span>
                     </p>
-                    <tooltip-bar-icon class="tooltip_icon" />
                 </div>
             </div>
+            <tooltip-bar-icon
+                ref="tooltip_icon"
+                class="tooltip_icon"
+                style="opacity: 0"
+            />
         </div>
     </div>
 </template>
@@ -36,7 +40,7 @@ import { ColumnGraphService } from "@/modules/graphs/services/ColumnGraphService
 import { mapGetters } from "vuex";
 
 export default {
-    name: "main-column-graph",
+    name: "MainColumnGraph",
     components: {
         TooltipBarIcon,
         MainTitle,
@@ -55,50 +59,45 @@ export default {
         ...mapGetters(["viewportWidth"]),
     },
     watch: {
-        "$refs.chart"(newChartHtml) {
-            this.service.setChartHtml(newChartHtml).dropGraph();
-            this.graphInit();
-        },
-        "$refs.tooltip"(newTooltipHtml) {
-            this.service.setTooltipHtml(newTooltipHtml).dropGraph();
-            this.graphInit();
-        },
         graphData(newGraphData) {
             this.service.setGraphData(newGraphData).dropGraph();
             this.graphInit();
         },
-        isDark(newIsDarkState) {
-            this.service.setDarkState(newIsDarkState).dropGraph();
+        viewportWidth() {
+            this.service.dropGraph();
             this.graphInit();
         },
-        viewportWidth(newViewportWidth) {
-            this.service.setIsMobileState(newViewportWidth).dropGraph();
-            this.graphInit();
-        },
+    },
+    mounted() {
+        this.service
+            .dropGraph()
+            .setChartHtml(this.$refs.chart)
+            .setTooltipHtml(this.$refs.tooltip)
+            .setTooltipIconHtml(this.$refs.tooltip_icon.$el)
+            .createTooltip()
+            .createTooltipIcon();
+
+        this.graphInit();
     },
     methods: {
         graphInit() {
             if (this.graphData) {
                 this.service
+                    .setGraphData(this.graphData)
                     .setContainerHeight(this.height)
+                    .setContainerWidth(this.$refs.chart.offsetWidth)
                     .createSvg()
                     .setY()
-                    .setNumberX()
-                    .graphAppends()
-                    .setTooltip();
+                    .setX()
+                    .graphAppends();
 
-                this.service.setSvgEvents().setTooltipEvents();
+                if (this.viewportWidth > 991.98) {
+                    this.service.setSvgEvents();
+                } else {
+                    this.service.setMobileSvgEvents();
+                }
             }
         },
-    },
-    mounted() {
-        this.service
-            .setChartHtml(this.$refs.chart)
-            .setTooltipHtml(this.$refs.tooltip)
-            .setDarkState(this.isDark)
-            .setIsMobileState(this.viewportWidth);
-
-        this.graphInit();
     },
 };
 </script>
@@ -110,12 +109,11 @@ export default {
     gap: 12px;
 }
 .container-chart {
-    width: calc(100% - 18px);
-    margin-right: 18px;
+    width: 100%;
 }
 .tooltip {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-tooltip, rgba(44, 47, 52, 0.90));
+    background: var(--background-tooltip, rgba(44, 47, 52, 0.9));
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 208px;
@@ -130,6 +128,7 @@ export default {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    transition: all 0.2s ease 0s;
     bottom: -20px;
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
 }
