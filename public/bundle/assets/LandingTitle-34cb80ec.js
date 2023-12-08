@@ -1,0 +1,1 @@
+import{_ as a,o as n,g as s,h as o,i as c,n as _,u as i}from"./app-7a3a58ff.js";const l={name:"landing-title",props:{tag:String}};function r(t,d,e,f,p,u){return n(),s(i(e.tag),{class:_(["title",[`title-${e.tag}`]])},{default:o(()=>[c(t.$slots,"default",{},void 0,!0)]),_:3},8,["class"])}const m=a(l,[["render",r],["__scopeId","data-v-4376fcc4"]]);export{m as L};
