@@ -58,6 +58,7 @@ export class ColumnGraphService extends NewGraphService {
             .attr("width", this.x.bandwidth())
             .attr("height", this.getBarHeight.bind(this))
             .attr("ry", 6)
+            .attr("rx", 6)
             .attr("class", "bar");
 
         return this;
