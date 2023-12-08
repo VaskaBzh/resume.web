@@ -114,8 +114,6 @@ final readonly class SubService
 
     /**
      * Set pending amount to 0 if balance is withdraw
-     *
-     * @param Sub $sub
      */
     public static function resetPending(Sub $sub): void
     {

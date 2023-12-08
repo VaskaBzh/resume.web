@@ -1,0 +1,1 @@
+/* empty css                                                                   */import{_ as e,o,c as n,i as s}from"./app-7a3a58ff.js";const a={name:"button-blue"},c={class:"button-black"};function r(t,u,_,d,l,p){return o(),n("button",c,[s(t.$slots,"default",{},void 0,!0)])}const m=e(a,[["render",r],["__scopeId","data-v-a485afad"]]);export{m as B};

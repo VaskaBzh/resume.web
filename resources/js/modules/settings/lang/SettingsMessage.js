@@ -43,6 +43,7 @@ export const SettingsMessage = {
                 "Link your account to Google Authenticator using a QR code or setup key",
                 "To confirm enter the temporary code from the Google Authenticator app",
                 "Resend code",
+                "To confirm, enter the temporary confirmation code from the Google Authenticator app."
             ],
             button: ["Back", "Change", "Send code"],
         },
@@ -64,12 +65,15 @@ export const SettingsMessage = {
         fac_popup: {
             title: "2FA connection",
             button: ["Continue", "Back", "Connect"],
-            label: ["Settings key", "Code from application"],
+            label: ["Settings key", "Confirmation code"],
             disable: {
                 title: "Disable 2FA",
                 text: "To disable, enter a temporary code from the Google Authenticator app",
                 placeholder: "6-digit confirmation code",
                 button: "Disable"
+            },
+            warning: {
+                title:'Important!/Save this setup key. You will need it if you lose your device with the Google Authenticator application.',
             }
         },
         password_popup: {
@@ -128,33 +132,37 @@ export const SettingsMessage = {
                 "Привяжите аккаунт к Google Authenticator с помощью QR-кода или ключа настройки",
                 "Для подтверждения введите временный код из приложения Google Authenticator",
                 "Отправить код повторно",
+                "Для подтверждения введите временный код подтверждения из приложения Google Authenticator"
             ],
-            button: ["Назад", "Сменить", "Отправить код"],
+            button: ["Назад", "Изменить", "Отправить код"],
         },
-        button: "Сменить",
+        button: "Изменить",
         button_verify: "Подтвердите почту",
         safety: {
             title: [
                 "Двухфакторная аутентификация",
                 "Вход по SMS",
-                "Сменить пароль",
+                "Изменить пароль",
             ],
             text: [
                 "Это механизм безопасности, используемый для защиты вашего профиля путем привязки вашего входа к физическому устройству.",
                 "Получай SMS с кодом для подтверждения входа в аккаунт на свой мобильный телефон.",
-                "Для смены пароля вам нужно помнить текущий.",
+                "Чтобы изменить пароль, вам необходимо помнить текущий.",
             ],
-            button: ["Подключить", "Сменить", "Отключить"],
+            button: ["Подключить", "Изменить", "Отключить"],
         },
         fac_popup: {
             title: "Подключение 2FA",
             button: ["Продолжить", "Назад", "Подключить"],
-            label: ["Ключ настройки", "Код из приложения"],
+            label: ["Ключ настройки", "Код подтверждения"],
             disable: {
                 title: "Отключить 2FA",
                 text: "Для отключения введите временный код из приложения Google Authenticator",
                 placeholder: "6-знычный код подтверждения",
                 button: "Отключить",
+            },
+            warning: {
+                title:'Важно!/Сохраните данный ключ настройки. Он понадобится в том случае, если вы потеряете устройство с приложением Google Authenticator.',
             }
         },
         password_popup: {

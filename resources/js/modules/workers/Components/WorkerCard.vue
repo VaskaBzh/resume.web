@@ -21,7 +21,7 @@
                                 'card_status-dead':
                                     target_worker.class === 'DEAD',
                             }"
-                            >{{ target_worker.class }}</span
+                            >{{ $t(`status-worker.title.${target_worker.class}`) }}</span
                         >
                     </div>
                 </transition>
@@ -76,6 +76,7 @@ import MinuteHashrateIcon from "@/modules/common/icons/MinuteHashrateIcon.vue";
 import DayHashrateIcon from "@/modules/common/icons/DayHashrateIcon.vue";
 import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import { mapGetters } from "vuex";
+import {WorkerMessages} from "@/modules/workers/lang/WorkerMessages";
 
 export default {
     name: "WorkerCard",
@@ -92,6 +93,9 @@ export default {
         target_worker: Object,
         graph: Object,
         wait: Boolean,
+    },
+    i18n: {
+      sharedMessages: WorkerMessages
     },
     data() {
         return {

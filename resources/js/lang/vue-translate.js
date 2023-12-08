@@ -788,7 +788,7 @@ const messages = {
                     titles: ["Today", "For month"],
                 },
                 hash: {
-                    titles: ["Current hashrate", "Avg.hashrate / 24"],
+                    titles: ["Current hashrate", "Hashrate / 24"],
                 },
                 hashrate: {
                     title: "Total hash rate",
@@ -848,9 +848,9 @@ const messages = {
                 thead: [
                     "Worker name",
                     "Current hashrate",
-                    "Hashrate/1h",
-                    "Hashrate/24h",
-                    "Failure rate/24h",
+                    "Hashrate / 1h",
+                    "Hashrate / 24h",
+                    "Reject / 24h",
                 ],
                 thead_short: [
                     "Name",
@@ -1026,7 +1026,7 @@ const messages = {
             confidence: "Privacy policy",
         },
         preloader: {
-            text: "Nothing was found for your request",
+            text: "There's no record here yet",
         },
     },
     ru: {
@@ -1464,7 +1464,7 @@ const messages = {
                 workers: "Воркеры",
                 income: "Доходы",
                 connecting: "Подключение",
-                wallets: "Кошельки",
+                wallets: "Кошелек",
                 watchers: "Наблюдатели",
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
@@ -1774,7 +1774,7 @@ const messages = {
             income: "Доходы",
             connecting: "Подключение",
             watchers: "Наблюдатели",
-            wallets: "Кошельки",
+            wallets: "Кошелек",
             referral: "Реферальный кабинет",
             settings: "Аккаунт",
             faq: "FAQ",
@@ -1812,7 +1812,7 @@ const messages = {
                 title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
-            graph: ["График дохода за месяц", "Майнинг", "Начислено"],
+            graph: ["График дохода за месяц", "Майнинг", "Текущий баланс"],
             info_blocks: {
                 title: "Начисления",
                 title_clear: "Чистая прибыль",
@@ -1830,7 +1830,7 @@ const messages = {
                     titles: ["Сегодня", "За месяц"],
                 },
                 hash: {
-                    titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],
+                    titles: ["Текущий хешрейт", "Хешрейт / 24"],
                 },
                 hashrate: {
                     title: "Общий хешрейт",
@@ -1889,10 +1889,10 @@ const messages = {
             table: {
                 thead: [
                     "Имя воркера",
-                    "Текущий",
-                    "Хешрейт/1ч",
-                    "Хешрейт/24ч",
-                    "Частота отказов/24ч",
+                    "Текущий хешрейт",
+                    "Хешрейт / 1ч",
+                    "Хешрейт / 24ч",
+                    "Реджект / 24ч",
                 ],
                 thead_short: ["Имя", "Текущий", "Ср.хешрейт/1д", "Отказы/1д"],
                 sub_thead: "Общий хешрейт",
@@ -2056,7 +2056,7 @@ const messages = {
             confidence: "Конфиденциальность",
         },
         preloader: {
-            text: "По вашему запросу ничего не найдено",
+            text: "Здесь пока что нет записей",
         },
     },
 };

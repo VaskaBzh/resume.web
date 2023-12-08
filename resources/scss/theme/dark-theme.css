@@ -23,12 +23,13 @@
     --text-primary: #F1F1F2;
     --text-primary-80: rgba(241, 241, 242, 0.80);
     --text-secondary: #C5C8CD;
-    --text-teritary: #6F7682;
+    --text-teritary: #98A2B3;
     --text-fourth: #595E68;
     --text-logo: #FFFFFF;
     --text-table-title: #43474E;
     --text-primary-inverse: #FFFFFF;
     --text-accent: #53B1FD;
+    --old-light-gray-400: #6F7682;
 
     /* status */
     --text-no-value: #43474E;

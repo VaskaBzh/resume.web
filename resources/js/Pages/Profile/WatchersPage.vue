@@ -105,10 +105,12 @@
             @removeWatcher="removeWatcher"
         />
     </watchers-popup-card>
-    <instruction-button
-        hint="watchers"
-        @openInstruction="instructionService.setStep().setVisible()"
-    />
+    <teleport to=".header_button-instruction" v-if="isMounted">
+        <instruction-button
+            hint="watchers"
+            @openInstruction="instructionService.setStep().setVisible()"
+        />
+    </teleport>
 </template>
 
 <script>
@@ -157,6 +159,7 @@ export default {
             instructionService: new InstructionService(),
             openOnBoardingPopup: false,
             closeOnBoardingPopup: false,
+            isMounted: false
         };
     },
     computed: {
@@ -194,6 +197,7 @@ export default {
         },
     },
     async mounted() {
+        this.isMounted = true
         this.instructionService.setStepsCount(2);
 
         document.title = this.$t("header.links.watchers");

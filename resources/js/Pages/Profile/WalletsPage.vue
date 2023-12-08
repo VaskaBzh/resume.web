@@ -318,10 +318,12 @@
             @back="wallets.back()"
         />
     </main-popup>
-    <instruction-button
-        hint="wallets"
-        @openInstruction="instructionService.setStep().setVisible()"
-    />
+    <teleport to=".header_button-instruction" v-if="isMounted">
+        <instruction-button
+            hint="wallets"
+            @openInstruction="instructionService.setStep().setVisible()"
+        />
+    </teleport>
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
@@ -401,9 +403,11 @@ export default {
             isActiveLabelMinWithdrawal: false,
             verifyButtonName: this.$t("wallets.no_info.verify_text"),
             instructionService: new InstructionService(),
+            isMounted: false
         };
     },
     mounted() {
+        this.isMounted = true
         this.instructionService.setStepsCount(2);
 
         this.walletInit();

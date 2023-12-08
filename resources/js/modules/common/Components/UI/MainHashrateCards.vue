@@ -39,10 +39,10 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .cards {
     display: flex;
-    gap: 12px;
+    gap: adaptive-value(8px, 12px);
     align-items: center;
     width: 100%;
 }

@@ -78,5 +78,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    justify-content: space-between;
 }
 </style>

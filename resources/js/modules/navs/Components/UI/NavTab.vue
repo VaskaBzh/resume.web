@@ -12,6 +12,7 @@
             burger_link: viewportWidth < 991.98,
             'tab-active': $route.path.startsWith(tab.url),
         }"
+        :target="this.tab.name === 'faq' ? '_blank':''"
     >
         <div class="tab_icon" v-html="tab.icon"></div>
         <span class="tab_text">
@@ -40,7 +41,7 @@ export default {
     display: inline-flex;
     align-items: center;
     padding: 0 16px;
-    min-height: 48px;
+    min-height: 40px;
     transition: all 0.5s ease 0s;
     border-radius: 12px;
     background: transparent;
@@ -65,10 +66,10 @@ export default {
 }
 .tab_icon-stroke {
     fill: none;
-    stroke: var(--text-teritary, #98a2b3);
+    stroke: var(--text-teritary);
 }
 .tab_icon-fill {
-    fill: var(--text-teritary, #98a2b3);
+    fill: var(--text-teritary);
     stroke: none;
 }
 .tab:hover .tab_text,

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Income;
 
-use App\Actions\Sub\ResetPending;
 use App\Dto\Income\UpdateStatusData;
-use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Exceptions\PayOutException;
 use App\Models\Sub;

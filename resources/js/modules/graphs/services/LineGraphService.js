@@ -1,4 +1,4 @@
-import { GraphService } from "@/modules/graphs/services/extends/GraphService";
+import {GraphService} from "@/modules/graphs/services/extends/GraphService";
 
 export class LineGraphService extends GraphService {
     constructor(graphData, translate) {
@@ -57,12 +57,39 @@ export class LineGraphService extends GraphService {
     }
 
     appendYAxis() {
-        this.svg
-            .append("g")
-            .attr("transform", `translate(-5, 0)`)
-            .call(this.yAxis)
-            .select(".domain")
-            .remove();
+        const HashrateUnitEnum = {
+            T: "TH/s",
+            P: "PH/s",
+            E: "EH/s",
+        };
+        let includedUnit = HashrateUnitEnum["T"];
+
+        if (this.graphData.unit.includes("E")) {
+
+            includedUnit = HashrateUnitEnum["E"];
+
+        } else if (this.graphData.unit.includes("P")) {
+
+            includedUnit = HashrateUnitEnum["P"];
+        }
+
+
+
+
+            this.svg
+                .append("g")
+                .attr("transform", `translate(-5, 0)`)
+                .call(this.yAxis)
+                .select(".domain")
+                .remove();
+
+        this.svg.append("text").attr("x", -25).attr("y", 0)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("font-weight", "100")
+            .attr('fill', '#6F7682')
+            .attr('stroke-width', '.8')
+            .text(`${includedUnit}`);
 
         return this;
     }

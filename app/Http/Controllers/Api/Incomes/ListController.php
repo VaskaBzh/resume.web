@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api\Incomes;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\IncomeResource;
 use App\Models\Income;
-use App\Models\Payout;
 use App\Models\Sub;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

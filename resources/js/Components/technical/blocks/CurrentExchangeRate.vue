@@ -94,19 +94,13 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .rate-container {
     /* width: 16%; */
     display: flex;
     justify-content: end;
-    gap: 24px;
+    gap: adaptive-value(4px, 24px);
     font-family: Unbounded;
-}
-
-@media (max-width: 410px) {
-    .rate-container .rate-block:not(:nth-child(1)) {
-        display: none;
-    }
 }
 
 .rate-block {
@@ -120,7 +114,7 @@ export default {
     color: var(--text-teritary);
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: bold;
     line-height: 20px; /* 142.857% */
 }
 

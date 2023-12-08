@@ -1,0 +1,2413 @@
+{
+  "AccountMenu.css": {
+    "file": "assets/AccountMenu-032fbd0e.css",
+    "src": "AccountMenu.css"
+  },
+  "ArrowUpIcon.css": {
+    "file": "assets/ArrowUpIcon-ca67bb6c.css",
+    "src": "ArrowUpIcon.css"
+  },
+  "AuthErrors.css": {
+    "file": "assets/AuthErrors-6785b3df.css",
+    "src": "AuthErrors.css"
+  },
+  "BarGraphData.css": {
+    "file": "assets/BarGraphData-e4ef52bd.css",
+    "src": "BarGraphData.css"
+  },
+  "ButtonBlue.css": {
+    "file": "assets/ButtonBlue-d9900d4f.css",
+    "src": "ButtonBlue.css"
+  },
+  "CabinetCard.css": {
+    "file": "assets/CabinetCard-24c63e43.css",
+    "src": "CabinetCard.css"
+  },
+  "ConnectCard.css": {
+    "file": "assets/ConnectCard-d9061747.css",
+    "src": "ConnectCard.css"
+  },
+  "FaqPage.css": {
+    "file": "assets/FaqPage-0cab71f7.css",
+    "src": "FaqPage.css"
+  },
+  "FaqTranslate.css": {
+    "file": "assets/FaqTranslate-e1d5c846.css",
+    "src": "FaqTranslate.css"
+  },
+  "Form.css": {
+    "file": "assets/Form-cd7c1e04.css",
+    "src": "Form.css"
+  },
+  "GradeData.css": {
+    "file": "assets/GradeData-e51e143a.css",
+    "src": "GradeData.css"
+  },
+  "HeroView.css": {
+    "file": "assets/HeroView-f887e1a9.css",
+    "src": "HeroView.css"
+  },
+  "InstructionButton.css": {
+    "file": "assets/InstructionButton-a02b3b64.css",
+    "src": "InstructionButton.css"
+  },
+  "InstructionService.css": {
+    "file": "assets/InstructionService-8b29b819.css",
+    "src": "InstructionService.css"
+  },
+  "LandingButton.css": {
+    "file": "assets/LandingButton-be70842e.css",
+    "src": "LandingButton.css"
+  },
+  "LandingText.css": {
+    "file": "assets/LandingText-77ffdb88.css",
+    "src": "LandingText.css"
+  },
+  "LandingTitle.css": {
+    "file": "assets/LandingTitle-0b2448bc.css",
+    "src": "LandingTitle.css"
+  },
+  "LightCalculatorView.css": {
+    "file": "assets/LightCalculatorView-903f29a7.css",
+    "src": "LightCalculatorView.css"
+  },
+  "MainAccordion.css": {
+    "file": "assets/MainAccordion-159f2ad9.css",
+    "src": "MainAccordion.css"
+  },
+  "MainButton.css": {
+    "file": "assets/MainButton-3212c3d8.css",
+    "src": "MainButton.css"
+  },
+  "MainCopy.css": {
+    "file": "assets/MainCopy-d5817b92.css",
+    "src": "MainCopy.css"
+  },
+  "MainDescription.css": {
+    "file": "assets/MainDescription-9cf087a5.css",
+    "src": "MainDescription.css"
+  },
+  "MainDescriptionOld.css": {
+    "file": "assets/MainDescriptionOld-4f5bfae5.css",
+    "src": "MainDescriptionOld.css"
+  },
+  "MainIcon.css": {
+    "file": "assets/MainIcon-a9c07eee.css",
+    "src": "MainIcon.css"
+  },
+  "MainInput.css": {
+    "file": "assets/MainInput-3db2f44d.css",
+    "src": "MainInput.css"
+  },
+  "MainMenu.css": {
+    "file": "assets/MainMenu-6891ccd3.css",
+    "src": "MainMenu.css"
+  },
+  "MainPopup.css": {
+    "file": "assets/MainPopup-f05f19bd.css",
+    "src": "MainPopup.css"
+  },
+  "MainPreloader.css": {
+    "file": "assets/MainPreloader-d05d4099.css",
+    "src": "MainPreloader.css"
+  },
+  "MainSearch.css": {
+    "file": "assets/MainSearch-b133d202.css",
+    "src": "MainSearch.css"
+  },
+  "MainSlider.css": {
+    "file": "assets/MainSlider-ba2470d8.css",
+    "src": "MainSlider.css"
+  },
+  "MainTable.css": {
+    "file": "assets/MainTable-c7297722.css",
+    "src": "MainTable.css"
+  },
+  "MainTabs.css": {
+    "file": "assets/MainTabs-17e49b47.css",
+    "src": "MainTabs.css"
+  },
+  "MainTitle.css": {
+    "file": "assets/MainTitle-117ad68a.css",
+    "src": "MainTitle.css"
+  },
+  "Mockup-mobile-statistic.css": {
+    "file": "assets/Mockup-mobile-statistic-faf05d76.css",
+    "src": "Mockup-mobile-statistic.css"
+  },
+  "NavTabs.css": {
+    "file": "assets/NavTabs-8afcf6b9.css",
+    "src": "NavTabs.css"
+  },
+  "NotificationList.css": {
+    "file": "assets/NotificationList-29bf6cd9.css",
+    "src": "NotificationList.css"
+  },
+  "ProfilePassword.css": {
+    "file": "assets/ProfilePassword-75f5cf56.css",
+    "src": "ProfilePassword.css"
+  },
+  "ReferralSelect.css": {
+    "file": "assets/ReferralSelect-9371abf8.css",
+    "src": "ReferralSelect.css"
+  },
+  "ReferralsLayoutView.css": {
+    "file": "assets/ReferralsLayoutView-97ad1b76.css",
+    "src": "ReferralsLayoutView.css"
+  },
+  "SelectTheme.css": {
+    "file": "assets/SelectTheme-0632f707.css",
+    "src": "SelectTheme.css"
+  },
+  "TableTitles.css": {
+    "file": "assets/TableTitles-6b42de83.css",
+    "src": "TableTitles.css"
+  },
+  "TickIcon.css": {
+    "file": "assets/TickIcon-2e71c382.css",
+    "src": "TickIcon.css"
+  },
+  "TooltipCard.css": {
+    "file": "assets/TooltipCard-feb8a004.css",
+    "src": "TooltipCard.css"
+  },
+  "ValidateService.css": {
+    "file": "assets/ValidateService-dd1b05f5.css",
+    "src": "ValidateService.css"
+  },
+  "VerifyLink.css": {
+    "file": "assets/VerifyLink-f9635ea1.css",
+    "src": "VerifyLink.css"
+  },
+  "WaitPreloader.css": {
+    "file": "assets/WaitPreloader-c4a49b14.css",
+    "src": "WaitPreloader.css"
+  },
+  "WarningBlock.css": {
+    "file": "assets/WarningBlock-ebdde4ad.css",
+    "src": "WarningBlock.css"
+  },
+  "_AccountMenu-396d6837.js": {
+    "css": [
+      "assets/AccountMenu-032fbd0e.css"
+    ],
+    "file": "assets/AccountMenu-396d6837.js",
+    "imports": [
+      "resources/js/app.js",
+      "_MainPopup-3ac77bbe.js",
+      "_MainTitle-5abaae33.js"
+    ]
+  },
+  "_ArrowUpIcon-bc4b823a.js": {
+    "css": [
+      "assets/ArrowUpIcon-ca67bb6c.css"
+    ],
+    "file": "assets/ArrowUpIcon-bc4b823a.js",
+    "imports": [
+      "_HomeMessage-d8fcb3c3.js",
+      "resources/js/app.js",
+      "_HostingMessage-36b739f1.js",
+      "_NavMessages-72153b48.js",
+      "_policy-bc46909d.js"
+    ]
+  },
+  "_AuthErrors-d335e0f9.js": {
+    "css": [
+      "assets/AuthErrors-6785b3df.css"
+    ],
+    "file": "assets/AuthErrors-d335e0f9.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_AuthMessages-57a1dce6.js": {
+    "file": "assets/AuthMessages-57a1dce6.js"
+  },
+  "_BarGraphData-2d15976d.js": {
+    "css": [
+      "assets/BarGraphData-e4ef52bd.css"
+    ],
+    "file": "assets/BarGraphData-2d15976d.js",
+    "imports": [
+      "_converter-ec486320.js",
+      "resources/js/app.js",
+      "_MainTitle-5abaae33.js",
+      "_TooltipCard-430f11e3.js",
+      "_transform-fa9976d2.js",
+      "_anime.es-de4e5aa0.js",
+      "_DefaultSubsService-b95954c2.js"
+    ]
+  },
+  "_ButtonBlue-af33d8d4.js": {
+    "css": [
+      "assets/ButtonBlue-d9900d4f.css"
+    ],
+    "file": "assets/ButtonBlue-af33d8d4.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_CabinetCard-9f91989e.js": {
+    "css": [
+      "assets/CabinetCard-24c63e43.css"
+    ],
+    "file": "assets/CabinetCard-9f91989e.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_TooltipCard-430f11e3.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_ConnectCard-8f0f0e6d.js": {
+    "assets": [
+      "assets/Tab-bar-home-en-d080c74f.png",
+      "assets/Tab-bar-income-en-15e96098.png",
+      "assets/Tab-bar-settings-en-31371697.png",
+      "assets/Tab-bar-statistic-en-1623f369.png",
+      "assets/Tab-bar-worker-en-63ae6f3a.png"
+    ],
+    "css": [
+      "assets/ConnectCard-d9061747.css",
+      "assets/swiper-1df8f2af.css",
+      "assets/pagination-1f52dca1.css"
+    ],
+    "file": "assets/ConnectCard-8f0f0e6d.js",
+    "imports": [
+      "_Mockup-mobile-statistic-cd502692.js",
+      "_HostingMessage-36b739f1.js",
+      "resources/js/app.js",
+      "_MainIcon-57980112.js"
+    ]
+  },
+  "_DefaultSubsService-b95954c2.js": {
+    "file": "assets/DefaultSubsService-b95954c2.js"
+  },
+  "_FaqTranslate-134a6516.js": {
+    "css": [
+      "assets/FaqTranslate-e1d5c846.css"
+    ],
+    "file": "assets/FaqTranslate-134a6516.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_Form-8d53cf55.js": {
+    "css": [
+      "assets/Form-cd7c1e04.css"
+    ],
+    "file": "assets/Form-8d53cf55.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_MainDescription-a8d06221.js",
+      "resources/js/app.js",
+      "_StatesService-a0d6c34c.js"
+    ]
+  },
+  "_GradeData-86a3feeb.js": {
+    "css": [
+      "assets/GradeData-e51e143a.css"
+    ],
+    "file": "assets/GradeData-86a3feeb.js",
+    "imports": [
+      "resources/js/app.js",
+      "_ReferralsLayoutView-cd624d01.js"
+    ]
+  },
+  "_HeroView-a2f93ef5.js": {
+    "css": [
+      "assets/HeroView-f887e1a9.css"
+    ],
+    "file": "assets/HeroView-a2f93ef5.js",
+    "imports": [
+      "_HomeMessage-d8fcb3c3.js",
+      "_LandingButton-856f648b.js",
+      "_LandingTitle-34cb80ec.js",
+      "_LandingText-9d89853a.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_HomeMessage-d8fcb3c3.js": {
+    "file": "assets/HomeMessage-d8fcb3c3.js"
+  },
+  "_HostingMessage-36b739f1.js": {
+    "file": "assets/HostingMessage-36b739f1.js"
+  },
+  "_InstructionButton-391a8821.js": {
+    "css": [
+      "assets/InstructionButton-a02b3b64.css"
+    ],
+    "file": "assets/InstructionButton-391a8821.js",
+    "imports": [
+      "resources/js/app.js",
+      "_InstructionService-d77d7f22.js"
+    ]
+  },
+  "_InstructionService-d77d7f22.js": {
+    "css": [
+      "assets/InstructionService-8b29b819.css"
+    ],
+    "file": "assets/InstructionService-d77d7f22.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_LandingButton-856f648b.js": {
+    "css": [
+      "assets/LandingButton-be70842e.css"
+    ],
+    "file": "assets/LandingButton-856f648b.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_LandingText-9d89853a.js": {
+    "css": [
+      "assets/LandingText-77ffdb88.css"
+    ],
+    "file": "assets/LandingText-9d89853a.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_LandingTitle-34cb80ec.js": {
+    "css": [
+      "assets/LandingTitle-0b2448bc.css"
+    ],
+    "file": "assets/LandingTitle-34cb80ec.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_LightCalculatorView-dcd25066.js": {
+    "css": [
+      "assets/LightCalculatorView-903f29a7.css"
+    ],
+    "file": "assets/LightCalculatorView-dcd25066.js",
+    "imports": [
+      "resources/js/app.js",
+      "_converter-ec486320.js",
+      "_HomeMessage-d8fcb3c3.js"
+    ]
+  },
+  "_MainAccordion-fe732dfb.js": {
+    "css": [
+      "assets/MainAccordion-159f2ad9.css"
+    ],
+    "file": "assets/MainAccordion-fe732dfb.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_MainButton-069506c4.js": {
+    "css": [
+      "assets/MainButton-3212c3d8.css"
+    ],
+    "file": "assets/MainButton-069506c4.js",
+    "imports": [
+      "_MainIcon-57980112.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_MainCopy-b48a6063.js": {
+    "css": [
+      "assets/MainCopy-d5817b92.css"
+    ],
+    "file": "assets/MainCopy-b48a6063.js",
+    "imports": [
+      "_TickIcon-df7ac9c5.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_MainDescription-a8d06221.js": {
+    "css": [
+      "assets/MainDescription-9cf087a5.css"
+    ],
+    "file": "assets/MainDescription-a8d06221.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MainDescriptionOld-8ed807b9.js": {
+    "css": [
+      "assets/MainDescriptionOld-4f5bfae5.css"
+    ],
+    "file": "assets/MainDescriptionOld-8ed807b9.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MainIcon-57980112.js": {
+    "css": [
+      "assets/MainIcon-a9c07eee.css"
+    ],
+    "file": "assets/MainIcon-57980112.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MainInput-7e1d9d63.js": {
+    "css": [
+      "assets/MainInput-3db2f44d.css"
+    ],
+    "file": "assets/MainInput-7e1d9d63.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MainMenu-3e28dd31.js": {
+    "css": [
+      "assets/MainMenu-6891ccd3.css"
+    ],
+    "file": "assets/MainMenu-3e28dd31.js",
+    "imports": [
+      "_wallet-icon-f914ad52.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_MainPopup-3ac77bbe.js": {
+    "assets": [
+      "assets/logo_high_quality-e71fc07b.svg",
+      "assets/logo_high_quality-dark-9f6a330e.svg"
+    ],
+    "css": [
+      "assets/MainPopup-f05f19bd.css"
+    ],
+    "file": "assets/MainPopup-3ac77bbe.js",
+    "imports": [
+      "resources/js/app.js",
+      "_anime.es-de4e5aa0.js"
+    ]
+  },
+  "_MainPreloader-edb92089.js": {
+    "css": [
+      "assets/MainPreloader-d05d4099.css"
+    ],
+    "file": "assets/MainPreloader-edb92089.js",
+    "imports": [
+      "resources/js/app.js",
+      "_StatesService-a0d6c34c.js",
+      "_anime.es-de4e5aa0.js"
+    ]
+  },
+  "_MainSearch-cc3f8f4b.js": {
+    "css": [
+      "assets/MainSearch-b133d202.css"
+    ],
+    "file": "assets/MainSearch-cc3f8f4b.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MainSlider-cf396ea1.js": {
+    "css": [
+      "assets/MainSlider-ba2470d8.css"
+    ],
+    "file": "assets/MainSlider-cf396ea1.js",
+    "imports": [
+      "resources/js/app.js",
+      "_MainPreloader-edb92089.js"
+    ]
+  },
+  "_MainTable-a3e08966.js": {
+    "css": [
+      "assets/MainTable-c7297722.css"
+    ],
+    "file": "assets/MainTable-a3e08966.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MainTabs-a2f87367.js": {
+    "css": [
+      "assets/MainTabs-17e49b47.css"
+    ],
+    "file": "assets/MainTabs-a2f87367.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MainTitle-5abaae33.js": {
+    "css": [
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/MainTitle-5abaae33.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_MinuteHashrateIcon-95aec08f.js": {
+    "file": "assets/MinuteHashrateIcon-95aec08f.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_Mockup-mobile-statistic-cd502692.js": {
+    "assets": [
+      "assets/iphone-14-2d7995be.png",
+      "assets/iphone-14-screen1-en-59cf51d3.png",
+      "assets/iphone-14-screen2-en-14a1263d.png",
+      "assets/iphone-14-screen3-en-b6f8cde9.png",
+      "assets/iphone-14-screen4-en-f7bd8078.png",
+      "assets/iphone-14-screen5-en-9f9371e3.png",
+      "assets/blank-shadow-90a21341.png",
+      "assets/cards-shadow-a5647662.png",
+      "assets/chart-accrued-shadow-15414fc1.png",
+      "assets/chart-hasrate-shadow-ec534912.png",
+      "assets/forecast-shadow-ab4b7814.png",
+      "assets/header-shadow-a8aaeea6.png",
+      "assets/navbar-shadow-55753e77.png",
+      "assets/Mockup-mac-8542050e.png",
+      "assets/Mockup-statistic-en-4065ec20.png",
+      "assets/Mockup-iphone-a338b245.png",
+      "assets/Mockup-mobile-statistic-e3303c0f.png"
+    ],
+    "css": [
+      "assets/Mockup-mobile-statistic-faf05d76.css"
+    ],
+    "file": "assets/Mockup-mobile-statistic-cd502692.js",
+    "imports": [
+      "resources/js/app.js",
+      "_LandingText-9d89853a.js",
+      "_LandingTitle-34cb80ec.js"
+    ]
+  },
+  "_NavMessages-72153b48.js": {
+    "file": "assets/NavMessages-72153b48.js"
+  },
+  "_NavTabs-a6ec92de.js": {
+    "assets": [
+      "assets/logo-tabs-c9c63554.svg",
+      "assets/logo-tabs-dark-efc2ef1f.svg"
+    ],
+    "css": [
+      "assets/NavTabs-8afcf6b9.css",
+      "assets/swiper-1df8f2af.css",
+      "assets/pagination-1f52dca1.css"
+    ],
+    "file": "assets/NavTabs-a6ec92de.js",
+    "imports": [
+      "_SelectTheme-71497640.js",
+      "resources/js/app.js",
+      "_InstructionService-d77d7f22.js",
+      "_AccountMenu-396d6837.js",
+      "_MainIcon-57980112.js"
+    ]
+  },
+  "_NotificationList-09539f47.js": {
+    "css": [
+      "assets/NotificationList-29bf6cd9.css"
+    ],
+    "file": "assets/NotificationList-09539f47.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_ProfilePassword-a211b840.js": {
+    "css": [
+      "assets/ProfilePassword-75f5cf56.css"
+    ],
+    "file": "assets/ProfilePassword-a211b840.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_ReferralSelect-da1293a2.js": {
+    "css": [
+      "assets/ReferralSelect-9371abf8.css"
+    ],
+    "file": "assets/ReferralSelect-da1293a2.js",
+    "imports": [
+      "_ReferralsLayoutView-cd624d01.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_ReferralsLayoutView-cd624d01.js": {
+    "css": [
+      "assets/ReferralsLayoutView-97ad1b76.css"
+    ],
+    "file": "assets/ReferralsLayoutView-cd624d01.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_MainTabs-a2f87367.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_SelectTheme-71497640.js": {
+    "assets": [
+      "assets/dark-theme-a2d8a285.css",
+      "assets/light-theme-8ae93846.css"
+    ],
+    "css": [
+      "assets/SelectTheme-0632f707.css"
+    ],
+    "file": "assets/SelectTheme-71497640.js",
+    "imports": [
+      "_MainMenu-3e28dd31.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_StatesService-a0d6c34c.js": {
+    "file": "assets/StatesService-a0d6c34c.js"
+  },
+  "_TableService-ecb32e12.js": {
+    "file": "assets/TableService-ecb32e12.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_TableTitles-46c1357e.js": {
+    "css": [
+      "assets/TableTitles-6b42de83.css"
+    ],
+    "file": "assets/TableTitles-46c1357e.js",
+    "imports": [
+      "resources/js/app.js",
+      "_MainIcon-57980112.js"
+    ]
+  },
+  "_TickIcon-df7ac9c5.js": {
+    "css": [
+      "assets/TickIcon-2e71c382.css"
+    ],
+    "file": "assets/TickIcon-df7ac9c5.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_TooltipCard-430f11e3.js": {
+    "css": [
+      "assets/TooltipCard-feb8a004.css"
+    ],
+    "file": "assets/TooltipCard-430f11e3.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_ValidateService-56a5ee18.js": {
+    "css": [
+      "assets/ValidateService-dd1b05f5.css"
+    ],
+    "file": "assets/ValidateService-56a5ee18.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_VerifyLink-301fc5ba.js": {
+    "css": [
+      "assets/VerifyLink-f9635ea1.css"
+    ],
+    "file": "assets/VerifyLink-301fc5ba.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_WaitPreloader-358f9559.js": {
+    "css": [
+      "assets/WaitPreloader-c4a49b14.css"
+    ],
+    "file": "assets/WaitPreloader-358f9559.js",
+    "imports": [
+      "resources/js/app.js",
+      "_transform-fa9976d2.js",
+      "_MainPreloader-edb92089.js",
+      "_anime.es-de4e5aa0.js"
+    ]
+  },
+  "_WarningBlock-e958f63d.js": {
+    "css": [
+      "assets/WarningBlock-ebdde4ad.css"
+    ],
+    "file": "assets/WarningBlock-e958f63d.js",
+    "imports": [
+      "_MainIcon-57980112.js",
+      "_MainDescription-a8d06221.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_WatchersMessages-3b1bfe4c.js": {
+    "file": "assets/WatchersMessages-3b1bfe4c.js"
+  },
+  "_anime.es-de4e5aa0.js": {
+    "file": "assets/anime.es-de4e5aa0.js"
+  },
+  "_converter-ec486320.js": {
+    "file": "assets/converter-ec486320.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_policy-bc46909d.js": {
+    "assets": [
+      "assets/policy-2c348d5a.pdf"
+    ],
+    "file": "assets/policy-bc46909d.js"
+  },
+  "_transform-fa9976d2.js": {
+    "file": "assets/transform-fa9976d2.js"
+  },
+  "_wallet-icon-f914ad52.js": {
+    "assets": [
+      "assets/ASIC-a61a80f7.webp",
+      "assets/Arrow-next-7119069b.png",
+      "assets/Arrow-prev-24eebdfe.png",
+      "assets/Check-d2ab1e3c.svg",
+      "assets/about-panel-img-en-32f2a054.webp",
+      "assets/about-panel-img-ru-2e571c87.webp",
+      "assets/active-icon-a70db62d.png",
+      "assets/arrow-down-icon-black-6f383c50.svg",
+      "assets/arrow-down-icon-blue-30c6b33a.svg",
+      "assets/arrow-down-land-f4eb03ac.png",
+      "assets/asic-moon-e2097689.webp",
+      "assets/asic-sun-9d730b76.webp",
+      "assets/bitcoin-b07518e4.webp",
+      "assets/change-password-icon-153b3475.png",
+      "assets/compl-main-img-47974906.webp",
+      "assets/dark-116a030b.svg",
+      "assets/efficiency_img-1-9d89d900.webp",
+      "assets/en-f0d1734a.svg",
+      "assets/graph_img-back-dark-8e1835cc.svg",
+      "assets/graph_img-back-70ad8d88.svg",
+      "assets/hashrate-icon-22a433db.png",
+      "assets/home_img-asic-d3950316.webp",
+      "assets/home_img-earn-91aefbf6.webp",
+      "assets/hosting_back_img-dark-524bb9af.svg",
+      "assets/hosting_back_img-dark-c868a01e.webp",
+      "assets/hosting_back_img-0665ec61.svg",
+      "assets/hosting_back_img-9d4a9cf2.webp",
+      "assets/hosting_info_img-1-3f597fd1.webp",
+      "assets/hosting_info_img-2-91c1158d.webp",
+      "assets/hosting_info_img-3-c705ff1d.webp",
+      "assets/img-icon-accept-2cd623a7.svg",
+      "assets/img-icon-enter-c0d4f2e7.svg",
+      "assets/img_no-info-ba8e92a4.svg",
+      "assets/img_no-statistic-f7508b8c.png",
+      "assets/img_wallets-no-info-fb211771.png",
+      "assets/income-icon-8f758369.png",
+      "assets/interface_img-back-b72452b8.svg",
+      "assets/invite-icon-1f097b11.png",
+      "assets/iphone-14-screen1-en-59cf51d3.png",
+      "assets/iphone-14-screen1-ru-872b013c.png",
+      "assets/iphone-14-screen2-en-14a1263d.png",
+      "assets/iphone-14-screen2-ru-28fb6582.png",
+      "assets/iphone-14-screen3-en-b6f8cde9.png",
+      "assets/iphone-14-screen3-ru-d632a6b6.png",
+      "assets/iphone-14-screen4-en-f7bd8078.png",
+      "assets/iphone-14-screen4-ru-9e476bac.png",
+      "assets/iphone-14-screen5-en-9f9371e3.png",
+      "assets/iphone-14-screen5-ru-2927634e.png",
+      "assets/iphone-14-2d7995be.png",
+      "assets/land-makeup-5909fa0c.png",
+      "assets/light-5d6b8d9f.svg",
+      "assets/logo_high_quality-dark-9f6a330e.svg",
+      "assets/logo_high_quality-lg-dark-0030b1bd.svg",
+      "assets/logo_high_quality-lg-dbe9943b.svg",
+      "assets/logo_high_quality-e71fc07b.svg",
+      "assets/main_an_img_1-dark-ff0ba0f0.svg",
+      "assets/main_an_img_1-4c3e31e9.svg",
+      "assets/main_an_img_2-dark-39175feb.svg",
+      "assets/main_an_img_2-b64e4435.svg",
+      "assets/main_an_img_3-dark-db7db846.svg",
+      "assets/main_an_img_3-6e3a1f3b.svg",
+      "assets/main_an_img_4-dark-a38657d6.svg",
+      "assets/main_an_img_4-ff1702d8.svg",
+      "assets/main_an_img_5-dark-38ccd5f8.svg",
+      "assets/main_an_img_5-46e2a3b8.svg",
+      "assets/main_an_img_full-dark-883aabe2.svg",
+      "assets/main_an_img_full-dark-0c326dba.webp",
+      "assets/main_an_img_full-1b945c66.svg",
+      "assets/main_an_img_full-14a9a58f.webp",
+      "assets/more-coins-329c8b75.webp",
+      "assets/orange-propeller-icon-998f471b.svg",
+      "assets/percent-icon-6b95c8b5.png",
+      "assets/platform-img-1-cc317896.webp",
+      "assets/platform-img-2-373c6a28.webp",
+      "assets/platform-img-3-1831c7c6.webp",
+      "assets/profile-9c156319.webp",
+      "assets/profit_view_img-1-dark-850f954a.svg",
+      "assets/profit_view_img-1-45a31c8c.svg",
+      "assets/propeller-7daeb77b.svg",
+      "assets/ru-ce589088.svg",
+      "assets/sikker_img-1-8e2d4d60.svg",
+      "assets/sms-icon-e14f7c2d.png",
+      "assets/static-propeller-2e965905.svg",
+      "assets/status-bar-16b8d036.png",
+      "assets/transparent-name-38dc3854.png",
+      "assets/two-factor-icon-e5ef3970.png",
+      "assets/wallet-icon-cbfe987e.png"
+    ],
+    "file": "assets/wallet-icon-f914ad52.js"
+  },
+  "pagination.css": {
+    "file": "assets/pagination-1f52dca1.css",
+    "src": "pagination.css"
+  },
+  "resources/assets/files/policy.pdf": {
+    "file": "assets/policy-2c348d5a.pdf",
+    "src": "resources/assets/files/policy.pdf"
+  },
+  "resources/assets/img/ASIC.webp": {
+    "file": "assets/ASIC-a61a80f7.webp",
+    "src": "resources/assets/img/ASIC.webp"
+  },
+  "resources/assets/img/Arrow-next.png": {
+    "file": "assets/Arrow-next-7119069b.png",
+    "src": "resources/assets/img/Arrow-next.png"
+  },
+  "resources/assets/img/Arrow-prev.png": {
+    "file": "assets/Arrow-prev-24eebdfe.png",
+    "src": "resources/assets/img/Arrow-prev.png"
+  },
+  "resources/assets/img/Check.svg": {
+    "file": "assets/Check-d2ab1e3c.svg",
+    "src": "resources/assets/img/Check.svg"
+  },
+  "resources/assets/img/about-panel-img-en.webp": {
+    "file": "assets/about-panel-img-en-32f2a054.webp",
+    "src": "resources/assets/img/about-panel-img-en.webp"
+  },
+  "resources/assets/img/about-panel-img-ru.webp": {
+    "file": "assets/about-panel-img-ru-2e571c87.webp",
+    "src": "resources/assets/img/about-panel-img-ru.webp"
+  },
+  "resources/assets/img/active-icon.png": {
+    "file": "assets/active-icon-a70db62d.png",
+    "src": "resources/assets/img/active-icon.png"
+  },
+  "resources/assets/img/arrow-down-icon-black.svg": {
+    "file": "assets/arrow-down-icon-black-6f383c50.svg",
+    "src": "resources/assets/img/arrow-down-icon-black.svg"
+  },
+  "resources/assets/img/arrow-down-icon-blue.svg": {
+    "file": "assets/arrow-down-icon-blue-30c6b33a.svg",
+    "src": "resources/assets/img/arrow-down-icon-blue.svg"
+  },
+  "resources/assets/img/arrow-down-land.png": {
+    "file": "assets/arrow-down-land-f4eb03ac.png",
+    "src": "resources/assets/img/arrow-down-land.png"
+  },
+  "resources/assets/img/asic-moon.webp": {
+    "file": "assets/asic-moon-e2097689.webp",
+    "src": "resources/assets/img/asic-moon.webp"
+  },
+  "resources/assets/img/asic-sun.webp": {
+    "file": "assets/asic-sun-9d730b76.webp",
+    "src": "resources/assets/img/asic-sun.webp"
+  },
+  "resources/assets/img/bitcoin.webp": {
+    "file": "assets/bitcoin-b07518e4.webp",
+    "src": "resources/assets/img/bitcoin.webp"
+  },
+  "resources/assets/img/change-password-icon.png": {
+    "file": "assets/change-password-icon-153b3475.png",
+    "src": "resources/assets/img/change-password-icon.png"
+  },
+  "resources/assets/img/compl-main-img.webp": {
+    "file": "assets/compl-main-img-47974906.webp",
+    "src": "resources/assets/img/compl-main-img.webp"
+  },
+  "resources/assets/img/dark.svg": {
+    "file": "assets/dark-116a030b.svg",
+    "src": "resources/assets/img/dark.svg"
+  },
+  "resources/assets/img/efficiency_img-1.webp": {
+    "file": "assets/efficiency_img-1-9d89d900.webp",
+    "src": "resources/assets/img/efficiency_img-1.webp"
+  },
+  "resources/assets/img/en.svg": {
+    "file": "assets/en-f0d1734a.svg",
+    "src": "resources/assets/img/en.svg"
+  },
+  "resources/assets/img/graph_img-back-dark.svg": {
+    "file": "assets/graph_img-back-dark-8e1835cc.svg",
+    "src": "resources/assets/img/graph_img-back-dark.svg"
+  },
+  "resources/assets/img/graph_img-back.svg": {
+    "file": "assets/graph_img-back-70ad8d88.svg",
+    "src": "resources/assets/img/graph_img-back.svg"
+  },
+  "resources/assets/img/hashrate-icon.png": {
+    "file": "assets/hashrate-icon-22a433db.png",
+    "src": "resources/assets/img/hashrate-icon.png"
+  },
+  "resources/assets/img/home_img-asic.webp": {
+    "file": "assets/home_img-asic-d3950316.webp",
+    "src": "resources/assets/img/home_img-asic.webp"
+  },
+  "resources/assets/img/home_img-earn.webp": {
+    "file": "assets/home_img-earn-91aefbf6.webp",
+    "src": "resources/assets/img/home_img-earn.webp"
+  },
+  "resources/assets/img/hosting_back_img-dark.svg": {
+    "file": "assets/hosting_back_img-dark-524bb9af.svg",
+    "src": "resources/assets/img/hosting_back_img-dark.svg"
+  },
+  "resources/assets/img/hosting_back_img-dark.webp": {
+    "file": "assets/hosting_back_img-dark-c868a01e.webp",
+    "src": "resources/assets/img/hosting_back_img-dark.webp"
+  },
+  "resources/assets/img/hosting_back_img.svg": {
+    "file": "assets/hosting_back_img-0665ec61.svg",
+    "src": "resources/assets/img/hosting_back_img.svg"
+  },
+  "resources/assets/img/hosting_back_img.webp": {
+    "file": "assets/hosting_back_img-9d4a9cf2.webp",
+    "src": "resources/assets/img/hosting_back_img.webp"
+  },
+  "resources/assets/img/hosting_info_img-1.webp": {
+    "file": "assets/hosting_info_img-1-3f597fd1.webp",
+    "src": "resources/assets/img/hosting_info_img-1.webp"
+  },
+  "resources/assets/img/hosting_info_img-2.webp": {
+    "file": "assets/hosting_info_img-2-91c1158d.webp",
+    "src": "resources/assets/img/hosting_info_img-2.webp"
+  },
+  "resources/assets/img/hosting_info_img-3.webp": {
+    "file": "assets/hosting_info_img-3-c705ff1d.webp",
+    "src": "resources/assets/img/hosting_info_img-3.webp"
+  },
+  "resources/assets/img/img-icon-accept.svg": {
+    "file": "assets/img-icon-accept-2cd623a7.svg",
+    "src": "resources/assets/img/img-icon-accept.svg"
+  },
+  "resources/assets/img/img-icon-enter.svg": {
+    "file": "assets/img-icon-enter-c0d4f2e7.svg",
+    "src": "resources/assets/img/img-icon-enter.svg"
+  },
+  "resources/assets/img/img_no-info.svg": {
+    "file": "assets/img_no-info-ba8e92a4.svg",
+    "src": "resources/assets/img/img_no-info.svg"
+  },
+  "resources/assets/img/img_no-statistic.png": {
+    "file": "assets/img_no-statistic-f7508b8c.png",
+    "src": "resources/assets/img/img_no-statistic.png"
+  },
+  "resources/assets/img/img_wallets-no-info.png": {
+    "file": "assets/img_wallets-no-info-fb211771.png",
+    "src": "resources/assets/img/img_wallets-no-info.png"
+  },
+  "resources/assets/img/income-icon.png": {
+    "file": "assets/income-icon-8f758369.png",
+    "src": "resources/assets/img/income-icon.png"
+  },
+  "resources/assets/img/interface_img-back.svg": {
+    "file": "assets/interface_img-back-b72452b8.svg",
+    "src": "resources/assets/img/interface_img-back.svg"
+  },
+  "resources/assets/img/invite-icon.png": {
+    "file": "assets/invite-icon-1f097b11.png",
+    "src": "resources/assets/img/invite-icon.png"
+  },
+  "resources/assets/img/iphone-14-screen1-en.png": {
+    "file": "assets/iphone-14-screen1-en-59cf51d3.png",
+    "src": "resources/assets/img/iphone-14-screen1-en.png"
+  },
+  "resources/assets/img/iphone-14-screen1-ru.png": {
+    "file": "assets/iphone-14-screen1-ru-872b013c.png",
+    "src": "resources/assets/img/iphone-14-screen1-ru.png"
+  },
+  "resources/assets/img/iphone-14-screen2-en.png": {
+    "file": "assets/iphone-14-screen2-en-14a1263d.png",
+    "src": "resources/assets/img/iphone-14-screen2-en.png"
+  },
+  "resources/assets/img/iphone-14-screen2-ru.png": {
+    "file": "assets/iphone-14-screen2-ru-28fb6582.png",
+    "src": "resources/assets/img/iphone-14-screen2-ru.png"
+  },
+  "resources/assets/img/iphone-14-screen3-en.png": {
+    "file": "assets/iphone-14-screen3-en-b6f8cde9.png",
+    "src": "resources/assets/img/iphone-14-screen3-en.png"
+  },
+  "resources/assets/img/iphone-14-screen3-ru.png": {
+    "file": "assets/iphone-14-screen3-ru-d632a6b6.png",
+    "src": "resources/assets/img/iphone-14-screen3-ru.png"
+  },
+  "resources/assets/img/iphone-14-screen4-en.png": {
+    "file": "assets/iphone-14-screen4-en-f7bd8078.png",
+    "src": "resources/assets/img/iphone-14-screen4-en.png"
+  },
+  "resources/assets/img/iphone-14-screen4-ru.png": {
+    "file": "assets/iphone-14-screen4-ru-9e476bac.png",
+    "src": "resources/assets/img/iphone-14-screen4-ru.png"
+  },
+  "resources/assets/img/iphone-14-screen5-en.png": {
+    "file": "assets/iphone-14-screen5-en-9f9371e3.png",
+    "src": "resources/assets/img/iphone-14-screen5-en.png"
+  },
+  "resources/assets/img/iphone-14-screen5-ru.png": {
+    "file": "assets/iphone-14-screen5-ru-2927634e.png",
+    "src": "resources/assets/img/iphone-14-screen5-ru.png"
+  },
+  "resources/assets/img/iphone-14.png": {
+    "file": "assets/iphone-14-2d7995be.png",
+    "src": "resources/assets/img/iphone-14.png"
+  },
+  "resources/assets/img/land-makeup.png": {
+    "file": "assets/land-makeup-5909fa0c.png",
+    "src": "resources/assets/img/land-makeup.png"
+  },
+  "resources/assets/img/light.svg": {
+    "file": "assets/light-5d6b8d9f.svg",
+    "src": "resources/assets/img/light.svg"
+  },
+  "resources/assets/img/logo_high_quality-dark.svg": {
+    "file": "assets/logo_high_quality-dark-9f6a330e.svg",
+    "src": "resources/assets/img/logo_high_quality-dark.svg"
+  },
+  "resources/assets/img/logo_high_quality-lg-dark.svg": {
+    "file": "assets/logo_high_quality-lg-dark-0030b1bd.svg",
+    "src": "resources/assets/img/logo_high_quality-lg-dark.svg"
+  },
+  "resources/assets/img/logo_high_quality-lg.svg": {
+    "file": "assets/logo_high_quality-lg-dbe9943b.svg",
+    "src": "resources/assets/img/logo_high_quality-lg.svg"
+  },
+  "resources/assets/img/logo_high_quality.svg": {
+    "file": "assets/logo_high_quality-e71fc07b.svg",
+    "src": "resources/assets/img/logo_high_quality.svg"
+  },
+  "resources/assets/img/main_an_img_1-dark.svg": {
+    "file": "assets/main_an_img_1-dark-ff0ba0f0.svg",
+    "src": "resources/assets/img/main_an_img_1-dark.svg"
+  },
+  "resources/assets/img/main_an_img_1.svg": {
+    "file": "assets/main_an_img_1-4c3e31e9.svg",
+    "src": "resources/assets/img/main_an_img_1.svg"
+  },
+  "resources/assets/img/main_an_img_2-dark.svg": {
+    "file": "assets/main_an_img_2-dark-39175feb.svg",
+    "src": "resources/assets/img/main_an_img_2-dark.svg"
+  },
+  "resources/assets/img/main_an_img_2.svg": {
+    "file": "assets/main_an_img_2-b64e4435.svg",
+    "src": "resources/assets/img/main_an_img_2.svg"
+  },
+  "resources/assets/img/main_an_img_3-dark.svg": {
+    "file": "assets/main_an_img_3-dark-db7db846.svg",
+    "src": "resources/assets/img/main_an_img_3-dark.svg"
+  },
+  "resources/assets/img/main_an_img_3.svg": {
+    "file": "assets/main_an_img_3-6e3a1f3b.svg",
+    "src": "resources/assets/img/main_an_img_3.svg"
+  },
+  "resources/assets/img/main_an_img_4-dark.svg": {
+    "file": "assets/main_an_img_4-dark-a38657d6.svg",
+    "src": "resources/assets/img/main_an_img_4-dark.svg"
+  },
+  "resources/assets/img/main_an_img_4.svg": {
+    "file": "assets/main_an_img_4-ff1702d8.svg",
+    "src": "resources/assets/img/main_an_img_4.svg"
+  },
+  "resources/assets/img/main_an_img_5-dark.svg": {
+    "file": "assets/main_an_img_5-dark-38ccd5f8.svg",
+    "src": "resources/assets/img/main_an_img_5-dark.svg"
+  },
+  "resources/assets/img/main_an_img_5.svg": {
+    "file": "assets/main_an_img_5-46e2a3b8.svg",
+    "src": "resources/assets/img/main_an_img_5.svg"
+  },
+  "resources/assets/img/main_an_img_full-dark.svg": {
+    "file": "assets/main_an_img_full-dark-883aabe2.svg",
+    "src": "resources/assets/img/main_an_img_full-dark.svg"
+  },
+  "resources/assets/img/main_an_img_full-dark.webp": {
+    "file": "assets/main_an_img_full-dark-0c326dba.webp",
+    "src": "resources/assets/img/main_an_img_full-dark.webp"
+  },
+  "resources/assets/img/main_an_img_full.svg": {
+    "file": "assets/main_an_img_full-1b945c66.svg",
+    "src": "resources/assets/img/main_an_img_full.svg"
+  },
+  "resources/assets/img/main_an_img_full.webp": {
+    "file": "assets/main_an_img_full-14a9a58f.webp",
+    "src": "resources/assets/img/main_an_img_full.webp"
+  },
+  "resources/assets/img/more-coins.webp": {
+    "file": "assets/more-coins-329c8b75.webp",
+    "src": "resources/assets/img/more-coins.webp"
+  },
+  "resources/assets/img/orange-propeller-icon.svg": {
+    "file": "assets/orange-propeller-icon-998f471b.svg",
+    "src": "resources/assets/img/orange-propeller-icon.svg"
+  },
+  "resources/assets/img/percent-icon.png": {
+    "file": "assets/percent-icon-6b95c8b5.png",
+    "src": "resources/assets/img/percent-icon.png"
+  },
+  "resources/assets/img/platform-img-1.webp": {
+    "file": "assets/platform-img-1-cc317896.webp",
+    "src": "resources/assets/img/platform-img-1.webp"
+  },
+  "resources/assets/img/platform-img-2.webp": {
+    "file": "assets/platform-img-2-373c6a28.webp",
+    "src": "resources/assets/img/platform-img-2.webp"
+  },
+  "resources/assets/img/platform-img-3.webp": {
+    "file": "assets/platform-img-3-1831c7c6.webp",
+    "src": "resources/assets/img/platform-img-3.webp"
+  },
+  "resources/assets/img/profile.webp": {
+    "file": "assets/profile-9c156319.webp",
+    "src": "resources/assets/img/profile.webp"
+  },
+  "resources/assets/img/profit_view_img-1-dark.svg": {
+    "file": "assets/profit_view_img-1-dark-850f954a.svg",
+    "src": "resources/assets/img/profit_view_img-1-dark.svg"
+  },
+  "resources/assets/img/profit_view_img-1.svg": {
+    "file": "assets/profit_view_img-1-45a31c8c.svg",
+    "src": "resources/assets/img/profit_view_img-1.svg"
+  },
+  "resources/assets/img/propeller.svg": {
+    "file": "assets/propeller-7daeb77b.svg",
+    "src": "resources/assets/img/propeller.svg"
+  },
+  "resources/assets/img/ru.svg": {
+    "file": "assets/ru-ce589088.svg",
+    "src": "resources/assets/img/ru.svg"
+  },
+  "resources/assets/img/sikker_img-1.svg": {
+    "file": "assets/sikker_img-1-8e2d4d60.svg",
+    "src": "resources/assets/img/sikker_img-1.svg"
+  },
+  "resources/assets/img/sms-icon.png": {
+    "file": "assets/sms-icon-e14f7c2d.png",
+    "src": "resources/assets/img/sms-icon.png"
+  },
+  "resources/assets/img/static-propeller.svg": {
+    "file": "assets/static-propeller-2e965905.svg",
+    "src": "resources/assets/img/static-propeller.svg"
+  },
+  "resources/assets/img/status-bar.png": {
+    "file": "assets/status-bar-16b8d036.png",
+    "src": "resources/assets/img/status-bar.png"
+  },
+  "resources/assets/img/transparent-name.png": {
+    "file": "assets/transparent-name-38dc3854.png",
+    "src": "resources/assets/img/transparent-name.png"
+  },
+  "resources/assets/img/two-factor-icon.png": {
+    "file": "assets/two-factor-icon-e5ef3970.png",
+    "src": "resources/assets/img/two-factor-icon.png"
+  },
+  "resources/assets/img/wallet-icon.png": {
+    "file": "assets/wallet-icon-cbfe987e.png",
+    "src": "resources/assets/img/wallet-icon.png"
+  },
+  "resources/js/Pages/AboutPage.vue": {
+    "css": [
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/AboutPage-94ad6cba.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/AboutPage.vue"
+  },
+  "resources/js/Pages/CalculatorPage.css": {
+    "file": "assets/CalculatorPage-d5f5210d.css",
+    "src": "resources/js/Pages/CalculatorPage.css"
+  },
+  "resources/js/Pages/CalculatorPage.vue": {
+    "css": [
+      "assets/CalculatorPage-d5f5210d.css",
+      "assets/ButtonBlue-d9900d4f.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/CalculatorPage-93785dc2.js",
+    "imports": [
+      "_LightCalculatorView-dcd25066.js",
+      "resources/js/app.js",
+      "_SelectTheme-71497640.js",
+      "_ButtonBlue-af33d8d4.js",
+      "_AccountMenu-396d6837.js",
+      "_MainPopup-3ac77bbe.js",
+      "_converter-ec486320.js",
+      "_HomeMessage-d8fcb3c3.js",
+      "_MainMenu-3e28dd31.js",
+      "_wallet-icon-f914ad52.js",
+      "_MainTitle-5abaae33.js",
+      "_anime.es-de4e5aa0.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/CalculatorPage.vue"
+  },
+  "resources/js/Pages/ConfirmPage.css": {
+    "file": "assets/ConfirmPage-d22b454e.css",
+    "src": "resources/js/Pages/ConfirmPage.css"
+  },
+  "resources/js/Pages/ConfirmPage.vue": {
+    "css": [
+      "assets/ConfirmPage-d22b454e.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/ConfirmPage-1c4cfb40.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_MainDescriptionOld-8ed807b9.js",
+      "_VerifyLink-301fc5ba.js",
+      "_AuthMessages-57a1dce6.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/ConfirmPage.vue"
+  },
+  "resources/js/Pages/ErrorPage.vue": {
+    "file": "assets/ErrorPage-bd543399.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/ErrorPage.vue"
+  },
+  "resources/js/Pages/FaqPage.css": {
+    "file": "assets/FaqPage-fdc746ec.css",
+    "src": "resources/js/Pages/FaqPage.css"
+  },
+  "resources/js/Pages/FaqPage.vue": {
+    "css": [
+      "assets/FaqPage-fdc746ec.css",
+      "assets/MainTitle-117ad68a.css",
+      "assets/ButtonBlue-d9900d4f.css",
+      "assets/MainAccordion-159f2ad9.css",
+      "assets/FaqPage-0cab71f7.css"
+    ],
+    "file": "assets/FaqPage-23290d2b.js",
+    "imports": [
+      "_HeroView-a2f93ef5.js",
+      "resources/js/modules/faq/Components/UI/FaqTabs.vue",
+      "_MainTabs-a2f87367.js",
+      "resources/js/modules/faq/Components/UI/FaqNavsTabs.vue",
+      "resources/js/modules/faq/Components/UI/FaqImagesComponent.vue",
+      "resources/js/app.js",
+      "_HomeMessage-d8fcb3c3.js",
+      "_LandingButton-856f648b.js",
+      "_LandingTitle-34cb80ec.js",
+      "_LandingText-9d89853a.js",
+      "_FaqTranslate-134a6516.js",
+      "resources/js/modules/faq/Components/UI/FaqWarning.vue",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/FaqPage.vue"
+  },
+  "resources/js/Pages/HomePage.css": {
+    "file": "assets/HomePage-ea7829d1.css",
+    "src": "resources/js/Pages/HomePage.css"
+  },
+  "resources/js/Pages/HomePage.vue": {
+    "css": [
+      "assets/HomePage-ea7829d1.css",
+      "assets/swiper-1df8f2af.css",
+      "assets/ButtonBlue-d9900d4f.css"
+    ],
+    "file": "assets/HomePage-7d9aa117.js",
+    "imports": [
+      "_ButtonBlue-af33d8d4.js",
+      "_HomeMessage-d8fcb3c3.js",
+      "resources/js/app.js",
+      "_Mockup-mobile-statistic-cd502692.js",
+      "_LandingTitle-34cb80ec.js",
+      "_LandingButton-856f648b.js",
+      "_LandingText-9d89853a.js",
+      "_LightCalculatorView-dcd25066.js",
+      "_HeroView-a2f93ef5.js",
+      "_NavMessages-72153b48.js",
+      "_converter-ec486320.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/HomePage.vue"
+  },
+  "resources/js/Pages/HostingPage.css": {
+    "file": "assets/HostingPage-842ef150.css",
+    "src": "resources/js/Pages/HostingPage.css"
+  },
+  "resources/js/Pages/HostingPage.vue": {
+    "assets": [
+      "assets/Mockup-monitoring-en-96f56eae.png",
+      "assets/Mockup-monitoring-iphone-en-38aa384b.png",
+      "assets/Mockup-support-6c687f7b.png",
+      "assets/Mockup-support-en-65c77a46.png"
+    ],
+    "css": [
+      "assets/HostingPage-842ef150.css",
+      "assets/swiper-1df8f2af.css",
+      "assets/pagination-1f52dca1.css"
+    ],
+    "file": "assets/HostingPage-830b842c.js",
+    "imports": [
+      "_HostingMessage-36b739f1.js",
+      "_Mockup-mobile-statistic-cd502692.js",
+      "resources/js/app.js",
+      "_ConnectCard-8f0f0e6d.js",
+      "_LandingButton-856f648b.js",
+      "_NavMessages-72153b48.js",
+      "_LandingText-9d89853a.js",
+      "_LandingTitle-34cb80ec.js",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/HostingPage.vue"
+  },
+  "resources/js/Pages/LoginPage.css": {
+    "file": "assets/LoginPage-99949829.css",
+    "src": "resources/js/Pages/LoginPage.css"
+  },
+  "resources/js/Pages/LoginPage.vue": {
+    "css": [
+      "assets/LoginPage-99949829.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/LoginPage-d06aa3b6.js",
+    "imports": [
+      "_policy-bc46909d.js",
+      "_AuthErrors-d335e0f9.js",
+      "_MainTitle-5abaae33.js",
+      "_MainPopup-3ac77bbe.js",
+      "_MainDescriptionOld-8ed807b9.js",
+      "_MainCopy-b48a6063.js",
+      "_MainButton-069506c4.js",
+      "resources/js/app.js",
+      "_ProfilePassword-a211b840.js",
+      "_ValidateService-56a5ee18.js",
+      "_VerifyLink-301fc5ba.js",
+      "_MainInput-7e1d9d63.js",
+      "_AuthMessages-57a1dce6.js",
+      "_anime.es-de4e5aa0.js",
+      "_TickIcon-df7ac9c5.js",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/LoginPage.vue"
+  },
+  "resources/js/Pages/MinersPage.css": {
+    "file": "assets/MinersPage-0ed38a25.css",
+    "src": "resources/js/Pages/MinersPage.css"
+  },
+  "resources/js/Pages/MinersPage.vue": {
+    "assets": [
+      "assets/yandex-2a70b515.png",
+      "assets/yandex-mini-eee313d4.png",
+      "assets/tinkoff-3f410f49.svg",
+      "assets/tinkoff-mini-5d5a38c5.svg",
+      "assets/vc-83faf164.svg",
+      "assets/vc-mini-28ad746f.svg",
+      "assets/habr-0db14112.svg",
+      "assets/habr-mini-7136ce92.svg"
+    ],
+    "css": [
+      "assets/MinersPage-0ed38a25.css",
+      "assets/ButtonBlue-d9900d4f.css",
+      "assets/swiper-1df8f2af.css",
+      "assets/pagination-1f52dca1.css"
+    ],
+    "file": "assets/MinersPage-9ec4cbee.js",
+    "imports": [
+      "_ButtonBlue-af33d8d4.js",
+      "resources/js/app.js",
+      "_Mockup-mobile-statistic-cd502692.js",
+      "_ConnectCard-8f0f0e6d.js",
+      "_NavMessages-72153b48.js",
+      "_LandingText-9d89853a.js",
+      "_LandingTitle-34cb80ec.js",
+      "_HostingMessage-36b739f1.js",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/MinersPage.vue"
+  },
+  "resources/js/Pages/Profile/ConnectingPage.css": {
+    "file": "assets/ConnectingPage-5a9f72e9.css",
+    "src": "resources/js/Pages/Profile/ConnectingPage.css"
+  },
+  "resources/js/Pages/Profile/ConnectingPage.vue": {
+    "css": [
+      "assets/ConnectingPage-5a9f72e9.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/ConnectingPage-c9ac99c1.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_TickIcon-df7ac9c5.js",
+      "resources/js/app.js",
+      "_InstructionService-d77d7f22.js",
+      "_InstructionButton-391a8821.js",
+      "_MainDescriptionOld-8ed807b9.js",
+      "_WarningBlock-e958f63d.js",
+      "_MainIcon-57980112.js",
+      "_MainDescription-a8d06221.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/ConnectingPage.vue"
+  },
+  "resources/js/Pages/Profile/FaqPage.vue": {
+    "css": [
+      "assets/FaqPage-0cab71f7.css",
+      "assets/MainTitle-117ad68a.css",
+      "assets/ButtonBlue-d9900d4f.css",
+      "assets/MainAccordion-159f2ad9.css"
+    ],
+    "file": "assets/FaqPage-b250325b.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_ButtonBlue-af33d8d4.js",
+      "_MainAccordion-fe732dfb.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/FaqPage.vue"
+  },
+  "resources/js/Pages/Profile/IncomePage.css": {
+    "file": "assets/IncomePage-00fcf025.css",
+    "src": "resources/js/Pages/Profile/IncomePage.css"
+  },
+  "resources/js/Pages/Profile/IncomePage.vue": {
+    "css": [
+      "assets/IncomePage-00fcf025.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/IncomePage-b4802ede.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_BarGraphData-2d15976d.js",
+      "_MainSlider-cf396ea1.js",
+      "_TableTitles-46c1357e.js",
+      "resources/js/app.js",
+      "_InstructionService-d77d7f22.js",
+      "_InstructionButton-391a8821.js",
+      "_converter-ec486320.js",
+      "_TooltipCard-430f11e3.js",
+      "_transform-fa9976d2.js",
+      "_anime.es-de4e5aa0.js",
+      "_DefaultSubsService-b95954c2.js",
+      "_MainPreloader-edb92089.js",
+      "_StatesService-a0d6c34c.js",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/IncomePage.vue"
+  },
+  "resources/js/Pages/Profile/Referral/EarnRewardsPage.css": {
+    "file": "assets/EarnRewardsPage-9367140b.css",
+    "src": "resources/js/Pages/Profile/Referral/EarnRewardsPage.css"
+  },
+  "resources/js/Pages/Profile/Referral/EarnRewardsPage.vue": {
+    "css": [
+      "assets/EarnRewardsPage-9367140b.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/EarnRewardsPage-0263d902.js",
+    "imports": [
+      "_ReferralSelect-da1293a2.js",
+      "_MainSearch-cc3f8f4b.js",
+      "_TableService-ecb32e12.js",
+      "resources/js/app.js",
+      "_ReferralsLayoutView-cd624d01.js",
+      "_MainTable-a3e08966.js",
+      "_MainSlider-cf396ea1.js",
+      "_MainTitle-5abaae33.js",
+      "_MainTabs-a2f87367.js",
+      "_MainPreloader-edb92089.js",
+      "_StatesService-a0d6c34c.js",
+      "_anime.es-de4e5aa0.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/Referral/EarnRewardsPage.vue"
+  },
+  "resources/js/Pages/Profile/Referral/MyReferralPage.css": {
+    "file": "assets/MyReferralPage-3e0e3e3f.css",
+    "src": "resources/js/Pages/Profile/Referral/MyReferralPage.css"
+  },
+  "resources/js/Pages/Profile/Referral/MyReferralPage.vue": {
+    "css": [
+      "assets/MyReferralPage-3e0e3e3f.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/MyReferralPage-36aa3c43.js",
+    "imports": [
+      "_MainSearch-cc3f8f4b.js",
+      "_GradeData-86a3feeb.js",
+      "_TableService-ecb32e12.js",
+      "resources/js/app.js",
+      "_ReferralsLayoutView-cd624d01.js",
+      "_MainTable-a3e08966.js",
+      "_MainSlider-cf396ea1.js",
+      "_MainTitle-5abaae33.js",
+      "_MainTabs-a2f87367.js",
+      "_MainPreloader-edb92089.js",
+      "_StatesService-a0d6c34c.js",
+      "_anime.es-de4e5aa0.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/Referral/MyReferralPage.vue"
+  },
+  "resources/js/Pages/Profile/Referral/OverviewPage.css": {
+    "file": "assets/OverviewPage-8b692a7b.css",
+    "src": "resources/js/Pages/Profile/Referral/OverviewPage.css"
+  },
+  "resources/js/Pages/Profile/Referral/OverviewPage.vue": {
+    "assets": [
+      "assets/percent-icon-6b95c8b5.png",
+      "assets/hashrate-icon-22a433db.png",
+      "assets/income-icon-8f758369.png",
+      "assets/invite-icon-1f097b11.png",
+      "assets/active-icon-a70db62d.png"
+    ],
+    "css": [
+      "assets/OverviewPage-8b692a7b.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/OverviewPage-3649effe.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_MainCopy-b48a6063.js",
+      "_GradeData-86a3feeb.js",
+      "resources/js/app.js",
+      "_ReferralSelect-da1293a2.js",
+      "_ReferralsLayoutView-cd624d01.js",
+      "_CabinetCard-9f91989e.js",
+      "_TickIcon-df7ac9c5.js",
+      "_MainTabs-a2f87367.js",
+      "_TooltipCard-430f11e3.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/Referral/OverviewPage.vue"
+  },
+  "resources/js/Pages/Profile/SettingsPage.css": {
+    "file": "assets/SettingsPage-1dd23e44.css",
+    "src": "resources/js/Pages/Profile/SettingsPage.css"
+  },
+  "resources/js/Pages/Profile/SettingsPage.vue": {
+    "css": [
+      "assets/SettingsPage-1dd23e44.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/SettingsPage-c29e9c6c.js",
+    "imports": [
+      "_wallet-icon-f914ad52.js",
+      "_MainTitle-5abaae33.js",
+      "_ProfilePassword-a211b840.js",
+      "resources/js/app.js",
+      "_MainPopup-3ac77bbe.js",
+      "_MainButton-069506c4.js",
+      "_ValidateService-56a5ee18.js",
+      "_InstructionService-d77d7f22.js",
+      "_InstructionButton-391a8821.js",
+      "_VerifyLink-301fc5ba.js",
+      "_MainDescriptionOld-8ed807b9.js",
+      "_MainCopy-b48a6063.js",
+      "_MainInput-7e1d9d63.js",
+      "_Form-8d53cf55.js",
+      "_anime.es-de4e5aa0.js",
+      "_MainIcon-57980112.js",
+      "_TickIcon-df7ac9c5.js",
+      "_MainDescription-a8d06221.js",
+      "_StatesService-a0d6c34c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/SettingsPage.vue"
+  },
+  "resources/js/Pages/Profile/StatisticPage.css": {
+    "file": "assets/StatisticPage-86d8b5f4.css",
+    "src": "resources/js/Pages/Profile/StatisticPage.css"
+  },
+  "resources/js/Pages/Profile/StatisticPage.vue": {
+    "assets": [
+      "assets/img_no-statistic-f7508b8c.png"
+    ],
+    "css": [
+      "assets/StatisticPage-86d8b5f4.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/StatisticPage-367568a8.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_MainPreloader-edb92089.js",
+      "_CabinetCard-9f91989e.js",
+      "_BarGraphData-2d15976d.js",
+      "_InstructionService-d77d7f22.js",
+      "resources/js/app.js",
+      "_MainTabs-a2f87367.js",
+      "_WaitPreloader-358f9559.js",
+      "_MinuteHashrateIcon-95aec08f.js",
+      "_InstructionButton-391a8821.js",
+      "_StatesService-a0d6c34c.js",
+      "_anime.es-de4e5aa0.js",
+      "_TooltipCard-430f11e3.js",
+      "_converter-ec486320.js",
+      "_transform-fa9976d2.js",
+      "_DefaultSubsService-b95954c2.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/StatisticPage.vue"
+  },
+  "resources/js/Pages/Profile/SubsPage.css": {
+    "file": "assets/SubsPage-375d0f8c.css",
+    "src": "resources/js/Pages/Profile/SubsPage.css"
+  },
+  "resources/js/Pages/Profile/SubsPage.vue": {
+    "assets": [
+      "assets/img_subs-no-info-7c22658d.png"
+    ],
+    "css": [
+      "assets/SubsPage-375d0f8c.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/SubsPage-23768d7f.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_MainPreloader-edb92089.js",
+      "_MainSearch-cc3f8f4b.js",
+      "resources/js/app.js",
+      "_MainButton-069506c4.js",
+      "_MainSlider-cf396ea1.js",
+      "_TableTitles-46c1357e.js",
+      "_MainDescriptionOld-8ed807b9.js",
+      "_CabinetCard-9f91989e.js",
+      "_MinuteHashrateIcon-95aec08f.js",
+      "_Form-8d53cf55.js",
+      "_MainPopup-3ac77bbe.js",
+      "_DefaultSubsService-b95954c2.js",
+      "_StatesService-a0d6c34c.js",
+      "_anime.es-de4e5aa0.js",
+      "_MainIcon-57980112.js",
+      "_TooltipCard-430f11e3.js",
+      "_MainDescription-a8d06221.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/SubsPage.vue"
+  },
+  "resources/js/Pages/Profile/WalletsPage.css": {
+    "file": "assets/WalletsPage-d6740c74.css",
+    "src": "resources/js/Pages/Profile/WalletsPage.css"
+  },
+  "resources/js/Pages/Profile/WalletsPage.vue": {
+    "assets": [
+      "assets/img_wallets-no-info-fb211771.png"
+    ],
+    "css": [
+      "assets/WalletsPage-d6740c74.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/WalletsPage-b301ad5b.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "resources/js/app.js",
+      "_MainMenu-3e28dd31.js",
+      "_MainButton-069506c4.js",
+      "_MainPreloader-edb92089.js",
+      "_MainPopup-3ac77bbe.js",
+      "_MainDescriptionOld-8ed807b9.js",
+      "_TooltipCard-430f11e3.js",
+      "_WarningBlock-e958f63d.js",
+      "_InstructionService-d77d7f22.js",
+      "_InstructionButton-391a8821.js",
+      "_MainInput-7e1d9d63.js",
+      "_VerifyLink-301fc5ba.js",
+      "_DefaultSubsService-b95954c2.js",
+      "_wallet-icon-f914ad52.js",
+      "_MainIcon-57980112.js",
+      "_StatesService-a0d6c34c.js",
+      "_anime.es-de4e5aa0.js",
+      "_MainDescription-a8d06221.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/WalletsPage.vue"
+  },
+  "resources/js/Pages/Profile/WatchersPage.css": {
+    "file": "assets/WatchersPage-bbbdeb69.css",
+    "src": "resources/js/Pages/Profile/WatchersPage.css"
+  },
+  "resources/js/Pages/Profile/WatchersPage.vue": {
+    "assets": [
+      "assets/img_watcher-card-01d9a239.png",
+      "assets/img_watcher-remove-25031a18.png"
+    ],
+    "css": [
+      "assets/WatchersPage-bbbdeb69.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/WatchersPage-e851ac01.js",
+    "imports": [
+      "_MainDescriptionOld-8ed807b9.js",
+      "_MainTitle-5abaae33.js",
+      "_MainButton-069506c4.js",
+      "resources/js/app.js",
+      "_MainSlider-cf396ea1.js",
+      "_WatchersMessages-3b1bfe4c.js",
+      "_MainPopup-3ac77bbe.js",
+      "_MainInput-7e1d9d63.js",
+      "_InstructionService-d77d7f22.js",
+      "_MainCopy-b48a6063.js",
+      "_MainPreloader-edb92089.js",
+      "_DefaultSubsService-b95954c2.js",
+      "_InstructionButton-391a8821.js",
+      "_MainIcon-57980112.js",
+      "_anime.es-de4e5aa0.js",
+      "_TickIcon-df7ac9c5.js",
+      "_StatesService-a0d6c34c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/WatchersPage.vue"
+  },
+  "resources/js/Pages/Profile/WorkersPage.css": {
+    "file": "assets/WorkersPage-d1f48414.css",
+    "src": "resources/js/Pages/Profile/WorkersPage.css"
+  },
+  "resources/js/Pages/Profile/WorkersPage.vue": {
+    "css": [
+      "assets/WorkersPage-d1f48414.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/WorkersPage-cfc9e1d0.js",
+    "imports": [
+      "resources/js/app.js",
+      "_CabinetCard-9f91989e.js",
+      "_MinuteHashrateIcon-95aec08f.js",
+      "_MainSlider-cf396ea1.js",
+      "_MainTable-a3e08966.js",
+      "_MainPreloader-edb92089.js",
+      "_MainTabs-a2f87367.js",
+      "_WaitPreloader-358f9559.js",
+      "_MainTitle-5abaae33.js",
+      "_MainPopup-3ac77bbe.js",
+      "_WatchersMessages-3b1bfe4c.js",
+      "_InstructionService-d77d7f22.js",
+      "_InstructionButton-391a8821.js",
+      "_TooltipCard-430f11e3.js",
+      "_StatesService-a0d6c34c.js",
+      "_anime.es-de4e5aa0.js",
+      "_transform-fa9976d2.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Profile/WorkersPage.vue"
+  },
+  "resources/js/Pages/RegPage.css": {
+    "file": "assets/RegPage-d53a466b.css",
+    "src": "resources/js/Pages/RegPage.css"
+  },
+  "resources/js/Pages/RegPage.vue": {
+    "css": [
+      "assets/RegPage-d53a466b.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/RegPage-77da1927.js",
+    "imports": [
+      "_policy-bc46909d.js",
+      "_AuthErrors-d335e0f9.js",
+      "_ValidateService-56a5ee18.js",
+      "_MainTitle-5abaae33.js",
+      "_MainButton-069506c4.js",
+      "resources/js/app.js",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/RegPage.vue"
+  },
+  "resources/js/Pages/TwoFactorVerifyPage.vue": {
+    "file": "assets/TwoFactorVerifyPage-7dac2eb7.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/TwoFactorVerifyPage.vue"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-6c4bed7c.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "css": [
+      "assets/app-6c4bed7c.css"
+    ],
+    "dynamicImports": [
+      "resources/js/layouts/AuthLayoutView.vue",
+      "resources/js/layouts/CalculatorLayoutView.vue",
+      "resources/js/layouts/FaqLayoutView.vue",
+      "resources/js/layouts/LayoutView.vue",
+      "resources/js/layouts/ProfileLayoutView.vue",
+      "_ReferralsLayoutView-cd624d01.js",
+      "resources/js/modules/notification/icons/NotificationSuccessIcon.vue",
+      "resources/js/modules/notification/icons/NotificationWarningIcon.vue",
+      "resources/js/modules/notification/icons/NotificationErrorIcon.vue",
+      "resources/js/Pages/AboutPage.vue",
+      "resources/js/Pages/CalculatorPage.vue",
+      "resources/js/Pages/ConfirmPage.vue",
+      "resources/js/Pages/ErrorPage.vue",
+      "resources/js/Pages/FaqPage.vue",
+      "resources/js/Pages/HomePage.vue",
+      "resources/js/Pages/HostingPage.vue",
+      "resources/js/Pages/LoginPage.vue",
+      "resources/js/Pages/MinersPage.vue",
+      "resources/js/Pages/RegPage.vue",
+      "resources/js/Pages/TwoFactorVerifyPage.vue",
+      "resources/js/Pages/Profile/ConnectingPage.vue",
+      "resources/js/Pages/Profile/FaqPage.vue",
+      "resources/js/Pages/Profile/IncomePage.vue",
+      "resources/js/Pages/Profile/SettingsPage.vue",
+      "resources/js/Pages/Profile/StatisticPage.vue",
+      "resources/js/Pages/Profile/SubsPage.vue",
+      "resources/js/Pages/Profile/WalletsPage.vue",
+      "resources/js/Pages/Profile/WatchersPage.vue",
+      "resources/js/Pages/Profile/WorkersPage.vue",
+      "resources/js/Pages/Profile/Referral/EarnRewardsPage.vue",
+      "resources/js/Pages/Profile/Referral/MyReferralPage.vue",
+      "resources/js/Pages/Profile/Referral/OverviewPage.vue",
+      "resources/js/Pages/AboutPage.vue",
+      "resources/js/Pages/CalculatorPage.vue",
+      "resources/js/Pages/ConfirmPage.vue",
+      "resources/js/Pages/ErrorPage.vue",
+      "resources/js/Pages/FaqPage.vue",
+      "resources/js/Pages/HomePage.vue",
+      "resources/js/Pages/HostingPage.vue",
+      "resources/js/Pages/LoginPage.vue",
+      "resources/js/Pages/MinersPage.vue",
+      "resources/js/Pages/RegPage.vue",
+      "resources/js/Pages/TwoFactorVerifyPage.vue",
+      "resources/js/Pages/AboutPage.vue",
+      "resources/js/Pages/CalculatorPage.vue",
+      "resources/js/Pages/ConfirmPage.vue",
+      "resources/js/Pages/ErrorPage.vue",
+      "resources/js/Pages/FaqPage.vue",
+      "resources/js/Pages/HomePage.vue",
+      "resources/js/Pages/HostingPage.vue",
+      "resources/js/Pages/LoginPage.vue",
+      "resources/js/Pages/MinersPage.vue",
+      "resources/js/Pages/RegPage.vue",
+      "resources/js/Pages/TwoFactorVerifyPage.vue",
+      "resources/js/modules/faq/Components/UI/FaqImagesComponent.vue",
+      "resources/js/modules/faq/Components/UI/FaqNavsTabs.vue",
+      "resources/js/modules/faq/Components/UI/FaqQuestionsComponent.vue",
+      "resources/js/modules/faq/Components/UI/FaqTabs.vue",
+      "resources/js/modules/faq/Components/UI/FaqWarning.vue",
+      "resources/js/Pages/AboutPage.vue",
+      "resources/js/Pages/CalculatorPage.vue",
+      "resources/js/Pages/ConfirmPage.vue",
+      "resources/js/Pages/ErrorPage.vue",
+      "resources/js/Pages/FaqPage.vue",
+      "resources/js/Pages/HomePage.vue",
+      "resources/js/Pages/HostingPage.vue",
+      "resources/js/Pages/LoginPage.vue",
+      "resources/js/Pages/MinersPage.vue",
+      "resources/js/Pages/RegPage.vue",
+      "resources/js/Pages/TwoFactorVerifyPage.vue",
+      "_ReferralsLayoutView-cd624d01.js",
+      "resources/js/Pages/Profile/StatisticPage.vue",
+      "resources/js/Pages/Profile/WorkersPage.vue",
+      "resources/js/Pages/Profile/IncomePage.vue"
+    ],
+    "file": "assets/app-7a3a58ff.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/layouts/AuthLayoutView.css": {
+    "file": "assets/AuthLayoutView-5ee6ca65.css",
+    "src": "resources/js/layouts/AuthLayoutView.css"
+  },
+  "resources/js/layouts/AuthLayoutView.vue": {
+    "assets": [
+      "assets/logo_high_quality-lg-dbe9943b.svg",
+      "assets/logo_high_quality-lg-dark-0030b1bd.svg",
+      "assets/graph_img-back-70ad8d88.svg",
+      "assets/graph_img-back-dark-8e1835cc.svg"
+    ],
+    "css": [
+      "assets/AuthLayoutView-5ee6ca65.css"
+    ],
+    "file": "assets/AuthLayoutView-dc5f595a.js",
+    "imports": [
+      "_SelectTheme-71497640.js",
+      "resources/js/app.js",
+      "_NotificationList-09539f47.js",
+      "_MainMenu-3e28dd31.js",
+      "_wallet-icon-f914ad52.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/layouts/AuthLayoutView.vue"
+  },
+  "resources/js/layouts/CalculatorLayoutView.css": {
+    "file": "assets/CalculatorLayoutView-6e7ff49a.css",
+    "src": "resources/js/layouts/CalculatorLayoutView.css"
+  },
+  "resources/js/layouts/CalculatorLayoutView.vue": {
+    "css": [
+      "assets/CalculatorLayoutView-6e7ff49a.css"
+    ],
+    "file": "assets/CalculatorLayoutView-dbc2c75c.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/layouts/CalculatorLayoutView.vue"
+  },
+  "resources/js/layouts/FaqLayoutView.css": {
+    "file": "assets/FaqLayoutView-530d0cd1.css",
+    "src": "resources/js/layouts/FaqLayoutView.css"
+  },
+  "resources/js/layouts/FaqLayoutView.vue": {
+    "css": [
+      "assets/FaqLayoutView-530d0cd1.css",
+      "assets/swiper-1df8f2af.css",
+      "assets/pagination-1f52dca1.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/FaqLayoutView-5e8830bf.js",
+    "imports": [
+      "_NavTabs-a6ec92de.js",
+      "_SelectTheme-71497640.js",
+      "resources/js/app.js",
+      "_ArrowUpIcon-bc4b823a.js",
+      "resources/js/modules/faq/Components/UI/FaqNavsTabs.vue",
+      "resources/js/modules/faq/Components/UI/FaqTabs.vue",
+      "_FaqTranslate-134a6516.js",
+      "_InstructionService-d77d7f22.js",
+      "_AccountMenu-396d6837.js",
+      "_MainPopup-3ac77bbe.js",
+      "_anime.es-de4e5aa0.js",
+      "_MainTitle-5abaae33.js",
+      "_MainIcon-57980112.js",
+      "_MainMenu-3e28dd31.js",
+      "_wallet-icon-f914ad52.js",
+      "_HomeMessage-d8fcb3c3.js",
+      "_HostingMessage-36b739f1.js",
+      "_NavMessages-72153b48.js",
+      "_policy-bc46909d.js",
+      "_LandingText-9d89853a.js",
+      "_MainTabs-a2f87367.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/layouts/FaqLayoutView.vue"
+  },
+  "resources/js/layouts/LayoutView.css": {
+    "file": "assets/LayoutView-86fde1e3.css",
+    "src": "resources/js/layouts/LayoutView.css"
+  },
+  "resources/js/layouts/LayoutView.vue": {
+    "css": [
+      "assets/LayoutView-86fde1e3.css"
+    ],
+    "file": "assets/LayoutView-cbff82fc.js",
+    "imports": [
+      "_ArrowUpIcon-bc4b823a.js",
+      "_HomeMessage-d8fcb3c3.js",
+      "resources/js/app.js",
+      "_HostingMessage-36b739f1.js",
+      "_NavMessages-72153b48.js",
+      "_policy-bc46909d.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/layouts/LayoutView.vue"
+  },
+  "resources/js/layouts/ProfileLayoutView.css": {
+    "file": "assets/ProfileLayoutView-704bb148.css",
+    "src": "resources/js/layouts/ProfileLayoutView.css"
+  },
+  "resources/js/layouts/ProfileLayoutView.vue": {
+    "css": [
+      "assets/ProfileLayoutView-704bb148.css",
+      "assets/swiper-1df8f2af.css",
+      "assets/pagination-1f52dca1.css",
+      "assets/MainTitle-117ad68a.css"
+    ],
+    "file": "assets/ProfileLayoutView-eff42a0d.js",
+    "imports": [
+      "_NavTabs-a6ec92de.js",
+      "_NotificationList-09539f47.js",
+      "_InstructionService-d77d7f22.js",
+      "resources/js/app.js",
+      "_SelectTheme-71497640.js",
+      "_MainMenu-3e28dd31.js",
+      "_wallet-icon-f914ad52.js",
+      "_AccountMenu-396d6837.js",
+      "_MainPopup-3ac77bbe.js",
+      "_anime.es-de4e5aa0.js",
+      "_MainTitle-5abaae33.js",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/layouts/ProfileLayoutView.vue"
+  },
+  "resources/js/modules/faq/Components/UI/FaqImagesComponent.css": {
+    "file": "assets/FaqImagesComponent-bc9325b0.css",
+    "src": "resources/js/modules/faq/Components/UI/FaqImagesComponent.css"
+  },
+  "resources/js/modules/faq/Components/UI/FaqImagesComponent.vue": {
+    "assets": [
+      "assets/1-923bc7bf.png",
+      "assets/2-c3fac125.png",
+      "assets/3-116a543d.png",
+      "assets/4-1a42f020.png",
+      "assets/5-c6f0e3a3.png",
+      "assets/6-09793eeb.png",
+      "assets/7-4bb771b2.png",
+      "assets/8-47a55419.png",
+      "assets/9-0b3d7b9d.png",
+      "assets/10-ddb4f6e3.png",
+      "assets/11-0359d21b.png",
+      "assets/12-e627c54f.png",
+      "assets/13-e54c213a.png",
+      "assets/14-ecd8758f.png",
+      "assets/15-90e4bf83.png",
+      "assets/16-96a8c6f1.png",
+      "assets/17-d85584b8.png",
+      "assets/18-eaedada0.png"
+    ],
+    "css": [
+      "assets/FaqImagesComponent-bc9325b0.css"
+    ],
+    "file": "assets/FaqImagesComponent-08be2d71.js",
+    "imports": [
+      "_LandingTitle-34cb80ec.js",
+      "resources/js/modules/faq/Components/UI/FaqTabs.vue",
+      "_LandingText-9d89853a.js",
+      "resources/js/modules/faq/Components/UI/FaqWarning.vue",
+      "_FaqTranslate-134a6516.js",
+      "resources/js/app.js",
+      "_MainIcon-57980112.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/faq/Components/UI/FaqImagesComponent.vue"
+  },
+  "resources/js/modules/faq/Components/UI/FaqNavsTabs.css": {
+    "file": "assets/FaqNavsTabs-49dc4215.css",
+    "src": "resources/js/modules/faq/Components/UI/FaqNavsTabs.css"
+  },
+  "resources/js/modules/faq/Components/UI/FaqNavsTabs.vue": {
+    "css": [
+      "assets/FaqNavsTabs-49dc4215.css"
+    ],
+    "file": "assets/FaqNavsTabs-4252c817.js",
+    "imports": [
+      "_FaqTranslate-134a6516.js",
+      "_LandingText-9d89853a.js",
+      "_MainTabs-a2f87367.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/faq/Components/UI/FaqNavsTabs.vue"
+  },
+  "resources/js/modules/faq/Components/UI/FaqQuestionsComponent.css": {
+    "file": "assets/FaqQuestionsComponent-4d39bfdc.css",
+    "src": "resources/js/modules/faq/Components/UI/FaqQuestionsComponent.css"
+  },
+  "resources/js/modules/faq/Components/UI/FaqQuestionsComponent.vue": {
+    "css": [
+      "assets/FaqQuestionsComponent-4d39bfdc.css",
+      "assets/MainTitle-117ad68a.css",
+      "assets/ButtonBlue-d9900d4f.css",
+      "assets/MainAccordion-159f2ad9.css"
+    ],
+    "file": "assets/FaqQuestionsComponent-468c5aa2.js",
+    "imports": [
+      "_MainTitle-5abaae33.js",
+      "_ButtonBlue-af33d8d4.js",
+      "_MainAccordion-fe732dfb.js",
+      "_LandingTitle-34cb80ec.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/faq/Components/UI/FaqQuestionsComponent.vue"
+  },
+  "resources/js/modules/faq/Components/UI/FaqTabs.css": {
+    "file": "assets/FaqTabs-da08b6b6.css",
+    "src": "resources/js/modules/faq/Components/UI/FaqTabs.css"
+  },
+  "resources/js/modules/faq/Components/UI/FaqTabs.vue": {
+    "css": [
+      "assets/FaqTabs-da08b6b6.css"
+    ],
+    "file": "assets/FaqTabs-3066a895.js",
+    "imports": [
+      "resources/js/app.js",
+      "_FaqTranslate-134a6516.js",
+      "_LandingText-9d89853a.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/faq/Components/UI/FaqTabs.vue"
+  },
+  "resources/js/modules/faq/Components/UI/FaqWarning.css": {
+    "file": "assets/FaqWarning-eb71dee6.css",
+    "src": "resources/js/modules/faq/Components/UI/FaqWarning.css"
+  },
+  "resources/js/modules/faq/Components/UI/FaqWarning.vue": {
+    "css": [
+      "assets/FaqWarning-eb71dee6.css"
+    ],
+    "file": "assets/FaqWarning-820af2a0.js",
+    "imports": [
+      "_MainIcon-57980112.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/faq/Components/UI/FaqWarning.vue"
+  },
+  "resources/js/modules/faq/images/1.png": {
+    "file": "assets/1-923bc7bf.png",
+    "src": "resources/js/modules/faq/images/1.png"
+  },
+  "resources/js/modules/faq/images/10.png": {
+    "file": "assets/10-ddb4f6e3.png",
+    "src": "resources/js/modules/faq/images/10.png"
+  },
+  "resources/js/modules/faq/images/11.png": {
+    "file": "assets/11-0359d21b.png",
+    "src": "resources/js/modules/faq/images/11.png"
+  },
+  "resources/js/modules/faq/images/12.png": {
+    "file": "assets/12-e627c54f.png",
+    "src": "resources/js/modules/faq/images/12.png"
+  },
+  "resources/js/modules/faq/images/13.png": {
+    "file": "assets/13-e54c213a.png",
+    "src": "resources/js/modules/faq/images/13.png"
+  },
+  "resources/js/modules/faq/images/14.png": {
+    "file": "assets/14-ecd8758f.png",
+    "src": "resources/js/modules/faq/images/14.png"
+  },
+  "resources/js/modules/faq/images/15.png": {
+    "file": "assets/15-90e4bf83.png",
+    "src": "resources/js/modules/faq/images/15.png"
+  },
+  "resources/js/modules/faq/images/16.png": {
+    "file": "assets/16-96a8c6f1.png",
+    "src": "resources/js/modules/faq/images/16.png"
+  },
+  "resources/js/modules/faq/images/17.png": {
+    "file": "assets/17-d85584b8.png",
+    "src": "resources/js/modules/faq/images/17.png"
+  },
+  "resources/js/modules/faq/images/18.png": {
+    "file": "assets/18-eaedada0.png",
+    "src": "resources/js/modules/faq/images/18.png"
+  },
+  "resources/js/modules/faq/images/2.png": {
+    "file": "assets/2-c3fac125.png",
+    "src": "resources/js/modules/faq/images/2.png"
+  },
+  "resources/js/modules/faq/images/3.png": {
+    "file": "assets/3-116a543d.png",
+    "src": "resources/js/modules/faq/images/3.png"
+  },
+  "resources/js/modules/faq/images/4.png": {
+    "file": "assets/4-1a42f020.png",
+    "src": "resources/js/modules/faq/images/4.png"
+  },
+  "resources/js/modules/faq/images/5.png": {
+    "file": "assets/5-c6f0e3a3.png",
+    "src": "resources/js/modules/faq/images/5.png"
+  },
+  "resources/js/modules/faq/images/6.png": {
+    "file": "assets/6-09793eeb.png",
+    "src": "resources/js/modules/faq/images/6.png"
+  },
+  "resources/js/modules/faq/images/7.png": {
+    "file": "assets/7-4bb771b2.png",
+    "src": "resources/js/modules/faq/images/7.png"
+  },
+  "resources/js/modules/faq/images/8.png": {
+    "file": "assets/8-47a55419.png",
+    "src": "resources/js/modules/faq/images/8.png"
+  },
+  "resources/js/modules/faq/images/9.png": {
+    "file": "assets/9-0b3d7b9d.png",
+    "src": "resources/js/modules/faq/images/9.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-iphone.png": {
+    "file": "assets/Mockup-iphone-a338b245.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-iphone.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-mac.png": {
+    "file": "assets/Mockup-mac-8542050e.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-mac.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-mobile-statistic.png": {
+    "file": "assets/Mockup-mobile-statistic-e3303c0f.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-mobile-statistic.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-monitoring-en.png": {
+    "file": "assets/Mockup-monitoring-en-96f56eae.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-monitoring-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-monitoring-iphone-en.png": {
+    "file": "assets/Mockup-monitoring-iphone-en-38aa384b.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-monitoring-iphone-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-statistic-en.png": {
+    "file": "assets/Mockup-statistic-en-4065ec20.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-statistic-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-support-en.png": {
+    "file": "assets/Mockup-support-en-65c77a46.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-support-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Mockup-support.png": {
+    "file": "assets/Mockup-support-6c687f7b.png",
+    "src": "resources/js/modules/hosting/assets/img/Mockup-support.png"
+  },
+  "resources/js/modules/hosting/assets/img/Tab-bar-home-en.png": {
+    "file": "assets/Tab-bar-home-en-d080c74f.png",
+    "src": "resources/js/modules/hosting/assets/img/Tab-bar-home-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Tab-bar-income-en.png": {
+    "file": "assets/Tab-bar-income-en-15e96098.png",
+    "src": "resources/js/modules/hosting/assets/img/Tab-bar-income-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Tab-bar-settings-en.png": {
+    "file": "assets/Tab-bar-settings-en-31371697.png",
+    "src": "resources/js/modules/hosting/assets/img/Tab-bar-settings-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Tab-bar-statistic-en.png": {
+    "file": "assets/Tab-bar-statistic-en-1623f369.png",
+    "src": "resources/js/modules/hosting/assets/img/Tab-bar-statistic-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/Tab-bar-worker-en.png": {
+    "file": "assets/Tab-bar-worker-en-63ae6f3a.png",
+    "src": "resources/js/modules/hosting/assets/img/Tab-bar-worker-en.png"
+  },
+  "resources/js/modules/hosting/assets/img/blank-shadow.png": {
+    "file": "assets/blank-shadow-90a21341.png",
+    "src": "resources/js/modules/hosting/assets/img/blank-shadow.png"
+  },
+  "resources/js/modules/hosting/assets/img/cards-shadow.png": {
+    "file": "assets/cards-shadow-a5647662.png",
+    "src": "resources/js/modules/hosting/assets/img/cards-shadow.png"
+  },
+  "resources/js/modules/hosting/assets/img/chart-accrued-shadow.png": {
+    "file": "assets/chart-accrued-shadow-15414fc1.png",
+    "src": "resources/js/modules/hosting/assets/img/chart-accrued-shadow.png"
+  },
+  "resources/js/modules/hosting/assets/img/chart-hasrate-shadow.png": {
+    "file": "assets/chart-hasrate-shadow-ec534912.png",
+    "src": "resources/js/modules/hosting/assets/img/chart-hasrate-shadow.png"
+  },
+  "resources/js/modules/hosting/assets/img/forecast-shadow.png": {
+    "file": "assets/forecast-shadow-ab4b7814.png",
+    "src": "resources/js/modules/hosting/assets/img/forecast-shadow.png"
+  },
+  "resources/js/modules/hosting/assets/img/header-shadow.png": {
+    "file": "assets/header-shadow-a8aaeea6.png",
+    "src": "resources/js/modules/hosting/assets/img/header-shadow.png"
+  },
+  "resources/js/modules/hosting/assets/img/navbar-shadow.png": {
+    "file": "assets/navbar-shadow-55753e77.png",
+    "src": "resources/js/modules/hosting/assets/img/navbar-shadow.png"
+  },
+  "resources/js/modules/miners/assets/img/habr-mini.svg": {
+    "file": "assets/habr-mini-7136ce92.svg",
+    "src": "resources/js/modules/miners/assets/img/habr-mini.svg"
+  },
+  "resources/js/modules/miners/assets/img/habr.svg": {
+    "file": "assets/habr-0db14112.svg",
+    "src": "resources/js/modules/miners/assets/img/habr.svg"
+  },
+  "resources/js/modules/miners/assets/img/tinkoff-mini.svg": {
+    "file": "assets/tinkoff-mini-5d5a38c5.svg",
+    "src": "resources/js/modules/miners/assets/img/tinkoff-mini.svg"
+  },
+  "resources/js/modules/miners/assets/img/tinkoff.svg": {
+    "file": "assets/tinkoff-3f410f49.svg",
+    "src": "resources/js/modules/miners/assets/img/tinkoff.svg"
+  },
+  "resources/js/modules/miners/assets/img/vc-mini.svg": {
+    "file": "assets/vc-mini-28ad746f.svg",
+    "src": "resources/js/modules/miners/assets/img/vc-mini.svg"
+  },
+  "resources/js/modules/miners/assets/img/vc.svg": {
+    "file": "assets/vc-83faf164.svg",
+    "src": "resources/js/modules/miners/assets/img/vc.svg"
+  },
+  "resources/js/modules/miners/assets/img/yandex-mini.png": {
+    "file": "assets/yandex-mini-eee313d4.png",
+    "src": "resources/js/modules/miners/assets/img/yandex-mini.png"
+  },
+  "resources/js/modules/miners/assets/img/yandex.png": {
+    "file": "assets/yandex-2a70b515.png",
+    "src": "resources/js/modules/miners/assets/img/yandex.png"
+  },
+  "resources/js/modules/navs/assets/img/logo-tabs-dark.svg": {
+    "file": "assets/logo-tabs-dark-efc2ef1f.svg",
+    "src": "resources/js/modules/navs/assets/img/logo-tabs-dark.svg"
+  },
+  "resources/js/modules/navs/assets/img/logo-tabs.svg": {
+    "file": "assets/logo-tabs-c9c63554.svg",
+    "src": "resources/js/modules/navs/assets/img/logo-tabs.svg"
+  },
+  "resources/js/modules/notification/icons/NotificationErrorIcon.css": {
+    "file": "assets/NotificationErrorIcon-ee7b5a71.css",
+    "src": "resources/js/modules/notification/icons/NotificationErrorIcon.css"
+  },
+  "resources/js/modules/notification/icons/NotificationErrorIcon.vue": {
+    "css": [
+      "assets/NotificationErrorIcon-ee7b5a71.css"
+    ],
+    "file": "assets/NotificationErrorIcon-fd3bde97.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/notification/icons/NotificationErrorIcon.vue"
+  },
+  "resources/js/modules/notification/icons/NotificationSuccessIcon.css": {
+    "file": "assets/NotificationSuccessIcon-b4b0c7ad.css",
+    "src": "resources/js/modules/notification/icons/NotificationSuccessIcon.css"
+  },
+  "resources/js/modules/notification/icons/NotificationSuccessIcon.vue": {
+    "css": [
+      "assets/NotificationSuccessIcon-b4b0c7ad.css"
+    ],
+    "file": "assets/NotificationSuccessIcon-2efe1b02.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/notification/icons/NotificationSuccessIcon.vue"
+  },
+  "resources/js/modules/notification/icons/NotificationWarningIcon.css": {
+    "file": "assets/NotificationWarningIcon-3c7dc1a4.css",
+    "src": "resources/js/modules/notification/icons/NotificationWarningIcon.css"
+  },
+  "resources/js/modules/notification/icons/NotificationWarningIcon.vue": {
+    "css": [
+      "assets/NotificationWarningIcon-3c7dc1a4.css"
+    ],
+    "file": "assets/NotificationWarningIcon-9cd3de6b.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/notification/icons/NotificationWarningIcon.vue"
+  },
+  "resources/js/modules/subs/images/img_subs-no-info.png": {
+    "file": "assets/img_subs-no-info-7c22658d.png",
+    "src": "resources/js/modules/subs/images/img_subs-no-info.png"
+  },
+  "resources/js/modules/watchers/imgs/img_watcher-card.png": {
+    "file": "assets/img_watcher-card-01d9a239.png",
+    "src": "resources/js/modules/watchers/imgs/img_watcher-card.png"
+  },
+  "resources/js/modules/watchers/imgs/img_watcher-remove.png": {
+    "file": "assets/img_watcher-remove-25031a18.png",
+    "src": "resources/js/modules/watchers/imgs/img_watcher-remove.png"
+  },
+  "resources/scss/app.scss": {
+    "file": "assets/app-da104e18.css",
+    "isEntry": true,
+    "src": "resources/scss/app.scss"
+  },
+  "resources/scss/theme/dark-theme.css": {
+    "file": "assets/dark-theme-a2d8a285.css",
+    "src": "resources/scss/theme/dark-theme.css"
+  },
+  "resources/scss/theme/light-theme.css": {
+    "file": "assets/light-theme-8ae93846.css",
+    "src": "resources/scss/theme/light-theme.css"
+  },
+  "swiper.css": {
+    "file": "assets/swiper-1df8f2af.css",
+    "src": "swiper.css"
+  }
+}

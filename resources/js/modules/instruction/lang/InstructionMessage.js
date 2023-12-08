@@ -3,7 +3,7 @@ export const InstructionMessage = {
         button_titles: {
             statistic: "Get acquainted with 'Statistics'",
             connecting: "Get acquainted with 'Connection'",
-            incomes: "Get acquainted with 'Incomes'",
+            income: "Get acquainted with 'Incomes'",
             settings: "Get acquainted with 'Settings'",
             wallets: "Get acquainted with 'Wallets'",
             watchers: "Get acquainted with 'Watchers'",
@@ -114,13 +114,13 @@ export const InstructionMessage = {
     },
     ru: {
         button_titles: {
-            statistic: "Знакомсто со «Статистикой»",
-            connecting: "Знакомсто с «Подключением»",
-            incomes: "Знакомсто с «Доходами»",
-            settings: "Знакомсто с «Настройками",
-            wallets: "Знакомсто с «Кошельками»",
-            watchers: "Знакомсто с «Наблюдателями»",
-            workers: "Знакомсто с «Воркерами»",
+            statistic: "Знакомство со «Статистикой»",
+            connecting: "Знакомство с «Подключением»",
+            income: "Знакомство с «Доходами»",
+            settings: "Знакомство с «Настройками",
+            wallets: "Знакомство с «Кошельками»",
+            watchers: "Знакомство с «Наблюдателями»",
+            workers: "Знакомство с «Воркерами»",
         },
         step: "Шаг",
         titles: {

@@ -43,10 +43,10 @@ export default {
 
 .title.headline,
 .title-headline {
-    color: var(--text-teritary, #98a2b3);
+    color: var(--text-teritary);
     font-family: NunitoSans, serif;
-    font-size: clamp(12px, 5vw, 14px);
+    font-size: clamp(12px, 2vw, 14px);
     font-weight: 600;
-    line-height: clamp(16px, 5vw, 20px);
+    line-height: clamp(16px, 2vw, 20px);
 }
 </style>

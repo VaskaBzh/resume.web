@@ -58,7 +58,7 @@ export class StatisticService extends GraphDataService {
             try {
                 const response = (await this.fetch()).data;
 
-                this.records = response.incomes.data.map(
+                this.records = response.incomes.map(
                     (incomeEl) => new BarGraphData(incomeEl)
                 );
 

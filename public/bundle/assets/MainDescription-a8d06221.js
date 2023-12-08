@@ -1,0 +1,1 @@
+import{_ as t,o as s,c as n,i as c}from"./app-7a3a58ff.js";const o={name:"MainDescription"},_={class:"text"};function a(e,i,r,p,d,l){return s(),n("div",_,[c(e.$slots,"default",{},void 0,!0)])}const f=t(o,[["render",a],["__scopeId","data-v-6b227cc0"]]);export{f as M};
