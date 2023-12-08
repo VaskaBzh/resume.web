@@ -6,6 +6,7 @@
             class="column-income"
             :value="column[1]"
             :column-key="column[0]"
+            :class-name="columns.status.split(' ').join('_')"
         />
     </tr>
 </template>
