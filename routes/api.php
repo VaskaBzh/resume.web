@@ -84,16 +84,17 @@ Route::group([
     Route::group([
         'prefix' => 'wallets',
     ], function () {
+        Route::post('/create', WalletCreateController::class)
+            ->middleware('throttle:6,1')
+            ->name('wallet.create');
+        Route::get('/{sub}', WalletListController::class)
+            ->name('wallet.list');
         Route::put('/update/{wallet}', WalletUpdateController::class)
             ->middleware('throttle:6,1')
             ->name('wallet.update');
         Route::put('/change/address/{wallet}', WalletChangeAddressController::class)
             ->middleware('throttle:6,1')
             ->name('wallet.change.address');
-        Route::post('/create', WalletCreateController::class)
-            ->middleware('throttle:6,1')
-            ->name('wallet.create');
-        Route::get('/{sub}', WalletListController::class)->name('wallet.list');
     });
 
     Route::group([
@@ -109,13 +110,18 @@ Route::group([
     });
 
     Route::group(['prefix' => 'watchers'], function () {
-        Route::get('/{watcher}', WatcherLinkShowController::class);
-        Route::get('/{user}/{sub}', WatcherLinkListController::class);
+        Route::get('/{watcher}', WatcherLinkShowController::class)
+            ->name('watcher.show');
+        Route::get('/{user}/{sub}', WatcherLinkListController::class)
+            ->name('watcher.list');
         Route::post('/create/{sub}', WatcherLinkCreateController::class)
+            ->name('watcher.crate')
             ->middleware('throttle:6,1');
         Route::put('/update/{watcher}', WatcherLinkUpdateController::class)
+            ->name('watcher.toggle')
             ->middleware('throttle:6,1');
         Route::delete('/delete/{watcher}', WatcherLinkDeleteController::class)
+            ->name('watcher.delete')
             ->middleware('throttle:6,1');
     });
 

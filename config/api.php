@@ -71,7 +71,14 @@ return [
     'minerstat' => [
         'uri' => env('MINERSTAT_API_URI'),
 
-        'token' => env('MINERSTAT_API_AUTH'),
+        'auth' => env('MINERSTAT_API_AUTH'),
+
+        'paths' => [
+            'network_hashrate' => 'hashrate',
+            'network_difficulty' => 'getdifficulty',
+            'reward_block' => 'bcperblock',
+            'price_USD' => '24hrprice',
+        ],
     ],
 
     'wallet' => [
@@ -92,6 +99,6 @@ return [
         /**
          * Minimal allowed withdraw for sub-account
          */
-        'min_withdrawal' => 0.005,
+        'min_withdrawal' => env('MIN_WITHDRAWAL', 0.005),
     ],
 ];

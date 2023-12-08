@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\WatcherLink;
 
-use App\Dto\WatcherLinkData;
+use App\Dto\WatcherLink\CreateData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WatcherLinks\CreateLinkRequest;
 use App\Http\Resources\WatcherLinkResource;
@@ -89,7 +89,7 @@ class CreateController extends Controller
         Sub $sub,
     ): WatcherLinkResource {
         $watcherLink = WatcherLinkService::withParams(
-            watcherLinkData: WatcherLinkData::fromRequest([
+            watcherLinkData: CreateData::fromRequest([
                 'name' => $request->name,
                 'sub' => $sub,
                 'user' => auth()->user(),
