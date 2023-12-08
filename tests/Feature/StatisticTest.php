@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Models\Hash;
@@ -13,7 +12,6 @@ use App\Models\User;
 use App\Utils\HashRateConverter;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
-use const _PHPStan_c6b09fbdf\__;
 
 class StatisticTest extends TestCase
 {
