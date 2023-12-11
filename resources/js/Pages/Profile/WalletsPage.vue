@@ -218,18 +218,18 @@
                     "
                 />
             </div>
-            <div class="autopayout-input_container">
-                <label class="label-popup">
-                    {{ $t("wallets.popups.add.placeholders.name") }}
-                </label>
-                <input
-                    v-model="wallets.form.name"
-                    autofocus
-                    type="text"
-                    class="input popup__input autopayput_input"
-                    :placeholder="$t('wallets.popups.change.placeholders.name')"
-                />
-            </div>
+            <!--            <div class="autopayout-input_container">-->
+            <!--                <label class="label-popup">-->
+            <!--                    {{ $t("wallets.popups.add.placeholders.name") }}-->
+            <!--                </label>-->
+            <!--                <input-->
+            <!--                    v-model="wallets.form.name"-->
+            <!--                    autofocus-->
+            <!--                    type="text"-->
+            <!--                    class="input popup__input autopayput_input"-->
+            <!--                    :placeholder="$t('wallets.popups.change.placeholders.name')"-->
+            <!--                />-->
+            <!--            </div>-->
             <warning-block class="wallets_warning" text="wallets_change" />
             <main-button
                 type="submit"
@@ -284,17 +284,17 @@
                     class="input popup__input autopayput_input"
                 />
             </div>
-            <div class="autopayout-input_container">
-                <label class="label-popup">
-                    {{ $t("wallets.popups.add.placeholders.name") }}
-                </label>
-                <input
-                    v-model="wallets.form.name"
-                    type="text"
-                    :placeholder="$t('wallets.popups.add.placeholders.name')"
-                    class="input popup__input autopayput_input"
-                />
-            </div>
+            <!--            <div class="autopayout-input_container">-->
+            <!--                <label class="label-popup">-->
+            <!--                    {{ $t("wallets.popups.add.placeholders.name") }}-->
+            <!--                </label>-->
+            <!--                <input-->
+            <!--                    v-model="wallets.form.name"-->
+            <!--                    type="text"-->
+            <!--                    :placeholder="$t('wallets.popups.add.placeholders.name')"-->
+            <!--                    class="input popup__input autopayput_input"-->
+            <!--                />-->
+            <!--            </div>-->
             <warning-block class="wallets_warning" text="wallets_change" />
             <main-button
                 type="submit"
@@ -318,7 +318,7 @@
             @back="wallets.back()"
         />
     </main-popup>
-    <teleport to=".header_button-instruction" v-if="isMounted">
+    <teleport v-if="isMounted" to=".header_button-instruction">
         <instruction-button
             hint="wallets"
             @openInstruction="instructionService.setStep().setVisible()"
@@ -403,11 +403,11 @@ export default {
             isActiveLabelMinWithdrawal: false,
             verifyButtonName: this.$t("wallets.no_info.verify_text"),
             instructionService: new InstructionService(),
-            isMounted: false
+            isMounted: false,
         };
     },
     mounted() {
-        this.isMounted = true
+        this.isMounted = true;
         this.instructionService.setStepsCount(2);
 
         this.walletInit();
