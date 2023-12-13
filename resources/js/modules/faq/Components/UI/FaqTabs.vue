@@ -59,7 +59,6 @@ export default {
     align-items: flex-start;
     flex: 1 1 auto;
     justify-content: flex-start;
-    max-width: fit-content;
     gap: 16px;
     height: calc(100vh - 144px);
     transition: all .3s ease;
@@ -67,6 +66,7 @@ export default {
     overflow-y: scroll;
     position: fixed;
     padding: 44px 24px;
+    max-width: 280px;
 }
 
 .faq__tabs::-webkit-scrollbar {
