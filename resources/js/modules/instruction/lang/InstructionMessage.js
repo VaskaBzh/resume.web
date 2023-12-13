@@ -5,7 +5,7 @@ export const InstructionMessage = {
             connecting: "Get acquainted with 'Connection'",
             income: "Get acquainted with 'Incomes'",
             settings: "Get acquainted with 'Settings'",
-            wallets: "Get acquainted with 'Wallets'",
+            wallets: "Get acquainted with 'Wallet'",
             watchers: "Get acquainted with 'Watchers'",
             workers: "Get acquainted with 'Workers'",
         },
@@ -110,7 +110,6 @@ export const InstructionMessage = {
                 To change your password, click the "Change" button and follow the instructions.`,
             ],
         },
-
     },
     ru: {
         button_titles: {
@@ -118,7 +117,7 @@ export const InstructionMessage = {
             connecting: "Знакомство с «Подключением»",
             income: "Знакомство с «Доходами»",
             settings: "Знакомство с «Настройками",
-            wallets: "Знакомство с «Кошельками»",
+            wallets: "Знакомство с «Кошельком»",
             watchers: "Знакомство с «Наблюдателями»",
             workers: "Знакомство с «Воркерами»",
         },
