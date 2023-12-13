@@ -28,7 +28,7 @@ export class IncomeService {
             "incomes",
             store.getters.getActive,
             1,
-            20
+            1000
         );
     }
 

@@ -428,7 +428,7 @@ const messages = {
                 workers: "Worker",
                 income: "Earnings",
                 connecting: "Connection",
-                wallets: "Wallets",
+                wallets: "Wallet",
                 watchers: "Watchers links",
                 home: "Home",
                 own_cabinet: "Profile",
@@ -732,7 +732,7 @@ const messages = {
             income: "Earnings",
             connecting: "Connection",
             watchers: "Watcher's links",
-            wallets: "Wallets",
+            wallets: "Wallet",
             referral: "Referral account",
             faq: "FAQ",
             support: "Support",
@@ -921,7 +921,7 @@ const messages = {
             },
         },
         wallets: {
-            title: ["Setting up auto payout", "Wallets"],
+            title: ["Min. threshold for payment", "Wallet address"],
             no_info: {
                 description:
                     "To enable automatic payouts, add your wallet address",
@@ -947,9 +947,9 @@ const messages = {
                 },
             },
             popups: {
-                note: "After adding a wallet, the address cannot be changed",
                 add: {
-                    title: "Add wallet",
+                    title: "Adding a wallet",
+                    note: "To add a wallet, enter its address",
                     placeholders: {
                         wallet: "Wallet address",
                         name: "Wallet label",
@@ -961,7 +961,8 @@ const messages = {
                     button: "Add",
                 },
                 change: {
-                    title: "Change label",
+                    title: "Changing wallet",
+                    note: "To change a wallet, enter its address",
                     placeholders: {
                         wallet: "Please enter the wallet *",
                         name: "Please enter the name",
@@ -1954,7 +1955,7 @@ const messages = {
             },
         },
         wallets: {
-            title: ["Настройка автовыплаты", "Кошельки"],
+            title: ["Мин. порог для автовыплаты", "Адрес кошелька"],
             no_info: {
                 description:
                     "Для автовыплаты начислений добавьте адрес вашего кошелька",
@@ -1978,9 +1979,9 @@ const messages = {
                 },
             },
             popups: {
-                note: "После добавления кошелька адрес невозможно будет изменить",
                 add: {
-                    title: "Добавить кошелек",
+                    title: "Добавление кошелька",
+                    note: "Чтобы добавить кошелек, ведите его адрес",
                     placeholders: {
                         wallet: "Адрес кошелька",
                         name: "Метка кошелька",
@@ -1992,7 +1993,8 @@ const messages = {
                     button: "Добавить",
                 },
                 change: {
-                    title: "Измените метку",
+                    title: "Изменение кошелька",
+                    note: "Чтобы изменить кошелек, ведите его адрес",
                     placeholders: {
                         wallet: "Введите кошелек *",
                         name: "Введите имя",
