@@ -85,9 +85,7 @@
             <div class="faq_main_blocks">
                 <div class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
                     <faq-navs-tabs id="faq_navs"/>
-                    <keep-alive>
                         <router-view/>
-                    </keep-alive>
                 </div>
             </div>
         </div>
@@ -158,7 +156,24 @@ export default {
             return {
                 flood: this.$t('scroll_questions.tabs[0]'),
                 security_jam: this.$t('scroll_questions.tabs[1]'),
-                security_information: this.$t('scroll_questions.tabs[0]'),
+                security_information: this.$t('scroll_questions.tabs[2]'),
+                security_account: this.$t('scroll_questions.tabs[3]'),
+                methods_security: this.$t('scroll_questions.tabs[4]'),
+                support: this.$t('scroll_questions.tabs[5]'),
+                stratum: this.$t('scroll_questions.tabs[6]'),
+                status_reject: this.$t('scroll_questions.tabs[7]'),
+                fact_hashrate: this.$t('scroll_questions.tabs[8]'),
+                what_workers: this.$t('scroll_questions.tabs[9]'),
+                workers_not_visible: this.$t('scroll_questions.tabs[10]'),
+                where_name_workers: this.$t('scroll_questions.tabs[11]'),
+                methods_income: this.$t('scroll_questions.tabs[12]'),
+                not_enter_wallets: this.$t('scroll_questions.tabs[13]'),
+                why_not_income: this.$t('scroll_questions.tabs[14]'),
+                min_sum_income: this.$t('scroll_questions.tabs[15]'),
+                stop_income: this.$t('scroll_questions.tabs[16]'),
+                txid: this.$t('scroll_questions.tabs[17]'),
+                sub: this.$t('scroll_questions.tabs[18]'),
+                delete_acc: this.$t('scroll_questions.tabs[19]'),
             }
         },
     },
