@@ -22,12 +22,18 @@ import { mapGetters } from "vuex";
 import {faqTranslate} from "@/modules/faq/lang/FaqTranslate";
 import ArrowBackIcon from "@/modules/faq/icons/ArrowBackIcon.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
+import {tabs} from "@/modules/faq/Enum/FaqTabsEnum";
 
 export default {
     name: "FaqTabs",
     components: {LandingText, ArrowBackIcon},
     i18n: {
         sharedMessages: faqTranslate
+    },
+    props: {
+        tabs: {
+            type: Object,
+        }
     },
     data() {
         return {
@@ -36,28 +42,13 @@ export default {
     },
     computed: {
         ...mapGetters(['viewportWidth']),
-        tabs() {
-            return {
-                choosesub: this.$t('scroll_tabs[0]'),
-                statistic: this.$t('scroll_tabs[1]'),
-                income: this.$t('scroll_tabs[2]'),
-                workers: this.$t('scroll_tabs[3]'),
-                Subs: this.$t('scroll_tabs[4]'),
-                connect: this.$t('scroll_tabs[5]'),
-                wallets: this.$t('scroll_tabs[6]'),
-                watchers: this.$t('scroll_tabs[7]'),
-                accounts: this.$t('scroll_tabs[8]'),
-                course: this.$t('scroll_tabs[9]'),
-                changeTheme: this.$t('scroll_tabs[10]'),
-                changeLang: this.$t('scroll_tabs[11]'),
-            }
-        }
     },
     methods: {
         choosingTabs(value) {
             this.activeTab = value
         }
     },
+
 }
 </script>
 
