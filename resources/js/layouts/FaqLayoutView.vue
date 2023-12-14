@@ -324,8 +324,8 @@ export default {
     flex: 1 1 0;
     height: calc(100vh - 165px);
     max-width: 690px;
-    margin: 0 auto;
-    padding: 0;
+    margin: -44px auto 44px;
+    padding-top: 44px;
 }
 
 
@@ -352,10 +352,10 @@ export default {
 
 @media (max-width: 999.99px) {
     .faq__main_items {
-        margin: 0 auto;
+        margin: -44px auto 44px;
         max-width: 100%;
         width: 100%;
-        padding: 0;
+        padding: 44px 0 0 0;
     }
 
 }
