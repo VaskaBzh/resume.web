@@ -51,7 +51,7 @@ export const TableMessages = {
                 ],
                 hints: {
                     hashrate:
-                        "Среднее значение мощности всех <br> ваших устройств за 24 часа <br> (время расчета 11: 00 AM GMT+4)",
+                        "Среднее значение мощности всех <br> ваших устройств за 24 часа <br> (время расчета 11:00 AM GMT+4)",
                     txid: "Уникальный идентификатор транзакции в <br> блокчейне Bitcoin. С его помощью вы можете <br> отследить статус вашей транзакции в сети.",
                     statuses: `<div class="tooltip__list">
                             <span class="tooltip_row"><span class="tooltip_status tooltip_status-complete">Выплачено</span> — начисление выплачено на ваш кошелек</span>
