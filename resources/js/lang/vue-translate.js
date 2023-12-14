@@ -770,7 +770,7 @@ const messages = {
                 title: "Hashrate",
                 no_workers_title: "Connect to allbtc pool",
             },
-            graph: ["Monthly income graph", "Mining", "Accrued"],
+            graph: ["Monthly income graph", "Income", "Accrued"],
             info_blocks: {
                 title: "Earnings",
                 title_clear: "Net income",
@@ -1813,7 +1813,7 @@ const messages = {
                 title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
-            graph: ["График дохода за месяц", "Майнинг", "Текущий баланс"],
+            graph: ["График дохода за месяц", "Доход", "Текущий баланс"],
             info_blocks: {
                 title: "Начисления",
                 title_clear: "Чистая прибыль",

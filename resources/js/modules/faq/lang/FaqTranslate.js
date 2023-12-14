@@ -69,6 +69,9 @@ export const faqTranslate = {
         warning_wallets_change: {
             sub_text: ['In case of change of wallet address', 'autopayments will be suspended for 48 hours to verify the wallet.']
         },
+        scroll_questions: {
+            tabs: ['Как защититься от фрода?', 'Как обеспечивается безопасность моих средств в пуле?', 'Как обеспечивается защита персональной информации майнеров?']
+        }
     },
     ru: {
         comeback: 'Вернуться в личный кабинет',
@@ -163,5 +166,8 @@ export const faqTranslate = {
         warning_wallets_change: {
             sub_text: ['В случае изменения адреса кошелька ', ' автовыплаты будут приостановлены в течении 48 часов для проверки кошелька.']
         },
+        scroll_questions: {
+            tabs: ['Как защититься от фрода?', 'Как обеспечивается безопасность моих средств в пуле?', 'Как обеспечивается защита персональной информации майнеров?']
+        }
     }
 };

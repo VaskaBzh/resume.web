@@ -2,7 +2,7 @@
     <div class="faq__layout">
         <header class="faq-header">
             <logo-block class="nav_logo" v-if="viewportWidth > 768"/>
-            <router-link :to="{ name: 'home' }" class="svg-mobile" v-if="viewportWidth<768">
+            <router-link :to="{ name: 'home' }" class="svg-mobile" v-if="viewportWidth < 768">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="40"
@@ -79,7 +79,7 @@
             :instruction-config="instructionService"
         />
         <div class="faq__bar">
-            <faq-tabs v-show="this.$route.name === 'description'">
+            <faq-tabs  :tabs="activeTabs">
                 <h2 class="fat__tabs_title">{{ $t("title_scroll_tabs") }}</h2>
             </faq-tabs>
             <div class="faq_main_blocks">
@@ -132,13 +132,48 @@ export default {
         return {
             isOpenBurgerFaq: false,
             instructionService: new InstructionService(),
-            selectFaq: false
+            selectFaq: false,
+            activeTabs: null
         }
     },
     computed: {
         ...mapGetters(['viewportWidth', 'user']),
+        tabsDescription() {
+            return {
+                choosesub: this.$t('scroll_tabs[0]'),
+                statistic: this.$t('scroll_tabs[1]'),
+                income: this.$t('scroll_tabs[2]'),
+                workers: this.$t('scroll_tabs[3]'),
+                Subs: this.$t('scroll_tabs[4]'),
+                connect: this.$t('scroll_tabs[5]'),
+                wallets: this.$t('scroll_tabs[6]'),
+                watchers: this.$t('scroll_tabs[7]'),
+                accounts: this.$t('scroll_tabs[8]'),
+                course: this.$t('scroll_tabs[9]'),
+                changeTheme: this.$t('scroll_tabs[10]'),
+                changeLang: this.$t('scroll_tabs[11]'),
+            }
+        },
+        tabsQuestions() {
+            return {
+                flood: this.$t('scroll_questions.tabs[0]'),
+                security_jam: this.$t('scroll_questions.tabs[1]'),
+                security_information: this.$t('scroll_questions.tabs[0]'),
+            }
+        },
+    },
+    watch: {
+        "$route.name"(newVal) {
+            if(newVal === 'description') {
+                this.activeTabs = this.tabsDescription
+            }
+            if(newVal === 'questions') {
+                this.activeTabs = this.tabsQuestions
+            }
+        }
     },
     async mounted() {
+        this.activeTabs = this.$route.name === 'questions' ? this.tabsQuestions:this.tabsDescription
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }

@@ -83,10 +83,7 @@ export const InstructionMessage = {
                 `For the worker name, use the template Paverl120TH.worker_name, where “worker_name” is your worker's name.`,
             ],
             wallets: [
-                `Autopayout occurs when the amount of accruals exceeds the minimum payout threshold: /
-                0.005 /
-                0.05 /
-                0.5 //
+                `Autopayout occurs when the amount of accruals exceeds the minimum payout threshold: 0.005 //
 
                 With autopayout, you will receive all accruals to the wallet without any commission.`,
                 `You can add one wallet for autopayout. The wallet can be changed (address and label). //
@@ -195,10 +192,7 @@ export const InstructionMessage = {
                 `Для имени воркера используйте шаблон Paverl120TH.worker_name, где “worker_name” ваше название воркера.`,
             ],
             wallets: [
-                `Автовыплата происходит когда сумма начислений превысит минимальный порог для выплаты: /
-                0.005 /
-                0.05 /
-                0.5 //
+                `Автовыплата происходит когда сумма начислений превысит минимальный порог для выплаты: 0.005 //
 
                 При автовыплате вы получите все начисления на кошелек без взымания комиссии.`,
                 `Вы можете добавить один кошелек для автовыплат. Кошелек можно изменять (адрес и метку). //
