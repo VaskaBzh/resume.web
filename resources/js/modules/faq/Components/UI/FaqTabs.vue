@@ -54,13 +54,7 @@ export default {
 
 <style scoped>
 .faq__tabs {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-start;
-    flex: 1 1 auto;
-    justify-content: flex-start;
-    gap: 16px;
-    height: calc(100vh - 144px);
+    height: calc(100vh - 74px);
     transition: all .3s ease;
     overflow: hidden;
     overflow-y: scroll;
@@ -75,14 +69,7 @@ export default {
 
 
 .faq_lists {
-    display: flex;
-    flex-flow: column nowrap;
-    list-style-type: none;
-    align-items: flex-start;
-    justify-content: flex-start;
     position: relative;
-    top: 0;
-    left: 0;
     transition: all .3s ease;
 }
 
@@ -97,6 +84,7 @@ export default {
 }
 
 .faq_list {
+    display: block;
     width: 100%;
     font-family: NunitoSans, serif;
     font-size: 16px;

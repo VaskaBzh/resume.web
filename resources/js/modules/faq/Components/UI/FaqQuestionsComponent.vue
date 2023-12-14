@@ -260,27 +260,16 @@ export default {
     opacity: 0;
 }
 
-
-.faq-questions__items {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 40px;
+.faq-questions__items .faq-questions__item:not(:first-child) {
+    padding-top: 44px;
 }
 
-.faq-questions__item {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 24px;
+.faq-questions__items .faq-questions__item:last-child {
+    padding-bottom: 44px;
 }
 
 .faq-questions__item p {
     font-weight: 400;
-}
-
-.faq_questions-text {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 20px;
 }
 
 .faq-title {
@@ -290,6 +279,7 @@ export default {
     font-weight: 400;
     line-height: 40px;
     text-transform: none;
+    margin-bottom: 24px;
 }
 
 .faq-subtitle {
@@ -299,6 +289,7 @@ export default {
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
+    margin-bottom: 12px;
 }
 
 .faq-questions-text {
@@ -319,7 +310,7 @@ export default {
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 150%; /* 24px */
+    line-height: 150%;
     letter-spacing: -0.176px;
     padding-left: 15px;
 }

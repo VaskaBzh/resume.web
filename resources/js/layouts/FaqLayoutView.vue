@@ -374,6 +374,7 @@ export default {
     font-weight: 400;
     line-height: 40px;
     color: #ffffff;
+    margin-bottom: 16px;
     font-family: Unbounded, serif;
 }
 
