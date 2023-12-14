@@ -5,11 +5,13 @@
         align-items: center;
         gap: 8px;
         cursor: pointer;
+        &:active {
+            text-decoration: underline;
+        }
     }
     &_icon {
         width: 16px;
         height: 16px;
-        min-width: 16px;
         &-copy {
             stroke: var(--icons-accent, #53b1fd);
         }
