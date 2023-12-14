@@ -70,8 +70,123 @@ export const faqTranslate = {
             sub_text: ['In case of change of wallet address', 'autopayments will be suspended for 48 hours to verify the wallet.']
         },
         scroll_questions: {
-            tabs: ['Как защититься от фрода?', 'Как обеспечивается безопасность моих средств в пуле?', 'Как обеспечивается защита персональной информации майнеров?']
-        }
+            tabs: ['How to protect from yourself fraud?',
+                'How is the security of my funds ensured in the mining pool?',
+                'How is the protection of miners’ personal information ensured?',
+                'How to secure your account?',
+                'Are there additional authentication methods to ensure account security?',
+                'How does the support service work?',
+                'What is stratum?',
+                'How to reduce rejection?',
+                'How does the actual hashrate differ from the declared hashrate?',
+                'What are workers?',
+                'Why are workers not shown?',
+                'What worker name should I specify when setting up equipment?',
+                'What payment methods does the pool use?',
+                'What happens if I do not specify a wallet for payment?',
+                'Why haven\'t I received my payment?',
+                'What is the minimum withdrawal amount on the pool?',
+                'Can I pause payments?',
+                'Where can I check the payment TxID?',
+                'What is a subaccount?',
+                'How to delete an account?',],
+            subtitle: ['Fraud protection is an important aspect in cryptocurrency mining. Here are a few measures you can take to protect yourself from fraud:',
+                'To ensure the security of miner funds we have implemented:',
+                'To ensure the security of miners’ personal data we use:',
+                'Here are some tips to keep your account secure:',
+                'Yes, for additional protection in allbtc pool you can enable two-factor authentication.',
+                'If you have any questions or encounter a problem, please contact support.  /\n' +
+                'The support service works every day and responds to the client within 5 minutes. Our managers will answer all your questions and help resolve technical problems.',
+                'Stratum is a standardized protocol for mining pools. In other words, this is the established name of the URL that is written in the ASIC to connect to the pool. You can find this URL in the “Connection” section in your personal account.',
+                'Reject is the percentage of rejection, that is, the ratio of rejected and accepted shares. When a pool uses a share to create a block, the miner receives a reward. Otherwise, the equipment will work for free, so you need to regularly monitor the rejection rate.',
+                'Actual hashrate is the actual computational speed that mining equipment achieves during the process of mining cryptocurrency.\n' +
+                '//The declared hashrate is the value indicated by the manufacturer of the mining equipment in its specifications or advertising materials. It is usually the maximum possible computing speed that the hardware can achieve under ideal conditions.',
+                'Workers are computers or special devices that perform computational operations to verify and process transactions on the blockchain and create new blocks.',
+                'If you have just connected your devices, it will take 1 - 10 minutes to update the data and display the workers in the pool statistics. If during this time the workers have not appeared, contact our support team.',
+                'The worker name must be set in the following form: "subaccount name"."worker_name". / Let\'s decipher:',
+                'The pool uses the FPPS+ payout method.',
+                'The funds will not disappear anywhere, but will accumulate in your subaccount until you specify a wallet. Please note: once you link your payout wallet, withdrawals will be frozen for 48 hours for security reasons.',
+                'Payment is a transfer of earned funds (rewards) to your active wallet.',
+                'The minimum amount is a threshold, upon reaching which the accumulated amount is paid to your wallet. In our pool auto payout occurs when the balance reaches 0.0005 BTC. The minimum threshold for automatic payout is set by the pool; it cannot be changed manually.',
+                'Yes, if you have been hacked or lost access to your wallet, contact technical support for help.',
+                'To view the TxID of a transaction, go to the “Income” section, find the payment history in the table, copy the TxID and paste the copied number into the blockchain network verification site.',
+                'A sub-account is a separate account that is created within the main account in your personal account. For convenience, creating several subaccounts allows users to separate information into so-called groups: the statistics of one subaccount will differ from the statistics of another subaccount.',
+                'For security reasons, you cannot delete your account manually. To delete your account you need to contact support.'],
+            frood: {
+                list: ['Be careful with unverified links and programs', 'Use strong passwords', 'Update your antivirus software', 'Be alert to social engineering', 'Data backup'],
+                text_list: ['Do not click on unverified links or install software from untrusted sources. Fraudsters can use fake links and programs to gain access to your mining equipment or steal your cryptocurrency.',
+                    'Protect your mining account and cryptocurrency wallets with strong passwords. Use a unique password for each platform and change passwords regularly.',
+                    'Install reliable antivirus software on all your devices and keep it updated regularly. This will help detect and prevent security threats, including fraudsters.',
+                    'Fraudsters may use social engineering techniques to gain access to your information or mining equipment. Be careful when communicating with strangers, especially in an online environment, and do not share sensitive information.',
+                    'Regularly back up important data such as cryptocurrency wallets and mining hardware settings. In case of fraud or network failure, you can quickly restore your information and continue mining.'],
+            },
+            security_jam: {
+                list: ['FPPS+ reward method', 'All payments occur automatically', 'No extra expenses'],
+                text_list: ['This is a modernized reward system that eliminates the risk of miners losing their earnings due to fluctuating transaction fees because it combines the block reward and transaction fee payments into one value. FPPS+ also guarantees a fair distribution of rewards between pool participants.',
+                    'Automatic payments are made without any action on the part of the miner. Once the total reward amount reaches a certain minimum threshold, the funds are automatically transferred to your wallet. What are the advantages of auto payments? The receipt of funds is carried out without delay, and the possibility of an error (incorrectly entered wallet address or transaction amount) caused by a human factor is eliminated.',
+                    'Since the number of transactions is regulated by the system, automatic withdrawal of funds is completely free, no commission is charged.'],
+            },
+
+            security_information: {
+                list: ['Miner data encryption', 'Regular operating system updates', 'Methods for protecting against DDOS attacks'],
+                text_list: ['Encrypting data that is transferred between users and the pool server helps prevent eavesdropping or interception by attackers. By using secure channels such as SSL/TLS, we ensure that data remains private and secure during transmission and protected from unauthorized access.',
+                    'Regular updates improve the security system: detect vulnerabilities, close them and as a result increase reliability. Also, regular updates of the pool software ensure compatibility with the latest changes caused by the dynamics of the crypto industry.',
+                    'When a mining pool is subject to DDoS attacks, this can lead to interruptions in mining operations, which results in reduced payouts to the miners. DDoS protection ensures that allbtc pool is always up and running and provides continuous reliable service to its users.'],
+            },
+            security_account: {
+                list: ['Strong password', 'Two-factor authentication (2FA)', 'Be careful when using public Wi-Fi', 'Software update', 'Beware of phishing attacks', 'Account activity monitoring'],
+                text_list: ['Use a unique password consisting of a combination of letters, numbers and special characters. Avoid using easy-to-guess passwords and reusing your password on other platforms.',
+                    'Enable 2FA for an extra layer of security. This allows you to verify your identity using an additional code or application other than your password.',
+                    'Avoid using public Wi-Fi networks to access your account. Such networks may not be secure and your data may be stolen.',
+                    'Regularly update the software on your device, including your operating system, antivirus software, and other security-related software.',
+                    'Be alert for suspicious emails, messages, or websites that may be trying to obtain your credentials. Never provide your passwords or sensitive information to unverified sources.',
+                    'Check your account activity regularly to notice any suspicious activity. If you notice unusual activity, contact support immediately.'],
+            },
+            texts: {
+                flood: '',
+                security_jam: '',
+                security_information: '',
+                security_account: '',
+                methods_security: '2FA improves the security of online accounts and systems by making it more difficult for attackers to gain access to an account even ' +
+                    'if they know the password. Even if an attacker steals or discovers your password, they will not have access to the second factor, which is required ' +
+                    'for full authentication.//To enable two-factor authentication in allbtc pool, you need to download the Google Authenticator application and scan the ' +
+                    'QR code to link your account to Google Authenticator. If you don`t have access to the camera, you can enter the setup key in the Google Authenticator ' +
+                    'app instead of scanning the QR code.//After linking your account to the Google Authenticator app, you will need to enter a code to confirm the 2FA ' +
+                    'connection. You will find this code in the Google Authenticator app.//Once you enable 2FA, all actions (login, adding-changing a wallet, disabling 2FA) ' +
+                    'must be confirmed with a unique code from Google Authenticator.',
+                support: 'Как связаться со службой поддержки? // написать в наш телеграм: \@allbtc_support / написать на почту: support\@all-btc.com//Также вступайте в наше комьюнити в телеграме "allbtc_community", где мы освещаем последние новости майнинг индустрии и говорим о последних обновлениях в Allbtc Pool.',
+                stratum: 'Stratum helps optimize the interaction between miners and the pool during the mining process. This is a communication protocol that is used to ensure the most efficient operation.//The mining pool sends a block of data for processing to each member of the pool, who then begins processing this data in order to find a solution for a new block in the blockchain. When one of the miners finds the correct solution, the result is sent back to the mining pool.//Stratum makes this entire procedure as efficient as possible, it minimizes delays and ensures smoother and more stable operation. Because of it miners are able to process more blocks and therefore earn more rewards.',
+                status_reject: 'The normal daily rejection rate is from 1% to 3%. It is almost impossible to achieve a zero rejection rate in the form of all accepted shares, since there is a delay between the device and the pool server.//Rejectrate is rejected solutions that ASICs sent to the pool. Most often they are rejected because the solution came too late and the pool moved on to solving a new problem.//If the percentage of rejection exceeds the daily norm (up to 3%), we recommend checking the stability of the Internet connection, rebooting the router, and replacing the corresponding cables if they have become unusable.//Reducing the level of rejects in mining can be achieved by taking the following measures:/',
+                status_reject_list: ['Update your mining hardware software to the latest version. ',
+                    'Check your network connection. The connection must be stable and reliable. Periodic loss of connection or low Internet speed can lead to an increase in rejects.',
+                    'Edit your mining software settings. Make sure you are using the optimal settings for your device.',
+                    'Make sure your equipment doesn\'t overheat. High temperatures can lead to errors and rejections. Place your mining equipment in a cool and well-ventilated area.'],
+                fact_hashrate: ['The difference between actual and reported hashrate can be caused by several factors.', 'It is important to understand that the actual hashrate may differ from the declared one, and this is normal. When planning mining operations, it is recommended to consider the actual hashrate in order to have more realistic mining expectations.'],
+                fact_hashrate_list: ['Actual mining conditions may differ from ideal ones, which affects the performance of the equipment.',
+                    'The efficiency of mining equipment may be lower than stated by the manufacturers.',
+                    'Power, cooling, or software issues may also affect the actual hashrate.'],
+                what_workers: 'Workers are part of a mining network and work together to solve complex mathematical problems that are necessary to add new blocks to the blockchain and receive cryptocurrency rewards.//' +
+                    'Mining workers perform computational operations, usually using graphics processing units (GPUs) or specialized mining devices such as Application-Specific Integrated Circuit (ASIC). They solve cryptographic puzzles known as hashes and submit their solutions to the blockchain network for verification. When a decision is made by the blockchain, miners are rewarded for their contribution to securing the network and validating transactions.//' +
+                    'Participating in mining using workers requires high computing power and energy. As competition increases, mining with individual workers becomes less and less profitable, and some miners choose to join mining pools to pool their resources and increase their chances of receiving rewards.',
+                workers_not_visible: '',
+                where_name_workers: 'For other equipment settings, use the instructions from your equipment manufacturer. When using one worker name, your devices will appear as one worker.',
+                where_name_workers_list: ['<subaccount name> is the name of your subaccount that you specified during registration;', '. - yes, this is the point, it is absolutely necessary;', '<worker_name> - set automatically'],
+                methods_income: 'FPPS+ is a modernized reward system that eliminates the risk of miners\' earnings being impacted by fluctuating transaction fees because it combines block rewards and transaction fee payments into one value. FPPS+ also guarantees a fair distribution of rewards between pool participants.',
+                not_enter_wallets: '',
+                why_not_income: 'Why might the payment not happen?',
+                why_not_income_list: ['Check if you added a wallet after registration. If you just added a wallet, automatic payments will not work for 48 hours. You will receive mining rewards, but will not be able to withdraw them to your wallet within the specified time for security reasons.',
+                    'Invalid wallet address. Check that the wallet address is correct. The wallet must contain a BTC address.',
+                    'You recently changed your wallet. If you change your wallet, automatic payments will not work for 48 hours. You will receive rewards for mining, but will not be able to withdraw them to your wallet within the specified time for security reasons.',
+                    'The current balance has not reached the minimum threshold for automatic payment. You can see information about the current balance of accruals in the “Statistics” or “Earnings” sections.',
+                    'If everything looks correct, but there are still no payments, you need to write to our support team, we will help you solve the problem.'],
+                min_sum_income: '',
+                stop_income: '',
+                txid: '',
+                sub: '“Subaccounts” section: here you can switch between your subaccounts and see basic information for each of them. In the top block you can see general statistics of all your subaccounts.',
+                delete_acc: '',
+
+            },
+        },
     },
     ru: {
         comeback: 'Вернуться в личный кабинет',
@@ -257,7 +372,7 @@ export const faqTranslate = {
                     'ключ настройки в приложении Google Authenticator.//После привязки аккаунта к приложению Google Authenticator вам необходимо будет ' +
                     'ввести код для подтверждения подключения 2FA. Этот код вы найдете в приложении Google Authenticator.//Как только вы подключите 2FA, ' +
                     'все действия (вход, добавление/изменение кошелька, отключение 2FA) должны быть подтверждены уникальным кодом из Google Authenticator.',
-                support: 'Как связаться со службой поддержки? // написать в наш телеграм: allbtc_support / написать на почту: "supportall-btc.com"//Также вступайте в наше комьюнити в телеграме "allbtc_community", где мы освещаем последние новости майнинг индустрии и говорим о последних обновлениях в Allbtc Pool.',
+                support: 'Как связаться со службой поддержки? // написать в наш телеграм: \@allbtc_support / написать на почту: support\@all-btc.com//Также вступайте в наше комьюнити в телеграме "allbtc_community", где мы освещаем последние новости майнинг индустрии и говорим о последних обновлениях в Allbtc Pool.',
                 stratum: 'Стратум помогает оптимизировать взаимодействие между майнерами и пулом в процессе майнинга. Это протокол коммуникации, который используется, чтобы обеспечить наиболее эффективную работу.//Майнинг пул отправляет блок данных для обработки каждому участнику пула, который затем начинает обработку этих данных с целью нахождения решения для нового блока в блокчейне. Когда один из майнеров находит правильное решение, результат отправляется обратно в майнинг пул.//Стратум делает всю эту процедуру максимально эффективной, он минимизирует задержки и обеспечивает более гладкую и стабильную работу. Благодаря этому майнеры способны обрабатывать больше блоков и, следовательно, зарабатывать больше вознаграждения.',
                 status_reject: 'Нормальный показатель суточного реджекта — от 1% до 3%. Достичь нулевого показателя реджекта в виде полностью всех принятых шар почти невозможно, так как существует задержка между устройством и сервером пула.//Реджектрейт — это отклоненные решения, которые асики отправили на пул. Чаще всего они отклоняются из-за того, что решение пришло слишком поздно, а пул перешел к решению новой задачи.//Если процент реджекта превышает суточный показатель нормы (до 3%) — мы рекомендуем проверить стабильность интернет соединения, перезагрузить маршрутизатор, заменить соответсвующие кабели, если они пришли в негодность.//Понижение уровня реджектов в майнинге может быть достигнуто путем принятия следующих мер:/',
                 status_reject_list: ['Обновите программное обеспечение своего майнингового оборудования до последней версии. ',
@@ -290,23 +405,6 @@ export const faqTranslate = {
                 delete_acc: '',
 
             },
-
-            text: ['1. Будьте осторожны с непроверенными ссылками и программами /\n' +
-            'Не переходите по непроверенным ссылкам и не устанавливайте программное обеспечение из ненадежных источников. Фродеры могут использовать поддельные ссылки и программы для получения доступа к вашему майнинговому оборудованию или кражи вашей криптовалюты.//\n' +
-            '\n' +
-            '2. Используйте сильные пароли /\n' +
-            'Защитите свой майнинговый аккаунт и кошельки криптовалюты сильными паролями. Используйте уникальный пароль для каждой платформы и регулярно меняйте пароли. //\n' +
-            '\n' +
-            '3. Обновляйте антивирусное программное обеспечение /\n' +
-            'Установите надежное антивирусное программное обеспечение на все свои устройства и регулярно обновляйте его. Это поможет обнаружить и предотвратить угрозы для безопасности, включая фродеров.//\n' +
-            '\n' +
-            '4. Будьте внимательны к социальной инженерии /\n' +
-            'Фродеры могут использовать методы социальной инженерии, чтобы получить доступ к вашей информации или майнинговому оборудованию. Будьте осторожны при общении с незнакомыми людьми, особенно в онлайн-среде, и не делитесь чувствительными данными.//\n' +
-            '\n' +
-            '5. Резервное копирование данных /\n' +
-            'Регулярно создавайте резервные копии важных данных, таких как кошельки криптовалют и настройки майнингового оборудования. В случае фрода или сбоя, вы сможете быстро восстановить свою информацию и продолжить майнинг.//\n' +
-            '\n' +
-            'Помните, что защита от фрода - это непрерывный процесс, и важно оставаться внимательным и информированным о новых угрозах и методах защиты.']
         },
         questions: [
             {

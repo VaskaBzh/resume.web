@@ -4,7 +4,7 @@
             <div id="flood" class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[0]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{ $t("scroll_questions.tabs[0]") }}</p>
+                    <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[0]") }}</p>
                     <ol class="faq-questions_orders">
                         <li class="faq-questions_order">
                             {{$t("scroll_questions.frood.list[0]")}}
@@ -33,7 +33,7 @@
             <div id="security_jam"  class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[1]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{ $t("scroll_questions.tabs[1]") }}</p>
+                    <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[1]") }}</p>
                     <ol class="faq-questions_orders">
                         <li class="faq-questions_order">
                             {{$t("scroll_questions.security_jam.list[0]")}}
@@ -54,7 +54,7 @@
             <div id="security_information"  class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[2]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{ $t("scroll_questions.tabs[2]") }}</p>
+                    <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[2]") }}</p>
                     <ol class="faq-questions_orders">
                         <li class="faq-questions_order">
                             {{$t("scroll_questions.security_information.list[0]")}}
@@ -104,13 +104,6 @@
                 <div class="faq_questions-text">
                     <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[4]") }}</p>
                     <p  class="faq-subtitle" v-i18n='$t("scroll_questions.texts.methods_security")'></p>
-                </div>
-            </div>
-            <div id="support"  class="faq-questions__item">
-                <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[5]")}}</landing-title>
-                <div class="faq_questions-text">
-                    <p  class="faq-subtitle" v-i18n='$t("scroll_questions.subtitle[5]")'></p>
-                    <p class="faq-questions-text" v-i18n='$t("scroll_questions.texts.support")'></p>
                 </div>
             </div>
             <div id="stratum"  class="faq-questions__item">
@@ -271,13 +264,13 @@ export default {
 .faq-questions__items {
     display: flex;
     flex-flow: column nowrap;
-    gap: 32px;
+    gap: 40px;
 }
 
 .faq-questions__item {
     display: flex;
     flex-flow: column nowrap;
-    gap: 40px;
+    gap: 24px;
 }
 
 .faq-questions__item p {
@@ -296,6 +289,7 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 40px;
+    text-transform: none;
 }
 
 .faq-subtitle {
@@ -320,7 +314,7 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     gap: 12px;
-    color: white;
+    color: var(--text-secondary);
     font-family: NunitoSans, serif;
     font-size: 16px;
     font-style: normal;

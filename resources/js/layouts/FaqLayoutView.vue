@@ -83,8 +83,8 @@
                 <h2 class="fat__tabs_title">{{ $t("title_scroll_tabs") }}</h2>
             </faq-tabs>
             <div class="faq_main_blocks">
-                <div class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
-                    <faq-navs-tabs id="faq_navs"/>
+                <div id="faq_navs" class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
+                    <faq-navs-tabs />
                         <router-view/>
                 </div>
             </div>
@@ -159,7 +159,6 @@ export default {
                 security_information: this.$t('scroll_questions.tabs[2]'),
                 security_account: this.$t('scroll_questions.tabs[3]'),
                 methods_security: this.$t('scroll_questions.tabs[4]'),
-                support: this.$t('scroll_questions.tabs[5]'),
                 stratum: this.$t('scroll_questions.tabs[6]'),
                 status_reject: this.$t('scroll_questions.tabs[7]'),
                 fact_hashrate: this.$t('scroll_questions.tabs[8]'),
@@ -185,10 +184,18 @@ export default {
             if(newVal === 'questions') {
                 this.activeTabs = this.tabsQuestions
             }
-        }
+        },
+        "$i18n.locale"() {
+            if(this.$route.name === 'questions') {
+                this.activeTabs = this.tabsQuestions
+            } else {
+                this.activeTabs = this.tabsDescription
+            }
+
+        },
     },
     async mounted() {
-        this.activeTabs = this.$route.name === 'questions' ? this.tabsQuestions:this.tabsDescription
+        this.activeTabs = this.$route.name === 'questions' ? this.tabsQuestions : this.tabsDescription
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }
