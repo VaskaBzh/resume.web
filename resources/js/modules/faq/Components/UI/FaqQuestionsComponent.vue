@@ -174,8 +174,7 @@
             <div id="not_enter_wallets"  class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[13]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[13]") }}</p>
-                    <p class="faq-questions-text"></p>
+                    <p  class="faq-questions-text">{{ $t("scroll_questions.subtitle[13]") }}</p>
                 </div>
             </div>
             <div id="why_not_income"  class="faq-questions__item">
@@ -195,22 +194,19 @@
             <div id="min_sum_income"  class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[15]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[15]") }}</p>
-                    <p class="faq-questions-text" ></p>
+                    <p  class="faq-questions-text">{{ $t("scroll_questions.subtitle[15]") }}</p>
                 </div>
             </div>
             <div id="stop_income"  class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[16]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[16]") }}</p>
-                    <p class="faq-questions-text" ></p>
+                    <p  class="faq-questions-text">{{ $t("scroll_questions.subtitle[16]") }}</p>
                 </div>
             </div>
             <div id="txid"  class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[17]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{  $t("scroll_questions.subtitle[17]") }}</p>
-                    <p class="faq-questions-text" ></p>
+                    <p  class="faq-questions-text">{{  $t("scroll_questions.subtitle[17]") }}</p>
                 </div>
             </div>
             <div id="sub"  class="faq-questions__item">
@@ -223,8 +219,7 @@
             <div id="delete_acc"  class="faq-questions__item">
                 <landing-title tag="h4" class="faq-title">{{$t("scroll_questions.tabs[19]")}}</landing-title>
                 <div class="faq_questions-text">
-                    <p  class="faq-subtitle">{{ $t("scroll_questions.subtitle[19]") }}</p>
-                    <p class="faq-questions-text" ></p>
+                    <p  class="faq-questions-text">{{ $t("scroll_questions.subtitle[19]") }}</p>
                 </div>
             </div>
         </div>
@@ -274,10 +269,10 @@ export default {
 
 .faq-title {
     font-family: Unbounded, serif;
-    font-size: clamp(14px, 2vw, 27px);
+    font-size: clamp(16px, 2vw, 27px);
     font-style: normal;
     font-weight: 400;
-    line-height: 40px;
+    line-height: clamp(25px, 3.5vw, 45px);
     text-transform: none;
     margin-bottom: 24px;
 }
@@ -285,7 +280,7 @@ export default {
 .faq-subtitle {
     color: var(--text-teritary-night, #6F7682);
     font-family: NunitoSans, serif;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
@@ -295,7 +290,7 @@ export default {
 .faq-questions-text {
     color: var(--text-teritary-night, #6F7682);
     font-family: NunitoSans, serif;
-    font-size: 16px;
+    font-size: clamp(14px, 3.5vw, 16px);
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
@@ -318,7 +313,7 @@ export default {
 .faq-questions_order p {
     color: #6F7682;
     font-family: NunitoSans, serif;
-    font-size: 16px;
+    font-size:  clamp(14px, 2vw, 16px);
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
@@ -327,7 +322,7 @@ export default {
 .reject {
     color: #6F7682;
     font-family: NunitoSans, serif;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
