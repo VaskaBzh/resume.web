@@ -39,7 +39,7 @@
                 />
             </div>
             <a
-                href="https://t.me/allbtc_support"
+                href="https://t.me/allbtc_connect"
                 target="_blank"
                 class="get-consultation"
             >{{ $t("system_monitoring.button") }}</a
