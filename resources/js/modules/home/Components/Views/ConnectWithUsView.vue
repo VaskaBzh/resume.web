@@ -1,7 +1,7 @@
 <template>
     <div class="connect-withus connect-withus__section" ref="view">
         <a
-            href="https://t.me/allbtc_support"
+            href="https://t.me/allbtc_connect"
             class="connect-withus__content"
             target="_blank"
         >
