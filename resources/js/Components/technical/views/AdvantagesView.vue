@@ -15,7 +15,7 @@
                     <a
                         class="all-link"
                         target="_blank"
-                        href="https://t.me/allbtc_support"
+                        href="https://t.me/allbtc_connect"
                     >
                         <svg
                             width="21"
