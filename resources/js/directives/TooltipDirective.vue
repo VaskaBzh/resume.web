@@ -13,6 +13,7 @@ export default {
         tippy(el, {
             content: binding.value.content || "",
             animation: "shift-away-extreme",
+            trigger: 'mouseenter',
             flip: true,
             flipOnUpdate: true,
             theme: "custom-theme",
