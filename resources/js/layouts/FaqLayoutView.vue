@@ -83,11 +83,9 @@
                 <h2 class="fat__tabs_title">{{ $t("title_scroll_tabs") }}</h2>
             </faq-tabs>
             <div class="faq_main_blocks">
-                <div class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
-                    <faq-navs-tabs id="faq_navs"/>
-                    <keep-alive>
+                <div id="faq_navs" class="faq__main_items" :class="{'faq_questions': this.$route.name.includes('questions')}">
+                    <faq-navs-tabs />
                         <router-view/>
-                    </keep-alive>
                 </div>
             </div>
         </div>
@@ -158,7 +156,23 @@ export default {
             return {
                 flood: this.$t('scroll_questions.tabs[0]'),
                 security_jam: this.$t('scroll_questions.tabs[1]'),
-                security_information: this.$t('scroll_questions.tabs[0]'),
+                security_information: this.$t('scroll_questions.tabs[2]'),
+                security_account: this.$t('scroll_questions.tabs[3]'),
+                methods_security: this.$t('scroll_questions.tabs[4]'),
+                stratum: this.$t('scroll_questions.tabs[6]'),
+                status_reject: this.$t('scroll_questions.tabs[7]'),
+                fact_hashrate: this.$t('scroll_questions.tabs[8]'),
+                what_workers: this.$t('scroll_questions.tabs[9]'),
+                workers_not_visible: this.$t('scroll_questions.tabs[10]'),
+                where_name_workers: this.$t('scroll_questions.tabs[11]'),
+                methods_income: this.$t('scroll_questions.tabs[12]'),
+                not_enter_wallets: this.$t('scroll_questions.tabs[13]'),
+                why_not_income: this.$t('scroll_questions.tabs[14]'),
+                min_sum_income: this.$t('scroll_questions.tabs[15]'),
+                stop_income: this.$t('scroll_questions.tabs[16]'),
+                txid: this.$t('scroll_questions.tabs[17]'),
+                sub: this.$t('scroll_questions.tabs[18]'),
+                delete_acc: this.$t('scroll_questions.tabs[19]'),
             }
         },
     },
@@ -170,10 +184,18 @@ export default {
             if(newVal === 'questions') {
                 this.activeTabs = this.tabsQuestions
             }
-        }
+        },
+        "$i18n.locale"() {
+            if(this.$route.name === 'questions') {
+                this.activeTabs = this.tabsQuestions
+            } else {
+                this.activeTabs = this.tabsDescription
+            }
+
+        },
     },
     async mounted() {
-        this.activeTabs = this.$route.name === 'questions' ? this.tabsQuestions:this.tabsDescription
+        this.activeTabs = this.$route.name === 'questions' ? this.tabsQuestions : this.tabsDescription
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }
@@ -302,8 +324,8 @@ export default {
     flex: 1 1 0;
     height: calc(100vh - 165px);
     max-width: 690px;
-    margin: 0 auto;
-    padding: 0;
+    margin: -44px auto 44px;
+    padding-top: 44px;
 }
 
 
@@ -330,10 +352,10 @@ export default {
 
 @media (max-width: 999.99px) {
     .faq__main_items {
-        margin: 0 auto;
+        margin: -44px auto 44px;
         max-width: 100%;
         width: 100%;
-        padding: 0;
+        padding: 44px 0 0 0;
     }
 
 }
@@ -352,6 +374,7 @@ export default {
     font-weight: 400;
     line-height: 40px;
     color: #ffffff;
+    margin-bottom: 16px;
     font-family: Unbounded, serif;
 }
 
