@@ -24,9 +24,9 @@
                             : 'scroll',
                 }"
             >
-                <notification-list />
+                <notification-list/>
                 <keep-alive>
-                    <slot />
+                    <slot/>
                 </keep-alive>
             </div>
         </div>
@@ -37,8 +37,8 @@ import NavTabs from "@/modules/navs/Components/NavTabs.vue";
 import HeaderComponentProfile from "@/modules/common/Components/HeaderComponentProfile.vue";
 import NotificationList from "@/modules/notification/Components/NotificationList.vue";
 
-import { InstructionService } from "@/modules/instruction/services/InstructionService";
-import { mapGetters } from "vuex";
+import {InstructionService} from "@/modules/instruction/services/InstructionService";
+import {mapGetters} from "vuex";
 
 export default {
     components: {
@@ -56,7 +56,7 @@ export default {
         change(event) {
             this.isOpenBurger = event;
 
-            document.body.style.overflowY = !!event ? "hidden" : "scroll";
+            document.body.style.overflowY = event ? "hidden" : "scroll";
         },
     },
     computed: {
@@ -107,12 +107,24 @@ export default {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    border-radius: 64px 0px 0px 0px;
+    border-radius: 48px 0px 0px 0px;
     background: var(--background-globe);
-    box-shadow: 0px 1px 4px 0px rgba(16, 24, 40, 0.05) inset;
     width: 100%;
     flex: 1 1 auto;
     padding: clamp(12px, 2vw, 24px);
+    position: relative;
+}
+
+.page-container::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    transform: translate(-24px, -24px);
+    border-radius: 48px 0 0 0;
+    box-shadow: 0 5px 10px 0 var(--main-page-shadow) inset;
+    z-index: 5;
+    pointer-events: none;
 }
 
 .page-container::-webkit-scrollbar {
@@ -129,6 +141,10 @@ export default {
 @media (max-width: 998px) {
     .page-container {
         border-radius: 0;
+    }
+
+    .page-container::before {
+        display: none;
     }
 }
 

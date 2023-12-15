@@ -1,7 +1,7 @@
 export const SubsCustomFunctions = {
     workers: "setWorkersStats",
     total_payout: "bitcoinFormat",
-    walletAddress: "copyContent",
+    walletAddress: "cutCopyContent",
     txid: "copyContent",
-    status: "statusRender",
+    status_translate: "statusRender",
 };

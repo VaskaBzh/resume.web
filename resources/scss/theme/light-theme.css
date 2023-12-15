@@ -19,9 +19,13 @@
     --background-accient: #2E90FA;
     --background-death: #2C2F340D;
 
+    /* shadows */
+
+    --main-page-shadow: rgba(69, 72, 77, 0.10);
+
     /* text */
     --text-primary: #1D2939;
-    --text-primary-80: #1d2939c4;
+    --text-primary-80: rgba(29, 41, 57, 0.80);
     --text-secondary: #475467;
     --text-teritary: #98A2B3;
     --text-fourth: #D0D5DD;

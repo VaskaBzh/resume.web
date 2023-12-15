@@ -42,7 +42,7 @@ export default {
         deligateProcess(event) {
             if (event.target.closest("[data-copy]")) {
                 navigator.clipboard.writeText(
-                    event.target.closest("[data-copy]").innerText
+                    event.target.closest("[data-copy]").dataset.copy
                 );
             }
         },

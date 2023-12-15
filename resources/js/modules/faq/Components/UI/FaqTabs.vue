@@ -22,12 +22,18 @@ import { mapGetters } from "vuex";
 import {faqTranslate} from "@/modules/faq/lang/FaqTranslate";
 import ArrowBackIcon from "@/modules/faq/icons/ArrowBackIcon.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
+import {tabs} from "@/modules/faq/Enum/FaqTabsEnum";
 
 export default {
     name: "FaqTabs",
     components: {LandingText, ArrowBackIcon},
     i18n: {
         sharedMessages: faqTranslate
+    },
+    props: {
+        tabs: {
+            type: Object,
+        }
     },
     data() {
         return {
@@ -36,46 +42,25 @@ export default {
     },
     computed: {
         ...mapGetters(['viewportWidth']),
-        tabs() {
-            return {
-                choosesub: this.$t('scroll_tabs[0]'),
-                statistic: this.$t('scroll_tabs[1]'),
-                income: this.$t('scroll_tabs[2]'),
-                workers: this.$t('scroll_tabs[3]'),
-                Subs: this.$t('scroll_tabs[4]'),
-                connect: this.$t('scroll_tabs[5]'),
-                wallets: this.$t('scroll_tabs[6]'),
-                watchers: this.$t('scroll_tabs[7]'),
-                accounts: this.$t('scroll_tabs[8]'),
-                course: this.$t('scroll_tabs[9]'),
-                changeTheme: this.$t('scroll_tabs[10]'),
-                changeLang: this.$t('scroll_tabs[11]'),
-            }
-        }
     },
     methods: {
         choosingTabs(value) {
             this.activeTab = value
         }
     },
+
 }
 </script>
 
 <style scoped>
 .faq__tabs {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-start;
-    flex: 1 1 auto;
-    justify-content: flex-start;
-    max-width: fit-content;
-    gap: 16px;
-    height: calc(100vh - 144px);
+    height: calc(100vh - 74px);
     transition: all .3s ease;
     overflow: hidden;
     overflow-y: scroll;
     position: fixed;
     padding: 44px 24px;
+    max-width: 280px;
 }
 
 .faq__tabs::-webkit-scrollbar {
@@ -84,14 +69,7 @@ export default {
 
 
 .faq_lists {
-    display: flex;
-    flex-flow: column nowrap;
-    list-style-type: none;
-    align-items: flex-start;
-    justify-content: flex-start;
     position: relative;
-    top: 0;
-    left: 0;
     transition: all .3s ease;
 }
 
@@ -106,6 +84,7 @@ export default {
 }
 
 .faq_list {
+    display: block;
     width: 100%;
     font-family: NunitoSans, serif;
     font-size: 16px;

@@ -39,15 +39,7 @@
                                 placeholder="0.005"
                                 disabled
                             />
-                            <label
-                                for="min"
-                                class="main__label autopayout-label"
-                                >{{
-                                    $t(
-                                        "wallets.popups.change.labels.minWithdrawal"
-                                    )
-                                }}</label
-                            >
+
                             <span class="autopayout-btc">BTC</span>
                         </div>
                     </div>
@@ -59,7 +51,7 @@
                     :is-visible="instructionService.isVisible"
                     text="texts.wallets[0]"
                     title="titles.wallets[0]"
-                    class-name="onboarding__card-right"
+                    class-name="onboarding__card-top"
                     @next="instructionService.nextStep()"
                     @prev="instructionService.prevStep()"
                     @close="instructionService.nextStep(6)"
@@ -103,7 +95,7 @@
                     :is-visible="instructionService.isVisible"
                     text="texts.wallets[1]"
                     title="titles.wallets[1]"
-                    class-name="onboarding__card-right"
+                    class-name="onboarding__card-bottom"
                     @next="instructionService.nextStep()"
                     @prev="instructionService.prevStep()"
                     @close="instructionService.nextStep(6)"
@@ -201,13 +193,13 @@
             class="form form-popup popup__form"
             @submit.prevent="changeWallet()"
         >
-            <main-title class="change-label_title">
+            <main-title>
                 {{ $t("wallets.popups.change.title") }}
+                <p class="wallet-description">
+                    {{ $t("wallets.popups.change.note") }}
+                </p>
             </main-title>
             <div class="autopayout-input_container">
-                <label class="label-popup">
-                    {{ $t("wallets.popups.add.placeholders.wallet") }}
-                </label>
                 <input
                     v-model="wallets.form.wallet"
                     autofocus
@@ -216,18 +208,6 @@
                     :placeholder="
                         $t('wallets.popups.change.placeholders.wallet')
                     "
-                />
-            </div>
-            <div class="autopayout-input_container">
-                <label class="label-popup">
-                    {{ $t("wallets.popups.add.placeholders.name") }}
-                </label>
-                <input
-                    v-model="wallets.form.name"
-                    autofocus
-                    type="text"
-                    class="input popup__input autopayput_input"
-                    :placeholder="$t('wallets.popups.change.placeholders.name')"
                 />
             </div>
             <warning-block class="wallets_warning" text="wallets_change" />
@@ -266,16 +246,13 @@
             class="form form-popup popup__form"
             @submit.prevent="createWallet()"
         >
-            <main-title
-                >{{ $t("wallets.popups.add.title") }}
+            <main-title>
+                {{ $t("wallets.popups.add.title") }}
                 <p class="wallet-description">
-                    {{ $t("wallets.popups.note") }}
+                    {{ $t("wallets.popups.add.note") }}
                 </p>
             </main-title>
             <div class="autopayout-input_container">
-                <label class="label-popup">
-                    {{ $t("wallets.popups.add.placeholders.wallet") }}
-                </label>
                 <input
                     v-model="wallets.form.wallet"
                     type="text"
@@ -284,17 +261,7 @@
                     class="input popup__input autopayput_input"
                 />
             </div>
-            <div class="autopayout-input_container">
-                <label class="label-popup">
-                    {{ $t("wallets.popups.add.placeholders.name") }}
-                </label>
-                <input
-                    v-model="wallets.form.name"
-                    type="text"
-                    :placeholder="$t('wallets.popups.add.placeholders.name')"
-                    class="input popup__input autopayput_input"
-                />
-            </div>
+
             <warning-block class="wallets_warning" text="wallets_change" />
             <main-button
                 type="submit"
@@ -318,7 +285,7 @@
             @back="wallets.back()"
         />
     </main-popup>
-    <teleport to=".header_button-instruction" v-if="isMounted">
+    <teleport v-if="isMounted" to=".header_button-instruction">
         <instruction-button
             hint="wallets"
             @openInstruction="instructionService.setStep().setVisible()"
@@ -403,11 +370,11 @@ export default {
             isActiveLabelMinWithdrawal: false,
             verifyButtonName: this.$t("wallets.no_info.verify_text"),
             instructionService: new InstructionService(),
-            isMounted: false
+            isMounted: false,
         };
     },
     mounted() {
-        this.isMounted = true
+        this.isMounted = true;
         this.instructionService.setStepsCount(2);
 
         this.walletInit();
@@ -482,24 +449,6 @@ export default {
     gap: 8px;
 }
 
-.wallet-wallet_address {
-    color: var(--text-teritary, #98a2b3);
-    font-family: NunitoSans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 145%; /* 20.3px */
-}
-
-.wallet-fullname {
-    color: var(--light-gray-500, #667085);
-    font-family: Unbounded;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%; /* 24px */
-}
-
 .header-component-wallet {
     display: flex;
     align-items: center;
@@ -524,14 +473,15 @@ export default {
 }
 
 .autopayout-btc {
-    color: var(--text-teritary, #98a2b3);
+    color: var(--text-teritary-night, #6f7682);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: 150%; /* 24px */
     position: absolute;
-    top: 16px;
+    top: 50%;
+    transform: translateY(-50%);
     right: 16px;
 }
 
@@ -551,10 +501,16 @@ export default {
     border: none;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-island-inner-3) !important;
-    padding: 24px 0 0 16px;
+    padding: 16px;
     width: 100%;
-    height: 56px;
-    outline: none;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    color: var(--text-teritary, #6f7682) !important;
+    &::placeholder {
+        color: inherit !important;
+    }
 }
 
 input:focus {
@@ -595,11 +551,11 @@ input:focus {
 
 .wallet__block {
     width: 100%;
-    padding: 32px 40px 16px;
+    padding: 32px 40px 20px;
     border-radius: 24px;
 
     &:last-child {
-        padding: 16px 40px 32px;
+        padding: 20px 40px 32px;
     }
 
     @media (max-width: 767.98px) {
@@ -635,33 +591,12 @@ input:focus {
     width: 48%;
 }
 
-.autopayout-input_container {
-    display: flex;
-    margin-bottom: 12px;
-    flex-direction: column;
-    border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-modal-input, #2c2f34);
-    padding: var(--pt-3, 12px) var(--pr-4, 16px) var(--pb-2, 8px)
-        var(--pl-4, 16px);
-}
-
-.change-autopyout_button {
-    border-radius: 12px;
-    background: var(--buttons-primary-fill-border-default, #2e90fa);
-    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
-    padding: 12px 16px;
-    color: var(--buttons-primary-text, #fff);
-    font-family: NunitoSans;
-    margin: 36px 0 0;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 32px; /* 177.778% */
-}
-
 .autopayput_input {
-    background: inherit !important;
+    width: 100%;
+    background: var(--background-modal-input, #2c2f34);
     color: var(--text-secondary, #475467);
+    padding: 16px;
+    border-radius: 12px;
 }
 
 .cancel-button {
@@ -688,6 +623,7 @@ input:focus {
         padding: 0;
 
         .wallets {
+            // .wallets__block
             &__block {
                 display: inline-flex;
                 cursor: pointer;
@@ -723,11 +659,11 @@ input:focus {
             justify-content: flex-start !important;
         }
     }
-
+    // .wallets__list
     &__list {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 40px;
         transition: all 0.3s ease 0s;
         width: 100%;
         @media (max-width: 1320.98px) {
@@ -745,7 +681,7 @@ input:focus {
             }
         }
         .wallets_warning {
-            margin-top: 0;
+            margin: 0;
         }
     }
 
@@ -767,16 +703,6 @@ input:focus {
     }
 
     &__block {
-        @media (max-width: 767.98px) {
-            padding: 10px 0 10px;
-            border-top: 1px solid #d7d8d9;
-            border-radius: 0;
-
-            &:first-child {
-                border-top: none;
-            }
-        }
-
         &-warning {
             padding: 16px;
             border-radius: var(--surface-border-radius-radius-s-md, 12px);
@@ -883,15 +809,6 @@ input:focus {
 
 .input-container {
     position: relative;
-}
-
-.label-popup {
-    color: var(--text-teritary);
-    font-family: NunitoSans;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px; /* 133.333% */
 }
 
 .input-label {
