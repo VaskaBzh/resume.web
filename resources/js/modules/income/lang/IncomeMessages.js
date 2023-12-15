@@ -4,7 +4,7 @@ export const IncomeMessages = {
         block: {
             titles: {
                 full_income: "Accrued for all time",
-                income: "Accrued",
+                income: "Current balance",
                 yesterday_amount: "Yesterday's income",
                 month_profit: "Monthly income",
                 month_profit_graph: "Monthly income chart",
