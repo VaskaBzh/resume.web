@@ -51,6 +51,7 @@ export default {
         margin: 0 6px -3px 0;
         cursor: pointer;
         fill: var(--icons-secondary);
+        outline: none;
 
         &:hover {
             fill: var(--svg-fill-hover);

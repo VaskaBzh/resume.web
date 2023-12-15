@@ -877,7 +877,7 @@ const messages = {
                 titles: ["Paid", "Unpaid", "Yesterday's income"],
                 card: [
                     "Accrued for all time",
-                    "Accrued",
+                    "Current balance",
                     "Income for the month",
                 ],
             },
