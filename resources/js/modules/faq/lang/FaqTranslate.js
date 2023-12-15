@@ -2,12 +2,12 @@ export const faqTranslate = {
     en: {
         comeback: 'Back to my account',
         "faq-links": ["FAQ", "Functional Description"],
-        scroll_tabs: ['Sub-account selection', 'Statistic', 'Income', 'Workers', 'Subaccounts', 'Connecting', 'Wallets', 'Watchers mode', 'Account', 'Course BTC and USD', 'Change interface theme', 'Language change'],
+        scroll_tabs: ['Sub-account selection', 'Statistics', 'Earnings', 'Workers', 'Subaccounts', 'Connection', 'Wallet', 'Watchers', 'Account', 'BTC and USD rate', 'Changing the interface theme', 'Switch language'],
         title_scroll_tabs: 'Sections',
         title: "Description of allbtc pool functionality",
         titles_texts: {
-            titles: ['Choosing a subaccount', 'Menu item «Statistic»', 'Menu item «Income»', 'Menu item «Workers»', 'Menu item «Subaccounts»', 'Menu item «Connecting»',
-                'Menu item «Wallets»', 'Menu item «Watchers»', 'Menu item «Accounts»', 'Course BTC and USD', 'Change interface theme', 'Language change'],
+            titles: ['Choosing a subaccount', 'Menu item «Statistics»', 'Menu item «Earnings»', 'Menu item «Workers»', 'Menu item «Subaccounts»', 'Menu item «Connection»',
+                'Menu item «Wallet»', 'Menu item «Watchers»', 'Menu item «Account»', 'BTC and USD rate', 'Changing the interface theme', 'Switch language'],
             subtitles: ['Hashrate graph', 'Performance metrics', 'Accrual for mining', 'Auto-payment and graph schedule', 'Step 1 - Pool URLs', 'Step 2 - Worker Name', 'Adding wallet', 'Wallet change']
         },
         texts: {
@@ -27,7 +27,7 @@ export const faqTranslate = {
                 ' - is the profit for mining for yesterday.',
                 'The monthly forecast',
                 ' - is the estimated profit for mining in the coming month.',
-                'Accrued',
+                'Current balance',
                 ' - is a progress-bar that shows your current balance of BTC, accrued for mining (value on the left), and the amount at which the auto-payment will be made to your wallet (value on the right).',
                 'The Monthly Income Graph',
                 ' - is an interactive graph that shows your accruals by day for the last month.',

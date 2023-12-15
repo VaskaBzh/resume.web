@@ -770,7 +770,7 @@ const messages = {
                 title: "Hashrate",
                 no_workers_title: "Connect to allbtc pool",
             },
-            graph: ["Monthly income graph", "Income", "Accrued"],
+            graph: ["Monthly income graph", "Income", "Current balance"],
             info_blocks: {
                 title: "Earnings",
                 title_clear: "Net income",

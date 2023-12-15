@@ -21,4 +21,5 @@ export const ColumnBlackListEnum = {
     hash_per_day: true,
     hash_per_min: true,
     status: true,
+    workers_count: true
 };
