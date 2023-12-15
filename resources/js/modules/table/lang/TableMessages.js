@@ -3,12 +3,12 @@ export const TableMessages = {
         income: {
             table: {
                 titles: [
-                    "Extraction date",
-                    "Earnings",
+                    "Accrrual date",
+                    "Accrued",
                     "Hashrate",
-                    "Payout Date",
+                    "Payment Date",
                     "Wallet",
-                    "Payout",
+                    "Paid",
                     "TxID",
                     "Status",
                 ],
@@ -21,7 +21,7 @@ export const TableMessages = {
                             <span class="tooltip_row"><span class="tooltip_status tooltip_status-checking">Checking</span> — your wallet is under verification, which takes 48 hours</span>
                             <span class="tooltip_row"><span class="tooltip_status tooltip_status-pending">Pending</span> — not enough balance for the minimum payout threshold</span>
                             <span class="tooltip_row"><span class="tooltip_status tooltip_status-reject">Error</span> — error during payout</span>
-                            <span class="tooltip_row"><span class="tooltip_status tooltip_status-no_wallet">No wallet</span> — you need to add a wallet to get the payout</span>
+                            <span class="tooltip_row"><span class="tooltip_status tooltip_status-no_wallet">Wallet needed</span> — you need to add a wallet to get the payout</span>
                         </div>`,
                 },
             },

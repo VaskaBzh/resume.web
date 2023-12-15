@@ -51,6 +51,10 @@ export default {
         margin: 0 6px -3px 0;
         cursor: pointer;
         fill: var(--icons-secondary);
+
+        &:hover {
+            fill: var(--svg-fill-hover);
+        }
     }
 }
 .column:first-child .column_value {
