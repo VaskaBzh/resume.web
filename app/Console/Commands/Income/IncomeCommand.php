@@ -27,32 +27,28 @@ class IncomeCommand extends Command
             ->each(static function (Sub $sub) {
                 $sub->refresh();
 
-                try {
-                    $referrerActiveSub = $sub->user
-                        ->referrer
-                        ?->activeSub()
-                        ->first();
+                $referrerActiveSub = $sub->user
+                    ->referrer
+                    ?->activeSub()
+                    ->first();
 
-                    $service = IncomeService::init(
-                        stat: app('miner_stat'),
-                        sub: $sub,
-                        referrerSub: $referrerActiveSub
-                    );
+                $service = IncomeService::init(
+                    stat: app('miner_stat'),
+                    sub: $sub,
+                    referrerSub: $referrerActiveSub
+                );
 
-                    $income = $service->createIncome($sub, Type::MINING);
-                    $service->updateLocalSub($sub, Type::MINING);
-                    $service->createFinance();
+                $income = $service->createIncome($sub, Type::MINING);
+                $service->updateLocalSub($sub, Type::MINING);
+                $service->createFinance();
 
-                    if ($referrerActiveSub) {
-                        $service->createIncome($referrerActiveSub, Type::REFERRAL);
-                        $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
-                    }
-
-                    Log::channel('commands.incomes')
-                        ->info(message: 'INCOME CREATE', context: $income->toArray());
-                } catch (IncomeCreatingException) {
-                    return;
+                if ($referrerActiveSub) {
+                    $service->createIncome($referrerActiveSub, Type::REFERRAL);
+                    $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
                 }
+
+                Log::channel('commands.incomes')
+                    ->info(message: 'INCOME CREATE', context: $income->toArray());
             });
 
         if (config('app.production_env')) {
