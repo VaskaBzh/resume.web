@@ -107,7 +107,8 @@ class ListController extends Controller
     public function __invoke(Sub $sub, Request $request): JsonResource
     {
         return IncomeResource::collection(
-            Income::with(['payout.wallet'])
+            Income::getByGroupId($sub->group_id)
+                ->with(['payout.wallet'])
                 ->between('incomes.created_at', $request->from, $request->to)
                 ->latest('incomes.created_at')
                 ->paginate($request->per_page)

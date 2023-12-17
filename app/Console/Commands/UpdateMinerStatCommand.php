@@ -20,7 +20,7 @@ class UpdateMinerStatCommand extends Command
             $stats = MinerStatService::store();
 
             if (! is_null($stats)) {
-                Log::channel('commands')->info('MINER STATS COMMAND', [
+                Log::channel('commands.blockchain')->info('MINER STATS COMMAND', [
                     'minerstats' => $stats,
                 ]);
 

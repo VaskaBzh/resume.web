@@ -13,6 +13,7 @@ use App\Services\Internal\IncomeService;
 use App\Services\Internal\PayoutService;
 use App\Services\Internal\SubService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class PayoutCommand extends Command
 {
@@ -47,6 +48,9 @@ class PayoutCommand extends Command
                         'payout' => $payout,
                         'status' => Status::COMPLETED,
                     ]));
+
+                    Log::channel('commands.payouts')
+                        ->info(message: 'PAYOUT CREATED', context: $payout->toArray());
                 } catch (PayOutException|\Exception $e) {
                     IncomeService::updateIncomes(data: UpdateStatusData::fromArray([
                         'sub' => $sub,

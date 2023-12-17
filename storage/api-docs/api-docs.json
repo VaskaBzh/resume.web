@@ -499,6 +499,27 @@
                 ]
             }
         },
+        "/pool/stats": {
+            "get": {
+                "tags": [
+                    "Pool stats"
+                ],
+                "summary": "Get pool statistics",
+                "operationId": "2d9e104453dd5f7342816404ddc15b55",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PoolStatsResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/referrals/incomes/{user}": {
             "get": {
                 "tags": [
@@ -2993,6 +3014,78 @@
                     "created_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "PoolStatsResource": {
+                "properties": {
+                    "valid": {
+                        "type": "integer"
+                    },
+                    "stale": {
+                        "type": "integer"
+                    },
+                    "hashrate": {
+                        "type": "integer"
+                    },
+                    "miners": {
+                        "type": "integer"
+                    },
+                    "workers": {
+                        "type": "integer"
+                    },
+                    "fee": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "fee_type": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "minpay": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "maxpay": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "height": {
+                        "type": "integer"
+                    },
+                    "reward": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "ticker": {
+                        "type": "string"
+                    },
+                    "dualmining": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "date": {
+                                    "type": "string"
+                                },
+                                "kind": {
+                                    "type": "string"
+                                },
+                                "height": {
+                                    "type": "integer"
+                                },
+                                "hash": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 },
                 "type": "object"
