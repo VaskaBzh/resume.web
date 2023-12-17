@@ -11,7 +11,6 @@ use App\Models\Payout;
 use App\Models\Sub;
 use App\Models\Wallet;
 use App\Services\External\Wallet\Client;
-use Illuminate\Http\Client\RequestException;
 
 final readonly class PayoutService
 {
@@ -40,17 +39,13 @@ final readonly class PayoutService
      */
     public function payOut(callable $callback): Payout
     {
-        try {
-            [$txId, $amount] = $callback(app(Client::class));
+        [$txId, $amount] = $callback(app(Client::class));
 
-            return Create::execute(PayoutData::fromArray([
-                'sub' => $this->sub,
-                'wallet' => $this->wallet,
-                'payout' => $amount,
-                'txid' => $txId,
-            ]));
-        } catch (PayOutException|RequestException $e) {
-            throw new PayOutException($e->getMessage());
-        }
+        return Create::execute(PayoutData::fromArray([
+            'sub' => $this->sub,
+            'wallet' => $this->wallet,
+            'payout' => $amount,
+            'txid' => $txId,
+        ]));
     }
 }
