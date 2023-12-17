@@ -43,12 +43,19 @@ class IncomeCommand extends Command
                 $service->createFinance();
 
                 if ($referrerActiveSub) {
-                    $service->createIncome($referrerActiveSub, Type::REFERRAL);
+                    $income = $service->createIncome($referrerActiveSub, Type::REFERRAL);
                     $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
+
+                    Log::channel('commands.incomes')->info(
+                        message: sprintf('INCOME CREATED. TYPE: %s', $income->type),
+                        context: $income->toArray()
+                    );
                 }
 
-                Log::channel('commands.incomes')
-                    ->info(message: 'INCOME CREATE', context: $income->toArray());
+                Log::channel('commands.incomes')->info(
+                    message: 'INCOME CREATED',
+                    context: $income->toArray()
+                );
             });
 
         if (config('app.production_env')) {
