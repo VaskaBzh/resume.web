@@ -6,14 +6,27 @@ namespace App\Services\External\BtcCom;
 
 use App\Exceptions\BusinessException;
 use App\Models\Worker;
+use App\Services\External\ApiRequest;
+use App\Services\External\BaseClient;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
-// TODO: Refactor to BaseClient implementation
-class Client implements ClientContract
+// TODO: Refactor to BaseClient implementation (in progress)
+class Client extends BaseClient implements ClientContract
 {
+    protected function baseUrl(): string
+    {
+        return config('api.btc.url');
+    }
+
+    protected function authorize(PendingRequest $request): PendingRequest
+    {
+        return $request->withHeaders(['Authorization' => config('api.btc.token')]);
+    }
+
     /**
      * Call btc.com
      */
@@ -56,10 +69,14 @@ class Client implements ClientContract
      */
     public function getSub(int $groupId): Collection
     {
-        return $this->call(path: str_replace('{group}',
-            "$groupId",
-            config('api.btc.paths.group'))
+        $response = $this->send(
+            request: ApiRequest::get(
+                uri: str_replace('{group}', "$groupId", config('api.btc.paths.group'))
+            )->setQuery('puid', config('api.btc.puid'))
         );
+
+        return collect($response['data']);
+
     }
 
     /**
