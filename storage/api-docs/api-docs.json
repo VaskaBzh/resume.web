@@ -230,7 +230,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/IncomeCollection"
+                                                "$ref": "#/components/schemas/IncomeResource"
                                             }
                                         },
                                         "first_page_url": {
@@ -813,7 +813,7 @@
                                         "incomes": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/IncomeCollection"
+                                                "$ref": "#/components/schemas/IncomeResource"
                                             }
                                         }
                                     },
@@ -2925,45 +2925,12 @@
                     },
                     "worker_count": {
                         "type": "integer"
-                    }
-                },
-                "type": "object"
-            },
-            "IncomeCollection": {
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "properties": {
-                                "type": {
-                                    "type": "string"
-                                },
-                                "amount": {
-                                    "type": "number"
-                                },
-                                "hash": {
-                                    "type": "integer"
-                                },
-                                "unit": {
-                                    "type": "string"
-                                },
-                                "status": {
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                },
-                                "income_at": {
-                                    "type": "string",
-                                    "format": "date"
-                                },
-                                "payout_at": {
-                                    "type": "string",
-                                    "format": "date"
-                                }
-                            },
-                            "type": "object"
-                        }
+                    },
+                    "day_at": {
+                        "type": "string"
+                    },
+                    "hour_at": {
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -2983,6 +2950,9 @@
                         "type": "string"
                     },
                     "status": {
+                        "type": "string"
+                    },
+                    "trans_status": {
                         "type": "string"
                     },
                     "message": {
@@ -3332,14 +3302,19 @@
                         "type": "decimal"
                     },
                     "hash": {
-                        "type": "number",
-                        "format": "float"
+                        "type": "integer"
                     },
                     "unit": {
                         "type": "string"
                     },
                     "worker_id": {
                         "type": "integer"
+                    },
+                    "day_at": {
+                        "type": "string"
+                    },
+                    "hour_at": {
+                        "type": "string"
                     }
                 },
                 "type": "object"
