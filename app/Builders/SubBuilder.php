@@ -21,17 +21,23 @@ class SubBuilder extends BaseBuilder
 
     public function hasWorkerHashRate(): Builder
     {
-        return $this->whereHas('workers', fn (Builder $query) => $query
-            ->where('hash_per_day', '>', 0)
+        return $this->whereHas('workers',
+            fn (Builder $query) => $query->where('hash_per_day', '>', 0)
         );
     }
 
     public function readyToPayout(): Builder
     {
-        return $this
-            ->with('wallets')
-            ->has('wallets')
-            ->where('pending_amount', '>=', config('api.wallet.min_withdrawal'));
+        return $this->whereHas('wallets', function (Builder $query) {
+            $query->where('wallet_updated_at', '<=', now()->subHours(48))
+                ->orWhere(static function (Builder $subQuery) {
+                    $subQuery->whereNull('wallet_updated_at')
+                        ->where('created_at', '<=', now()->subHours(48));
+                });
+        })->where('pending_amount',
+            '>=',
+            config('api.wallet.min_withdrawal')
+        );
     }
 
     public function getActive(Collection $userIds): Builder

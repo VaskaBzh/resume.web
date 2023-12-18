@@ -1,7 +1,5 @@
 <template>
-    <tr
-        class="table__row"
-    >
+    <tr class="table__row">
         <row-column
             v-for="(column, i) in service.filteredColumns"
             :value="column"
@@ -16,9 +14,9 @@ import { RowService } from "@/modules/table/services/RowService";
 import { mapGetters } from "vuex";
 
 export default {
-    name: "table-row",
+    name: "TableRow",
     components: {
-        RowColumn
+        RowColumn,
     },
     props: {
         columns: Array,
@@ -30,7 +28,7 @@ export default {
     },
     data() {
         return {
-             service: new RowService(),
+            service: new RowService(),
         };
     },
     watch: {
@@ -43,10 +41,8 @@ export default {
     },
     mounted() {
         this.service.rowProcess(this.columns, this.titles);
-    }
+    },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

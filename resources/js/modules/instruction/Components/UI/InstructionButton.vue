@@ -26,7 +26,7 @@ export default {
     },
     props: {
         hint: String,
-    }
+    },
 }
 </script>
 
@@ -35,18 +35,15 @@ export default {
     filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.10));
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    background: var(--background-tooltip, rgba(44, 47, 52, 0.90));
-    position: fixed;
+    background: var(--buttons-fourth-fill-border-default);
     width: 48px;
     height: 48px;
-    right: 32px;
-    bottom: 16px;
     display: flex;
     border-radius: 50%;
     cursor: pointer;
 }
 
-@media (max-width: 1279.98px) {
+@media (max-width: 768px) {
     .button {
         display: none;
     }

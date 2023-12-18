@@ -6,62 +6,53 @@ namespace App\Services\Internal;
 
 use App\Actions\Finance\Create;
 use App\Actions\Income\Create as IncomeCreate;
+use App\Actions\Income\UpdateStatus;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
 use App\Dto\Income\IncomeCreateData;
+use App\Dto\Income\UpdateStatusData;
 use App\Dto\Sub\SubUpsertData;
-use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
-use App\Exceptions\IncomeCreatingException;
 use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
-use Illuminate\Support\Facades\Log;
 
 final class IncomeService
 {
     /**
-     * Global mining stats (net difficulty, reward block, etc)
-     */
-    private MinerStat $stat;
-
-    /**
-     * Local sub-account
-     */
-    private Sub $sub;
-
-    /**
-     * Referrer sub-account
-     */
-    private ?Sub $referrerSub;
-
-    /**
-     * Referral percent
-     */
-    private float $referralPercent;
-
-    /**
-     * Referral discount
-     */
-    private float $referralDiscount;
-
-    /**
-     * Pure sub-account coin earning
-     */
-    private float $dailyEarn;
-
-    /**
-     * AllBtc commission
-     */
-    private float $fee;
-
-    /**
-     * Income parameters.
+     * @var array{
+     *     mining: array{
+     *         dailyAmount: float,
+     *         pendingAmount: float,
+     *         totalAmount: float,
+     *         status: string,
+     *         message?: string
+     *     },
+     *     referral: array{
+     *         dailyAmount: float,
+     *         pendingAmount: float,
+     *         totalAmount: float,
+     *         status: string,
+     *         message?: string,
+     *     },
+     *     hash: float|null,
+     *     diff: float|null
+     * } $params
      *
-     * @var array<string, string|float[]>
+     * Params:
+     * 'mining': Common mining income params.
+     *   'dailyAmount': Daily earn after deducting the commission of allbtc and remote pool
+     *   'pendingAmount': Sub-account amount until withdrawal limit
+     *   'totalAmount': Sub-account total amount for all time
+     * 'referral': Referral income params.
+     *   'dailyAmount': Referrer profit from this referral
+     *   'pendingAmount': Referrer amount until withdrawal limit
+     *   'totalAmount': Referrer total amount
+     * 'hash': Sub-account hash rate
+     * 'diff': Current network difficulty
      */
     private array $params = [
         'mining' => [],
@@ -71,28 +62,48 @@ final class IncomeService
     ];
 
     /**
-     * Init service
-     * Set sub-account
-     *
-     * @throws IncomeCreatingException
+     * @param  MinerStat  $stat Global mining stats (net difficulty, reward block, etc)
+     * @param  Sub  $sub Local sub-account
+     * @param  Sub|null  $referrerSub Referrer sub-account
+     * @param  float  $referralPercent Referral percent
+     * @param  float  $dailyEarn Pure sub-account coin earning
+     * @param  float  $fee AllBtc commission
      */
-    public function init(Sub $sub, ?Sub $referrerSub): IncomeService
-    {
-        $this->stat = MinerStat::first();
-        $this->sub = $sub;
-        $this->referrerSub = $referrerSub;
-        $this->referralPercent = (float) $sub->user->referral_percent ?? $referrerSub->user->referral_percent;
-        $this->referralDiscount = (float) $sub->user->referral_discount;
+    private function __construct(
+        private readonly MinerStat $stat,
+        private readonly Sub $sub,
+        private readonly ?Sub $referrerSub,
+        private readonly float $referralPercent,
+        private readonly float $dailyEarn,
+        private readonly int $hashRate,
+        private readonly float $fee,
+    ) {
+    }
 
-        if (! $this->setHashRate()) {
-            throw new IncomeCreatingException(sprintf('Sub-account %s hasn\'t a hash rate!', $sub->sub));
-        }
+    /**
+     * Init service
+     */
+    public static function init(
+        MinerStat $stat,
+        Sub $sub,
+        ?Sub $referrerSub
+    ): IncomeService {
+        $service = new self(
+            stat: $stat,
+            sub: $sub,
+            referrerSub: $referrerSub,
+            referralPercent: (float) $sub->user->referral_percent ?? $referrerSub->user->referral_percent,
+            dailyEarn: Helper::calculateEarn(
+                stats: $stat,
+                hashRate: $subAccountHashRate = $sub->hash_rate,
+            ),
+            hashRate: $subAccountHashRate,
+            fee: $sub->allbtc_fee - (float) $sub->user->referral_discount
+        );
 
-        $this->setParams();
+        $service->setParams();
 
-        Log::channel('commands.incomes')->info('INIT UPDATE INCOME PROCESS '.$sub->sub);
-
-        return $this;
+        return $service;
     }
 
     /**
@@ -101,9 +112,6 @@ final class IncomeService
     private function setParams(): void
     {
         $this
-            ->setFee()
-            ->setNetworkDifficulty()
-            ->setDailyEarn()
             ->setDailyAmount()
             ->setPendingAmount($this->sub, Type::MINING)
             ->setTotalAmount($this->sub, Type::MINING)
@@ -119,54 +127,13 @@ final class IncomeService
     }
 
     /**
-     * Set allbtc fee, decrease them if referrer exists
-     */
-    private function setFee(): IncomeService
-    {
-        $this->fee = $this->sub->allbtc_fee - $this->referralDiscount;
-
-        return $this;
-    }
-
-    /**
-     * Set total hash rate
-     */
-    private function setHashRate(): bool
-    {
-        $this->params['hash'] = $this->sub->hash_rate;
-
-        return $this->params['hash'] > 0;
-    }
-
-    private function setNetworkDifficulty(): IncomeService
-    {
-        $this->params['diff'] = $this->stat->network_difficulty;
-
-        return $this;
-    }
-
-    /**
-     * Set pure mining daily earn
-     */
-    private function setDailyEarn(): IncomeService
-    {
-        $this->dailyEarn = Helper::calculateEarn(
-            stats: $this->stat,
-            hashRate: $this->params['hash'],
-            fee: 0
-        );
-
-        return $this;
-    }
-
-    /**
      * Set the daily earn after deducting the commission of allbtc and remote pool
      */
     private function setDailyAmount(): IncomeService
     {
         $this->params[Type::MINING->value]['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
-            hashRate: $this->params['hash'],
+            hashRate: $this->hashRate,
             fee: config('api.btc.fee') + $this->fee
         );
 
@@ -178,7 +145,8 @@ final class IncomeService
      */
     public function setPendingAmount(Sub $sub, Type $incomeType): IncomeService
     {
-        $this->params[$incomeType->value]['pendingAmount'] = (float) $sub->pending_amount + $this->params[$incomeType->value]['dailyAmount'];
+        $this->params[$incomeType->value]['pendingAmount'] = $this->params[$incomeType->value]['dailyAmount'] +
+            (float) $sub->pending_amount;
 
         return $this;
     }
@@ -188,17 +156,19 @@ final class IncomeService
      */
     public function setTotalAmount(Sub $sub, Type $incomeType): IncomeService
     {
-        $this->params[$incomeType->value]['totalAmount'] = $this->params[$incomeType->value]['dailyAmount'] + $sub->total_amount;
+        $this->params[$incomeType->value]['totalAmount'] = $this->params[$incomeType->value]['dailyAmount'] +
+            $sub->total_amount;
 
         return $this;
     }
 
     /**
-     * Set referrer profit if exits
+     * Set referrer profit
      */
     public function setReferrerProfit(): IncomeService
     {
-        $this->params[Type::REFERRAL->value]['dailyAmount'] = $this->dailyEarn * ($this->referralPercent / 100);
+        $this->params[Type::REFERRAL->value]['dailyAmount'] = $this->dailyEarn *
+            ($this->referralPercent / 100);
 
         return $this;
     }
@@ -219,18 +189,26 @@ final class IncomeService
     public function setInfo(
         Sub $sub,
         Type $incomeType
-    ): IncomeService {
-        if ($this->isReadyToPayOut($sub, $incomeType)) {
+    ): void {
+        if ($sub->wallets->isEmpty()) {
+            $this->params[$incomeType->value]['status'] = Status::NO_WALLET;
 
-            $this->params[$incomeType->value]['message'] = Message::READY_TO_PAYOUT;
-            $this->params[$incomeType->value]['status'] = Status::READY_TO_PAYOUT;
-        } else {
-
-            $this->params[$incomeType->value]['message'] = Message::LESS_MIN_WITHDRAWAL;
-            $this->params[$incomeType->value]['status'] = Status::PENDING;
+            return;
         }
 
-        return $this;
+        if (! $sub->wallets->first()->isUnlocked()) {
+            $this->params[$incomeType->value]['status'] = Status::ON_VERIFY;
+
+            return;
+        }
+
+        if (! $this->isReadyToPayOut($sub, $incomeType)) {
+            $this->params[$incomeType->value]['status'] = Status::PENDING;
+
+            return;
+        }
+
+        $this->params[$incomeType->value]['status'] = Status::READY_TO_PAYOUT;
     }
 
     /**
@@ -246,11 +224,15 @@ final class IncomeService
                 'type' => $incomeType,
                 'referral_id' => $incomeType->value === 'referral' ? $this->sub->user->id : null,
                 'status' => $this->params[$incomeType->value]['status'],
-                'message' => $this->params[$incomeType->value]['message'],
-                'hash' => (float) HashRateConverter::fromPure($this->params['hash'])->value,
-                'diff' => $this->params['diff'],
+                'hash' => HashRateConverter::fromPure($this->hashRate),
+                'diff' => $this->stat->network_difficulty,
             ])
         );
+    }
+
+    public static function updateIncomes(UpdateStatusData $data): void
+    {
+        UpdateStatus::execute(updateStatusData: $data);
     }
 
     /**

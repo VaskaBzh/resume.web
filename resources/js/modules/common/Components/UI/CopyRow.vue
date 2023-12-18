@@ -1,26 +1,14 @@
 <template>
-    <div
-        class="copy"
-        :class="{ active: active }"
-        @click="this.copyLink"
-    >
-        <span class="copy_label">{{ this.copyObject.title }}:</span>
-        <span class="copy_link">{{ this.copyObject.link }}</span>
+    <div class="copy" :class="{ active: active }" @click="copyLink">
+        <span class="copy_label">{{ copyObject.title }}:</span>
+        <span class="copy_link">{{ copyObject.link }}</span>
         <transition name="copy">
-            <copy-icon
-                class="copy_icon"
-                v-show="!active"
-            />
+            <copy-icon v-show="!active" class="copy_icon" />
         </transition>
         <transition name="tick">
-            <tick-icon
-                class="copy_tick"
-                v-show="active"
-            />
+            <tick-icon v-show="active" class="copy_tick" />
         </transition>
-        <slot
-            name="instruction"
-        />
+        <slot name="instruction" />
     </div>
 </template>
 
@@ -29,13 +17,13 @@ import CopyIcon from "@/modules/common/icons/CopyIcon.vue";
 import TickIcon from "@/modules/common/icons/TickIcon.vue";
 
 export default {
-    name: "copy-row",
-    props: {
-        copyObject: Object,
-    },
+    name: "CopyRow",
     components: {
         CopyIcon,
         TickIcon,
+    },
+    props: {
+        copyObject: Object,
     },
     data() {
         return {
@@ -84,12 +72,12 @@ export default {
     min-height: 56px;
     padding: 4px 16px;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island-inner-3, #F8FAFD);
+    background: var(--background-island-inner-3, #f8fafd);
     cursor: pointer;
     &:hover {
         .copy {
             &_icon {
-                stroke: #2E90FAFF;
+                stroke: #2e90faff;
             }
         }
     }
@@ -115,14 +103,14 @@ export default {
         transition: all 0.3s ease 0s;
     }
     &_label {
-        color: var(--text-teritary-night, #6F7682);
+        color: var(--text-teritary-night, #6f7682);
         font-family: NunitoSans, serif;
         font-size: 12px;
         font-weight: 400;
         line-height: 16px;
     }
     &_link {
-        color: var(--text-secondary-night, #C5C8CD);
+        color: var(--text-secondary-night, #c5c8cd);
         font-family: NunitoSans, serif;
         font-size: 16px;
         font-style: normal;

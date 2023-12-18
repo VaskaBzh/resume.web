@@ -1,13 +1,13 @@
 export const StatisticMessage = {
     en: {
         no_info: {
-            text: "For statistics to appear you need to connect workers",
+            text: "Connect your devices and the actual statistics will be displayed here",
             button: "Connect",
         },
     },
     ru: {
         no_info: {
-            text: "Чтобы появилась статистика, необходимо подключить воркеры",
+            text: "Подключите свои устройства, и здесь отобразится актуальная статистика",
             button: "Подключить",
         },
     },

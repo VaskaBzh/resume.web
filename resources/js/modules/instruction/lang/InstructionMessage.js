@@ -3,9 +3,9 @@ export const InstructionMessage = {
         button_titles: {
             statistic: "Get acquainted with 'Statistics'",
             connecting: "Get acquainted with 'Connection'",
-            incomes: "Get acquainted with 'Incomes'",
+            income: "Get acquainted with 'Incomes'",
             settings: "Get acquainted with 'Settings'",
-            wallets: "Get acquainted with 'Wallets'",
+            wallets: "Get acquainted with 'Wallet'",
             watchers: "Get acquainted with 'Watchers'",
             workers: "Get acquainted with 'Workers'",
         },
@@ -83,10 +83,7 @@ export const InstructionMessage = {
                 `For the worker name, use the template Paverl120TH.worker_name, where “worker_name” is your worker's name.`,
             ],
             wallets: [
-                `Autopayout occurs when the amount of accruals exceeds the minimum payout threshold: /
-                0.005 /
-                0.05 /
-                0.5 //
+                `Autopayout occurs when the amount of accruals exceeds the minimum payout threshold: 0.005 //
 
                 With autopayout, you will receive all accruals to the wallet without any commission.`,
                 `You can add one wallet for autopayout. The wallet can be changed (address and label). //
@@ -110,17 +107,16 @@ export const InstructionMessage = {
                 To change your password, click the "Change" button and follow the instructions.`,
             ],
         },
-
     },
     ru: {
         button_titles: {
-            statistic: "Знакомсто со «Статистикой»",
-            connecting: "Знакомсто с «Подключением»",
-            incomes: "Знакомсто с «Доходами»",
-            settings: "Знакомсто с «Настройками",
-            wallets: "Знакомсто с «Кошельками»",
-            watchers: "Знакомсто с «Наблюдателями»",
-            workers: "Знакомсто с «Воркерами»",
+            statistic: "Знакомство со «Статистикой»",
+            connecting: "Знакомство с «Подключением»",
+            income: "Знакомство с «Доходами»",
+            settings: "Знакомство с «Настройками",
+            wallets: "Знакомство с «Кошельком»",
+            watchers: "Знакомство с «Наблюдателями»",
+            workers: "Знакомство с «Воркерами»",
         },
         step: "Шаг",
         titles: {
@@ -196,10 +192,7 @@ export const InstructionMessage = {
                 `Для имени воркера используйте шаблон Paverl120TH.worker_name, где “worker_name” ваше название воркера.`,
             ],
             wallets: [
-                `Автовыплата происходит когда сумма начислений превысит минимальный порог для выплаты: /
-                0.005 /
-                0.05 /
-                0.5 //
+                `Автовыплата происходит когда сумма начислений превысит минимальный порог для выплаты: 0.005 //
 
                 При автовыплате вы получите все начисления на кошелек без взымания комиссии.`,
                 `Вы можете добавить один кошелек для автовыплат. Кошелек можно изменять (адрес и метку). //

@@ -20,7 +20,7 @@
                 />
                 <div class="buttons-connect-container">
                     <a
-                        href="https://t.me/allbtc_support"
+                        href="https://t.me/allbtc_connect"
                         target="_blank"
                         class="connect-order"
                         type="submit"
@@ -30,7 +30,7 @@
                     <p class="or-text">{{ $t("connect.form.text") }}</p>
                     <div class="or-container">
                         <a
-                            href="https://t.me/allbtc_support"
+                            href="https://t.me/allbtc_connect"
                             target="_blank"
                             class="or-button"
                         >

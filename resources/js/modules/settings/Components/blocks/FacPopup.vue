@@ -8,7 +8,8 @@
     >
         <div class="fac__head">
             <main-title>{{ $t("fac_popup.title") }}</main-title>
-            <main-description>{{ $t("popup.text[4]") }}</main-description>
+            <main-description v-if="hasCode">{{ $t("popup.text[7]") }}</main-description>
+            <main-description v-if="!hasCode">{{ $t("popup.text[4]") }}</main-description>
         </div>
         <div v-if="!hasCode" class="fac__content">
             <div class="fac_qrcode" v-html="qrCode"></div>
@@ -18,6 +19,7 @@
                 :code="code"
                 :label="$t('fac_popup.label[0]')"
             />
+            <warning-block :text="$t('fac_popup.warning.title')" class="fac_warning"/>
             <main-button
                 class="button-blue fac_button button-full"
                 @click.prevent="hasCode = true"
@@ -62,6 +64,7 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
+import WarningBlock from "@/modules/common/Components/UI/WarningBlock.vue";
 
 export default {
     name: "FacPopup",
@@ -97,6 +100,7 @@ export default {
         ...mapGetters(["errorsExpired"]),
     },
     components: {
+        WarningBlock,
         MainDescription,
         MainPopup,
         MainTitle,
@@ -116,6 +120,10 @@ export default {
             }
         },
     },
+
+    mounted() {
+        console.log(this.wait)
+    }
 };
 </script>
 
@@ -132,17 +140,23 @@ export default {
     margin: 0 auto 40px;
 }
 
-.fac_code,
-.fac_input {
+.fac_code {
+    margin-bottom: 12px;
+}
+
+.fac_warning {
     margin-bottom: 80px;
 }
 
 .fac_input {
+    margin-bottom: 80px;
+    height: 50px;
     background: var(--background-modal-input, #2c2f34);
 }
 
 .fac_button {
     min-height: 56px;
+    font-weight: 600;
 }
 
 .fac__buttons {

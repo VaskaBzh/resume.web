@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Services\External\MinerStatService;
+use App\Services\Internal\MinerStatService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -14,11 +14,10 @@ class UpdateMinerStatCommand extends Command
 
     protected $description = 'Command description';
 
-    public function handle(
-        MinerStatService $minerStatService,
-    ) {
+    public function handle(): void
+    {
         try {
-            $stats = $minerStatService->store();
+            $stats = MinerStatService::store();
 
             if (! is_null($stats)) {
                 Log::channel('commands.blockchain')->info('MINER STATS COMMAND', [
@@ -26,12 +25,12 @@ class UpdateMinerStatCommand extends Command
                 ]);
 
                 $this->info('Stats updated');
-
-                return 0;
             }
         } catch (\Exception $e) {
             report($e);
             $this->error('Stats not imported, check logs');
         }
+
+        $this->call('pool:stat');
     }
 }

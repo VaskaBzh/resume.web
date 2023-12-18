@@ -18,8 +18,8 @@ class MinerStat extends Model
         'next_difficulty',
         'change_difficulty',
         'reward_block',
+        'fpps_rate',
         'price_USD',
         'time_remain',
-        'fpps_rate',
     ];
 }

@@ -33,7 +33,7 @@ export default {
         TooltipCard,
     },
     props: {
-        BTC: {
+        bitcoin: {
             type: Number,
             default: 0,
         },
@@ -65,7 +65,7 @@ export default {
     methods: {
         async updateConversion() {
             this.converter = new Converter(
-                this.BTC,
+                this.bitcoin,
                 this.btcInfo?.btc?.price ?? 0
             );
             await this.converter.convert();
@@ -77,14 +77,12 @@ export default {
 .is-web {
     display: inline-flex;
     gap: 4px;
+    flex-flow: column nowrap;
 }
 .is-mobile {
     display: none !important;
 }
 @media (max-width: 500px) {
-    .is-web {
-        display: none;
-    }
     .is-mobile {
         display: inline-block;
     }
@@ -160,17 +158,24 @@ export default {
 
     &__value {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: space-between;
         flex-wrap: wrap;
         gap: 5px;
         @media (max-width: 479.98px) {
+            align-items: flex-start;
             gap: 0 5px;
         }
+
+        @media (max-width: 389.99px) {
+            flex-flow: column nowrap;
+        }
+
         span {
             white-space: nowrap;
             display: inline-flex;
             gap: 5px;
+            align-self: flex-end;
             @media (max-width: 479.98px) {
                 gap: 0 5px;
                 font-weight: 500;

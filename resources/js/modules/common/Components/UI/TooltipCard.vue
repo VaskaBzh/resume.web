@@ -1,5 +1,5 @@
 <template>
-    <button class="tooltip_elem" v-tooltip="text">
+    <button class="tooltip_elem" v-tooltip="{ content: text }">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon"

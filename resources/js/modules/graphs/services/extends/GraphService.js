@@ -85,7 +85,6 @@ export class GraphService {
 
     setTooltipHtml(newTooltipHtml) {
         this.tooltipHtml = newTooltipHtml;
-
         return this;
     }
 
@@ -168,13 +167,6 @@ export class GraphService {
         return this;
     }
 
-    emptyValidationRules() {
-        return d3.max(this.graphData.values) !== 0
-            ? d3.max(this.graphData.values) +
-                  d3.max(this.graphData.values) * 0.2
-            : 120;
-    }
-
     setY() {
         this.y = d3
             .scaleLinear()
@@ -182,6 +174,13 @@ export class GraphService {
             .range([this.containerHeight, 0]);
 
         return this;
+    }
+
+    emptyValidationRules() {
+        return d3.max(this.graphData.values) !== 0
+            ? d3.max(this.graphData.values) +
+                  d3.max(this.graphData.values) * 0.2
+            : 120;
     }
 
     setAreaGenerator() {
@@ -335,8 +334,7 @@ export class GraphService {
             unit = "P";
         }
 
-        const splitValue = String(value).split(".");
-        const validatedValue = value.toFixed(splitValue[0].length > 2 ? 0 : 2);
+        const validatedValue = value.toFixed();
 
         return { val: validatedValue, unit: unit };
     }
@@ -349,7 +347,7 @@ export class GraphService {
             ]
         );
 
-        return val.val + " " + val.unit + "H";
+        return val.val;
     }
 
     formatTime(date) {
@@ -492,6 +490,9 @@ export class GraphService {
 
     setSvgEvents() {
         this.svg.on("mousemove", (event) => {
+            if(event.target.innerHTML.includes('H')) {
+                Array.from(event.currentTarget.children).forEach(item => item.style.pointerEvents = 'none')
+            }
             const mouseX = d3.pointer(event)[0];
             const position = this.getClosestPoint(mouseX);
             this.updateLineAndDot(event, position);

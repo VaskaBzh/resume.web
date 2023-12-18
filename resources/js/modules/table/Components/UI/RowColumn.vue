@@ -1,8 +1,12 @@
 <template>
     <td class="column">
-        <span class="column_title" v-show="!!title">{{ title }}</span>
-        <span class="column_value" v-show="value !== null" v-html="renderedValue"></span>
-        <span class="column_icon" v-show="!!$slots.icon">
+        <span v-show="!!title" class="column_title">{{ title }}</span>
+        <span
+            v-show="value !== null"
+            class="column_value"
+            v-html="renderedValue"
+        ></span>
+        <span v-show="!!$slots.icon" class="column_icon">
             <slot name="icon" />
         </span>
     </td>
@@ -11,9 +15,10 @@
 <script>
 import { SubsCustomFunctions } from "@/modules/table/functionsMap/SubsCustomFunctions";
 import { ColumnService } from "@/modules/table/services/ColumnService";
+import { IncomeTableMessages } from "@/modules/income/lang/IncomeTableMessages";
 
 export default {
-    name: "row-column",
+    name: "RowColumn",
     props: {
         value: {
             type: String,
@@ -21,14 +26,10 @@ export default {
         },
         title: String,
         columnKey: String,
+        className: String,
     },
-    watch: {
-        value() {
-            this.initRenderFunctions();
-        },
-        "service.renderedValue"(newRenderedValue) {
-            this.renderedValue = newRenderedValue;
-        }
+    i18n: {
+        sharedMessages: IncomeTableMessages,
     },
     data() {
         return {
@@ -36,23 +37,32 @@ export default {
             service: new ColumnService(),
         };
     },
-    methods: {
-        initRenderFunctions() {
-            const functionName = SubsCustomFunctions[this.columnKey];
-            if (functionName) {
-                this.service[functionName](this.value, null);
-            } else {
-                this.renderedValue = this.value;
-            }
-        }
+    watch: {
+        value() {
+            this.initRenderFunctions();
+        },
+        "service.renderedValue"(newRenderedValue) {
+            this.renderedValue = newRenderedValue;
+        },
     },
     mounted() {
         this.initRenderFunctions();
-    }
-}
+    },
+    methods: {
+        initRenderFunctions() {
+            const functionName = SubsCustomFunctions[this.columnKey];
+
+            if (functionName) {
+                this.service[functionName](this.value, this.className);
+            } else {
+                this.renderedValue = this.value;
+            }
+        },
+    },
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .column {
     height: 48px;
     background: var(--background-island, #212327);
@@ -61,6 +71,7 @@ export default {
     border-style: solid;
     border-color: transparent;
     transition: all 0.5s ease 0s;
+    white-space: nowrap;
 }
 .column:first-child {
     border-radius: 8px 0 0 8px;
@@ -75,11 +86,13 @@ export default {
 }
 @media (max-width: $mobile) {
     .column {
-        display: flex;
-        flex-direction: column;
-    }
-    .column_title {
-        display: inline-flex;
+        &:not(.column-income) {
+            display: flex;
+            flex-direction: column;
+            .column_title {
+                display: inline-flex;
+            }
+        }
     }
 }
 .active .column_value,
@@ -87,37 +100,28 @@ export default {
 .unstable .column_value,
 .ACTIVE .column_value,
 .INACTIVE .column_value,
-.UNSTABLE .column_value,
-.error .column_value,
-.complete .column_value,
-.completed .column_value,
-.pending .column_value,
-.rejected .column_value {
+.UNSTABLE .column_value {
     height: 24px;
     border-radius: 8px;
     padding: 8px;
 }
 .active .column_value,
-.ACTIVE .column_value,
-.complete .column_value,
-.completed .column_value {
-    color: var(--status-succesfull, #1FB96C);
-    background: var(--background-success, #21322E);
+.ACTIVE .column_value {
+    color: var(--status-succesfull, #1fb96c);
+    background: var(--background-success, #21322e);
 }
 .unstable .column_value,
-.UNSTABLE .column_value,
-.pending .column_value {
-    color: var(--status-waiting, #FFB868);
-    background: var(--background-waiting, #FFF8F0);
+.UNSTABLE .column_value {
+    color: var(--status-waiting, #ffb868);
+    background: var(--background-waiting, #fff8f0);
 }
 .inactive .column_value,
-.INACTIVE .column_value,
-.rejected .column_value {
-    color: var(--status-failed, #F1404A);
-    background: var(--background-failed, #FEECED);
+.INACTIVE .column_value {
+    color: var(--status-failed, #f1404a);
+    background: var(--background-failed, #feeced);
 }
 .column_title {
-    color: var(--text-table-title, #98A2B3);
+    color: var(--text-table-title, #98a2b3);
     font-family: NunitoSans, serif;
     font-size: 12px;
     font-weight: 600;

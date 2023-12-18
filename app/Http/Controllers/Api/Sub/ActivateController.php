@@ -16,6 +16,7 @@ class ActivateController extends Controller
     #[
         OA\Put(
             path: '/subs/sub/activate/{sub}',
+            description: 'Referrer role required for this action',
             summary: 'Mark sub as active',
             security: [['bearer' => []]],
             tags: ['Subaccount'],
@@ -65,6 +66,7 @@ class ActivateController extends Controller
     public function __invoke(Sub $sub): JsonResponse
     {
         $this->authorize('viewOrChange', $sub);
+        $this->authorize('activate', $sub);
 
         Activate::execute(sub: $sub);
 

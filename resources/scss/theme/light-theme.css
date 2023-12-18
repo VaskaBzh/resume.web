@@ -1,7 +1,7 @@
 :root {
     /* background */
     --background-island: #FFF;
-    --background-globe : #F8FAFD;
+    --background-globe : #F6F6F6;
     --background-modal: #F8FAFD;
     --background-modal-input: #FFFFFF;
     --background-datepicker: #FFFFFF;
@@ -19,11 +19,15 @@
     --background-accient: #2E90FA;
     --background-death: #2C2F340D;
 
+    /* shadows */
+
+    --main-page-shadow: rgba(69, 72, 77, 0.10);
+
     /* text */
     --text-primary: #1D2939;
-    --text-primary-80: #1D2939;
+    --text-primary-80: rgba(29, 41, 57, 0.80);
     --text-secondary: #475467;
-    --text-teritary: #6F7682;
+    --text-teritary: #98A2B3;
     --text-fourth: #D0D5DD;
     --text-logo: #000034;
     --text-table-title: #98A2B3;
@@ -55,6 +59,7 @@
 
     /* svg */
     --svg-fill: #D0D5DD;
+    --svg-fill-hover: #98A2B3;
     --icons-accent: #53B1FD4D;
     --icons-primary: #98A2B3;
     --icons-secondary: #D0D5DD;

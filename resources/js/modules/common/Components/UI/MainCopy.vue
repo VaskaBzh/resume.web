@@ -139,7 +139,7 @@ export default {
         transition: all 0.3s ease;
     }
     &_icon {
-        stroke: #aeaeb2;
+        stroke: var(--icons-secondary);
         width: 24px;
         height: 24px;
         position: absolute;

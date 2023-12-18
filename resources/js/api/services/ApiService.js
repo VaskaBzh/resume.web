@@ -53,7 +53,7 @@ export class ApiService {
     setLocaleHeaders() {
         this.instance.interceptors.request.use((config) => {
             const locale = localStorage.getItem("location");
-            if (locale) config.headers["Accept-Language"] = locale;
+            if (locale) config.headers["Accept-Language"] = `${locale};q=1.0`;
 
             return config;
         });

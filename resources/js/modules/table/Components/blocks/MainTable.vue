@@ -12,7 +12,7 @@
                 :titles="titles"
                 :key="i"
                 :viewportWidth="viewportWidth"
-                :class="row.class ?? null"
+                :class="row.class ?? ''"
                 :data-popup="row.data"
                 :removePercent="removePercent"
             />

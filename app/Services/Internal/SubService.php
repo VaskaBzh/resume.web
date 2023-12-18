@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Actions\Hashes\DeleteOldHashrates;
+use App\Actions\Hashes\Create as CreateNew;
 use App\Actions\Sub\Create;
+use App\Actions\Sub\ResetPending;
 use App\Dto\Sub\SubsOverallData;
 use App\Dto\Sub\SubUpsertData;
 use App\Dto\Sub\SubViewData;
-use App\Models\Hash;
 use App\Models\Sub;
 use App\Models\User;
-use App\Services\External\Contracts\ClientContract;
-use App\Services\External\Contracts\TransformContract;
+use App\Services\External\BtcCom\ClientContract;
+use App\Services\External\BtcCom\TransformContract;
 use Illuminate\Support\Collection;
 
 final readonly class SubService
@@ -99,25 +99,24 @@ final readonly class SubService
     public function createHash(): void
     {
         $remoteSubList = $this->client->getSubList();
-
         $localSubList = self::withLocal(User::pluck('id'), $remoteSubList->pluck('gid'));
 
         $transformed = $this->transformCollection($localSubList, $remoteSubList);
-
-        $transformed->each(function (SubViewData $subData) {
-
-            // TODO: CreateNewAndDeleteOld action
-            DeleteOldHashrates::execute(
+        $transformed->each(static function (SubViewData $subData) {
+            CreateNew::execute(
                 groupId: $subData->groupId,
-                date: now()->subMonths(2)->toDateTimeString()
+                hashRate: $subData->hashPerMinPure,
+                unit: $subData->hashPerMinUnit,
+                workerCount: $subData->activeWorkersCount
             );
-
-            Hash::create([
-                'group_id' => $subData->groupId,
-                'hash' => $subData->hashPerMinPure,
-                'unit' => $subData->hashPerMinUnit,
-                'worker_count' => $subData->activeWorkersCount,
-            ]);
         });
+    }
+
+    /**
+     * Set pending amount to 0 if balance is withdraw
+     */
+    public static function resetPending(Sub $sub): void
+    {
+        ResetPending::execute(sub: $sub);
     }
 }

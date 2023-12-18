@@ -60,6 +60,7 @@ export default {
     },
     mounted() {
         this.initProgress();
+
     },
 }
 </script>
@@ -93,7 +94,7 @@ export default {
     align-items: center;
 }
 .progress_value {
-    color: var(--text-primary);
+    color: var(--text-primary-80);
     font-family: Unbounded, serif;
     font-size: 14px;
     font-weight: 400;

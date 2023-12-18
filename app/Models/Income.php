@@ -20,10 +20,12 @@ class Income extends Model
     protected $fillable = [
         'group_id',
         'type',
+        'payout_id',
         'referral_id',
         'daily_amount',
         'diff',
         'hash',
+        'unit',
         'status',
         'message',
     ];
@@ -43,6 +45,11 @@ class Income extends Model
     public function wallet(): BelongsTo
     {
         return $this->belongsTo(Wallet::class);
+    }
+
+    public function payout(): BelongsTo
+    {
+        return $this->belongsTo(Payout::class);
     }
 
     /* end relations */

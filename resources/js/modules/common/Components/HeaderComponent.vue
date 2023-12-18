@@ -90,13 +90,12 @@ export default {
     }
 
     .button-black {
-        width: 200px;
-        height: 50px;
+        padding: 8px 20px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: clamp(18px, 5vw, 14px);
+        font-size: clamp(14px, 2vw, 18px);
         font-style: normal;
         font-weight: 400;
         line-height: 120%;

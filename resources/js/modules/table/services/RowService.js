@@ -35,22 +35,24 @@ export class RowService {
     }
 
     filterColumns() {
-        this.filteredColumns = Object.entries(this.columns).filter(elem => !ColumnBlackListEnum[elem[0]]);
+        this.filteredColumns = Object.entries(this.columns).filter(
+            (elem) => !ColumnBlackListEnum[elem[0]]
+        );
 
         return this;
     }
 
     getGroupId() {
-        this.group_id = Object.entries(this.columns).filter(elem => elem[0] === 'group_id')[0];
+        this.group_id = Object.entries(this.columns).filter(
+            (elem) => elem[0] === "group_id"
+        )[0];
 
         return this;
     }
 
     filterTitles() {
         if (this.viewportWidth <= 767.98) {
-            this.filteredTitles = [
-                ...this.titles,
-            ];
+            this.filteredTitles = [...this.titles];
         }
 
         return this;
@@ -68,11 +70,11 @@ export class RowService {
     getWorkers() {
         const workersObject = ["workers", {}];
 
-        Object.entries(this.columns).forEach(elem => {
+        Object.entries(this.columns).forEach((elem) => {
             if (WorkersKeysEnum[elem[0]]) {
                 workersObject[1][elem[0]] = elem[1];
             }
-        })
+        });
 
         if (Object.entries(workersObject[1]).length === 0) {
             return this;

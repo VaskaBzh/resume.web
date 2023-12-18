@@ -9,7 +9,7 @@
             }"
             @click="$emit('changeStatus', tab.value)"
         >
-            {{ $t(tab.name) }}
+            {{ $t(tab.name) }} ({{tab.count ?? 0}})
         </div>
     </div>
 </template>
@@ -25,7 +25,8 @@ export default {
     },
     i18n: {
         sharedMessages: WorkerMessages,
-    }
+    },
+
 }
 </script>
 
@@ -35,7 +36,12 @@ export default {
     min-height: 40px;
     width: 100%;
     background: transparent;
+    overflow-x: scroll;
 }
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
 .tab {
     height: 100%;
     padding: 4px 12px;
@@ -48,7 +54,7 @@ export default {
     border-radius: 12px;
     background: transparent;
     cursor: pointer;
-	min-width: 48px;
+    text-wrap: nowrap;
 }
 .tab:hover {
     color: var(--text-focus, #2E90FA);

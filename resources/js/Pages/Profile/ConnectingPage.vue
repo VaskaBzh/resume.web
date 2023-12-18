@@ -52,10 +52,12 @@
             />
         </div>
     </div>
-    <instruction-button
-        hint="connecting"
-        @openInstruction="instructionService.setStep().setVisible()"
-    />
+    <teleport to=".header_button-instruction" v-if="isMounted">
+        <instruction-button
+            hint="connecting"
+            @openInstruction="instructionService.setStep().setVisible()"
+        />
+    </teleport>
 </template>
 
 <script>
@@ -86,6 +88,7 @@ export default {
         return {
             viewportWidth: 0,
             instructionService: new InstructionService(),
+            isMounted: false
         };
     },
     async created() {
@@ -117,6 +120,7 @@ export default {
         },
     },
     mounted() {
+        this.isMounted = true
         this.instructionService.setStepsCount(2);
         document.title = this.$t("header.links.connecting");
     },

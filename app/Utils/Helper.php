@@ -51,6 +51,9 @@ class Helper
         return $totalWithFpps - ($totalWithFpps * ($fee / 100));
     }
 
+    /**
+     * Generate total pool hash rate for web-statistic dashboards
+     */
     public static function regenerateHashRate(int $pureHashRate): int
     {
         $numbers = str_split((string) $pureHashRate);

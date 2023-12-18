@@ -44,4 +44,8 @@ export default {
     font-weight: 400;
     line-height: 120%;
 }
+
+.title-faq {
+    font-size: clamp(14px, 2vw, 27px);
+}
 </style>
