@@ -69,7 +69,7 @@ class ListController extends Controller
                                 new OA\Property(
                                     property: 'data',
                                     type: 'array',
-                                    items: new OA\Items(ref: '#/components/schemas/IncomeCollection')
+                                    items: new OA\Items(ref: '#/components/schemas/IncomeResource')
                                 ),
                                 new OA\Property(property: 'first_page_url', type: 'string'),
                                 new OA\Property(property: 'from', type: 'integer'),

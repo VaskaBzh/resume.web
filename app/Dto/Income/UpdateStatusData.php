@@ -15,9 +15,9 @@ final readonly class UpdateStatusData
 {
     public function __construct(
         public Sub $sub,
-        public Payout $payout,
-        public ?Wallet $wallet,
         public Status $status,
+        public ?Payout $payout,
+        public ?Wallet $wallet,
         public ?Message $message,
     ) {
     }
@@ -26,9 +26,9 @@ final readonly class UpdateStatusData
     {
         return new self(
             sub: $data['sub'],
-            payout: $data['payout'],
-            wallet: Arr::get($data, 'wallet'),
             status: $data['status'],
+            payout: Arr::get($data, 'payout'),
+            wallet: Arr::get($data, 'wallet'),
             message: Arr::get($data, 'message'),
         );
     }

@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Console\Commands\Income;
 
 use App\Enums\Income\Type;
-use App\Exceptions\IncomeCreatingException;
 use App\Models\Sub;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class IncomeCommand extends Command
 {
@@ -38,7 +36,7 @@ class IncomeCommand extends Command
                     referrerSub: $referrerActiveSub
                 );
 
-                $income = $service->createIncome($sub, Type::MINING);
+                $service->createIncome($sub, Type::MINING);
                 $service->updateLocalSub($sub, Type::MINING);
                 $service->createFinance();
 
@@ -46,9 +44,6 @@ class IncomeCommand extends Command
                     $service->createIncome($referrerActiveSub, Type::REFERRAL);
                     $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
                 }
-
-                Log::channel('commands.incomes')
-                    ->info(message: 'INCOME CREATE', context: $income->toArray());
             });
 
         if (config('app.production_env')) {
