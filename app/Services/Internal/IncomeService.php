@@ -14,11 +14,11 @@ use App\Dto\Income\UpdateStatusData;
 use App\Dto\Sub\SubUpsertData;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
-use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
+use Illuminate\Support\Facades\Log;
 
 final class IncomeService
 {
@@ -215,11 +215,11 @@ final class IncomeService
      * Create income
      * Create referrer income if exists
      */
-    public function createIncome(Sub $sub, Type $incomeType): Income
+    public function createIncome(Sub $sub, Type $incomeType): void
     {
-        return IncomeCreate::execute(
+        $income = IncomeCreate::execute(
             incomeCreateData: IncomeCreateData::fromRequest([
-                'group_id' => $sub->group_id,
+                'sub' => $sub,
                 'dailyAmount' => $this->params[$incomeType->value]['dailyAmount'],
                 'type' => $incomeType,
                 'referral_id' => $incomeType->value === 'referral' ? $this->sub->user->id : null,
@@ -227,6 +227,11 @@ final class IncomeService
                 'hash' => HashRateConverter::fromPure($this->hashRate),
                 'diff' => $this->stat->network_difficulty,
             ])
+        );
+
+        Log::channel('commands.incomes')->info(
+            message: sprintf('INCOME CREATED. TYPE: %s', $incomeType->value),
+            context: $income?->toArray()
         );
     }
 
