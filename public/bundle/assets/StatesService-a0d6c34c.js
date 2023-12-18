@@ -1,0 +1,1 @@
+class r{constructor(){this.state=!1}setState(t=!0){this.state=t}getState(){return this.state}setTemporaryState(t=!0,e=1e3){const s=this.state;this.state=t,setTimeout(()=>this.state=s,e)}}export{r as S};

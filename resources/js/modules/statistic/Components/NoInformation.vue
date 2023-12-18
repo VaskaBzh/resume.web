@@ -42,7 +42,7 @@ export default {
 }
 .button-blue {
     background: var(--old-primary-500, #2e90fa);
-    color: var(--buttons-primary-text, var(--main-gohan, #fff));
+    color: #FFFFFF;
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
 }
 .button-full {
@@ -60,10 +60,10 @@ export default {
     align-items: center;
 }
 .no-information_text {
-    color: var(--text-teritary, #98a2b3);
+    color: var(--text-teritary);
     text-align: center;
     font-family: NunitoSans, serif;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 24px;
 }

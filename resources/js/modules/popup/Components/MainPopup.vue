@@ -1,6 +1,6 @@
 <template>
-    <div class="popup" :id="id" :class="{ 'popup-show': service.isOpened }">
-<!--        <un-click-view :wait="wait" />-->
+    <div :id="id" class="popup" :class="{ 'popup-show': service.isOpened }">
+        <!--        <un-click-view :wait="wait" />-->
         <div class="popup__wrapper">
             <div class="popup__content-fake">
                 <div class="popup__block-fake">
@@ -8,22 +8,19 @@
                 </div>
             </div>
             <div
-                class="popup__content onboarding_block"
-                :class="[
-                    wait ? 'popup__content_block-loading' : '',
-                    className,
-                ]"
                 ref="popup_block"
+                class="popup__content onboarding_block"
+                :class="[wait ? 'popup__content_block-loading' : '', className]"
             >
-                <div class="popup__block-logo" ref="popup_logo">
-                    <logo-light class="popup_logo" v-show="!isDark" />
-                    <logo-dark class="popup_logo" v-show="isDark" />
+                <div ref="popup_logo" class="popup__block-logo">
+                    <logo-light v-show="!isDark" class="popup_logo" />
+                    <logo-dark v-show="isDark" class="popup_logo" />
                 </div>
                 <!--					v-if="!isDark"-->
                 <!--				<logo-dark-->
                 <!--					v-else-->
                 <!--				/>-->
-                <div class="popup__block" ref="popup_content">
+                <div ref="popup_content" class="popup__block">
                     <button
                         type="button"
                         class="popup_close"
@@ -47,7 +44,7 @@ import { mapGetters } from "vuex";
 import { PopupService } from "@/modules/popup/services/PopupService";
 
 export default {
-    name: "main-popup",
+    name: "MainPopup",
     components: {
         PopupCrossIcon,
         UnClickView,
@@ -59,11 +56,9 @@ export default {
         id: String,
         opened: {
             type: Boolean,
-
         },
         closed: {
             type: Boolean,
-
         },
         makeResize: {
             type: Boolean,
@@ -104,7 +99,6 @@ export default {
         this.service.setPopupBlockHtml(this.$refs.popup_block);
         this.service.setPopupLogoHtml(this.$refs.popup_logo);
         this.service.initFunc();
-
     },
     beforeUnmount() {
         this.service.destroyFunc();
@@ -152,7 +146,7 @@ export default {
     height: 122px;
     transform: translateY(220px);
     transition: all 0.5s ease 0s;
-    padding: 32px;
+    padding: 40px;
     position: relative;
     overflow: hidden;
 }
@@ -178,7 +172,7 @@ export default {
     flex-direction: column;
     position: relative;
     opacity: 0;
-    min-width: 492px;
+    min-width: 480px;
 }
 .popup_close {
     position: absolute;

@@ -39,7 +39,7 @@ export default {
     gap: 50px;
     width: 100%;
     max-width: clamp(328px, 55vw, 860px);
-    height: clamp(370px, 40vw, 680px);
+    height: clamp(418px, 40vw, 680px);
     flex-flow: row nowrap;
     padding-right: 50px;
     margin-bottom: clamp(20px, 10vw, 30px);

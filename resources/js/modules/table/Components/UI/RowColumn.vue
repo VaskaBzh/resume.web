@@ -26,6 +26,7 @@ export default {
         },
         title: String,
         columnKey: String,
+        className: String,
     },
     i18n: {
         sharedMessages: IncomeTableMessages,
@@ -52,7 +53,7 @@ export default {
             const functionName = SubsCustomFunctions[this.columnKey];
 
             if (functionName) {
-                this.service[functionName](this.value, this.$t);
+                this.service[functionName](this.value, this.className);
             } else {
                 this.renderedValue = this.value;
             }

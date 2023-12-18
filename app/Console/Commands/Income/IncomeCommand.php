@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Income;
 
-use App\Dto\Income\UpdateStatusData;
 use App\Enums\Income\Type;
 use App\Exceptions\IncomeCreatingException;
 use App\Models\Sub;
@@ -28,39 +27,35 @@ class IncomeCommand extends Command
             ->each(static function (Sub $sub) {
                 $sub->refresh();
 
-                try {
-                    $referrerActiveSub = $sub->user
-                        ->referrer
-                        ?->activeSub()
-                        ->first();
+                $referrerActiveSub = $sub->user
+                    ->referrer
+                    ?->activeSub()
+                    ->first();
 
-                    $service = IncomeService::init(
-                        stat: app('miner_stat'),
-                        sub: $sub,
-                        referrerSub: $referrerActiveSub
+                $service = IncomeService::init(
+                    stat: app('miner_stat'),
+                    sub: $sub,
+                    referrerSub: $referrerActiveSub
+                );
+
+                $income = $service->createIncome($sub, Type::MINING);
+                $service->updateLocalSub($sub, Type::MINING);
+                $service->createFinance();
+
+                if ($referrerActiveSub) {
+                    $income = $service->createIncome($referrerActiveSub, Type::REFERRAL);
+                    $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
+
+                    Log::channel('commands.incomes')->info(
+                        message: sprintf('INCOME CREATED. TYPE: %s', $income->type),
+                        context: $income->toArray()
                     );
-
-                    $income = $service->createIncome($sub, Type::MINING);
-                    $service->updateLocalSub($sub, Type::MINING);
-                    $service->createFinance();
-
-                    IncomeService::updateIncomes(
-                        data: UpdateStatusData::fromArray([
-                            'sub' => $sub,
-                            'status' => $income->status,
-                        ])
-                    );
-
-                    if ($referrerActiveSub) {
-                        $service->createIncome($referrerActiveSub, Type::REFERRAL);
-                        $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
-                    }
-
-                    Log::channel('incomes')
-                        ->info(message: 'INCOME CREATE', context: $income->toArray());
-                } catch (IncomeCreatingException) {
-                    return;
                 }
+
+                Log::channel('commands.incomes')->info(
+                    message: 'INCOME CREATED',
+                    context: $income->toArray()
+                );
             });
 
         if (config('app.production_env')) {

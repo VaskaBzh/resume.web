@@ -428,7 +428,7 @@ const messages = {
                 workers: "Worker",
                 income: "Earnings",
                 connecting: "Connection",
-                wallets: "Wallets",
+                wallets: "Wallet",
                 watchers: "Watchers links",
                 home: "Home",
                 own_cabinet: "Profile",
@@ -732,7 +732,7 @@ const messages = {
             income: "Earnings",
             connecting: "Connection",
             watchers: "Watcher's links",
-            wallets: "Wallets",
+            wallets: "Wallet",
             referral: "Referral account",
             faq: "FAQ",
             support: "Support",
@@ -770,7 +770,7 @@ const messages = {
                 title: "Hashrate",
                 no_workers_title: "Connect to allbtc pool",
             },
-            graph: ["Monthly income graph", "Mining", "Accrued"],
+            graph: ["Monthly income graph", "Income", "Current balance"],
             info_blocks: {
                 title: "Earnings",
                 title_clear: "Net income",
@@ -788,7 +788,7 @@ const messages = {
                     titles: ["Today", "For month"],
                 },
                 hash: {
-                    titles: ["Current hashrate", "Avg.hashrate / 24"],
+                    titles: ["Current hashrate", "Hashrate / 24"],
                 },
                 hashrate: {
                     title: "Total hash rate",
@@ -848,9 +848,9 @@ const messages = {
                 thead: [
                     "Worker name",
                     "Current hashrate",
-                    "Hashrate/1h",
-                    "Hashrate/24h",
-                    "Failure rate/24h",
+                    "Hashrate / 1h",
+                    "Hashrate / 24h",
+                    "Reject / 24h",
                 ],
                 thead_short: [
                     "Name",
@@ -877,7 +877,7 @@ const messages = {
                 titles: ["Paid", "Unpaid", "Yesterday's income"],
                 card: [
                     "Accrued for all time",
-                    "Accrued",
+                    "Current balance",
                     "Income for the month",
                 ],
             },
@@ -921,7 +921,7 @@ const messages = {
             },
         },
         wallets: {
-            title: ["Setting up auto payout", "Wallets"],
+            title: ["Min. threshold for payment", "Wallet address"],
             no_info: {
                 description:
                     "To enable automatic payouts, add your wallet address",
@@ -947,9 +947,9 @@ const messages = {
                 },
             },
             popups: {
-                note: "After adding a wallet, the address cannot be changed",
                 add: {
-                    title: "Add wallet",
+                    title: "Adding a wallet",
+                    note: "To add a wallet, enter its address",
                     placeholders: {
                         wallet: "Wallet address",
                         name: "Wallet label",
@@ -961,7 +961,8 @@ const messages = {
                     button: "Add",
                 },
                 change: {
-                    title: "Change label",
+                    title: "Changing wallet",
+                    note: "To change a wallet, enter its address",
                     placeholders: {
                         wallet: "Please enter the wallet *",
                         name: "Please enter the name",
@@ -1026,7 +1027,7 @@ const messages = {
             confidence: "Privacy policy",
         },
         preloader: {
-            text: "Nothing was found for your request",
+            text: "There's no record here yet",
         },
     },
     ru: {
@@ -1464,7 +1465,7 @@ const messages = {
                 workers: "Воркеры",
                 income: "Доходы",
                 connecting: "Подключение",
-                wallets: "Кошельки",
+                wallets: "Кошелек",
                 watchers: "Наблюдатели",
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
@@ -1774,7 +1775,7 @@ const messages = {
             income: "Доходы",
             connecting: "Подключение",
             watchers: "Наблюдатели",
-            wallets: "Кошельки",
+            wallets: "Кошелек",
             referral: "Реферальный кабинет",
             settings: "Аккаунт",
             faq: "FAQ",
@@ -1812,7 +1813,7 @@ const messages = {
                 title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
-            graph: ["График дохода за месяц", "Майнинг", "Начислено"],
+            graph: ["График дохода за месяц", "Доход", "Текущий баланс"],
             info_blocks: {
                 title: "Начисления",
                 title_clear: "Чистая прибыль",
@@ -1830,7 +1831,7 @@ const messages = {
                     titles: ["Сегодня", "За месяц"],
                 },
                 hash: {
-                    titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],
+                    titles: ["Текущий хешрейт", "Хешрейт / 24"],
                 },
                 hashrate: {
                     title: "Общий хешрейт",
@@ -1889,10 +1890,10 @@ const messages = {
             table: {
                 thead: [
                     "Имя воркера",
-                    "Текущий",
-                    "Хешрейт/1ч",
-                    "Хешрейт/24ч",
-                    "Частота отказов/24ч",
+                    "Текущий хешрейт",
+                    "Хешрейт / 1ч",
+                    "Хешрейт / 24ч",
+                    "Реджект / 24ч",
                 ],
                 thead_short: ["Имя", "Текущий", "Ср.хешрейт/1д", "Отказы/1д"],
                 sub_thead: "Общий хешрейт",
@@ -1954,7 +1955,7 @@ const messages = {
             },
         },
         wallets: {
-            title: ["Настройка автовыплаты", "Кошельки"],
+            title: ["Мин. порог для автовыплаты", "Адрес кошелька"],
             no_info: {
                 description:
                     "Для автовыплаты начислений добавьте адрес вашего кошелька",
@@ -1978,9 +1979,9 @@ const messages = {
                 },
             },
             popups: {
-                note: "После добавления кошелька адрес невозможно будет изменить",
                 add: {
-                    title: "Добавить кошелек",
+                    title: "Добавление кошелька",
+                    note: "Чтобы добавить кошелек, ведите его адрес",
                     placeholders: {
                         wallet: "Адрес кошелька",
                         name: "Метка кошелька",
@@ -1992,7 +1993,8 @@ const messages = {
                     button: "Добавить",
                 },
                 change: {
-                    title: "Измените метку",
+                    title: "Изменение кошелька",
+                    note: "Чтобы изменить кошелек, ведите его адрес",
                     placeholders: {
                         wallet: "Введите кошелек *",
                         name: "Введите имя",
@@ -2056,7 +2058,7 @@ const messages = {
             confidence: "Конфиденциальность",
         },
         preloader: {
-            text: "По вашему запросу ничего не найдено",
+            text: "Здесь пока что нет записей",
         },
     },
 };

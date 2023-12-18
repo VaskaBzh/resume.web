@@ -18,8 +18,8 @@
         <svg
             v-if="!!columns.graphId && !removePercent"
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
         >
@@ -215,7 +215,7 @@ export default {
             &:not(.main) {
                 padding: 16px;
                 background: var(--background-island);
-                border-radius: 16px;
+                border-radius: 24px;
                 box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
                 .more {
                     margin-top: 11px;

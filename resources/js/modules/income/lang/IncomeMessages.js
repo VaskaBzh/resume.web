@@ -4,7 +4,7 @@ export const IncomeMessages = {
         block: {
             titles: {
                 full_income: "Accrued for all time",
-                income: "Accrued",
+                income: "Current balance",
                 yesterday_amount: "Yesterday's income",
                 month_profit: "Monthly income",
                 month_profit_graph: "Monthly income chart",
@@ -20,7 +20,7 @@ export const IncomeMessages = {
         block: {
             titles: {
                 full_income: "Начислено за все время",
-                income: "Начислено",
+                income: "Текущий баланс",
                 yesterday_amount: "Вчерашний доход",
                 month_profit: "Доход за месяц",
                 month_profit_graph: "График дохода за месяц",

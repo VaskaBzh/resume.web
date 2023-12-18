@@ -7,9 +7,7 @@ export class accountData {
         this.workers_count_unstable = accountRecord.workers_count_dead;
 
         this.workers_count =
-            this.workers_count_active +
-            this.workers_count_in_active +
-            this.workers_count_unstable;
+            this.workers_count_active + this.workers_count_in_active;
 
         this.hash_per_min = accountRecord.hash_per_min;
         this.hash_per_day = accountRecord.hash_per_day;

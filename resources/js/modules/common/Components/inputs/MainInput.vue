@@ -4,7 +4,7 @@
         class="input_row"
         :class="{ 'input_row-error': error, 'input_row-focus': value }"
     >
-        <span class="input_label">{{ inputLabel }}</span>
+        <span class="input_label" v-if="!editable">{{ inputLabel }}</span>
         <input
             :id="inputName"
             v-model="value"
@@ -12,6 +12,7 @@
             class="input"
             :readonly="!editable"
             :autocomplete="autocomplete"
+            :placeholder="inputLabel"
         />
     </label>
 </template>

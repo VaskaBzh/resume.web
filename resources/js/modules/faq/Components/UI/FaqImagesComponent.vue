@@ -4,7 +4,7 @@
             <LandingTitle tag="h3" class="faq_item_title">{{ $t('title') }}</LandingTitle>
             <div class="faq-item-main">
                 <div class="faq_item_images">
-                    <img src="@/modules/faq/images/1.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-1.png" alt="all btc" class="faq-image">
                 </div>
                 <ol class="faq_item_order-lists">
                     <li v-for="(link, i) in tabs" :key="link[i]" class="faq_item_order-list">
@@ -17,7 +17,7 @@
             <LandingTitle tag="h3" class="faq_item_title">1. {{ $t("titles_texts.titles[0]") }}</LandingTitle>
             <div class="faq-info-sub_item">
                 <div class="faq_item_images">
-                    <img src="@/modules/faq/images/2.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-2.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[0]") }}
                 </LandingText>
@@ -32,7 +32,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/3.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-3.png" alt="all btc" class="faq-image">
                     </div>
                     <LandingText :tag="'p'" class="faq_item_text">
                         {{ $t("texts.text[1]") }}
@@ -44,7 +44,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/4.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-4.png" alt="all btc" class="faq-image">
                     </div>
                     <LandingText :tag="'p'" class="faq_item_text">
                         <span class="faq_weight">{{ $t("texts.text[2]") }}</span>
@@ -69,7 +69,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/5.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-5.png" alt="all btc" class="faq-image">
                     </div>
                     <ul class="faq_item_text_lists">
                         <li>
@@ -92,7 +92,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/6.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-6.png" alt="all btc" class="faq-image">
                     </div>
                     <LandingText :tag="'p'" class="faq_item_text">
                         <span class="faq_weight">{{ $t("texts.text[16]") }}</span>
@@ -109,7 +109,7 @@
             <LandingTitle tag="h3" class="faq_item_title">3. {{ $t("titles_texts.titles[2]") }}</LandingTitle>
             <div class="faq-item_income">
                 <div class="faq_item_images">
-                    <img src="@/modules/faq/images/7.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-7.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[20]") }}
                 </LandingText>
@@ -153,7 +153,7 @@
             <LandingTitle tag="h3" class="faq_item_title">4. {{ $t("titles_texts.titles[3]") }}</LandingTitle>
             <div class="faq-item_workers">
                 <div class="faq_item_images">
-                    <img src="@/modules/faq/images/8.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-8.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[37]") }}
                 </LandingText>
@@ -163,7 +163,7 @@
             <LandingTitle tag="h3" class="faq_item_title">5. {{ $t("titles_texts.titles[4]") }}</LandingTitle>
             <div class="faq-item_subacc">
                 <div class="faq_item_images">
-                    <img src="@/modules/faq/images/9.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-9.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[38]") }}
                 </LandingText>
@@ -178,7 +178,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/10.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-10.png" alt="all btc" class="faq-image">
                     </div>
                     <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[39]") }}
                     </LandingText>
@@ -189,7 +189,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/11.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-11.png" alt="all btc" class="faq-image">
                     </div>
                     <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[40]") }}
                     </LandingText>
@@ -205,7 +205,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/12.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-12.png" alt="all btc" class="faq-image">
                     </div>
                     <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[41]") }}
                     </LandingText>
@@ -220,7 +220,7 @@
                         }}
                     </landing-title>
                     <div class="faq_item_images">
-                        <img src="@/modules/faq/images/13.png" alt="all btc" class="faq-image">
+                        <img src="@/modules/faq/images/faq-13.png" alt="all btc" class="faq-image">
                     </div>
                     <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[42]") }}
                     </LandingText>
@@ -235,7 +235,7 @@
             <LandingTitle tag="h3" class="faq_item_title">8. {{ $t("titles_texts.titles[7]") }}</LandingTitle>
             <div class="faq-item_watchers">
                 <div class="faq_item_images">
-                    <img src="@/modules/faq/images/14.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-14.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[43]") }}</LandingText>
             </div>
@@ -244,7 +244,7 @@
             <LandingTitle tag="h3" class="faq_item_title">9. {{ $t("titles_texts.titles[8]") }}</LandingTitle>
             <div class="faq-item_accounts">
                 <div class="faq_item_images">
-                    <img src="@/modules/faq/images/15.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-15.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[44]") }}
                 </LandingText>
@@ -254,7 +254,7 @@
             <LandingTitle tag="h3" class="faq_item_title">10. {{ $t("titles_texts.titles[9]") }}</LandingTitle>
             <div class="faq-item_course">
                 <div class="faq_item_images faq_image_one">
-                    <img src="@/modules/faq/images/16.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-16.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[45]") }}
                 </LandingText>
@@ -264,7 +264,7 @@
             <LandingTitle tag="h3" class="faq_item_title">11. {{ $t("titles_texts.titles[10]") }}</LandingTitle>
             <div class="faq-item_changeTheme">
                 <div class="faq_item_image faq_image_two">
-                    <img src="@/modules/faq/images/17.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-17.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[46]") }}
                 </LandingText>
@@ -274,7 +274,7 @@
             <LandingTitle tag="h3" class="faq_item_title">12. {{ $t("titles_texts.titles[11]") }}</LandingTitle>
             <div class="faq-item_changeLang">
                 <div class="faq_item_image faq_image_three">
-                    <img src="@/modules/faq/images/18.png" alt="all btc" class="faq-image">
+                    <img src="@/modules/faq/images/faq-18.png" alt="all btc" class="faq-image">
                 </div>
                 <LandingText :tag="'p'" class="faq_item_text">{{ $t("texts.text[47]") }}
                 </LandingText>
@@ -326,20 +326,26 @@ export default {
 
 <style scoped>
 .faq-info_items {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 58px;
-    overflow-y: scroll;
     padding-bottom: 44px;
     scrollbar-width: thin;
-    max-width: 690px;
+    max-width: 1170px;
     height: 100%;
 }
 
-.faq-info_items::-webkit-scrollbar {
-    display: none;
+.faq-info_items .faq-info_items_item:not(:first-child) {
+    padding-top: 44px;
 }
 
+.faq-info_items .faq-info_items_item:last-child {
+    padding-bottom: 44px;
+}
+
+@media (max-width: 999.99px) {
+    .faq-info_items {
+        max-width: unset;
+        width: 100%;
+    }
+}
 .faq_item_title {
     color: #F1F1F2;
     font-family: Unbounded, serif;
@@ -349,6 +355,12 @@ export default {
     line-height: 40px;
     text-transform: none;
     margin-bottom: 40px;
+}
+
+@media (max-width: 475px) {
+    .faq_item_title {
+        margin-bottom: 16px;
+    }
 }
 
 .faq-info-sub_item {
@@ -400,8 +412,15 @@ export default {
 }
 
 .faq_item_images {
-    max-width: 690px;
+    max-width: 1170px;
     height: auto;
+}
+
+@media (max-width: 999.99px) {
+    .faq_item_images {
+        max-width: unset;
+        width: 100%;
+    }
 }
 
 .faq-image {
@@ -484,7 +503,7 @@ export default {
 
 
 .faq_image_one {
-    max-width: 279px;
+    max-width: 168px;
 }
 
 .faq_image_two {

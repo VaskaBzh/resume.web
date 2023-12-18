@@ -8,7 +8,7 @@
             <span class="text-cvt">{{ $t("hosting_title[4]") }}</span>
         </div>
         <a
-            href="https://t.me/allbtc_support"
+            href="https://t.me/allbtc_connect"
             target="_blank"
             class="get-consultation"
         >

@@ -97,10 +97,12 @@
             class="cabinet__preloader-bg"
         />
     </div>
-    <instruction-button
-        hint="statistic"
-        @openInstruction="instructionService.setStep().setVisible()"
-    />
+    <teleport to=".header_button-instruction" v-if="isMounted">
+        <instruction-button
+            hint="statistic"
+            @openInstruction="instructionService.setStep().setVisible()"
+        />
+    </teleport>
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
@@ -138,6 +140,7 @@ export default {
             lineChartService: new StatisticService(this.offset, this.$route),
             barChartService: new StatisticService(30),
             instructionService: new InstructionService(),
+            isMounted: false
         };
     },
     watch: {
@@ -164,6 +167,7 @@ export default {
         ...mapGetters(["getActive", "getAccount"]),
     },
     async mounted() {
+        this.isMounted = true
         this.instructionService.setStepsCount(4);
 
         document.title = this.$t("header.links.statistic");
@@ -198,12 +202,13 @@ export default {
 @media (max-width: 500px) {
     .title-statistic {
         display: inline-block;
-        padding: 0 0 8px 16px;
+        padding: 8px 0 8px 16px;
         color: var(--text-primary);
         font-family: Unbounded, serif !important;
         font-size: 20px !important;
         font-style: normal;
         font-weight: 400;
+        min-height: 40px;
         line-height: 32px; /* 160% */
     }
 }
@@ -254,7 +259,7 @@ export default {
         flex-direction: column;
         gap: 24px;
         width: 100%;
-        height: fit-content;
+        max-height: 588px;
         @media (max-width: 2100px) {
             grid-column: 1 / 7;
         }

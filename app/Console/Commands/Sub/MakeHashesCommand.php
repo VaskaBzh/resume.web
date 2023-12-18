@@ -25,6 +25,6 @@ class MakeHashesCommand extends Command
         DeleteOld::execute();
         $subService->createHash();
 
-        Log::channel('commands')->info('SUB HASHRATE IMPORT COMPLETE');
+        Log::channel('commands.subs')->info('SUB HASHRATE IMPORT COMPLETE');
     }
 }
