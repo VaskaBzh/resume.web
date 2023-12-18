@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Income;
 
+use App\Dto\Income\UpdateStatusData;
 use App\Enums\Income\Type;
 use App\Exceptions\IncomeCreatingException;
 use App\Models\Sub;
@@ -42,6 +43,13 @@ class IncomeCommand extends Command
                     $income = $service->createIncome($sub, Type::MINING);
                     $service->updateLocalSub($sub, Type::MINING);
                     $service->createFinance();
+
+                    IncomeService::updateIncomes(
+                        data: UpdateStatusData::fromArray([
+                            'sub' => $sub,
+                            'status' => $income->status,
+                        ])
+                    );
 
                     if ($referrerActiveSub) {
                         $service->createIncome($referrerActiveSub, Type::REFERRAL);

@@ -11,7 +11,7 @@ use App\Models\User;
 use App\Utils\HashRateConverter;
 use Illuminate\Support\Collection;
 
-class ReferralService
+final readonly class ReferralService
 {
     public static function getReferrerStatistic(User $referrer): array
     {

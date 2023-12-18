@@ -52,7 +52,7 @@ use Symfony\Component\HttpFoundation\Response;
                             new OA\Property(
                                 property: 'incomes',
                                 type: 'array',
-                                items: new OA\Items(ref: '#/components/schemas/IncomeCollection')
+                                items: new OA\Items(ref: '#/components/schemas/IncomeResource')
                             ),
                         ],
                         type: 'object',

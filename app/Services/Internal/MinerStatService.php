@@ -10,7 +10,7 @@ use App\Models\MinerStat;
 use App\Services\External\BtcCom\Client as BtcComClient;
 use App\Services\External\MinerStat\Client as MinerStatsClient;
 
-class MinerStatService
+final readonly class MinerStatService
 {
     public static function store(): ?MinerStat
     {
