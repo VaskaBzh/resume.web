@@ -22,15 +22,15 @@ class Create
             $income = Income::create([
                 'group_id' => $incomeCreateData->sub->group_id,
                 'type' => $incomeCreateData->type->value,
+                'wallet_id' => $incomeCreateData->wallet?->id,
                 'referral_id' => $incomeCreateData->referralId,
                 'daily_amount' => $incomeCreateData->dailyAmount,
                 'status' => $incomeCreateData->status->value,
                 'message' => $incomeCreateData->message?->value,
                 'hash' => $incomeCreateData->hashrate->value,
                 'unit' => $incomeCreateData->hashrate->unit,
-                'diff' => $incomeCreateData->difficulty,
             ]);
-
+dd($income);
             UpdateStatus::execute(
                 updateStatusData: UpdateStatusData::fromArray([
                     'sub' => $incomeCreateData->sub,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
-use App\Models\MinerStat;
+use App\Exceptions\CalculatingException;
 
 class Helper
 {
@@ -16,19 +16,23 @@ class Helper
      * $this->rewardBlock - награда за блок
      * $this->network_difficulty - сложность сети биткоина
      * $this->fpps_rate - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
+     *
+     * @throws CalculatingException
      */
-    public static function calculateEarn(MinerStat $stats, float $hashRate, float $fee = 0): float
+    public static function calculateEarn(float $hashRate, float $fee = 0): float
     {
         if ($hashRate <= 0) {
             return 0;
         }
+
+        $stats = app('miner_stat')->only('reward_block', 'network_difficulty', 'fpps_rate');
 
         $secondsPerDay = 86400;
 
         /*
          * Target difficulty
          */
-        $targetDifficulty = $stats->network_difficulty * pow(2, 32);
+        $targetDifficulty = $stats['network_difficulty'] * pow(2, 32);
 
         /**
          * Block earning time based on current hash rate, seconds per day and target
@@ -38,12 +42,12 @@ class Helper
         /**
          * User total earn based on block reward and calculating earning time
          */
-        $total = $stats->reward_block / $earnTime;
+        $total = $stats['reward_block'] / $earnTime;
 
         /**
          * User total earn plus ffps
          */
-        $totalWithFpps = $total + ($total * ($stats->fpps_rate / 100));
+        $totalWithFpps = $total + ($total * ($stats['fpps_rate'] / 100));
 
         /**
          * User total with ffps minus tax percent

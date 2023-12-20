@@ -6,6 +6,6 @@ namespace App\Exceptions;
 
 use Exception;
 
-class IncomeCreatingException extends Exception
+class CalculatingException extends Exception
 {
 }

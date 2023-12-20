@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Exceptions\CalculatingException;
 use App\Models\MinerStat;
 use App\Services\External\BtcCom\Client as BtcComClient;
 use App\Services\External\BtcCom\ClientContract;
@@ -21,7 +22,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ClientContract::class, BtcComClient::class);
         $this->app->bind(TransformContract::class, BtcComDataTransformer::class);
-        $this->app->singleton('miner_stat', fn () => MinerStat::first());
+        $this->app->singleton('miner_stat', function () {
+            if (! $stats = MinerStat::first()) {
+                throw new CalculatingException('Miner stat is empty');
+            }
+
+            return $stats;
+        });
     }
 
     /**

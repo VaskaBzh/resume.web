@@ -15,19 +15,18 @@ class Income extends Model
 
     protected $table = 'incomes';
 
-    protected $guarded = [];
-
     protected $fillable = [
         'group_id',
         'type',
-        'payout_id',
         'referral_id',
+        'payout_id',
+        'wallet_id',
         'daily_amount',
-        'diff',
-        'hash',
-        'unit',
         'status',
         'message',
+        'hash',
+        'unit',
+        'diff',
     ];
 
     /*

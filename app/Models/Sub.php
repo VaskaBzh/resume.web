@@ -125,9 +125,13 @@ class Sub extends Model
     public function todayForecast(float $hashPerDay, float $fee): string
     {
         return number_format(Helper::calculateEarn(
-            stats: MinerStat::first(),
             hashRate: $hashPerDay,
             fee: $fee
         ), 8, '.', ' ');
+    }
+
+    public function isAmountLimitReached(float $amount): bool
+    {
+        return (float) $this->pending_amount + $amount >= config('api.wallet.min_withdrawal');
     }
 }

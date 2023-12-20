@@ -20,7 +20,7 @@ class ListController extends Controller
             path: '/incomes/{sub}',
             summary: 'Get list of incomes',
             security: [['bearer' => []]],
-            tags: ['Income'],
+            tags: ['MiningIncome'],
             parameters: [
                 new OA\Parameter(
                     name: 'sub',

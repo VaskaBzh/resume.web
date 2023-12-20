@@ -24,7 +24,7 @@ class ApiRequest
     /**
      * Create an API request for a given HTTP method and URI.
      */
-    public function __construct(
+    protected function __construct(
         protected string $method = 'get',
         protected string $uri = ''
     ) {

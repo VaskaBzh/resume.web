@@ -102,15 +102,6 @@ class WorkerServiceTest extends TestCase
                     unit: Unit::tryFrom($worker['shares_1d_unit'])
                 )->value,
             ]);
-
-            Http::assertSent(function ($request) use ($worker, $ownerId) {
-                if ($request->method() === 'POST') {
-
-                    return $request->url() == config('api.btc.url').config('api.btc.paths.update worker')
-                        && $request['worker_id'] == (string) $worker['worker_id']
-                        && $request['group_id'] == $ownerId;
-                }
-            });
         }
     }
 

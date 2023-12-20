@@ -14,6 +14,7 @@ use App\Dto\Income\UpdateStatusData;
 use App\Dto\Sub\SubUpsertData;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
+use App\Exceptions\CalculatingException;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Utils\HashRateConverter;
@@ -97,7 +98,6 @@ final class IncomeService
             referrerSub: $referrerSub,
             referralPercent: (float)$sub->user->referral_percent ?? $referrerSub->user->referral_percent,
             dailyEarn: Helper::calculateEarn(
-                stats: $stat,
                 hashRate: $subAccountHashRate = $sub->hash_rate,
             ),
             hashRate: $subAccountHashRate,
@@ -131,11 +131,12 @@ final class IncomeService
 
     /**
      * Set the daily earn after deducting the commission of allbtc and remote pool
+     *
+     * @throws CalculatingException
      */
     private function setDailyAmount(): IncomeService
     {
         $this->params[Type::MINING->value]['dailyAmount'] = Helper::calculateEarn(
-            stats: $this->stat,
             hashRate: $this->hashRate,
             fee: config('api.btc.fee') + $this->fee
         );
