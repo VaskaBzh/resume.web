@@ -20,8 +20,8 @@ enum Status: string
         return match (true) {
             $sub->wallets->isEmpty() => self::NO_WALLET,
             ! $sub->wallets->first()->isUnlocked() => self::ON_VERIFY,
-            ! $sub->isAmountLimitReached($amount) => self::PENDING,
-            default => self::READY_TO_PAYOUT,
+            $sub->isAmountLimitReached($amount) => self::READY_TO_PAYOUT,
+            default => self::PENDING,
         };
     }
 }

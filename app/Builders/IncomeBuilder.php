@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 
 class IncomeBuilder extends BaseBuilder
 {
-    public function getNotCompleted(int $groupId): Builder
+    public function whereNotCompleted(int $groupId): Builder
     {
         return $this
             ->getByGroupId($groupId)

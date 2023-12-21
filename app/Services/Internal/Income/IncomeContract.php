@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Services\Internal\Income;
 
-use App\Models\Income;
+use App\Dto\DtoContract;
 
 interface IncomeContract
 {
+    public function getAmount(): float;
+
     public function setEarn(): static;
 
     public function setAmount(): static;
 
     public function setFee(): static;
 
-    public function store(): Income;
+    public function dto(): DtoContract;
 }

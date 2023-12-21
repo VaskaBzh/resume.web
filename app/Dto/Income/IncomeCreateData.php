@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Income;
 
+use App\Dto\DtoContract;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
@@ -12,7 +13,7 @@ use App\Models\Wallet;
 use App\Utils\HashRateConverter;
 use Illuminate\Support\Arr;
 
-final readonly class IncomeCreateData
+final readonly class IncomeCreateData implements DtoContract
 {
     /**
      * @param  float  $dailyAmount sub-account dalily amount
@@ -34,7 +35,7 @@ final readonly class IncomeCreateData
     ) {
     }
 
-    public static function fromRequest(array $requestData): IncomeCreateData
+    public static function fromArray(array $requestData): IncomeCreateData
     {
         return new self(
             sub: $requestData['sub'],

@@ -136,7 +136,7 @@ class IncomeTest extends TestCase
             'created_at' => now(),
         ]);
 
-        Income::getNotCompleted($this->sub->group_id)
+        Income::whereNotCompleted($this->sub->group_id)
             ->update([
                 'payout_id' => $payout->id,
                 'status' => 'completed',

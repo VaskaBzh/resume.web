@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Actions\Income;
 
-use App\Dto\Income\IncomeCreateData;
-use App\Dto\Income\UpdateStatusData;
+use App\Actions\Executable;
+use App\Dto\DtoContract;
 use App\Models\Income;
 use Illuminate\Support\Facades\DB;
 
-class Create
+class Create implements Executable
 {
-    public static function execute(IncomeCreateData $incomeCreateData): ?Income
+    public static function execute(DtoContract $incomeCreateData): void
     {
         try {
             DB::beginTransaction();
@@ -19,7 +19,7 @@ class Create
             /**
              * @var Income $income
              */
-            $income = Income::create([
+            Income::create([
                 'group_id' => $incomeCreateData->sub->group_id,
                 'type' => $incomeCreateData->type->value,
                 'wallet_id' => $incomeCreateData->wallet?->id,
@@ -30,22 +30,11 @@ class Create
                 'hash' => $incomeCreateData->hashrate->value,
                 'unit' => $incomeCreateData->hashrate->unit,
             ]);
-dd($income);
-            UpdateStatus::execute(
-                updateStatusData: UpdateStatusData::fromArray([
-                    'sub' => $incomeCreateData->sub,
-                    'status' => $incomeCreateData->status,
-                ])
-            );
 
             DB::commit();
-
-            return $income;
         } catch (\Exception $e) {
             report($e);
             DB::rollBack();
-
-            return null;
         }
     }
 }

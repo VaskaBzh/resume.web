@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Internal\Income;
 
-use App\Actions\Income\Create as IncomeCreate;
+use App\Dto\DtoContract;
 use App\Dto\Income\IncomeCreateData;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Exceptions\CalculatingException;
-use App\Models\Income;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 
@@ -45,17 +44,15 @@ class MiningIncome extends BaseIncome
         return $this;
     }
 
-    public function store(): Income
+    public function dto(): DtoContract
     {
-        return IncomeCreate::execute(
-            incomeCreateData: IncomeCreateData::fromRequest([
-                'sub' => $this->sub,
-                'wallet' => $this->sub->wallets()->first(),
-                'dailyAmount' => $this->amount,
-                'type' => Type::MINING,
-                'status' => Status::onSub($this->sub, $this->amount),
-                'hash' => HashRateConverter::fromPure($this->sub->hash_rate),
-            ])
-        );
+        return IncomeCreateData::fromArray([
+            'sub' => $this->sub,
+            'wallet' => $this->sub->wallets()->first(),
+            'dailyAmount' => $this->amount,
+            'type' => Type::MINING,
+            'status' => Status::onSub($this->sub, $this->amount),
+            'hash' => HashRateConverter::fromPure($this->sub->hash_rate),
+        ]);
     }
 }
