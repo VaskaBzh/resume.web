@@ -14,7 +14,6 @@ class UpdateStatus
         Income::whereNotCompleted($updateStatusData->sub->group_id)->update([
             'status' => $updateStatusData->status->value,
             'payout_id' => $updateStatusData->payout?->id,
-            'wallet_id' => $updateStatusData->wallet?->id,
         ]);
     }
 }

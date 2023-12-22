@@ -8,33 +8,12 @@ use App\Dto\DtoContract;
 use App\Dto\Income\IncomeCreateData;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
-use App\Exceptions\CalculatingException;
 use App\Utils\HashRateConverter;
 use App\Utils\Helper;
 
 class MiningIncome extends BaseIncome
 {
-    public function setFee(): static
-    {
-        $this->fee = $this->sub->allbtc_fee - (float) $this->sub->user->referral_discount;
-
-        return $this;
-    }
-
-    /**
-     * @throws CalculatingException
-     */
-    public function setEarn(): static
-    {
-        $this->earn = Helper::calculateEarn(hashRate: $this->sub->hash_rate);
-
-        return $this;
-    }
-
-    /**
-     * @throws CalculatingException
-     */
-    public function setAmount(): static
+    protected function setAmount(): static
     {
         $this->amount = Helper::calculateEarn(
             hashRate: $this->sub->hash_rate,
@@ -44,9 +23,9 @@ class MiningIncome extends BaseIncome
         return $this;
     }
 
-    public function dto(): DtoContract
+    protected function setDto(): static
     {
-        return IncomeCreateData::fromArray([
+        $this->dto = IncomeCreateData::fromArray([
             'sub' => $this->sub,
             'wallet' => $this->sub->wallets()->first(),
             'dailyAmount' => $this->amount,
@@ -54,5 +33,12 @@ class MiningIncome extends BaseIncome
             'status' => Status::onSub($this->sub, $this->amount),
             'hash' => HashRateConverter::fromPure($this->sub->hash_rate),
         ]);
+
+        return $this;
+    }
+
+    public function dto(): DtoContract
+    {
+        return $this->dto;
     }
 }

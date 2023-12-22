@@ -10,11 +10,9 @@ interface IncomeContract
 {
     public function getAmount(): float;
 
-    public function setEarn(): static;
+    public function getEarn(): float;
 
-    public function setAmount(): static;
-
-    public function setFee(): static;
+    public function getFee(): float;
 
     public function dto(): DtoContract;
 }
