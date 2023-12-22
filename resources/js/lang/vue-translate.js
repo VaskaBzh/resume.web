@@ -799,7 +799,7 @@ const messages = {
                 },
                 tooltip: [
                     "On your subaccount ",
-                    "Autopayment <br> occurs when the balance is >",
+                    "<br>Autopayment occurs when the balance is > ",
                 ],
             },
         },
@@ -1842,7 +1842,7 @@ const messages = {
                 },
                 tooltip: [
                     "На вашем субаккаунте ",
-                    "Автовыплата <br> происходит при  балансе >",
+                    "<br>Автовыплата происходит при  балансе > ",
                 ],
             },
         },

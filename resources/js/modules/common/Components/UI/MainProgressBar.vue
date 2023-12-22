@@ -5,7 +5,20 @@
                 {{ title }}
             </main-title>
             <div class="progress_icon">
-                <TooltipCard :text=" $t('statistic.info_blocks.tooltip[0]') + progress + unit + '. ' + $t('statistic.info_blocks.tooltip[1]') + ' ' + final + unit"></TooltipCard>
+                <TooltipCard
+                    :text="
+                        $t('statistic.info_blocks.tooltip[0]') +
+                        progress +
+                        ' ' +
+                        unit +
+                        '. ' +
+                        $t('statistic.info_blocks.tooltip[1]') +
+                        ' ' +
+                        final +
+                        ' ' +
+                        unit
+                    "
+                ></TooltipCard>
             </div>
         </div>
         <div class="progress__block">
@@ -14,7 +27,7 @@
                 <span class="progress_value">{{ final }} {{ unit }}</span>
             </div>
             <div class="progress__bar">
-                <span class="progress_line" ref="progress_line"></span>
+                <span ref="progress_line" class="progress_line"></span>
             </div>
         </div>
     </div>
@@ -23,9 +36,13 @@
 <script>
 import MainTitle from "./MainTitle.vue";
 import anime from "animejs/lib/anime.es.js";
-import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue"
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
 export default {
-    name: "main-progress-bar",
+    name: "MainProgressBar",
+    components: {
+        MainTitle,
+        TooltipCard,
+    },
     props: {
         title: String,
         hint: String,
@@ -33,36 +50,31 @@ export default {
         final: Number,
         unit: String,
     },
-    components: {
-        MainTitle,
-        TooltipCard
-    },
     computed: {
         percent() {
             const onePercent = this.final / 100;
 
             return this.progress / onePercent;
-        }
+        },
     },
     watch: {
         progress() {
             this.initProgress();
-        }
+        },
+    },
+    mounted() {
+        this.initProgress();
     },
     methods: {
         initProgress() {
             anime({
                 targets: this.$refs.progress_line,
                 width: `${this.percent}%`,
-                easing: 'easeInOutQuad',
+                easing: "easeInOutQuad",
             });
-        }
+        },
     },
-    mounted() {
-        this.initProgress();
-
-    },
-}
+};
 </script>
 
 <style scoped>
@@ -107,23 +119,23 @@ export default {
     position: relative;
     width: 100%;
 }
-@media(max-width:900px){
-    .progress__head{
+@media (max-width: 900px) {
+    .progress__head {
         margin-bottom: 12px;
     }
-    .progress_value{
+    .progress_value {
         font-size: 12px;
     }
 }
-@media(max-width:500px){
-    .progress__bar{
+@media (max-width: 500px) {
+    .progress__bar {
         min-height: 12px;
     }
 }
 .progress_line {
     border-radius: 16px;
     opacity: 0.8;
-    background: var(--background-accient, #2E90FA);
+    background: var(--background-accient, #2e90fa);
     position: absolute;
     left: 0;
     top: 0;
@@ -131,9 +143,9 @@ export default {
     width: 0;
     max-width: 100%;
 }
-@media(max-width:500px){
-   .card-title{
+@media (max-width: 500px) {
+    .card-title {
         font-size: 12px !important;
-   }
+    }
 }
 </style>
