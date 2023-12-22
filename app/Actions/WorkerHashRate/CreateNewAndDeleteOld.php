@@ -12,8 +12,7 @@ class CreateNewAndDeleteOld
     public static function execute(Worker $worker, array $hashRateData): void
     {
         WorkerHashrate::oldestThan(
-            workerId: $worker->worker_id,
-            date: now()->subMonths(2)->toDateTimeString()
+            date: now()->subMonths()
         )->delete();
 
         $worker
