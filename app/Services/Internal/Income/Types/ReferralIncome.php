@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal\Income;
+namespace App\Services\Internal\Income\Types;
 
 use App\Dto\DtoContract;
 use App\Dto\Income\IncomeCreateData;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Models\Sub;
+use App\Services\Internal\Income\BaseIncome;
 use App\Utils\HashRateConverter;
 
 class ReferralIncome extends BaseIncome
