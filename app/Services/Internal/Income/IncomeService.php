@@ -9,11 +9,37 @@ use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Income\UpdateStatus;
 use App\Dto\FinanceData;
 use App\Dto\Income\UpdateStatusData;
+use App\Exceptions\CalculatingException;
+use App\Models\Sub;
+use App\Services\Internal\Income\Types\MiningIncome;
+use App\Services\Internal\Income\Types\ReferralIncome;
+use App\Services\Internal\SubService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-readonly class ServiceIncome
+final readonly class IncomeService
 {
+    /**
+     * @throws CalculatingException
+     */
+    public function localSubProcess(Sub $sub): void
+    {
+        $referrerActiveSub = $sub->user
+            ->referrer
+            ?->activeSub()
+            ->first();
+
+        $this->store($miningIncome = MiningIncome::make($sub));
+        $this->createFinance($miningIncome);
+        SubService::updateAmounts($sub, $miningIncome->getAmount());
+
+        if ($referrerActiveSub) {
+            $referralIncome = ReferralIncome::make($sub);
+            $this->store($referralIncome);
+            SubService::updateAmounts($referrerActiveSub, $referralIncome->getAmount());
+        }
+    }
+
     public function store(IncomeContract $income): void
     {
         try {

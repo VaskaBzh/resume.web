@@ -18,7 +18,6 @@ use App\Exceptions\CalculatingException;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Utils\HashRateConverter;
-use App\Utils\Helper;
 use Illuminate\Support\Facades\Log;
 
 final class IncomeService

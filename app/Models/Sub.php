@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Builders\SubBuilder;
-use App\Utils\Helper;
+use App\Utils\Earn;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -124,7 +124,7 @@ class Sub extends Model
      */
     public function todayForecast(float $hashPerDay, float $fee): string
     {
-        return number_format(Helper::calculateEarn(
+        return number_format(Earn::calculateBitcoin(
             hashRate: $hashPerDay,
             fee: $fee
         ), 8, '.', ' ');
@@ -132,6 +132,6 @@ class Sub extends Model
 
     public function isAmountLimitReached(float $amount): bool
     {
-        return (float) $this->pending_amount + $amount >= config('api.wallet.min_withdrawal');
+        return ((float) $this->pending_amount + $amount) >= config('api.wallet.min_withdrawal');
     }
 }

@@ -36,7 +36,7 @@ class ReferralIncome extends BaseIncome
         return $this;
     }
 
-    protected function setDto(): static
+    protected function buildDto(): static
     {
         $this->dto = IncomeCreateData::fromArray([
             'sub' => $this->referrerActiveSub,

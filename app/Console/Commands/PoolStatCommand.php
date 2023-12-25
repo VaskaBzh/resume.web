@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Utils\Helper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
@@ -24,11 +23,31 @@ class PoolStatCommand extends Command
 
         if ($poolStats = json_decode($poolStats)) {
             if (property_exists($poolStats, 'hashrate')) {
-                $regeneratePoolHashRate = Helper::regenerateHashRate($poolStats->hashrate);
+                $regeneratePoolHashRate = self::regenerateHashRate($poolStats->hashrate);
                 $poolStats->hashrate = $regeneratePoolHashRate;
             }
 
             File::put('poolstats.json', json_encode($poolStats));
         }
+    }
+
+    /**
+     * Generate total pool hash rate for web-statistic dashboards
+     */
+    public static function regenerateHashRate(int $pureHashRate): int
+    {
+        $numbers = str_split((string) $pureHashRate);
+
+        $regenerated[] = (int) head($numbers);
+
+        $tail = array_slice($numbers, 2);
+
+        $regenerated[] = mt_rand(0, 5);
+
+        foreach ($tail as $number) {
+            $regenerated[] = mt_rand(0, 9);
+        }
+
+        return (int) implode('', $regenerated);
     }
 }

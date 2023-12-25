@@ -10,6 +10,8 @@ use App\Services\External\BtcCom\Client as BtcComClient;
 use App\Services\External\BtcCom\ClientContract;
 use App\Services\External\BtcCom\DataTransformer as BtcComDataTransformer;
 use App\Services\External\BtcCom\TransformContract;
+use App\Services\Internal\Income\IncomeService;
+use App\Services\Internal\PayoutService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
 
             return $stats;
         });
+        $this->app->bind('income', fn () => new IncomeService());
+        $this->app->bind('payout', fn () => new PayoutService());
     }
 
     /**

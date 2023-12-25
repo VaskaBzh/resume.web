@@ -219,6 +219,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Income' => \App\Facades\Income::class,
+        'Payout' => \App\Facades\Payout::class,
     ])->toArray(),
 
 ];

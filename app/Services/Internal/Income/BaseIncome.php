@@ -7,7 +7,8 @@ namespace App\Services\Internal\Income;
 use App\Dto\DtoContract;
 use App\Exceptions\CalculatingException;
 use App\Models\Sub;
-use App\Utils\Helper;
+use App\Utils\Earn;
+use App\Utils\Fee;
 
 abstract class BaseIncome implements IncomeContract
 {
@@ -29,7 +30,7 @@ abstract class BaseIncome implements IncomeContract
             ->setEarn()
             ->setFee()
             ->setAmount()
-            ->setDto();
+            ->buildDto();
     }
 
     /**
@@ -45,12 +46,9 @@ abstract class BaseIncome implements IncomeContract
         return $this;
     }
 
-    /**
-     * @throws CalculatingException
-     */
     protected function setEarn(): static
     {
-        $this->earn = Helper::calculateEarn(hashRate: $this->sub->hash_rate);
+        $this->earn = Earn::calculateBitcoin(hashRate: $this->sub->hash_rate);
 
         return $this;
     }
@@ -60,11 +58,7 @@ abstract class BaseIncome implements IncomeContract
      */
     protected function setFee(): static
     {
-        $this->fee = $this->sub->allbtc_fee - (float) $this->sub->user->referral_discount;
-
-        if ($this->fee < 0) {
-            throw new CalculatingException('Fee should not be unsigned');
-        }
+        $this->fee = Fee::get($this->sub);
 
         return $this;
     }
@@ -84,7 +78,7 @@ abstract class BaseIncome implements IncomeContract
         return $this->amount;
     }
 
-    abstract protected function setDto(): static;
+    abstract protected function buildDto(): static;
 
     abstract protected function setAmount(): static;
 

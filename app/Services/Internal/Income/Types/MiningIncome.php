@@ -9,14 +9,14 @@ use App\Dto\Income\IncomeCreateData;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Services\Internal\Income\BaseIncome;
+use App\Utils\Earn;
 use App\Utils\HashRateConverter;
-use App\Utils\Helper;
 
 class MiningIncome extends BaseIncome
 {
     protected function setAmount(): static
     {
-        $this->amount = Helper::calculateEarn(
+        $this->amount = Earn::calculateBitcoin(
             hashRate: $this->sub->hash_rate,
             fee: config('api.btc.fee') + $this->fee
         );
@@ -24,7 +24,7 @@ class MiningIncome extends BaseIncome
         return $this;
     }
 
-    protected function setDto(): static
+    protected function buildDto(): static
     {
         $this->dto = IncomeCreateData::fromArray([
             'sub' => $this->sub,
