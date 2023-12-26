@@ -164,7 +164,7 @@
         "/incomes/{sub}": {
             "get": {
                 "tags": [
-                    "Income"
+                    "MiningIncome"
                 ],
                 "summary": "Get list of incomes",
                 "operationId": "5a67eed1bb6a258ba46d5d91fac020b4",

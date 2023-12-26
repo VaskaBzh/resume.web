@@ -29,14 +29,16 @@ final readonly class IncomeService
             ?->activeSub()
             ->first();
 
-        $this->store($miningIncome = MiningIncome::make($sub));
-        $this->createFinance($miningIncome);
+        $miningIncome = MiningIncome::make($sub);
         SubService::updateAmounts($sub, $miningIncome->getAmount());
+
+        $this->store($miningIncome);
+        $this->createFinance($miningIncome);
 
         if ($referrerActiveSub) {
             $referralIncome = ReferralIncome::make($sub);
-            $this->store($referralIncome);
             SubService::updateAmounts($referrerActiveSub, $referralIncome->getAmount());
+            $this->store($referralIncome);
         }
     }
 
