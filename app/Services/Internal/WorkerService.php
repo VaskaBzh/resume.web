@@ -6,14 +6,16 @@ namespace App\Services\Internal;
 
 use App\Actions\Worker\Create;
 use App\Actions\Worker\Update;
-use App\Actions\WorkerHashRate\CreateNewAndDeleteOld;
+use App\Actions\WorkerHashRate\Create as HashRateCreate;
 use App\Dto\WorkerData;
 use App\Models\Sub;
 use App\Models\Worker;
+use App\Models\WorkerHashrate;
 use App\Services\External\BtcCom\ClientContract;
 use App\Services\External\BtcCom\TransformContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 final readonly class WorkerService
 {
@@ -68,20 +70,32 @@ final readonly class WorkerService
 
     public function createHashes(int $groupId): void
     {
-        $remoteWorkers = $this->client->getWorkerList($groupId);
-        $localWorkers = Worker::select('worker_id')
-            ->whereIn('worker_id', $remoteWorkers->pluck('worker_id'))
-            ->get();
+        $remoteWorkers = $this->client->getWorkerList($groupId)
+            ->filter(static fn (array $remoteWorker) => Arr::get($remoteWorker, 'shares_1m_pure', 0) > 0);
+
+        $localWorkers = Worker::whereIn('worker_id', $remoteWorkers->pluck('worker_id'))->get();
 
         $remoteWorkers->each(function (array $remoteWorker) use ($localWorkers) {
             if ($localWorker = $localWorkers->where('worker_id', $remoteWorker['worker_id'])->first()) {
-                if (Arr::get($remoteWorker, 'shares_1m_pure', 0) > 0) {
-                    CreateNewAndDeleteOld::execute($localWorker, [
-                        'hash_rate_per_min' => $remoteWorker['shares_1m_pure'],
-                        'unit' => $remoteWorker['shares_unit'],
-                    ]);
-                }
+                HashRateCreate::execute($localWorker, [
+                    'hash_rate_per_min' => $remoteWorker['shares_1m_pure'],
+                    'unit' => $remoteWorker['shares_unit'],
+                ]);
             }
         });
+
+        Log::channel('commands.workers')->info(
+            message: sprintf("WORKER HASHRATE IMPORT COMPLETE \n
+            TOTAL 1M HASHRATE: %s \n
+            WORKERS COUNT: %s",
+                WorkerHashrate::selectRaw('worker_id, max(hash_per_min) as hash')
+                    ->groupBy('worker_id', 'hash_per_min', 'created_at')
+                    ->latest()
+                    ->limit($remoteWorkers->count())
+                    ->get()
+                    ->sum('hash'),
+                $remoteWorkers->count(),
+            )
+        );
     }
 }

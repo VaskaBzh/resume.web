@@ -45,9 +45,5 @@ class IncomeCommand extends Command
                     $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
                 }
             });
-
-        if (config('app.production_env')) {
-            $this->call('payout');
-        }
     }
 }

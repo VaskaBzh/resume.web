@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Console\Commands\DeleteHashCommand;
 use App\Console\Commands\Income\IncomeCommand;
 use App\Console\Commands\Income\PayoutCommand;
 use App\Console\Commands\PoolStatCommand;
@@ -30,6 +31,7 @@ class Kernel extends ConsoleKernel
         SetSubCustomPercentCommand::class,
         ObserveCustomPercentTimeCommand::class,
         PoolStatCommand::class,
+        DeleteHashCommand::class,
     ];
 
     /**
@@ -38,10 +40,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('income')->dailyAt('07:00');
+        $schedule->command('payout')->dailyAt('07:15');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
         $schedule->command('make:worker-hashes')->everyFifteenMinutes();
         $schedule->command('observe:custom-percent-time')->dailyAt('00:00');
+        $schedule->command('delete:hash')->dailyAt('02:00');
     }
 
     /**

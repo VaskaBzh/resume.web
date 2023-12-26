@@ -38,7 +38,7 @@ class SyncWorkerCommand extends Command
             ->info(
                 message: sprintf("SYNCED COUNT: %s. \n
                 ADDED COUNT: %s. \n
-                TOTAL HASHRATE: %s",
+                TOTAL 1D HASHRATE: %s",
                     $syncedWorkersCount,
                     $addedWorkers ?? 0,
                     Worker::sum('hash_per_day'),
