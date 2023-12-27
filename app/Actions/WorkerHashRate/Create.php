@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace App\Actions\WorkerHashRate;
 
 use App\Models\Worker;
-use App\Models\WorkerHashrate;
 
-class CreateNewAndDeleteOld
+class Create
 {
     public static function execute(Worker $worker, array $hashRateData): void
     {
-        WorkerHashrate::oldestThan(
-            date: now()->subMonths()
-        )->delete();
-
         $worker
             ->workerHashrates()
             ->create([

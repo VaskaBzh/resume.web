@@ -7,7 +7,6 @@ namespace App\Console\Commands\Worker;
 use App\Services\Internal\WorkerService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Log;
 
 class MakeWorkerHashesCommand extends Command
 {
@@ -23,8 +22,6 @@ class MakeWorkerHashesCommand extends Command
         WorkerService $workerService
     ): void {
         $workerService->createHashes(config('api.btc.all_groups'));
-
-        Log::channel('commands.workers')->info('WORKER HASHRATE IMPORT COMPLETE');
 
         Artisan::call('make:sub-hashes');
     }

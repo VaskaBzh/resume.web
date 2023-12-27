@@ -86,7 +86,7 @@ class ReferralTest extends TestCase
                     'referral_percent' => 1,
                     'referrals_total_amount' => '0.00044444',
                     'referral_url' => route('v1.register', 'referral_code='.$this->referrer->referral_code),
-                    'total_referrals_hash_rate' => '100.00',
+                    'total_referrals_hash_rate' => '200.00',
                     'hash_rate_unit' => 'T',
                 ],
             ])
@@ -117,7 +117,7 @@ class ReferralTest extends TestCase
                     [
                         'email' => 'second@gmail.com',
                         'referral_active_workers_count' => 1,
-                        'referral_hash_per_day' => '100.00',
+                        'referral_hash_per_day' => '200.00',
                         'referral_hash_per_day_unit' => 'T',
                         'referral_inactive_workers_count' => 1,
                         'referral_percent' => 1,
