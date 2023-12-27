@@ -7,6 +7,7 @@ namespace App\Services\Income;
 use App\Actions\Finance\Create as FinanceCreate;
 use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Income\UpdateStatus;
+use App\Dto\DtoContract;
 use App\Dto\FinanceData;
 use App\Dto\Income\UpdateStatusData;
 use App\Exceptions\CalculatingException;
@@ -61,10 +62,7 @@ final readonly class IncomeService
             DB::rollBack();
         }
 
-        Log::channel('commands.incomes')->info(
-            message: sprintf('INCOME CREATED. TYPE: %s', $income->dto()->type->value),
-            context: get_object_vars($income->dto()),
-        );
+        $this->log($income->dto());
     }
 
     public function updateIncomes(UpdateStatusData $updateStatusData): void
@@ -81,5 +79,15 @@ final readonly class IncomeService
             'percent' => $income->getFee(),
             'profit' => $income->getEarn() * ($income->getFee() / 100),
         ]));
+    }
+
+    private function log(DtoContract $income): void
+    {
+        Log::channel('commands.incomes')->info(
+            message: "INCOME CREATED.\n
+            TYPE: {$income->type->value})\n
+            AMOUNT: {$income->dailyAmount}\n
+            SUB: {$income->sub->group_id}",
+        );
     }
 }
