@@ -6,6 +6,7 @@ namespace Tests\Feature\Services;
 
 use App\Models\Payout;
 use App\Models\Sub;
+use App\Services\Internal\PayoutService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -45,7 +46,7 @@ class PayoutServiceTest extends TestCase
     {
         $this->mockRemoteWallet();
 
-        $this->artisan('payout');
+        app(PayoutService::class)->init();
 
         Http::assertNothingSent();
         $this->assertCount(0, Payout::all());
@@ -66,7 +67,7 @@ class PayoutServiceTest extends TestCase
 
         $this->mockRemoteWallet();
 
-        $this->artisan('payout');
+        app(PayoutService::class)->init();
 
         Http::assertNothingSent();
         $this->assertCount(0, Payout::all());
@@ -88,7 +89,7 @@ class PayoutServiceTest extends TestCase
 
         $this->mockRemoteWallet();
 
-        $this->artisan('payout');
+        app(PayoutService::class)->init();
 
         Http::assertNothingSent();
         $this->assertCount(0, Payout::all());
@@ -113,7 +114,7 @@ class PayoutServiceTest extends TestCase
 
         $this->mockRemoteWallet();
 
-        $this->artisan('payout');
+        app(PayoutService::class)->init();
 
         Http::assertSent(function ($request) {
             return $request->url() == 'http://92.205.163.43:8332';
