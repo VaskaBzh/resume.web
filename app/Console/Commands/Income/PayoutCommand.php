@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Income;
 
-use App\Services\PayoutService;
+use App\Facades\Payout;
+use App\Models\Sub;
 use Illuminate\Console\Command;
 
 class PayoutCommand extends Command
@@ -13,10 +14,16 @@ class PayoutCommand extends Command
 
     protected $description = 'Вывод средств на сервис кошелька';
 
-    public function handle(PayoutService $service): void
+    public function handle(): void
     {
-        if (config('app.production_env')) {
-            $service->init();
-        }
+//        if (config('app.production_env')) {
+            $subs = Sub::readyToPayout()
+                ->with('wallets')
+                ->get();
+
+            $subs->each(function (Sub $sub) {
+                Payout::localSubProcess($sub);
+            });
+//        }
     }
 }

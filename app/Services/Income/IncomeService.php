@@ -43,7 +43,7 @@ final readonly class IncomeService
         }
     }
 
-    public function store(IncomeContract $income): void
+    private function store(IncomeContract $income): void
     {
         try {
             DB::beginTransaction();
@@ -83,11 +83,9 @@ final readonly class IncomeService
 
     private function log(DtoContract $income): void
     {
+        $amount = number_format($income->dailyAmount, 8, '.', ' ');
         Log::channel('commands.incomes')->info(
-            message: "INCOME CREATED.\n
-            TYPE: {$income->type->value})\n
-            AMOUNT: {$income->dailyAmount}\n
-            SUB: {$income->sub->group_id}",
+            message: "SUB: {$income->sub->group_id} AMOUNT: $amount  TYPE: {$income->type->value}"
         );
     }
 }
