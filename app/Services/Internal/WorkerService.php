@@ -10,12 +10,10 @@ use App\Actions\WorkerHashRate\Create as HashRateCreate;
 use App\Dto\WorkerData;
 use App\Models\Sub;
 use App\Models\Worker;
-use App\Models\WorkerHashrate;
 use App\Services\External\BtcCom\ClientContract;
 use App\Services\External\BtcCom\TransformContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 final readonly class WorkerService
 {
@@ -83,19 +81,5 @@ final readonly class WorkerService
                 ]);
             }
         });
-
-        Log::channel('commands.workers')->info(
-            message: sprintf("WORKER HASHRATE IMPORT COMPLETE \n
-            TOTAL 1M HASHRATE: %s \n
-            WORKERS COUNT: %s",
-                WorkerHashrate::selectRaw('worker_id, max(hash_per_min) as hash')
-                    ->groupBy('worker_id', 'hash_per_min', 'created_at')
-                    ->latest()
-                    ->limit($remoteWorkers->count())
-                    ->get()
-                    ->sum('hash'),
-                $remoteWorkers->count(),
-            )
-        );
     }
 }

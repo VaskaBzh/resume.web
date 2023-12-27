@@ -7,7 +7,9 @@ namespace App\Console\Commands\Income;
 use App\Enums\Income\Type;
 use App\Models\Sub;
 use App\Services\Internal\IncomeService;
+use App\Utils\HashRateConverter;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class IncomeCommand extends Command
 {
@@ -20,30 +22,39 @@ class IncomeCommand extends Command
      */
     public function handle(): void
     {
-        Sub::hasWorkerHashRate()
+        $subs = Sub::hasWorkerHashRate()
             ->with(['user.referrer', 'wallets'])
-            ->each(static function (Sub $sub) {
-                $sub->refresh();
+            ->get();
 
-                $referrerActiveSub = $sub->user
-                    ->referrer
-                    ?->activeSub()
-                    ->first();
+        Log::channel('commands.incomes')->info('START INCOME PROCESS');
 
-                $service = IncomeService::init(
-                    stat: app('miner_stat'),
-                    sub: $sub,
-                    referrerSub: $referrerActiveSub
-                );
+        $subs->each(static function (Sub $sub) {
+            $sub->refresh();
 
-                $service->createIncome($sub, Type::MINING);
-                $service->updateLocalSub($sub, Type::MINING);
-                $service->createFinance();
+            $referrerActiveSub = $sub->user
+                ->referrer
+                ?->activeSub()
+                ->first();
 
-                if ($referrerActiveSub) {
-                    $service->createIncome($referrerActiveSub, Type::REFERRAL);
-                    $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
-                }
-            });
+            $service = IncomeService::init(
+                stat: app('miner_stat'),
+                sub: $sub,
+                referrerSub: $referrerActiveSub
+            );
+
+            $service->createIncome($sub, Type::MINING);
+            $service->updateLocalSub($sub, Type::MINING);
+            $service->createFinance();
+
+            if ($referrerActiveSub) {
+                $service->createIncome($referrerActiveSub, Type::REFERRAL);
+                $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
+            }
+        });
+
+        $totalHashRate = HashRateConverter::fromPure($subs->sum('hash_rate'));
+
+        Log::channel('commands.incomes')
+            ->info("FINISH INCOME PROCESS WITH HASH RATE: $totalHashRate->value $totalHashRate->unit");
     }
 }
