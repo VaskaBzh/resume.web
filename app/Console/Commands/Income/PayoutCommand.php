@@ -15,6 +15,8 @@ class PayoutCommand extends Command
 
     public function handle(PayoutService $service): void
     {
-        $service->init();
+        if (config('app.production_env')) {
+            $service->init();
+        }
     }
 }

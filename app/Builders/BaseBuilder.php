@@ -14,6 +14,11 @@ class BaseBuilder extends Builder
         return $this->where('group_id', $groupId);
     }
 
+    public function oldestThan(Carbon $date): Builder
+    {
+        return $this->where('created_at', '<', $date);
+    }
+
     public function between(string $column, ?string $from, ?string $to): Builder
     {
         return $this

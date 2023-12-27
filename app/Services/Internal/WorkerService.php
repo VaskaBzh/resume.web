@@ -6,7 +6,7 @@ namespace App\Services\Internal;
 
 use App\Actions\Worker\Create;
 use App\Actions\Worker\Update;
-use App\Actions\WorkerHashRate\CreateNewAndDeleteOld;
+use App\Actions\WorkerHashRate\Create as HashRateCreate;
 use App\Dto\WorkerData;
 use App\Models\Sub;
 use App\Models\Worker;
@@ -68,19 +68,17 @@ final readonly class WorkerService
 
     public function createHashes(int $groupId): void
     {
-        $remoteWorkers = $this->client->getWorkerList($groupId);
-        $localWorkers = Worker::select('worker_id')
-            ->whereIn('worker_id', $remoteWorkers->pluck('worker_id'))
-            ->get();
+        $remoteWorkers = $this->client->getWorkerList($groupId)
+            ->filter(static fn (array $remoteWorker) => Arr::get($remoteWorker, 'shares_1m_pure', 0) > 0);
+
+        $localWorkers = Worker::whereIn('worker_id', $remoteWorkers->pluck('worker_id'))->get();
 
         $remoteWorkers->each(function (array $remoteWorker) use ($localWorkers) {
             if ($localWorker = $localWorkers->where('worker_id', $remoteWorker['worker_id'])->first()) {
-                if (Arr::get($remoteWorker, 'shares_1m_pure', 0) > 0) {
-                    CreateNewAndDeleteOld::execute($localWorker, [
-                        'hash_rate_per_min' => $remoteWorker['shares_1m_pure'],
-                        'unit' => $remoteWorker['shares_unit'],
-                    ]);
-                }
+                HashRateCreate::execute($localWorker, [
+                    'hash_rate_per_min' => $remoteWorker['shares_1m_pure'],
+                    'unit' => $remoteWorker['shares_unit'],
+                ]);
             }
         });
     }

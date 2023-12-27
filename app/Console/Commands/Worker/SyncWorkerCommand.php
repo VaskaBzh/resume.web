@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Worker;
 
-use App\Models\Worker;
 use App\Services\Internal\WorkerService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -36,12 +35,9 @@ class SyncWorkerCommand extends Command
 
         Log::channel('commands.workers')
             ->info(
-                message: sprintf("SYNCED COUNT: %s. \n
-                ADDED COUNT: %s. \n
-                TOTAL HASHRATE: %s",
+                message: sprintf('SYNCED COUNT: %s ADDED COUNT: %s',
                     $syncedWorkersCount,
-                    $addedWorkers ?? 0,
-                    Worker::sum('hash_per_day'),
+                    $addedWorkers,
                 )
             );
     }
