@@ -39,13 +39,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('income')->dailyAt('07:00');
-        $schedule->command('payout')->dailyAt('07:15');
+        $schedule->command('income')->dailyAt('02:00');
+        $schedule->command('payout')->dailyAt('07:00');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
         $schedule->command('make:worker-hashes')->everyFifteenMinutes();
         $schedule->command('observe:custom-percent-time')->dailyAt('00:00');
-        $schedule->command('delete:hash')->dailyAt('02:00');
+        $schedule->command('delete:hash')->dailyAt('12:00');
     }
 
     /**
