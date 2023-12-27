@@ -19,10 +19,10 @@
         .ReadMsgBody {
             width: 100%;
         }
-        .ExternalClass {
+        .ApiClass {
             width: 100%;
         }
-        .ExternalClass {
+        .ApiClass {
             line-height: 100%;
         }
         a:hover {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal\Income;
+namespace App\Services\Income;
 
 use App\Actions\Finance\Create as FinanceCreate;
 use App\Actions\Income\Create as IncomeCreate;
@@ -11,9 +11,9 @@ use App\Dto\FinanceData;
 use App\Dto\Income\UpdateStatusData;
 use App\Exceptions\CalculatingException;
 use App\Models\Sub;
-use App\Services\Internal\Income\Types\MiningIncome;
-use App\Services\Internal\Income\Types\ReferralIncome;
-use App\Services\Internal\SubService;
+use App\Services\Income\Types\MiningIncome;
+use App\Services\Income\Types\ReferralIncome;
+use App\Services\SubService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

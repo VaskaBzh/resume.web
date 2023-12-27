@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Services\External\BtcCom;
+namespace App\Services\Api\BtcCom;
 
 use App\Exceptions\BusinessException;
 use App\Models\Worker;
-use App\Services\External\ApiRequest;
-use App\Services\External\BaseClient;
+use App\Services\Api\ApiRequest;
+use App\Services\Api\BaseClient;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;

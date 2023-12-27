@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\External\BtcCom;
+namespace App\Services\Api\BtcCom;
 
 use Illuminate\Support\Collection;
 

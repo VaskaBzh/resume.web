@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Income;
 
-use App\Services\Internal\PayoutService;
+use App\Services\PayoutService;
 use Illuminate\Console\Command;
 
 class PayoutCommand extends Command

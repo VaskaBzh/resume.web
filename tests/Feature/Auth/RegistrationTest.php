@@ -6,7 +6,7 @@ namespace Feature\Auth;
 
 use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
-use App\Services\Internal\ReferralService;
+use App\Services\ReferralService;
 use Database\Seeders\RoleAndPermissionsSeeder;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;

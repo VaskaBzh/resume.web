@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Services;
 
 use App\Models\User;
-use App\Services\Internal\ReferralService;
+use App\Services\ReferralService;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 

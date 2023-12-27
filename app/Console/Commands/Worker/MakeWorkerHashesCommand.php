@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Worker;
 
-use App\Services\Internal\WorkerService;
+use App\Services\WorkerService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 

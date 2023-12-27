@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\External;
+namespace App\Services\Api;
 
 class ApiRequest
 {

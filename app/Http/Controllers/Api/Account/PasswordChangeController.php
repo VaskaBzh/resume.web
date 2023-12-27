@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Api\Account;
 
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
-use App\Services\Internal\UserService;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Sub;
 
-use App\Services\Internal\SubService;
+use App\Services\SubService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 

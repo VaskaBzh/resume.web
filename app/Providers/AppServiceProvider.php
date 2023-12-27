@@ -6,12 +6,12 @@ namespace App\Providers;
 
 use App\Exceptions\CalculatingException;
 use App\Models\MinerStat;
-use App\Services\External\BtcCom\Client as BtcComClient;
-use App\Services\External\BtcCom\ClientContract;
-use App\Services\External\BtcCom\DataTransformer as BtcComDataTransformer;
-use App\Services\External\BtcCom\TransformContract;
-use App\Services\Internal\Income\IncomeService;
-use App\Services\Internal\PayoutService;
+use App\Services\Api\BtcCom\Client as BtcComClient;
+use App\Services\Api\BtcCom\ClientContract;
+use App\Services\Api\BtcCom\DataTransformer as BtcComDataTransformer;
+use App\Services\Api\BtcCom\TransformContract;
+use App\Services\Income\IncomeService;
+use App\Services\PayoutService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 

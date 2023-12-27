@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal;
+namespace App\Services;
 
 use App\Actions\Finance\Create;
 use App\Actions\Income\Create as IncomeCreate;
@@ -17,6 +17,7 @@ use App\Enums\Income\Type;
 use App\Exceptions\CalculatingException;
 use App\Models\MinerStat;
 use App\Models\Sub;
+use App\Services\App\Helper;
 use App\Utils\HashRateConverter;
 use Illuminate\Support\Facades\Log;
 

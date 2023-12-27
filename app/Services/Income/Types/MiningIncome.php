@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal\Income\Types;
+namespace App\Services\Income\Types;
 
 use App\Dto\DtoContract;
 use App\Dto\Income\IncomeCreateData;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
-use App\Services\Internal\Income\BaseIncome;
+use App\Services\Income\BaseIncome;
 use App\Utils\Earn;
 use App\Utils\HashRateConverter;
 

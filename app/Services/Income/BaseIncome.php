@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal\Income;
+namespace App\Services\Income;
 
 use App\Dto\DtoContract;
 use App\Exceptions\CalculatingException;

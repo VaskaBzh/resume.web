@@ -9,7 +9,7 @@ use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Models\Income;
 use App\Models\User;
-use App\Services\Internal\ReferralService;
+use App\Services\ReferralService;
 use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;

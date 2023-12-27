@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal;
+namespace App\Services;
 
 use App\Actions\Hashes\Create as CreateNew;
 use App\Actions\Sub\Create;
@@ -13,8 +13,8 @@ use App\Dto\Sub\SubViewData;
 use App\Models\Hash;
 use App\Models\Sub;
 use App\Models\User;
-use App\Services\External\BtcCom\ClientContract;
-use App\Services\External\BtcCom\TransformContract;
+use App\Services\Api\BtcCom\ClientContract;
+use App\Services\Api\BtcCom\TransformContract;
 use Illuminate\Support\Collection;
 
 final readonly class SubService

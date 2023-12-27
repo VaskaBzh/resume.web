@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal;
+namespace App\Services;
 
 use App\Actions\MinerStat\Upsert;
 use App\Dto\MinerStats;
 use App\Models\MinerStat;
-use App\Services\External\BtcCom\Client as BtcComClient;
-use App\Services\External\MinerStat\Client as MinerStatsClient;
+use App\Services\Api\BtcCom\Client as BtcComClient;
+use App\Services\Api\MinerStat\Client as MinerStatsClient;
 
 final readonly class MinerStatService
 {

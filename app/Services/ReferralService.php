@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Internal;
+namespace App\Services;
 
 use App\Builders\SubBuilder;
 use App\Models\Income;

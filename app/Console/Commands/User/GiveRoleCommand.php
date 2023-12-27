@@ -4,7 +4,7 @@ namespace App\Console\Commands\User;
 
 use App\Enums\User\Roles;
 use App\Models\User;
-use App\Services\Internal\ReferralService;
+use App\Services\ReferralService;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
 
