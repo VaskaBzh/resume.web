@@ -16,14 +16,14 @@ class PayoutCommand extends Command
 
     public function handle(): void
     {
-//        if (config('app.production_env')) {
-            $subs = Sub::readyToPayout()
-                ->with('wallets')
-                ->get();
+        //        if (config('app.production_env')) {
+        $subs = Sub::readyToPayout()
+            ->with('wallets')
+            ->get();
 
-            $subs->each(function (Sub $sub) {
-                Payout::localSubProcess($sub);
-            });
-//        }
+        $subs->each(function (Sub $sub) {
+            Payout::localSubProcess($sub);
+        });
+        //        }
     }
 }

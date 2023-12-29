@@ -7,7 +7,7 @@ namespace App\Rules\User;
 use Illuminate\Contracts\Validation\InvokableRule;
 use Illuminate\Support\Facades\Hash;
 
-final readonly class ConfirmationCodeRule implements InvokableRule
+class ConfirmationCodeRule implements InvokableRule
 {
     public function __invoke($attribute, $value, $fail)
     {

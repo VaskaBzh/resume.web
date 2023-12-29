@@ -14,9 +14,7 @@ final readonly class MinerStatService
 {
     public static function store(): ?MinerStat
     {
-        $properties = (new MinerStat())->getFillable();
-
-        $imports = app(MinerStatsClient::class)(properties: $properties);
+        $imports = app(MinerStatsClient::class)(properties: (new MinerStat)->getFillable());
 
         return Upsert::execute(
             stats: MinerStats::fromResponse(collect(

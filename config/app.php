@@ -34,6 +34,11 @@ return [
     'local' => env('APP_ENV') === 'local',
     'testing_env' => env('APP_ENV') === 'testing',
 
+    /**
+     * Sub-account wallet verification time
+     */
+    'wallet_verification_time' => env('WALLET_VERIFICATION_TIME', 48),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

@@ -47,31 +47,26 @@ final readonly class ReferralService
 
     public static function getReferralCollection(User $user): Collection
     {
-        $referrals = $user->referrals()
-            ->with('subs')
-            ->with('subs.workers')
-            ->get();
+        return $user
+            ->referrals()
+            ->withSubsWorkerStats()
+            ->withSum('referralIncomes as total_income', 'daily_amount')
+            ->orderBy('total_income', 'desc')
+            ->paginate()
+            ->transform(function (User $referral) {
 
-        return $referrals->map(function (User $referral) {
+                $totalHashPerDay = HashRateConverter::fromPure($referral->subs->sum('workers_sum_hash_per_day'));
 
-            $referralWorkers = $referral->subs->pluck('workers')->flatMap;
-            $referralSubs = $referral->subs;
-            $totalHashRate = HashRateConverter::fromPure($referralSubs->map->hash_rate->sum());
-
-            return [
-                'email' => $referral->email,
-                'referral_active_workers_count' => $referralWorkers
-                    ->where('status', 'ACTIVE')
-                    ->count(),
-                'referral_inactive_workers_count' => $referralWorkers
-                    ->where('status', 'INACTIVE')
-                    ->count(),
-                'referral_hash_per_day' => $totalHashRate->value,
-                'referral_hash_per_day_unit' => $totalHashRate->unit,
-                'total_amount' => $referralSubs->sum('total_amount'),
-                'referral_percent' => $referral->referral_percentage,
-            ];
-        });
+                return [
+                    'email' => $referral->email,
+                    'referral_active_workers_count' => $referral->subs->sum('total_active_workers'),
+                    'referral_inactive_workers_count' => $referral->subs->sum('total_inactive_workers'),
+                    'referral_hash_per_day' => (float) $totalHashPerDay->value,
+                    'referral_hash_per_day_unit' => $totalHashPerDay->unit,
+                    'total_amount' => (float) $referral->total_income,
+                    'referral_percent' =>(float) $referral->referral_percentage,
+                ];
+            });
     }
 
     /**

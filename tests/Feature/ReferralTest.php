@@ -104,11 +104,6 @@ class ReferralTest extends TestCase
     {
         Income::insert($incomes);
 
-        $this->referral
-            ->subs()
-            ->hasWorkerHashRate()
-            ->update(['total_amount' => 0.00044444]);
-
         Sanctum::actingAs($this->referrer);
 
         $this->getJson(route('v1.referral.list', $this->referrer))
@@ -117,7 +112,7 @@ class ReferralTest extends TestCase
                     [
                         'email' => 'second@gmail.com',
                         'referral_active_workers_count' => 1,
-                        'referral_hash_per_day' => '200.00',
+                        'referral_hash_per_day' => 200.00,
                         'referral_hash_per_day_unit' => 'T',
                         'referral_inactive_workers_count' => 1,
                         'referral_percent' => 1,

@@ -21,23 +21,21 @@ class SubBuilder extends BaseBuilder
 
     public function hasWorkerHashRate(): Builder
     {
-        return $this->whereHas('workers',
-            fn (Builder $query) => $query->where('hash_per_day', '>', 0)
+        return $this->whereHas('workers', fn (Builder $query) => $query
+            ->where('hash_per_day', '>', 0)
         );
     }
 
     public function readyToPayout(): Builder
     {
-        return $this->whereHas('wallets', function (Builder $query) {
-            $query->where('wallet_updated_at', '<=', now()->subHours(48))
-                ->orWhere(static function (Builder $subQuery) {
-                    $subQuery->whereNull('wallet_updated_at')
-                        ->where('created_at', '<=', now()->subHours(48));
-                });
-        })->where('pending_amount',
-            '>=',
-            config('api.wallet.min_withdrawal')
-        );
+        $walletVerificationTime = now()->subHours(config('app.wallet_verification_time'));
+
+        return $this->whereHas('wallets', static fn (Builder $query) => $query
+            ->where('wallet_updated_at', '<=', $walletVerificationTime)
+            ->orWhere(static fn (Builder $subQuery) => $subQuery
+                ->whereNull('wallet_updated_at')
+                ->where('created_at', '<=', $walletVerificationTime))
+        )->where('pending_amount', '>=', config('api.wallet.min_withdrawal'));
     }
 
     public function getActive(Collection $userIds): Builder
@@ -47,14 +45,15 @@ class SubBuilder extends BaseBuilder
 
     public function whereExpiredCustomPercent(): Builder
     {
-        return $this
-            ->whereNotNull('custom_percent_expired_at')
+        return $this->whereNotNull('custom_percent_expired_at')
             ->where('custom_percent_expired_at', '<=', now());
     }
 
     public function lastMonthIncomes(): HasMany
     {
-        return $this->model->incomes()->where('created_at', '>=', now()->subMonth());
+        return $this->model
+            ->incomes()
+            ->where('created_at', '>=', now()->subMonth());
     }
 
     public function whereNameIn(Collection $names): Builder

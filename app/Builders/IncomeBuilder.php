@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Builders;
 
 use App\Enums\Income\Status;
+use App\Enums\Income\Type;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 
 class IncomeBuilder extends BaseBuilder
 {
@@ -25,10 +26,10 @@ class IncomeBuilder extends BaseBuilder
             ->whereDate('created_at', Carbon::yesterday());
     }
 
-    public function getReferralIncomes(Collection $groupIds): Builder
+    public function referral(User $user): Builder
     {
         return $this
-            ->whereIn('group_id', $groupIds)
-            ->where('type', 'referral');
+            ->where('referral_id', $user->id)
+            ->where('type', Type::REFERRAL->value);
     }
 }

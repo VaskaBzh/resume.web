@@ -4,7 +4,7 @@ namespace App\Rules\User;
 
 use Illuminate\Contracts\Validation\InvokableRule;
 
-readonly class OnlyEngNameRule implements InvokableRule
+class OnlyEngNameRule implements InvokableRule
 {
     public function __invoke($attribute, $value, $fail)
     {
