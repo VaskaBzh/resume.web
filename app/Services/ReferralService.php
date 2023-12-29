@@ -64,7 +64,7 @@ final readonly class ReferralService
                     'referral_hash_per_day' => (float) $totalHashPerDay->value,
                     'referral_hash_per_day_unit' => $totalHashPerDay->unit,
                     'total_amount' => (float) $referral->total_income,
-                    'referral_percent' =>(float) $referral->referral_percentage,
+                    'referral_percent' => (float) $referral->referral_percentage,
                 ];
             });
     }
