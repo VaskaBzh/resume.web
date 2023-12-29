@@ -35,8 +35,8 @@ final readonly class ReferralService
 
         return [
             'group_id' => $referrer->active_sub,
-            'attached_referrals_count' => $result->active_referrals_count,
-            'active_referrals_count' => $result->attached_referrals_count,
+            'attached_referrals_count' => $result->attached_referrals_count,
+            'active_referrals_count' => $result->active_referrals_count,
             'referrals_total_amount' => Income::whereIn('group_id', $referrer->subs->pluck('group_id'))
                 ->where('type', 'referral')
                 ->sum('daily_amount'),
