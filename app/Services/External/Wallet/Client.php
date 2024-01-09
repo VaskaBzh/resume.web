@@ -64,7 +64,7 @@ final class Client
             ],
         ]);
 
-        Log::channel('payouts')->info('WALLET RESPONSE', [
+        Log::channel('commands.payouts')->info('WALLET RESPONSE', [
             'wallet' => $wallet,
             'response' => $response,
         ]);
