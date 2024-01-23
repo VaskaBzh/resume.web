@@ -13,7 +13,6 @@ use App\Models\Payout;
 use App\Models\Sub;
 use App\Services\External\Wallet\Client;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 final readonly class PayoutService
