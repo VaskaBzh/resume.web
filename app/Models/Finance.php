@@ -14,6 +14,7 @@ class Finance extends Model
         'earn',
         'user_total',
         'percent',
+        'clear_percent',
         'profit',
     ];
 

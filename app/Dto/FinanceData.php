@@ -11,6 +11,7 @@ final readonly class FinanceData
      * @param  float  $earn - общая добыча
      * @param  float  $userTotal доход сабаккаунта после вычета таксы
      * @param  float  $percent - величина таксы
+     * @param  float  $clear_percent - величина таксы с учетом рефералки
      * @param  float  $profit - доход allbtc
      */
     public function __construct(
@@ -18,6 +19,7 @@ final readonly class FinanceData
         public float $earn,
         public float $userTotal,
         public float $percent,
+        public float $clear_percent,
         public float $profit,
     ) {
     }
@@ -29,6 +31,7 @@ final readonly class FinanceData
             earn: $requestData['earn'],
             userTotal: $requestData['user_total'],
             percent: $requestData['percent'],
+            clear_percent: $requestData['clear_percent'],
             profit: $requestData['profit']
         );
     }
