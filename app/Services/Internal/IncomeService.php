@@ -267,22 +267,26 @@ final class IncomeService
      */
     public function createFinance(): void
     {
-        if ($this->sub->user->referrer_id == null) {
-            $clear_percent = $this->fee;
-        } else {
-            if ($this->fee < $this->sub->user->referral_percent) {
-                Log::channel('commands.incomes')->warning('Referal percent more then our percent!');
+        try {
+            if ($this->sub->user->referrer_id == null) {
+                $clear_percent = $this->fee;
+            } else {
+                if ($this->fee < $this->sub->user->referral_percent) {
+                    Log::channel('commands.incomes')->warning('Referal percent more then our percent!');
+                }
+                $clear_percent = $this->fee - $this->sub->user->referral_percent;
             }
-            $clear_percent = $this->fee - $this->sub->user->referral_percent;
-        }
 
-        Create::execute(financeData: FinanceData::fromRequest([
-            'group_id' => $this->sub->group_id,
-            'earn' => $this->dailyEarn - $this->dailyEarn * (config('api.btc.fee') / 100),
-            'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
-            'percent' => $this->fee,
-            'clear_percent' => $clear_percent,
-            'profit' => $this->dailyEarn * ($clear_percent / 100),
-        ]));
+            Create::execute(financeData: FinanceData::fromRequest([
+                'group_id' => $this->sub->group_id,
+                'earn' => $this->dailyEarn - $this->dailyEarn * (config('api.btc.fee') / 100),
+                'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
+                'percent' => $this->fee,
+                'clear_percent' => $clear_percent,
+                'profit' => $this->dailyEarn * ($clear_percent / 100),
+            ]));
+        } catch (\Exception $e) {
+            Log::error('Exception occurred while creating finance: ' . $e->getMessage());
+        }
     }
 }
