@@ -193,7 +193,7 @@ class IncomeServiceTest extends TestCase
     public function referralDiscountCase()
     {
         $referralSub = $this->subsWithHashRate->where('group_id', 3)->first();
-        $referralSub->user->update(['referral_discount' => 1]);
+        $referralSub->user->update(['referral_discount' => 6]);
         $referralSub->wallets->first()->update(['wallet_updated_at' => now()->subHours(48)]);
 
         $service = IncomeService::init($this->stat, $referralSub, null);
@@ -210,6 +210,14 @@ class IncomeServiceTest extends TestCase
             ''
         );
 
+        if($referralSub->user->referrer_id == null ){
+            $clear_percent = config('api.btc.fee');
+        } else {
+            $clear_percent = 10 - $referralSub->user->referral_percent -
+                $referralSub->user->referral_discount;
+        }
+
+//        dd($clear_percent, $referralSub->user->referral_percent, $referralSub->user->referral_discount, $pureDailyEarning, $pureDailyEarning * ($clear_percent / 100));
         $service->createIncome($referralSub, Type::MINING);
         $service->updateLocalSub($referralSub, Type::MINING);
         $service->createFinance();
@@ -237,7 +245,8 @@ class IncomeServiceTest extends TestCase
             ),
             'user_total' => $expectDailyAmount,
             'percent' => $resultFee - config('api.btc.fee'),
-            'profit' => number_format($pureDailyEarning * ($subDiscountedFee / 100),
+            'clear_percent' => $clear_percent,
+            'profit' => number_format($pureDailyEarning * ($clear_percent / 100),
                 8,
                 '.',
                 ''
