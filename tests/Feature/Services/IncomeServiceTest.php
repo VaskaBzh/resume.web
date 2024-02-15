@@ -226,7 +226,7 @@ class IncomeServiceTest extends TestCase
             'group_id' => $referralSub->group_id,
             'type' => Type::MINING->value,
             'daily_amount' => $expectDailyAmount,
-            'status' => Status::PENDING->value,
+            'status' => Status::READY_TO_PAYOUT->value,
             'hash' => HashRateConverter::fromPure($hashrate)->value,
         ]);
         $this->assertDatabaseHas('subs', [
