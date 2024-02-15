@@ -75,5 +75,3 @@ role:
 	$(ARTISAN) give:role
 percent:
 	$(ARTISAN) set:percent
-payout:
-	$(ARTISAN) payout
