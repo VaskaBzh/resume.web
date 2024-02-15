@@ -274,7 +274,7 @@ final class IncomeService
                 if ($this->fee < $this->sub->user->referral_percent) {
                     Log::channel('commands.incomes')->warning('Referal percent more then our percent!');
                 }
-                $clear_percent = $this->fee - $this->sub->user->referral_percent;
+                $clear_percent = $this->fee - $this->sub->user->referral_percent - $this->sub->user->referral_discount;
             }
 
             Create::execute(financeData: FinanceData::fromRequest([
