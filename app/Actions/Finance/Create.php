@@ -16,6 +16,7 @@ class Create
             'earn' => $financeData->earn,
             'user_total' => $financeData->userTotal,
             'percent' => $financeData->percent,
+            'clear_percent' => $financeData->clear_percent,
             'profit' => $financeData->profit,
         ]);
     }

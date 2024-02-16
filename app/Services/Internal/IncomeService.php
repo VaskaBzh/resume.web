@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Log;
 
 final class IncomeService
 {
+
     /**
      * @var array{
      *     mining: array{
@@ -62,22 +63,23 @@ final class IncomeService
     ];
 
     /**
-     * @param  MinerStat  $stat Global mining stats (net difficulty, reward block, etc)
-     * @param  Sub  $sub Local sub-account
-     * @param  Sub|null  $referrerSub Referrer sub-account
-     * @param  float  $referralPercent Referral percent
-     * @param  float  $dailyEarn Pure sub-account coin earning
-     * @param  float  $fee AllBtc commission
+     * @param MinerStat $stat Global mining stats (net difficulty, reward block, etc)
+     * @param Sub $sub Local sub-account
+     * @param Sub|null $referrerSub Referrer sub-account
+     * @param float $referralPercent Referral percent
+     * @param float $dailyEarn Pure sub-account coin earning
+     * @param float $fee AllBtc commission
      */
     private function __construct(
         private readonly MinerStat $stat,
-        private readonly Sub $sub,
-        private readonly ?Sub $referrerSub,
-        private readonly float $referralPercent,
-        private readonly float $dailyEarn,
-        private readonly int $hashRate,
-        private readonly float $fee,
-    ) {
+        private readonly Sub       $sub,
+        private readonly ?Sub      $referrerSub,
+        private readonly float     $referralPercent,
+        private readonly float     $dailyEarn,
+        private readonly int       $hashRate,
+        private readonly float     $fee,
+    )
+    {
     }
 
     /**
@@ -85,20 +87,21 @@ final class IncomeService
      */
     public static function init(
         MinerStat $stat,
-        Sub $sub,
-        ?Sub $referrerSub
-    ): IncomeService {
+        Sub       $sub,
+        ?Sub      $referrerSub
+    ): IncomeService
+    {
         $service = new self(
             stat: $stat,
             sub: $sub,
             referrerSub: $referrerSub,
-            referralPercent: (float) $sub->user->referral_percent ?? $referrerSub->user->referral_percent,
+            referralPercent: (float)$sub->user->referral_percent ?? $referrerSub->user->referral_percent,
             dailyEarn: Helper::calculateEarn(
                 stats: $stat,
                 hashRate: $subAccountHashRate = $sub->hash_rate,
             ),
             hashRate: $subAccountHashRate,
-            fee: $sub->allbtc_fee - (float) $sub->user->referral_discount
+            fee: $sub->allbtc_fee - (float)$sub->user->referral_discount
         );
 
         $service->setParams();
@@ -146,7 +149,7 @@ final class IncomeService
     public function setPendingAmount(Sub $sub, Type $incomeType): IncomeService
     {
         $this->params[$incomeType->value]['pendingAmount'] = $this->params[$incomeType->value]['dailyAmount'] +
-            (float) $sub->pending_amount;
+            (float)$sub->pending_amount;
 
         return $this;
     }
@@ -180,29 +183,30 @@ final class IncomeService
     {
         $dailyAmount = $this->params[$incomeType->value]['dailyAmount'];
 
-        return ((float) $sub->pending_amount + $dailyAmount) >= config('api.wallet.min_withdrawal');
+        return ((float)$sub->pending_amount + $dailyAmount) >= config('api.wallet.min_withdrawal');
     }
 
     /**
      * Set income message and status
      */
     public function setInfo(
-        Sub $sub,
+        Sub  $sub,
         Type $incomeType
-    ): void {
+    ): void
+    {
         if ($sub->wallets->isEmpty()) {
             $this->params[$incomeType->value]['status'] = Status::NO_WALLET;
 
             return;
         }
 
-        if (! $sub->wallets->first()->isUnlocked()) {
+        if (!$sub->wallets->first()->isUnlocked()) {
             $this->params[$incomeType->value]['status'] = Status::ON_VERIFY;
 
             return;
         }
 
-        if (! $this->isReadyToPayOut($sub, $incomeType)) {
+        if (!$this->isReadyToPayOut($sub, $incomeType)) {
             $this->params[$incomeType->value]['status'] = Status::PENDING;
 
             return;
@@ -263,12 +267,26 @@ final class IncomeService
      */
     public function createFinance(): void
     {
-        Create::execute(financeData: FinanceData::fromRequest([
-            'group_id' => $this->sub->group_id,
-            'earn' => $this->dailyEarn - $this->dailyEarn * (config('api.btc.fee') / 100),
-            'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
-            'percent' => $this->fee,
-            'profit' => $this->dailyEarn * ($this->fee / 100),
-        ]));
+        try {
+            if ($this->sub->user->referrer_id == null) {
+                $clear_percent = $this->fee;
+            } else {
+                if ($this->fee < $this->sub->user->referral_percent) {
+                    Log::channel('commands.incomes')->warning('Referal percent more then our percent!');
+                }
+                $clear_percent = $this->fee - $this->sub->user->referral_percent - $this->sub->user->referral_discount;
+            }
+
+            Create::execute(financeData: FinanceData::fromRequest([
+                'group_id' => $this->sub->group_id,
+                'earn' => $this->dailyEarn - $this->dailyEarn * (config('api.btc.fee') / 100),
+                'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
+                'percent' => $this->fee,
+                'clear_percent' => $clear_percent,
+                'profit' => $this->dailyEarn * ($clear_percent / 100),
+            ]));
+        } catch (\Exception $e) {
+            Log::error('Exception occurred while creating finance: ' . $e->getMessage());
+        }
     }
 }

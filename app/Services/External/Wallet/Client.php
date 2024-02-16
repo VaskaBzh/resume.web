@@ -54,25 +54,57 @@ final class Client
      */
     public function sendBalance(string $wallet, float $balance): string
     {
-        $response = $this->client->post(config('api.wallet.ip'), [
-            'jsonrpc' => '1.0',
-            'id' => 'withdrawal',
-            'method' => 'sendtoaddress',
-            'params' => [
-                $wallet,
-                (float) number_format($balance, 8, '.', ' '),
-            ],
-        ]);
+        try {
+            Log::channel('commands.payouts')->info('Sending balance', [
+                'wallet' => $wallet,
+                'balance' => $balance,
+            ]);
 
-        Log::channel('commands.payouts')->info('WALLET RESPONSE', [
-            'wallet' => $wallet,
-            'response' => $response,
-        ]);
+            $formattedBalance = (float) number_format($balance, 8, '.', '');
 
-        if (! $response['result']) {
-            throw new PayOutException(Message::ERROR_PAYOUT->value.$response['error']);
+            // Логирование перед отправкой запроса
+            Log::channel('commands.payouts')->info('Preparing to send request to wallet API', [
+                'wallet' => $wallet,
+                'formattedBalance' => $formattedBalance,
+            ]);
+
+            $response = $this->client->post(config('api.wallet.ip'), [
+                'jsonrpc' => '1.0',
+                'id' => 'withdrawal',
+                'method' => 'sendtoaddress',
+                'params' => [$wallet, $formattedBalance],
+            ]);
+
+            // Полученный ответ
+            Log::channel('commands.payouts')->info('Received wallet API response', [
+                'wallet' => $wallet,
+                'response' => $response,
+            ]);
+
+            if (!isset($response['result']) || $response['result'] === null) {
+                Log::channel('commands.payouts')->error('Error in wallet API response', [
+                    'wallet' => $wallet,
+                    'response' => $response,
+                ]);
+                throw new PayOutException(Message::ERROR_PAYOUT->value . ($response['error'] ?? 'Unknown error'));
+            }
+
+            // Успешное завершение операции
+            Log::channel('commands.payouts')->info('Successfully sent balance', [
+                'wallet' => $wallet,
+                'transactionId' => $response['result'],
+            ]);
+
+            return $response['result'];
+        } catch (\Exception $e) {
+            // Исключения
+            Log::channel('commands.payouts')->error('Exception in sendBalance', [
+                'wallet' => $wallet,
+                'balance' => $balance,
+                'exception' => $e->getMessage(),
+            ]);
+            throw $e; // Переброс исключения для обработки на более высоком уровне
         }
-
-        return $response['result'];
     }
+
 }
