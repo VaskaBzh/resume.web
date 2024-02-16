@@ -31,14 +31,14 @@ class SyncWorkerCommand extends Command
             $addedWorkers = $workerService
                 ->addNew(groupId: config('api.btc.ungrouped_id'))
                 ->count();
+            Log::channel('commands.workers')
+                ->info(
+                    message: sprintf('SYNCED COUNT: %s ADDED COUNT: %s',
+                        $syncedWorkersCount,
+                        $addedWorkers,
+                    )
+                );
         }
 
-        Log::channel('commands.workers')
-            ->info(
-                message: sprintf('SYNCED COUNT: %s ADDED COUNT: %s',
-                    $syncedWorkersCount,
-                    $addedWorkers,
-                )
-            );
     }
 }
