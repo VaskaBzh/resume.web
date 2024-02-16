@@ -57,7 +57,6 @@ class WalletTest extends TestCase
     public function createWithCode(): void
     {
         $code = $this->generateConfirmationCode();
-
         $sub = $this->user->subs()->first();
         $walletAddress = Str::random(20);
 
