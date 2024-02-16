@@ -65,7 +65,7 @@ return [
         /**
          * Tax percent
          */
-        'fee' => 0.5,
+        'fee' => 3.5,
     ],
 
     'minerstat' => [
