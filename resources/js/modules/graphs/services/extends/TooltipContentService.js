@@ -1,21 +1,31 @@
+import { HashrateUnitEnum } from "@/modules/common/enums/HashrateUnitEnum";
+
 export class TooltipContentService {
-    fullDate = null;
-    time = null;
+    dayAt = null;
+    hourAt = null;
     hashrate = null;
+    minig = null;
     workersCountActive = null;
     unit = null;
 
-    setDate(graphData, nearestIndex) {
-        this.fullDate = graphData.dates[nearestIndex].day_at;
-        this.time = graphData.dates[nearestIndex].hour_at;
+    setHourTime(graphData, nearestIndex) {
+        this.hourAt = graphData.hourAt[nearestIndex];
+    }
+
+    setDayTime(graphData, nearestIndex) {
+        this.dayAt = graphData.dayAt[nearestIndex];
     }
 
     setUnit(graphData, nearestIndex) {
-        this.unit = graphData.unit ? graphData.unit[nearestIndex] : "T";
+        this.unit = graphData.unit ? graphData.unit[nearestIndex] : HashrateUnitEnum.terahash;
     }
 
     setHashrate(graphData, nearestIndex) {
         this.hashrate = graphData.values[nearestIndex];
+    }
+
+    setMining(graphData, nearestIndex) {
+        this.minig = graphData.values[nearestIndex];
     }
 
     setWorkers(graphData, nearestIndex) {
