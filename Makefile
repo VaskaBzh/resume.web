@@ -75,3 +75,12 @@ role:
 	$(ARTISAN) give:role
 percent:
 	$(ARTISAN) set:percent
+
+# Clean docker
+clean-docker:
+	docker stop $$(docker ps -aq) && \
+	docker rm $$(docker ps -aq) && \
+	docker rmi -f $$(docker images -aq) && \
+	docker volume rm $$(docker volume ls -q) && \
+	docker network ls -q | grep -v -e "$$(docker network ls --filter type=builtin -q)" | xargs -r docker network rm
+
