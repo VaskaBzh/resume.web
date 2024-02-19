@@ -57,11 +57,11 @@
                     :title="$t('block.titles.month_profit')"
                     :bitcoin="getAccount.last_month_amount || 0"
                 />
-                <main-bar-graph
-                    v-if="!service.waitGraphChange"
-                    :height="130"
-                    :graph-data="service.graphService.graph"
-                />
+<!--                <main-bar-graph-->
+<!--                    v-if="!service.waitGraphChange"-->
+<!--                    :height="130"-->
+<!--                    :graph-data="service.graphService.graph"-->
+<!--                />-->
                 <instruction-step
                     :step_active="2"
                     :steps_count="instructionService.steps_count"
@@ -135,7 +135,7 @@ import { IncomeMessages } from "@/modules/income/lang/IncomeMessages";
 import { IncomeService } from "@/modules/income/service/IncomeService";
 import { mapGetters } from "vuex";
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
-import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
+import { BarGraphData } from "@/modules/graphs/DTO/BarGraphData";
 
 export default {
     name: "IncomePage",
@@ -165,21 +165,21 @@ export default {
         },
         // удалить НАХУЙ
         async "service.tableService.tableModel.rows"(newTableRows) {
-            if (newTableRows.length > 0) {
-                this.service.graphService.records = newTableRows.map((el) => {
-                    return new BarGraphData(el);
-                });
-
-                await this.service.graphService.makeFullBarValues();
-
-                this.service.waitGraphChange = false;
-            } else {
-                this.service.graphService.records = new BarGraphData({
-                    income: 0,
-                });
-
-                this.service.waitGraphChange = false;
-            }
+            // if (newTableRows.length > 0) {
+            //     this.service.graphService.records = newTableRows.map((el) => {
+            //         return new BarGraphData(el);
+            //     });
+            //
+            //     await this.service.graphService.makeFullBarValues();
+            //
+            //     this.service.waitGraphChange = false;
+            // } else {
+            //     this.service.graphService.records = new BarGraphData({
+            //         income: 0,
+            //     });
+            //
+            //     this.service.waitGraphChange = false;
+            // }
         },
     },
     data() {

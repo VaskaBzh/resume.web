@@ -1,7 +1,7 @@
 export class ObjectTrait {
     keyToFind = null;
 
-    findValueByKey(objectData, keyToFind) {
+    static findValueByKey(objectData, keyToFind) {
         if (!this.keyToFind) {
             this.keyToFind = keyToFind;
         }
@@ -24,4 +24,4 @@ export class ObjectTrait {
             }
         }
     }
-}3
+}

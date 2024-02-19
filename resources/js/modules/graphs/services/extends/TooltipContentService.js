@@ -1,20 +1,13 @@
 export class TooltipContentService {
-    constructor() {
-        this.fullDate = null;
-        this.time = null;
-        this.hashrate = null;
-        this.workersCountActive = null;
-        this.unit = null;
-    }
+    fullDate = null;
+    time = null;
+    hashrate = null;
+    workersCountActive = null;
+    unit = null;
 
     setDate(graphData, nearestIndex) {
-        const date = new Date(graphData.dates[nearestIndex]);
-
-        this.fullDate = date.getUTCFullYear();
-        this.time =
-            date.getDate().toString().padStart(2, "0") +
-            "." +
-            (date.getMonth() + 1).toString().padStart(2, "0");
+        this.fullDate = graphData.dates[nearestIndex].day_at;
+        this.time = graphData.dates[nearestIndex].hour_at;
     }
 
     setUnit(graphData, nearestIndex) {

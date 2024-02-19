@@ -1,47 +1,40 @@
-import { LineGraphData } from "@/modules/statistic/DTO/LineGraphData";
+import { LineGraphData } from "@/modules/graphs/DTO/LineGraphData";
 import { ProfileApi } from "@/api/api";
-import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
+import { BarGraphData } from "@/modules/graphs/DTO/BarGraphData";
 import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
+import store from "@/store";
+import { ResponseTrait } from "@/traits/ResponseTrait";
 
-export class StatisticService extends GraphDataService {
-    constructor(offset, route) {
-        super(offset);
-
+export class StatisticService {
+    constructor(route) {
         this.waitGraph = true;
         this.waitGraphChange = true;
-        this.buttons = [];
 
         this.route = route;
+
+        this.graphDataService = this.createGraphDataService();
     }
 
-    setButtons() {
-        this.buttons = [
-            { title: `24 ${this.translate("hours")}`, value: 96 },
-            { title: `7 ${this.translate("days")}`, value: 672 },
-            // { title: `1 ${this.translate("month")}`, value: 2880 },
-        ];
+    createGraphDataService() {
+        return new GraphDataService();
     }
 
-    async fetch() {
+    async fetchStatistic() {
         return await ProfileApi.get(
-            `/statistic/${this.group_id}?offset=${this.offset}`
+            `/statistic/${store.getters.getActive}?offset=${this.graphDataService.offset}`
         );
     }
 
     async lineGraphIndex() {
-        if (this.group_id !== -1) {
+        if (store.getters.getActive !== -1) {
             this.waitGraphChange = true;
 
-            this.setDefaultKeys();
-
             try {
-                const response = (await this.fetch()).data;
+                const response = ResponseTrait.getResponseData(await this.fetchStatistic());
 
-                this.records = response.hashes.map(
-                    (hashEl) => new LineGraphData(hashEl)
-                );
+                this.graphDataService.setRecords(response.hashes, LineGraphData).makeFullValues();
 
-                await this.makeFullValues();
+                console.log(this.graphDataService.graph)
 
                 this.waitGraph = false;
                 this.waitGraphChange = false;
@@ -52,18 +45,16 @@ export class StatisticService extends GraphDataService {
     }
 
     async barGraphIndex() {
-        if (this.group_id !== -1) {
+        if (store.getters.getActive !== -1) {
             this.waitGraphChange = true;
 
             try {
-                const response = (await this.fetch()).data;
+                const response = ResponseTrait.getResponseData(await this.fetchStatistic());
 
-                this.records = response.incomes.map(
-                    (incomeEl) => new BarGraphData(incomeEl)
-                );
+                this.graphDataService.setRecords(response.incomes, BarGraphData)
 
-                this.setDefaultKeys(60 * 60 * 1000 * 24);
-                await this.makeFullBarValues();
+                // this.setDefaultKeys(60 * 60 * 1000 * 24);
+                // await this.makeFullBarValues();
 
                 this.waitGraph = false;
                 this.waitGraphChange = false;

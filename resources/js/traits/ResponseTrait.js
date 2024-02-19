@@ -1,5 +1,5 @@
 export class ResponseTrait {
-    getResponseData(response) {
+    static getResponseData(response) {
         if (!response?.data) {
             return response;
         }
@@ -9,7 +9,7 @@ export class ResponseTrait {
         }
     }
 
-    isEmptyResponse(responseData) {
+    static isEmptyResponse(responseData) {
         return responseData.length === 0;
     }
 }

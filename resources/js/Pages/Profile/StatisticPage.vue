@@ -20,15 +20,15 @@
             <main-title class="title-statistic"
                 >{{ $t("statistic.title") }}
             </main-title>
-            <statistic-line-graph
-                class="statistic_graph"
-                :wait-graph-change="lineChartService.waitGraphChange"
-                :offset="lineChartService.offset"
-                :graph="lineChartService.graph"
-                :buttons="lineChartService.buttons"
-                :instruction-config="instructionService"
-                @getValue="lineChartService.setOffset($event)"
-            />
+<!--            <statistic-line-graph-->
+<!--                class="statistic_graph"-->
+<!--                :wait-graph-change="lineChartService.waitGraphChange"-->
+<!--                :offset="lineChartService.offset"-->
+<!--                :graph="lineChartService.graph"-->
+<!--                :buttons="graphOffsetTabs"-->
+<!--                :instruction-config="instructionService"-->
+<!--                @getValue="lineChartService.graphDataService.setOffset($event)"-->
+<!--            />-->
             <div
                 class="statistic__cards onboarding_block"
                 :class="{
@@ -84,12 +84,12 @@
                 class="statistic__info"
                 :instruction-config="instructionService"
             />
-            <statistic-column-graph
-                :instruction-config="instructionService"
-                :wait-graph-change="barChartService.waitGraphChange"
-                :graph="barChartService.graph"
-                class="statistic_graph-column"
-            />
+<!--            <statistic-column-graph-->
+<!--                :instruction-config="instructionService"-->
+<!--                :wait-graph-change="barChartService.waitGraphChange"-->
+<!--                :graph="barChartService.graph"-->
+<!--                class="statistic_graph-column"-->
+<!--            />-->
         </div>
         <no-information
             v-if="!lineChartService.waitGraph && !getAccount.workers_count"
@@ -137,49 +137,42 @@ export default {
     },
     data() {
         return {
-            lineChartService: new StatisticService(this.offset, this.$route),
-            barChartService: new StatisticService(30),
+            lineChartService: new StatisticService(this.$route),
+            barChartService: new StatisticService(),
             instructionService: new InstructionService(),
-            isMounted: false
+            isMounted: false,
         };
     },
     watch: {
         "$i18n.locale"() {
             document.title = this.$t("header.links.statistic");
-
-            this.lineChartService.setButtons();
-
-            // this.lineChartService.setTranslate(this.$t);
-            // this.barChartService.setTranslate(this.$t);
         },
         async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
         },
-        async getActive(newActiveId) {
-            this.lineChartService.setGroupId(newActiveId);
-            this.barChartService.setGroupId(newActiveId);
-
+        async getActive() {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
         },
     },
     computed: {
         ...mapGetters(["getActive", "getAccount"]),
+        graphOffsetTabs() {
+            return [
+                {title: `24 ${this.$t("hours")}`, value: 96},
+                {title: `7 ${this.$t("days")}`, value: 672},
+                // { title: `1 ${this.translate("month")}`, value: 2880 },
+            ];
+        }
     },
     async mounted() {
         this.isMounted = true
         this.instructionService.setStepsCount(4);
 
         document.title = this.$t("header.links.statistic");
-        if (this.$t) {
-            this.lineChartService.setTranslate(this.$t);
-            this.barChartService.setTranslate(this.$t);
-        }
 
-        this.lineChartService.setGroupId(this.getActive);
-        this.barChartService.setGroupId(this.getActive);
-
-        this.lineChartService.setButtons();
+        this.lineChartService.graphDataService.setOffset(this.graphOffsetTabs[0].value);
+        this.barChartService.graphDataService.setOffset(30);
 
         await this.lineChartService.lineGraphIndex();
         await this.barChartService.barGraphIndex();

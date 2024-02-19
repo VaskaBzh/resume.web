@@ -1,24 +1,25 @@
 import * as d3 from "d3";
 import { ValidateDataService } from "@/modules/graphs/services/extends/ValidateDataService";
+import {TooltipContentService} from "resources/js/modules/graphs/services/extends/TooltipContentService";
+import {TooltipNavigationService} from "resources/js/modules/graphs/services/extends/TooltipNavigationService";
 
 export class NewGraphService {
     graphData = {};
     containerHeight = null;
-    containerWidth = null;
 
     x = null;
     y = null;
     svg = null;
-    chartHtml = null;
 
-    d3Tooltip = null;
-    tooltipHtml = null;
-    fullDate = null;
-    time = null;
     mouseX = null;
-    clientX = null;
+
     // mouseEventTimeout = null;
     // touchEventTimeout = null;
+
+    constructor() {
+        this.tooltipContentService = this.createTooltipContentService();
+        this.tooltipNavigationService = this.createTooltipNavigationService();
+    }
 
     /* Base setters start */
 
@@ -34,18 +35,6 @@ export class NewGraphService {
         return this;
     }
 
-    setContainerWidth(newContainerWidth = '100%') {
-        this.containerWidth = newContainerWidth;
-
-        return this;
-    }
-
-    setChartHtml(newChartHtml) {
-        this.chartHtml = newChartHtml;
-
-        return this;
-    }
-
     setMouseX(newMouseX) {
         this.mouseX = newMouseX;
 
@@ -55,7 +44,7 @@ export class NewGraphService {
     /*
         Base setters end
 
-        Creator start
+        Creators start
     */
 
     createSvg() {
@@ -68,14 +57,16 @@ export class NewGraphService {
         return this;
     }
 
-    createTooltip() {
-        this.d3Tooltip = d3.select(this.tooltipHtml);
+    createTooltipContentService() {
+        return new TooltipContentService();
+    }
 
-        return this;
+    createTooltipNavigationService() {
+        return new TooltipNavigationService();
     }
 
     /*
-        Creator end
+        Creators end
 
         Destroyer start
      */
@@ -99,7 +90,7 @@ export class NewGraphService {
         this.x = d3
             .scaleLinear()
             .domain(this.graphData.dates.map((_, i) => i))
-            .range([0, this.containerWidth]);
+            .range([0, '100%']);
 
         return this;
     }
@@ -115,7 +106,9 @@ export class NewGraphService {
 
     /* Events start */
 
-    mouseEnterEventAction() {}
+    mouseEnterEventAction() {
+        
+    }
     mouseLeaveEventAction() {}
 
     setSvgEvents() {

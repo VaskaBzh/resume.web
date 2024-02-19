@@ -8,22 +8,6 @@ export class ColumnGraphService extends NewGraphService {
     mining = null;
     barData = null;
 
-    /* Setters start */
-
-    setTooltipIconHtml(newTooltipIconHtml) {
-        this.tooltipIconHtml = newTooltipIconHtml;
-
-        return this;
-    }
-
-    createTooltipIcon() {
-        this.d3TooltipIcon = d3.select(this.tooltipIconHtml);
-
-        return this;
-    }
-
-    /* Setters end */
-
     /* Polymorph methods start */
 
     setX() {

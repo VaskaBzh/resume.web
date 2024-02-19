@@ -17,7 +17,7 @@ export class TableService {
         this.client = this.createClient();
         this.tableModel = this.createTableModel();
         this.paginationModel = this.createPaginationModel();
-        this.responseTrait = this.useResponseTrait();
+        // this.responseTrait = this.useResponseTrait();
         this.objectTrait = this.useObjectTrait();
         this.tableStates = this.createTableControllService();
     }
@@ -34,9 +34,9 @@ export class TableService {
         return new Client();
     }
 
-    useResponseTrait() {
-        return new ResponseTrait();
-    }
+    // useResponseTrait() {
+    //     return new ResponseTrait();
+    // }
 
     useObjectTrait() {
         return new ObjectTrait();
@@ -87,13 +87,13 @@ export class TableService {
         try {
             const response = await this.client[client](...params);
 
-            const responseData = this.responseTrait.getResponseData(response);
+            const responseData = ResponseTrait.getResponseData(response);
             // const responseMeta = this.objectTrait.findValueByKey(
             //     response,
             //     "meta"
             // );
 
-            if (this.responseTrait.isEmptyResponse(responseData)) {
+            if (ResponseTrait.isEmptyResponse(responseData)) {
                 this.tableStates.emptyResponse();
 
                 return this;
