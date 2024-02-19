@@ -58,6 +58,12 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "lint:phpcs": "phpcs",
+        "lint:phpstan": "phpstan analyse",
+        "lint": [
+            "npm run lint:phpcs",
+            "npm run lint:phpstan"
         ]
     },
     "extra": {
