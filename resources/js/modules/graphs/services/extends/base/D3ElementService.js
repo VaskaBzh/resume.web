@@ -17,7 +17,7 @@ export class D3ElementService {
         return this.svg;
     }
 
-    dropGraph() {
+    dropSvg() {
         if (this.svg) {
             this.svg.selectAll("*").remove();
             this.svg._groups[0][0].remove();
