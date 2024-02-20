@@ -20,15 +20,15 @@
             <main-title class="title-statistic"
                 >{{ $t("statistic.title") }}
             </main-title>
-<!--            <statistic-line-graph-->
-<!--                class="statistic_graph"-->
-<!--                :wait-graph-change="lineChartService.waitGraphChange"-->
-<!--                :offset="lineChartService.offset"-->
-<!--                :graph="lineChartService.graph"-->
-<!--                :buttons="graphOffsetTabs"-->
-<!--                :instruction-config="instructionService"-->
-<!--                @getValue="lineChartService.graphDataService.setOffset($event)"-->
-<!--            />-->
+            <statistic-line-graph
+                class="statistic_graph"
+                :wait-graph-change="lineChartService.waitGraphChange"
+                :offset="lineChartService.offset"
+                :graph="lineChartService.graphDataService.graph"
+                :buttons="graphOffsetTabs"
+                :instruction-config="instructionService"
+                @getValue="lineChartService.graphDataService.setOffset($event)"
+            />
             <div
                 class="statistic__cards onboarding_block"
                 :class="{

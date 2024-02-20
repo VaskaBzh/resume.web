@@ -85,6 +85,7 @@ export class GraphService {
 
     setTooltipHtml(newTooltipHtml) {
         this.tooltipHtml = newTooltipHtml;
+        
         return this;
     }
 

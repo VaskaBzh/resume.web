@@ -1,12 +1,14 @@
 import * as d3 from "d3";
 
-export class D3ElementService {
-    constructor() {
-        this.svg = null;
-    }
+export class D3ElementModel {
+    svg = null;
 
-    d3ActionSvgElement(action, newSvgElement) {
-        this.svg = d3[action](newSvgElement);
+    createSvg(newSvgElement) {
+        this.svg = d3
+            .select(newSvgElement)
+            .append("svg")
+            .attr("width", "100%")
+            .attr("height", newSvgElement.offsetHeight);
 
         return this;
     }

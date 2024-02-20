@@ -1,5 +1,5 @@
 <template>
-    <div ref="chart" class="container-chart">
+    <div ref="chart" :style="{ 'height': `${height}px` }" class="container-chart">
         <div ref="tooltip" class="tooltip" style="opacity: 0">
             <div class="tooltip__content">
                 <p class="tooltip_text">
@@ -46,6 +46,7 @@ import TooltipIcon from "@/modules/graphs/icons/TooltipIcon.vue";
 
 import { LineGraphService } from "@/modules/graphs/services/LineGraphService";
 import { mapGetters } from "vuex";
+import { GraphModel } from "@/modules/graphs/models/GraphModel";
 
 export default {
     name: "main-line-graph",
@@ -59,85 +60,88 @@ export default {
     data() {
         return {
             graph: this.graphData,
-            service: new LineGraphService(this.graphData, this.$t),
+            service: new GraphModel(),
         };
     },
     computed: {
         ...mapGetters(["isDark", "viewportWidth"]),
     },
-    watch: {
-        "$refs.chart.offsetWidth"(newChartHtml) {
-            this.service.setChartHtml(newChartHtml).dropGraph();
-            this.graphInit();
-        },
-        "$refs.tooltip"(newTooltipHtml) {
-            this.service.setTooltipHtml(newTooltipHtml).dropGraph();
-            this.graphInit();
-        },
+    // watch: {
+    //     "$refs.chart.offsetWidth"(newChartHtml) {
+    //         this.service.setChartHtml(newChartHtml).dropGraph();
+    //         this.graphInit();
+    //     },
+    //     "$refs.tooltip"(newTooltipHtml) {
+    //         this.service.setTooltipHtml(newTooltipHtml).dropGraph();
+    //         this.graphInit();
+    //     },
         graphData(newGraphData) {
-            this.service.setGraphData(newGraphData).dropGraph();
-            this.graphInit();
+            console.log(newGraphData)
+            this.service.initGraph(this.$refs.chart, "line", newGraphData   );
         },
-        height() {
-            this.service.dropGraph();
-            this.graphInit();
-        },
-        isDark(newIsDarkState) {
-            this.service.setDarkState(newIsDarkState).dropGraph();
-            this.graphInit();
-        },
-        viewportWidth(newViewportWidth) {
-            this.service.setIsMobileState(newViewportWidth).dropGraph();
-            this.graphInit();
-        },
-    },
+    //     height() {
+    //         this.service.dropGraph();
+    //         this.graphInit();
+    //     },
+    //     isDark(newIsDarkState) {
+    //         this.service.setDarkState(newIsDarkState).dropGraph();
+    //         this.graphInit();
+    //     },
+    //     viewportWidth(newViewportWidth) {
+    //         this.service.setIsMobileState(newViewportWidth).dropGraph();
+    //         this.graphInit();
+    //     },
+    // },
     methods: {
         graphInit() {
-            if (this.graphData) {
-                const colors = {
-                    circle: this.isDark ? "#212327" : "#ffffff",
-                    bands: this.isDark ? "rgba(47,47,47,0.95)" : "rgba(208, 213, 221, 0.2)",
-                }
-
-                this.service
-                    .setContainerHeight(this.height)
-                    .createSvg()
-                    .gradientInit()
-                    .setDefaultX()
-                    .setY()
-                    .setAxis()
-                    .setXAxis(
-                        this.service.chartHtml.offsetWidth > 500
-                            ? 12
-                            : this.service.validateXAxis()
-                    )
-                    .setNumberX()
-                    .setYAxis(6)
-                    .setLineGenerator()
-                    .setAreaGenerator()
-                    .setYBand()
-                    .graphAppends(colors)
-                    .setTooltip();
-
-                if (this.service.isMobile) {
-                    this.service.setSvgEventsMobile();
-                } else {
-                    this.service.setSvgEvents().setTooltipEvents();
-                }
-            }
+            // if (this.graphData) {
+            //     const colors = {
+            //         circle: this.isDark ? "#212327" : "#ffffff",
+            //         bands: this.isDark ? "rgba(47,47,47,0.95)" : "rgba(208, 213, 221, 0.2)",
+            //     }
+            //
+            //     this.service
+            //         .setContainerHeight(this.height)
+            //         .createSvg()
+            //         .gradientInit()
+            //         .setDefaultX()
+            //         .setY()
+            //         .setAxis()
+            //         .setXAxis(
+            //             this.service.chartHtml.offsetWidth > 500
+            //                 ? 12
+            //                 : this.service.validateXAxis()
+            //         )
+            //         .setNumberX()
+            //         .setYAxis(6)
+            //         .setLineGenerator()
+            //         .setAreaGenerator()
+            //         .setYBand()
+            //         .graphAppends(colors)
+            //         .setTooltip();
+            //
+            //     if (this.service.isMobile) {
+            //         this.service.setSvgEventsMobile();
+            //     } else {
+            //         this.service.setSvgEvents().setTooltipEvents();
+            //     }
+            // }
         },
     },
     mounted() {
-        this.service
-            .setChartHtml(this.$refs.chart)
-            .setTooltipHtml(this.$refs.tooltip)
-            .setDarkState(this.isDark)
-            .setIsMobileState(this.viewportWidth);
-
-        this.graphInit();
+        if (this.graphData) {
+            this.service.initGraph(this.$refs.chart, "line", this.graphData);
+        }
+        // this.service
+        //     .setChartHtml(this.$refs.chart)
+        //     .setTooltipHtml(this.$refs.tooltip)
+        //     .setDarkState(this.isDark)
+        //     .setIsMobileState(this.viewportWidth);
+        //
+        // this.graphInit();
     },
     unmounted() {
-        this.service.dropGraph();
+        // this.service.dropGraph();
     },
 };
 </script>

@@ -34,8 +34,6 @@ export class StatisticService {
 
                 this.graphDataService.setRecords(response.hashes, LineGraphData).makeFullValues();
 
-                console.log(this.graphDataService.graph)
-
                 this.waitGraph = false;
                 this.waitGraphChange = false;
             } catch (err) {
