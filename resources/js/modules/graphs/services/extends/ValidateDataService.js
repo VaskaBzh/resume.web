@@ -1,10 +1,10 @@
 import * as d3 from "d3";
 
 export class ValidateDataService {
-    maxValue = 120;
-    percentPadding = 0.2;
+    static maxValue = 120000000000000;
+    static percentPadding = 0.2;
 
-    static setMaxValue(newMaxValue = 120) {
+    static setMaxValue(newMaxValue = 120000000000000) {
         this.maxValue = newMaxValue;
     }
 
