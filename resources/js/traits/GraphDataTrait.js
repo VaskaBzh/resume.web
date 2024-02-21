@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-export class ValidateDataService {
+export class GraphDataTrait {
     static maxValue = 120000000000000;
     static percentPadding = 0.2;
 
@@ -12,12 +12,11 @@ export class ValidateDataService {
         this.percentPadding = newPercentPadding;
     }
 
-    static valueValidationRules(values) {
+    static lineValueValidation(values) {
         const emptyValue = 0;
 
         return d3.max(values) !== emptyValue
-            ? d3.max(values) +
-            d3.max(values) * this.percentPadding
+            ? d3.max(values) + d3.max(values) * this.percentPadding
             : this.maxValue;
     }
 }

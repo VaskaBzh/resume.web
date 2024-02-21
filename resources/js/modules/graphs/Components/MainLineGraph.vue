@@ -1,42 +1,42 @@
 <template>
-    <div ref="chart" :style="{ 'height': `${height}px` }" class="container-chart">
-        <div ref="tooltip" class="tooltip" style="opacity: 0">
-            <div class="tooltip__content">
-                <p class="tooltip_text">
-                    <span class="tooltip_label"
-                        >{{ $t("tooltip.hash") }}:
-                    </span>
-                    <span class="tooltip_value">
-                        {{ service.hashrate }} {{ service.unit }}h/s
-                    </span>
-                </p>
-                <p class="tooltip_text" v-if="service.workersCountActive">
-                    <span class="tooltip_label"
-                        >{{ $t("tooltip.workers") }}:
-                    </span>
-                    <span class="tooltip_value">
-                        <span class="tooltip_value tooltip_value-green">
-                            {{ service.workersCountActive }}
-                        </span>
-                    </span>
-                </p>
-                <p class="tooltip_text">
-                    <span class="tooltip_label"
-                        >{{ $t("tooltip.rejected") }}:
-                    </span>
-                    <span class="tooltip_value">0.000%</span>
-                </p>
-                <p class="tooltip_text tooltip_text-date">
-                    <span class="tooltip_value">
-                        {{ service.fullDate }}
-                    </span>
-                    <span class="tooltip_label">
-                        {{ service.time }}
-                    </span>
-                </p>
-                <tooltip-icon class="tooltip_icon" />
-            </div>
-        </div>
+    <div ref="chart" :style="{ height: `${height}px` }" class="container-chart">
+        <!--        <div ref="tooltip" class="tooltip" style="opacity: 0">-->
+        <!--            <div class="tooltip__content">-->
+        <!--                <p class="tooltip_text">-->
+        <!--                    <span class="tooltip_label"-->
+        <!--                        >{{ $t("tooltip.hash") }}:-->
+        <!--                    </span>-->
+        <!--                    <span class="tooltip_value">-->
+        <!--                        {{ service.hashrate }} {{ service.unit }}h/s-->
+        <!--                    </span>-->
+        <!--                </p>-->
+        <!--                <p v-if="service.workersCountActive" class="tooltip_text">-->
+        <!--                    <span class="tooltip_label"-->
+        <!--                        >{{ $t("tooltip.workers") }}:-->
+        <!--                    </span>-->
+        <!--                    <span class="tooltip_value">-->
+        <!--                        <span class="tooltip_value tooltip_value-green">-->
+        <!--                            {{ service.workersCountActive }}-->
+        <!--                        </span>-->
+        <!--                    </span>-->
+        <!--                </p>-->
+        <!--                <p class="tooltip_text">-->
+        <!--                    <span class="tooltip_label"-->
+        <!--                        >{{ $t("tooltip.rejected") }}:-->
+        <!--                    </span>-->
+        <!--                    <span class="tooltip_value">0.000%</span>-->
+        <!--                </p>-->
+        <!--                <p class="tooltip_text tooltip_text-date">-->
+        <!--                    <span class="tooltip_value">-->
+        <!--                        {{ service.fullDate }}-->
+        <!--                    </span>-->
+        <!--                    <span class="tooltip_label">-->
+        <!--                        {{ service.time }}-->
+        <!--                    </span>-->
+        <!--                </p>-->
+        <!--                <tooltip-icon class="tooltip_icon" />-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
     <div class="y-axis-container"></div>
 </template>
@@ -44,12 +44,11 @@
 <script>
 import TooltipIcon from "@/modules/graphs/icons/TooltipIcon.vue";
 
-import { LineGraphService } from "@/modules/graphs/services/LineGraphService";
 import { mapGetters } from "vuex";
-import { GraphModel } from "@/modules/graphs/models/GraphModel";
+import { GraphFacade } from "@/modules/graphs/facades/GraphFacade";
 
 export default {
-    name: "main-line-graph",
+    name: "MainLineGraph",
     components: {
         TooltipIcon,
     },
@@ -59,8 +58,7 @@ export default {
     },
     data() {
         return {
-            graph: this.graphData,
-            service: new GraphModel(),
+            facade: new GraphFacade(),
         };
     },
     computed: {
@@ -75,10 +73,24 @@ export default {
     //         this.service.setTooltipHtml(newTooltipHtml).dropGraph();
     //         this.graphInit();
     //     },
+    watch: {
         graphData(newGraphData) {
-            console.log(newGraphData)
-            this.service.initGraph(this.$refs.chart, "line", newGraphData   );
+            this.service.rebuildGraph(this.$refs.chart, "line", newGraphData);
         },
+    },
+    mounted() {
+        this.facade.createGraph(this.$refs.chart, "line", this.graphData);
+        // this.service
+        //     .setChartHtml(this.$refs.chart)
+        //     .setTooltipHtml(this.$refs.tooltip)
+        //     .setDarkState(this.isDark)
+        //     .setIsMobileState(this.viewportWidth);
+        //
+        // this.graphInit();
+    },
+    unmounted() {
+        // this.service.dropGraph();
+    },
     //     height() {
     //         this.service.dropGraph();
     //         this.graphInit();
@@ -128,21 +140,6 @@ export default {
             // }
         },
     },
-    mounted() {
-        if (this.graphData) {
-            this.service.initGraph(this.$refs.chart, "line", this.graphData);
-        }
-        // this.service
-        //     .setChartHtml(this.$refs.chart)
-        //     .setTooltipHtml(this.$refs.tooltip)
-        //     .setDarkState(this.isDark)
-        //     .setIsMobileState(this.viewportWidth);
-        //
-        // this.graphInit();
-    },
-    unmounted() {
-        // this.service.dropGraph();
-    },
 };
 </script>
 
@@ -152,7 +149,7 @@ export default {
 }
 .tooltip {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-tooltip, rgba(44, 47, 52, 0.90));
+    background: var(--background-tooltip, rgba(44, 47, 52, 0.9));
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 160px;

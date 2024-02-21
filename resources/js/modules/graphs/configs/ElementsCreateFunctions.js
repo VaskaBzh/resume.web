@@ -32,8 +32,6 @@ export const ElementsCreateFunctions = {
     //         .append("stop")
     //         .attr("offset", "100%")
     //         .attr("stop-color", "rgba(46, 144, 250, 0)");
-    //
-    //
     // },
     line(...args) {
         args[0]
@@ -52,7 +50,7 @@ export const ElementsCreateFunctions = {
     //         P: "PH/s",
     //         E: "EH/s",
     //     };
-    //    
+    //
     //     let includedUnit = HashrateUnitEnum["T"];
     //
     //     if (args[0].unit.includes("E")) {
@@ -62,7 +60,9 @@ export const ElementsCreateFunctions = {
     //     }
     //
     //     d3.select(".chart_axis-y")
-    //         .append("text").attr("x", -25).attr("y", 0)
+    //         .append("text")
+    //         .attr("x", -25)
+    //         .attr("y", 0)
     //         .attr("text-anchor", "middle")
     //         .style("font-size", "16px")
     //         .style("font-weight", "100")
@@ -79,4 +79,4 @@ export const ElementsCreateFunctions = {
     //         .select(".domain")
     //         .remove();
     // },
-}
+};
