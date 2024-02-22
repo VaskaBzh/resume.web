@@ -23,6 +23,7 @@ class HashBuilder extends BaseBuilder
         switch ($period) {
             case 'day':
                 $records = $this->getByGroupId($groupId)
+                    ->whereDate('created_at', today())
                     ->latest()
                     ->take(96)
                     ->get();
