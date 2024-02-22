@@ -83,8 +83,7 @@ class StatisticController extends Controller
     {
         return new JsonResponse([
             'hashes' => HashRateResource::collection(
-                Hash::getByOffset($sub->group_id, $request->offset)
-                    ->get()
+                Hash::getByType($sub->group_id, $request->offset)
             ),
             'incomes' => IncomeResource::collection(
                 Income::getByGroupId($sub->group_id)

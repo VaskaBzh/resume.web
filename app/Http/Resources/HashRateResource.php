@@ -28,8 +28,7 @@ class HashRateResource extends JsonResource
             'hash' => (float) $this->hash,
             'unit' => $this->unit,
             'worker_count' => $this->worker_count,
-            'day_at' => $this->created_at->format('d.m.Y'),
-            'hour_at' => $this->created_at->format('H:m'),
+            'day_hour' => $this->created_at->format('d.m.Y H:i'),
         ];
     }
 }
