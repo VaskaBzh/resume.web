@@ -1,14 +1,14 @@
 import { Graph } from "@/modules/graphs/models/Graph";
-import { Tooltip } from "@/modules/graphs/models/Tooltip";
-import * as d3 from "d3";
 import { GraphDataTrait } from "@/traits/GraphDataTrait";
+import { TooltipService } from "@/modules/graphs/services/TooltipService";
+import * as d3 from "d3";
 
 export class GraphService {
     svg = null;
 
     constructor() {
         this.graph = this.createGraphModel();
-        this.tooltip = this.createTooltipModel();
+        this.tooltipService = this.createTooltipService();
     }
 
     /* creators start */
@@ -17,8 +17,8 @@ export class GraphService {
         return new Graph();
     }
 
-    createTooltipModel() {
-        return new Tooltip();
+    createTooltipService() {
+        return new TooltipService();
     }
 
     /* creators end

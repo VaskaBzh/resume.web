@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @default \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @default \Illuminate\Database\Eloquent\factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {

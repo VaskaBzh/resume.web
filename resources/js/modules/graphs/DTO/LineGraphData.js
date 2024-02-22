@@ -6,6 +6,6 @@ export class LineGraphData {
         this.dayAt = hashrateRecord.day_at;
         this.hourAt = hashrateRecord.hour_at;
 
-        this.dates = new Date(hashrateRecord.day_at.split(".").reverse().join("-") + ":" + hashrateRecord.hour_at);
+        this.dates = new Date(hashrateRecord.day_at.split(".").reverse().join("-") + " " + hashrateRecord.hour_at);
     }
 }

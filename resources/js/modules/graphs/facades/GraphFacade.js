@@ -1,5 +1,5 @@
 import { ElementsConfig } from "@/modules/graphs/configs/ElementsConfig";
-import { GraphFactory } from "@/modules/graphs/Factories/GraphFactory";
+import { GraphFactory } from "@/modules/graphs/factories/GraphFactory";
 
 export class GraphFacade {
     buildGraph(element, type, graphData) {
