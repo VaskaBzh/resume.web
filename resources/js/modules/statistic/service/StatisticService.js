@@ -20,8 +20,9 @@ export class StatisticService {
     }
 
     async fetchStatistic() {
+        // this.graphDataService.offset
         return await ProfileApi.get(
-            `/statistic/${store.getters.getActive}?offset=${this.graphDataService.offset}`
+            `/statistic/${store.getters.getActive}?offset=day`
         );
     }
 
