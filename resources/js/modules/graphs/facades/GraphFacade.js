@@ -2,19 +2,24 @@ import { ElementsConfig } from "@/modules/graphs/configs/ElementsConfig";
 import { GraphFactory } from "@/modules/graphs/factories/GraphFactory";
 
 export class GraphFacade {
-    buildGraph(element, type, graphData) {
-        this.graph = GraphFactory.createGraph(type);
+    buildGraph(element, tooltip, type, graphData) {
+        this.graphService = GraphFactory.createGraph(type);
 
-        if (element && graphData) {
-            // .fillElements(ElementsConfig[type])
-            this.graph
-                .createGraph(element)
-                .setGraphData(graphData)
-                .setGraphX()
-                .setGraphY()
-                .fillGenerators(graphData)
-                .buildElements();
+        if (!element || !graphData) {
+            return this;
         }
+
+        // .fillElements(ElementsConfig[type])
+        this.graphService
+            .createGraph(element)
+            .setTooltipHtml(element)
+            .setGraphData(graphData)
+            .setGraphX()
+            .setGraphY()
+            .fillGenerators(graphData)
+            .buildElements();
+
+        this.graphService.createListeners();
     }
 
     createGraph(...args) {
@@ -30,7 +35,7 @@ export class GraphFacade {
     }
 
     dropGraph() {
-        this.graph.dropGraph();
+        this.graphService.dropGraph().dropListeners();
 
         return this;
     }

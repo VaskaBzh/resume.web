@@ -1,42 +1,59 @@
 <template>
     <div ref="chart" :style="{ height: `${height}px` }" class="container-chart">
-        <!--        <div ref="tooltip" class="tooltip" style="opacity: 0">-->
-        <!--            <div class="tooltip__content">-->
-        <!--                <p class="tooltip_text">-->
-        <!--                    <span class="tooltip_label"-->
-        <!--                        >{{ $t("tooltip.hash") }}:-->
-        <!--                    </span>-->
-        <!--                    <span class="tooltip_value">-->
-        <!--                        {{ service.hashrate }} {{ service.unit }}h/s-->
-        <!--                    </span>-->
-        <!--                </p>-->
-        <!--                <p v-if="service.workersCountActive" class="tooltip_text">-->
-        <!--                    <span class="tooltip_label"-->
-        <!--                        >{{ $t("tooltip.workers") }}:-->
-        <!--                    </span>-->
-        <!--                    <span class="tooltip_value">-->
-        <!--                        <span class="tooltip_value tooltip_value-green">-->
-        <!--                            {{ service.workersCountActive }}-->
-        <!--                        </span>-->
-        <!--                    </span>-->
-        <!--                </p>-->
-        <!--                <p class="tooltip_text">-->
-        <!--                    <span class="tooltip_label"-->
-        <!--                        >{{ $t("tooltip.rejected") }}:-->
-        <!--                    </span>-->
-        <!--                    <span class="tooltip_value">0.000%</span>-->
-        <!--                </p>-->
-        <!--                <p class="tooltip_text tooltip_text-date">-->
-        <!--                    <span class="tooltip_value">-->
-        <!--                        {{ service.fullDate }}-->
-        <!--                    </span>-->
-        <!--                    <span class="tooltip_label">-->
-        <!--                        {{ service.time }}-->
-        <!--                    </span>-->
-        <!--                </p>-->
-        <!--                <tooltip-icon class="tooltip_icon" />-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div
+            v-if="facade.graphService?.tooltipContent"
+            ref="tooltip"
+            class="tooltip"
+            :class="{ 'tooltip-left': facade.graphService.isTooltipLeft }"
+            :style="{
+                opacity: facade.graphService.tooltipOpacity,
+                left: `${facade.graphService.tooltipPosition.left}px`,
+                top: `${facade.graphService.tooltipPosition.top}px`,
+            }"
+        >
+            <div class="tooltip__content">
+                <p class="tooltip_text">
+                    <span class="tooltip_label"
+                        >{{ $t("tooltip.hash") }}:
+                    </span>
+                    <span class="tooltip_value">
+                        {{ facade.graphService.tooltipContent.convertedValues }}
+                        {{ facade.graphService.tooltipContent.unit }}h/s
+                    </span>
+                </p>
+                <p
+                    v-if="facade.graphService.tooltipContent.amount"
+                    class="tooltip_text"
+                >
+                    <span class="tooltip_label"
+                        >{{ $t("tooltip.workers") }}:
+                    </span>
+                    <span class="tooltip_value">
+                        <span class="tooltip_value tooltip_value-green">
+                            {{ facade.graphService.tooltipContent.amount }}
+                        </span>
+                    </span>
+                </p>
+                <p class="tooltip_text">
+                    <span class="tooltip_label"
+                        >{{ $t("tooltip.rejected") }}:
+                    </span>
+                    <span class="tooltip_value">0.000%</span>
+                </p>
+                <p class="tooltip_text tooltip_text-date">
+                    <span class="tooltip_value">
+                        {{ facade.graphService.tooltipContent.dayAt }}
+                    </span>
+                    <span class="tooltip_label">
+                        {{ facade.graphService.tooltipContent.hourAt }}
+                    </span>
+                </p>
+                <tooltip-icon
+                    class="tooltip_icon"
+                    :class="{ 'tooltip_icon-left': isTooltipLeft }"
+                />
+            </div>
+        </div>
     </div>
     <div class="y-axis-container"></div>
 </template>
@@ -64,95 +81,73 @@ export default {
     computed: {
         ...mapGetters(["isDark", "viewportWidth"]),
     },
-    // watch: {
-    //     "$refs.chart.offsetWidth"(newChartHtml) {
-    //         this.service.setChartHtml(newChartHtml).dropGraph();
-    //         this.graphInit();
-    //     },
-    //     "$refs.tooltip"(newTooltipHtml) {
-    //         this.service.setTooltipHtml(newTooltipHtml).dropGraph();
-    //         this.graphInit();
-    //     },
     watch: {
+        "$refs.chart"(newChartHtml) {
+            this.facade.rebuildGraph(
+                newChartHtml,
+                this.$refs.tooltip,
+                "line",
+                this.graphData
+            );
+        },
         graphData(newGraphData) {
-            this.service.rebuildGraph(this.$refs.chart, "line", newGraphData);
+            this.facade.rebuildGraph(
+                this.$refs.chart,
+                this.$refs.tooltip,
+                "line",
+                newGraphData
+            );
+        },
+        height() {
+            this.facade.rebuildGraph(
+                this.$refs.chart,
+                this.$refs.tooltip,
+                "line",
+                this.graphData
+            );
+        },
+        isDark() {
+            this.facade.rebuildGraph(
+                this.$refs.chart,
+                this.$refs.tooltip,
+                "line",
+                this.graphData
+            );
+        },
+        viewportWidth() {
+            this.facade.rebuildGraph(
+                this.$refs.chart,
+                this.$refs.tooltip,
+                "line",
+                this.graphData
+            );
         },
     },
     mounted() {
-        this.facade.createGraph(this.$refs.chart, "line", this.graphData);
-        // this.service
-        //     .setChartHtml(this.$refs.chart)
-        //     .setTooltipHtml(this.$refs.tooltip)
-        //     .setDarkState(this.isDark)
-        //     .setIsMobileState(this.viewportWidth);
-        //
-        // this.graphInit();
+        this.facade.createGraph(
+            this.$refs.chart,
+            this.$refs.tooltip,
+            "line",
+            this.graphData
+        );
     },
     unmounted() {
-        // this.service.dropGraph();
-    },
-    //     height() {
-    //         this.service.dropGraph();
-    //         this.graphInit();
-    //     },
-    //     isDark(newIsDarkState) {
-    //         this.service.setDarkState(newIsDarkState).dropGraph();
-    //         this.graphInit();
-    //     },
-    //     viewportWidth(newViewportWidth) {
-    //         this.service.setIsMobileState(newViewportWidth).dropGraph();
-    //         this.graphInit();
-    //     },
-    // },
-    methods: {
-        graphInit() {
-            // if (this.graphData) {
-            //     const colors = {
-            //         circle: this.isDark ? "#212327" : "#ffffff",
-            //         bands: this.isDark ? "rgba(47,47,47,0.95)" : "rgba(208, 213, 221, 0.2)",
-            //     }
-            //
-            //     this.service
-            //         .setContainerHeight(this.height)
-            //         .createSvg()
-            //         .gradientInit()
-            //         .setDefaultX()
-            //         .setY()
-            //         .setAxis()
-            //         .setXAxis(
-            //             this.service.chartHtml.offsetWidth > 500
-            //                 ? 12
-            //                 : this.service.validateXAxis()
-            //         )
-            //         .setNumberX()
-            //         .setYAxis(6)
-            //         .setLineGenerator()
-            //         .setAreaGenerator()
-            //         .setYBand()
-            //         .graphAppends(colors)
-            //         .setTooltip();
-            //
-            //     if (this.service.isMobile) {
-            //         this.service.setSvgEventsMobile();
-            //     } else {
-            //         this.service.setSvgEvents().setTooltipEvents();
-            //     }
-            // }
-        },
+        this.facade.dropGraph();
     },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container-chart {
     margin-left: 48px;
 }
 .tooltip {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-tooltip, rgba(44, 47, 52, 0.9));
-    box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
+    box-shadow: 0 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 160px;
+    min-height: 108px;
 }
 .tooltip__content {
     display: flex;
@@ -160,12 +155,21 @@ export default {
     gap: 4px;
     position: relative;
 }
-.tooltip_icon {
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
+.tooltip {
+    &-left {
+        .tooltip_icon {
+            right: auto;
+            left: -20px;
+            transform: rotate(180deg) translateY(8px);
+        }
+    }
+    &_icon {
+        position: absolute;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 2px 12px -1px rgba(16, 24, 40, 0.08);
+    }
 }
 .tooltip_text {
     font-family: NunitoSans, serif;

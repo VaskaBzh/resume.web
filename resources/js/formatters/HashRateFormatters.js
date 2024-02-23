@@ -18,9 +18,9 @@ export class HashRateFormatters {
             unit = "P";
         }
 
-        const validatedValue = value.toFixed();
+        const validatedValue = value.toFixed(2);
 
-        return { val: validatedValue, unit: unit };
+        return { hashRate: validatedValue, unit: unit };
     }
 
     static formatHashRateInString(pureHashRate) {

@@ -5,6 +5,8 @@ import * as d3 from "d3";
 import store from "@/store";
 
 export class LineGraphService extends GraphService {
+    TOOLTIP_MARGIN = 16;
+
     buildElements() {
         const bandColor = store.getters.isDark
             ? "rgba(47,47,47,0.95)"
@@ -89,18 +91,18 @@ export class LineGraphService extends GraphService {
             .select(".domain")
             .remove();
 
-        const HashrateUnitEnum = {
-            T: "TH/s",
-            P: "PH/s",
-            E: "EH/s",
-        };
-        let includedUnit = HashrateUnitEnum["T"];
-
-        if (this.graphData.unit.includes("E")) {
-            includedUnit = HashrateUnitEnum["E"];
-        } else if (this.graphData.unit.includes("P")) {
-            includedUnit = HashrateUnitEnum["P"];
-        }
+        // const HashrateUnitEnum = {
+        //     T: "TH/s",
+        //     P: "PH/s",
+        //     E: "EH/s",
+        // };
+        // let includedUnit = HashrateUnitEnum["T"];
+        //
+        // if (this.graphData.unit.includes("E")) {
+        //     includedUnit = HashrateUnitEnum["E"];
+        // } else if (this.graphData.unit.includes("P")) {
+        //     includedUnit = HashrateUnitEnum["P"];
+        // }
 
         this.svg
             .append("g")
@@ -109,25 +111,30 @@ export class LineGraphService extends GraphService {
             .select(".domain")
             .remove();
 
-        this.svg
-            .append("text")
-            .attr("x", -25)
-            .attr("y", 0)
-            .attr("text-anchor", "middle")
-            .style("font-size", "16px")
-            .style("font-weight", "100")
-            .attr("fill", "#6F7682")
-            .attr("stroke-width", ".8")
-            .text(`${includedUnit}`);
+        // this.svg
+        //     .append("text")
+        //     .attr("x", -25)
+        //     .attr("y", 0)
+        //     .attr("text-anchor", "middle")
+        //     .style("font-size", "16px")
+        //     .style("font-weight", "100")
+        //     .attr("fill", "#6F7682")
+        //     .attr("stroke-width", ".8")
+        //     .text(`${includedUnit}`);
     }
 
     getGenerators() {
         const yAxis = d3
             .axisLeft(this.y)
             .ticks(12)
-            .tickFormat(
-                (d) => HashRateFormatters.formatHashRateInObject(d).val
-            );
+            .tickFormat((d) => {
+                const convertedHashRate =
+                    HashRateFormatters.formatHashRateInObject(d);
+
+                return `${Number(convertedHashRate.hashRate).toFixed()} ${
+                    convertedHashRate.unit
+                }h/s`;
+            });
 
         return {
             area: d3
@@ -161,6 +168,74 @@ export class LineGraphService extends GraphService {
                 .domain(yAxis.scale().ticks())
                 .range([this.graphElem.clientHeigh, 0]),
         };
+    }
+
+    getClosestPoint(mouseX) {
+        const pathNode = this.svg.select(".main_line").node();
+        let beginning = 0,
+            end = pathNode.getTotalLength();
+        let position = null;
+
+        while (true) {
+            const target = Math.floor((beginning + end) / 2);
+            position = pathNode.getPointAtLength(target);
+            if (
+                (target === end || target === beginning) &&
+                position.x !== mouseX
+            ) {
+                break;
+            }
+            if (position.x > mouseX) end = target;
+            else if (position.x < mouseX) beginning = target;
+            else break;
+        }
+
+        return position;
+    }
+
+    abstractLeaveAction() {
+        this.svg.selectAll(".vertical-line").style("opacity", 0);
+
+        this.svg.selectAll(".dot").style("opacity", 0);
+    }
+
+    abstractMoveAction(mouseX) {
+        if (!this.tooltip) {
+            return this;
+        }
+
+        const linePosition = this.getClosestPoint(mouseX);
+
+        this.tooltipService.tooltip.isLeft = this.tooltip.clientWidth > mouseX;
+
+        const tooltipLeftMargin = this.isTooltipLeft
+            ? this.TOOLTIP_MARGIN
+            : -this.TOOLTIP_MARGIN;
+
+        const savedRightPosition = this.isTooltipLeft
+            ? 0
+            : -this.tooltip.clientWidth;
+
+        this.tooltipService.setTooltipPosition(
+            linePosition.x + tooltipLeftMargin + savedRightPosition,
+            linePosition.y - this.tooltip.clientHeight / 2
+        );
+
+        this.svg
+            .selectAll(".vertical-line")
+            .attr("x1", linePosition.x)
+            .attr("x2", linePosition.x)
+            .attr("y1", 0)
+            .attr("y2", this.graphElem.clientHeight)
+            .style("opacity", 1);
+
+        this.svg
+            .selectAll(".dot")
+            .attr("cx", linePosition.x)
+            .attr("cy", linePosition.y)
+            .style("opacity", 1);
+
+        return this;
     }
     // constructor(graphData, translate) {
     //     super(graphData, translate);
