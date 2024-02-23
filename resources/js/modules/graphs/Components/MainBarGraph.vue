@@ -59,45 +59,49 @@ export default {
         ...mapGetters(["viewportWidth"]),
     },
     watch: {
-        graphData(newGraphData) {
-            this.service.setGraphData(newGraphData).dropGraph();
-            this.graphInit();
-        },
-        viewportWidth() {
-            this.service.dropGraph();
-            this.graphInit();
-        },
+        // "$refs.chart"(newChartHtml) {
+        //     this.facade.rebuildGraph(
+        //         newChartHtml,
+        //         this.$refs.tooltip,
+        //         "line",
+        //         this.graphData
+        //     );
+        // },
+        // graphData(newGraphData) {
+        //     this.facade.rebuildGraph(
+        //         this.$refs.chart,
+        //         this.$refs.tooltip,
+        //         "line",
+        //         newGraphData
+        //     );
+        // },
+        // height() {
+        //     this.facade.rebuildGraph(
+        //         this.$refs.chart,
+        //         this.$refs.tooltip,
+        //         "line",
+        //         this.graphData
+        //     );
+        // },
+        // viewportWidth() {
+        //     this.facade.rebuildGraph(
+        //         this.$refs.chart,
+        //         this.$refs.tooltip,
+        //         "line",
+        //         this.graphData
+        //     );
+        // },
     },
     mounted() {
-        this.service
-            .dropGraph()
-            .setChartHtml(this.$refs.chart)
-            .setTooltipHtml(this.$refs.tooltip)
-            .setTooltipIconHtml(this.$refs.tooltip_icon.$el)
-            .createTooltip()
-            .createTooltipIcon();
-
-        this.graphInit();
+        // this.facade.createGraph(
+        //     this.$refs.chart,
+        //     this.$refs.tooltip,
+        //     "line",
+        //     this.graphData
+        // );
     },
-    methods: {
-        graphInit() {
-            if (this.graphData) {
-                this.service
-                    .setGraphData(this.graphData)
-                    .setContainerHeight(this.height)
-                    .setContainerWidth(this.$refs.chart.offsetWidth)
-                    .createSvg()
-                    .setY()
-                    .setX()
-                    .graphAppends();
-
-                if (this.viewportWidth > 991.98) {
-                    this.service.setSvgEvents();
-                } else {
-                    this.service.setMobileSvgEvents();
-                }
-            }
-        },
+    unmounted() {
+        this.facade.dropGraph();
     },
 };
 </script>

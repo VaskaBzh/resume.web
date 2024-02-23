@@ -1,7 +1,94 @@
 import { GraphService } from "@/modules/graphs/services/GraphService";
 import * as d3 from "d3";
+import { GraphDataTrait } from "../../../traits/GraphDataTrait";
 
 export class ColumnGraphService extends GraphService {
+    setGraphY() {
+        const graphDataTrait = GraphDataTrait;
+
+        graphDataTrait.setMaxValue(0.005);
+
+        this.graph.y = d3.scaleLinear(
+            [0, graphDataTrait.lineValueValidation(this.graphData.values)],
+            [this.graphElem.clientHeight, 0]
+        );
+
+        return this;
+    }
+
+    buildElements() {
+        console.dir(this.y);
+
+        this.svg
+            .selectAll("rect")
+            .data(this.graphData.values)
+            .join("rect")
+            .attr("x", (_, i) => this.x(i))
+            .attr("y", (yAxisData) => this.y(yAxisData) - 2)
+            .attr("width", this.x.bandwidth())
+            .attr("height", (yAxisData) => this.getBarHeight(yAxisData))
+            .attr("ry", 6)
+            .attr("rx", 6)
+            .attr("class", "bar");
+    }
+
+    getGenerators() {}
+
+    abstractLeaveAction() {}
+
+    getClosestPoint(touchX) {
+        const bars = this.svg.selectAll(".bar").nodes();
+        let closestBar = null;
+
+        this.barData = this.getBarData(touchX);
+
+        bars.forEach((bar, i) => {
+            bar.setAttribute("style", "transition: all 0.1s ease 0s;");
+
+            if (this.barData.index === i) {
+                closestBar = bar;
+
+                bar.setAttribute(
+                    "style",
+                    "fill: #2E90FA; transition: all 0.1s ease 0s;"
+                );
+            }
+        });
+
+        if (closestBar) {
+            const rect = closestBar.getBoundingClientRect();
+
+            return {
+                x: touchX,
+                y: this.containerHeight - rect.height,
+            };
+        }
+
+        return null;
+    }
+
+    abstractMoveAction(mouseX) {
+        if (!this.tooltip) {
+            return this;
+        }
+
+        const linePosition = this.getClosestPoint(mouseX);
+
+        this.tooltipService.tooltip.isLeft = this.tooltip.clientWidth > mouseX;
+
+        const tooltipLeftMargin = this.isTooltipLeft
+            ? this.TOOLTIP_MARGIN
+            : -this.TOOLTIP_MARGIN;
+
+        const savedRightPosition = this.isTooltipLeft
+            ? 0
+            : -this.tooltip.clientWidth;
+
+        this.tooltipService.setTooltipPosition(
+            linePosition.x + tooltipLeftMargin + savedRightPosition,
+            linePosition.y - this.tooltip.clientHeight / 2
+        );
+    }
     // tooltipIconHtml = null;
     // d3TooltipIcon = null;
     //

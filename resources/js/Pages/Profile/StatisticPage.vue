@@ -84,12 +84,12 @@
                 class="statistic__info"
                 :instruction-config="instructionService"
             />
-<!--            <statistic-column-graph-->
-<!--                :instruction-config="instructionService"-->
-<!--                :wait-graph-change="barChartService.waitGraphChange"-->
-<!--                :graph="barChartService.graph"-->
-<!--                class="statistic_graph-column"-->
-<!--            />-->
+            <statistic-column-graph
+                :instruction-config="instructionService"
+                :wait-graph-change="barChartService.waitGraphChange"
+                :graph="barChartService.graph"
+                class="statistic_graph-column"
+            />
         </div>
         <no-information
             v-if="!lineChartService.waitGraph && !getAccount.workers_count"
@@ -97,7 +97,7 @@
             class="cabinet__preloader-bg"
         />
     </div>
-    <teleport to=".header_button-instruction" v-if="isMounted">
+    <teleport v-if="isMounted" to=".header_button-instruction">
         <instruction-button
             hint="statistic"
             @openInstruction="instructionService.setStep().setVisible()"
@@ -159,19 +159,21 @@ export default {
         ...mapGetters(["getActive", "getAccount"]),
         graphOffsetTabs() {
             return [
-                {title: `24 ${this.$t("hours")}`, value: 96},
-                {title: `7 ${this.$t("days")}`, value: 672},
+                { title: `24 ${this.$t("hours")}`, value: 96 },
+                { title: `7 ${this.$t("days")}`, value: 672 },
                 // { title: `1 ${this.translate("month")}`, value: 2880 },
             ];
-        }
+        },
     },
     async mounted() {
-        this.isMounted = true
+        this.isMounted = true;
         this.instructionService.setStepsCount(4);
 
         document.title = this.$t("header.links.statistic");
 
-        this.lineChartService.graphDataService.setOffset(this.graphOffsetTabs[0].value);
+        this.lineChartService.graphDataService.setOffset(
+            this.graphOffsetTabs[0].value
+        );
         this.barChartService.graphDataService.setOffset(30);
 
         await this.lineChartService.lineGraphIndex();
