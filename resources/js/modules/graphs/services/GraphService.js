@@ -192,16 +192,20 @@ export class GraphService {
 
     getTickPosition(mouseX) {
         const position =
-            mouseX /
+            (mouseX + 1) /
             (this.graphElem.clientWidth / this.graphData.values.length);
 
-        return Number(position.toFixed()) - 1;
+        if (position === this.graphData.values.length) {
+            return this.graphData.values.length - 1;
+        }
+
+        return Math.floor(position);
     }
 
     mouseMoveAction(event, mouseX) {
         const tickPosition = this.getTickPosition(mouseX);
 
-        if (tickPosition > -1 && tickPosition < this.graphData.values.length) {
+        if (tickPosition >= -1 && tickPosition < this.graphData.values.length) {
             this.tooltipService
                 .getTargetValue(this.graphData, tickPosition)
                 .showTooltip();

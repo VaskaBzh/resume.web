@@ -101,7 +101,7 @@ export default {
         // );
     },
     unmounted() {
-        this.facade.dropGraph();
+        // this.facade.dropGraph();
     },
 };
 </script>
