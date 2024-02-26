@@ -3,25 +3,25 @@
         <main-title class="headline">{{ $t("statistic.graph[0]") }}</main-title>
         <div ref="chart" class="container-chart">
             <div ref="tooltip" class="tooltip" style="opacity: 0">
-                <div class="tooltip__content">
-                    <p class="tooltip_text">
-                        <span class="tooltip_value"
-                            >{{ isNaN(service.time) ? "" : service.time }}.{{
-                                isNaN(service.fullDate)
-                                    ? ".."
-                                    : service.fullDate
-                            }}</span
-                        >
-                    </p>
-                    <p class="tooltip_text tooltip_text-mining">
-                        <span class="tooltip_label">
-                            {{ $t("statistic.graph[1]") }}:
-                        </span>
-                        <span class="tooltip_value">
-                            {{ service.mining || 0 }} BTC
-                        </span>
-                    </p>
-                </div>
+<!--                <div class="tooltip__content">-->
+<!--                    <p class="tooltip_text">-->
+<!--                        <span class="tooltip_value"-->
+<!--                            >{{ isNaN(service.time) ? "" : service.time }}.{{-->
+<!--                                isNaN(service.fullDate)-->
+<!--                                    ? ".."-->
+<!--                                    : service.fullDate-->
+<!--                            }}</span-->
+<!--                        >-->
+<!--                    </p>-->
+<!--                    <p class="tooltip_text tooltip_text-mining">-->
+<!--                        <span class="tooltip_label">-->
+<!--                            {{ $t("statistic.graph[1]") }}:-->
+<!--                        </span>-->
+<!--                        <span class="tooltip_value">-->
+<!--                            {{ service.mining || 0 }} BTC-->
+<!--                        </span>-->
+<!--                    </p>-->
+<!--                </div>-->
             </div>
             <tooltip-bar-icon
                 ref="tooltip_icon"
@@ -36,8 +36,8 @@
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import TooltipBarIcon from "@/modules/graphs/icons/TooltipBarIcon.vue";
 
-import { ColumnGraphService } from "@/modules/graphs/services/ColumnGraphService";
 import { mapGetters } from "vuex";
+import { GraphFacade } from "@/modules/graphs/facades/GraphFacade";
 
 export default {
     name: "MainColumnGraph",
@@ -51,57 +51,51 @@ export default {
     },
     data() {
         return {
-            graph: this.graphData,
-            service: new ColumnGraphService(this.graphData, this.$t),
+            facade: new GraphFacade(),
         };
     },
     computed: {
         ...mapGetters(["viewportWidth"]),
     },
     watch: {
-        // "$refs.chart"(newChartHtml) {
-        //     this.facade.rebuildGraph(
-        //         newChartHtml,
-        //         this.$refs.tooltip,
-        //         "line",
-        //         this.graphData
-        //     );
-        // },
-        // graphData(newGraphData) {
-        //     this.facade.rebuildGraph(
-        //         this.$refs.chart,
-        //         this.$refs.tooltip,
-        //         "line",
-        //         newGraphData
-        //     );
-        // },
-        // height() {
-        //     this.facade.rebuildGraph(
-        //         this.$refs.chart,
-        //         this.$refs.tooltip,
-        //         "line",
-        //         this.graphData
-        //     );
-        // },
-        // viewportWidth() {
-        //     this.facade.rebuildGraph(
-        //         this.$refs.chart,
-        //         this.$refs.tooltip,
-        //         "line",
-        //         this.graphData
-        //     );
-        // },
+        "$refs.chart"(newChartHtml) {
+            this.facade.rebuildGraph(
+                newChartHtml,
+                "bar",
+                this.graphData
+            );
+        },
+        graphData(newGraphData) {
+            this.facade.rebuildGraph(
+                this.$refs.chart,
+                "bar",
+                newGraphData
+            );
+        },
+        height() {
+            this.facade.rebuildGraph(
+                this.$refs.chart,
+                "bar",
+                this.graphData
+            );
+        },
+        viewportWidth() {
+            this.facade.rebuildGraph(
+                this.$refs.chart,
+                "bar",
+                this.graphData
+            );
+        },
     },
     mounted() {
-        // this.facade.createGraph(
-        //     this.$refs.chart,
-        //     this.$refs.tooltip,
-        //     "line",
-        //     this.graphData
-        // );
+        this.facade.createGraph(
+            this.$refs.chart,
+            "bar",
+            this.graphData
+        );
     },
     unmounted() {
-        // this.facade.dropGraph();
+        this.facade.dropGraph();
     },
 };
 </script>

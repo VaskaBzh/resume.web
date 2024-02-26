@@ -99,11 +99,11 @@ export class GraphService {
         return this;
     }
 
-    setGraphElements(newElements) {
-        this.graph.elements = newElements;
-
-        return this;
-    }
+    // setGraphElements(newElements) {
+    //     this.graph.elements = newElements;
+    //
+    //     return this;
+    // }
 
     setGraphX() {
         this.graph.x = d3.scaleTime(
@@ -119,7 +119,7 @@ export class GraphService {
 
     setGraphY() {
         this.graph.y = d3.scaleLinear(
-            [0, GraphDataTrait.lineValueValidation(this.graphData.values)],
+            [0, GraphDataTrait.domainValueValidation(this.graphData.values)],
             [this.graphElem.clientHeight, 0]
         );
 
@@ -192,7 +192,7 @@ export class GraphService {
 
     getTickPosition(mouseX) {
         const position =
-            (mouseX + 1) /
+            mouseX /
             (this.graphElem.clientWidth / this.graphData.values.length);
 
         if (position === this.graphData.values.length) {
@@ -205,7 +205,7 @@ export class GraphService {
     mouseMoveAction(event, mouseX) {
         const tickPosition = this.getTickPosition(mouseX);
 
-        if (tickPosition >= -1 && tickPosition < this.graphData.values.length) {
+        if (tickPosition >= 0 && tickPosition < this.graphData.values.length) {
             this.tooltipService
                 .getTargetValue(this.graphData, tickPosition)
                 .showTooltip();

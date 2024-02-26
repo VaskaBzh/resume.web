@@ -85,7 +85,6 @@ export default {
         "$refs.chart"(newChartHtml) {
             this.facade.rebuildGraph(
                 newChartHtml,
-                this.$refs.tooltip,
                 "line",
                 this.graphData
             );
@@ -93,7 +92,6 @@ export default {
         graphData(newGraphData) {
             this.facade.rebuildGraph(
                 this.$refs.chart,
-                this.$refs.tooltip,
                 "line",
                 newGraphData
             );
@@ -101,7 +99,6 @@ export default {
         height() {
             this.facade.rebuildGraph(
                 this.$refs.chart,
-                this.$refs.tooltip,
                 "line",
                 this.graphData
             );
@@ -109,7 +106,6 @@ export default {
         isDark() {
             this.facade.rebuildGraph(
                 this.$refs.chart,
-                this.$refs.tooltip,
                 "line",
                 this.graphData
             );
@@ -117,7 +113,6 @@ export default {
         viewportWidth() {
             this.facade.rebuildGraph(
                 this.$refs.chart,
-                this.$refs.tooltip,
                 "line",
                 this.graphData
             );
@@ -126,7 +121,6 @@ export default {
     mounted() {
         this.facade.createGraph(
             this.$refs.chart,
-            this.$refs.tooltip,
             "line",
             this.graphData
         );

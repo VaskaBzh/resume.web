@@ -6,13 +6,17 @@ export class GraphDataTrait {
 
     static setMaxValue(newMaxValue = 120000000000000) {
         this.maxValue = newMaxValue;
+        
+        return this;
     }
 
     static setPercentPadding(newPercentPadding = 0.2) {
         this.percentPadding = newPercentPadding;
+        
+        return this;
     }
 
-    static lineValueValidation(values) {
+    static domainValueValidation(values) {
         const emptyValue = 0;
 
         return d3.max(values) !== emptyValue

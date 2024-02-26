@@ -507,6 +507,10 @@ h6 {
     .vertical-line {
         transition: all 0.5s ease 0s;
     }
+
+    .dot {
+        transition: opacity 0.5s ease 0s;
+    }
 }
 
 #app {
@@ -535,7 +539,7 @@ h6 {
 
 .tooltip {
     position: absolute;
-    transition: all 0.2s ease 0s;
+    transition: opacity 0.2s ease 0s;
     width: fit-content;
     border: none;
     background: #ecf2fc;

@@ -2,10 +2,11 @@ import { ElementsConfig } from "@/modules/graphs/configs/ElementsConfig";
 import { GraphFactory } from "@/modules/graphs/factories/GraphFactory";
 
 export class GraphFacade {
-    buildGraph(element, tooltip, type, graphData) {
+    buildGraph(element, type, graphData) {
         this.graphService = GraphFactory.createGraph(type);
 
         if (!element || !graphData) {
+            console.log(element, graphData)
             return this;
         }
 

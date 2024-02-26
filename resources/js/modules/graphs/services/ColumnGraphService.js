@@ -1,93 +1,71 @@
 import { GraphService } from "@/modules/graphs/services/GraphService";
+import { GraphDataTrait } from "@/traits/GraphDataTrait";
 import * as d3 from "d3";
-import { GraphDataTrait } from "../../../traits/GraphDataTrait";
 
 export class ColumnGraphService extends GraphService {
+    BAR_PADDING = 8;
+
     setGraphY() {
         const graphDataTrait = GraphDataTrait;
 
-        graphDataTrait.setMaxValue(0.005);
+        graphDataTrait.setPercentPadding(0).setMaxValue(0.005);
 
         this.graph.y = d3.scaleLinear(
-            [0, graphDataTrait.lineValueValidation(this.graphData.values)],
+            [0, graphDataTrait.domainValueValidation(this.graphData.values)],
             [this.graphElem.clientHeight, 0]
         );
 
         return this;
     }
 
-    buildElements() {
-        console.dir(this.y);
+    setGraphX() {
+        this.graph.x = d3
+            .scaleBand()
+            .domain(this.graphData.dates.map((_, i) => i))
+            .range([0, this.graphElem.clientWidth]);
 
+        this.graph.x.padding((this.BAR_PADDING / (this.x.bandwidth() / 100)) / 100)
+
+        return this;
+    }
+
+    buildElements() {
         this.svg
             .selectAll("rect")
             .data(this.graphData.values)
             .join("rect")
             .attr("x", (_, i) => this.x(i))
-            .attr("y", (yAxisData) => this.y(yAxisData) - 2)
+            .attr("y", (yAxisData) => this.y(yAxisData) + 2)
             .attr("width", this.x.bandwidth())
-            .attr("height", (yAxisData) => this.getBarHeight(yAxisData))
+            .attr("height", (yAxisData) => this.graphElem.clientHeight - this.y(yAxisData) + 8)
             .attr("ry", 6)
             .attr("rx", 6)
             .attr("class", "bar");
     }
 
-    getGenerators() {}
-
     abstractLeaveAction() {}
-
-    getClosestPoint(touchX) {
-        const bars = this.svg.selectAll(".bar").nodes();
-        let closestBar = null;
-
-        this.barData = this.getBarData(touchX);
-
-        bars.forEach((bar, i) => {
-            bar.setAttribute("style", "transition: all 0.1s ease 0s;");
-
-            if (this.barData.index === i) {
-                closestBar = bar;
-
-                bar.setAttribute(
-                    "style",
-                    "fill: #2E90FA; transition: all 0.1s ease 0s;"
-                );
-            }
-        });
-
-        if (closestBar) {
-            const rect = closestBar.getBoundingClientRect();
-
-            return {
-                x: touchX,
-                y: this.containerHeight - rect.height,
-            };
-        }
-
-        return null;
-    }
-
-    abstractMoveAction(mouseX) {
+    
+    abstractMoveAction(mouseX, tickPosition) {
         if (!this.tooltip) {
             return this;
         }
 
-        const linePosition = this.getClosestPoint(mouseX);
+        // tickPosition
 
-        this.tooltipService.tooltip.isLeft = this.tooltip.clientWidth > mouseX;
-
-        const tooltipLeftMargin = this.isTooltipLeft
-            ? this.TOOLTIP_MARGIN
-            : -this.TOOLTIP_MARGIN;
-
-        const savedRightPosition = this.isTooltipLeft
-            ? 0
-            : -this.tooltip.clientWidth;
-
-        this.tooltipService.setTooltipPosition(
-            linePosition.x + tooltipLeftMargin + savedRightPosition,
-            linePosition.y - this.tooltip.clientHeight / 2
-        );
+        // this.tooltipService.tooltip.isLeft = this.tooltip.clientWidth > mouseX;
+        //
+        // const tooltipLeftMargin = this.isTooltipLeft
+        //     ? this.TOOLTIP_MARGIN
+        //     : -this.TOOLTIP_MARGIN;
+        //
+        // const savedRightPosition = this.isTooltipLeft
+        //     ? 0
+        //     : -this.tooltip.clientWidth;
+        //
+        // this.tooltipService.setTooltipPosition(
+        //     barPosition.x + tooltipLeftMargin + savedRightPosition,
+        //     barPosition.y - this.tooltip.clientHeight / 2
+        // );
     }
     // tooltipIconHtml = null;
     // d3TooltipIcon = null;

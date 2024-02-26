@@ -87,7 +87,7 @@
             <statistic-column-graph
                 :instruction-config="instructionService"
                 :wait-graph-change="barChartService.waitGraphChange"
-                :graph="barChartService.graph"
+                :graph="barChartService.graphDataService.graph"
                 class="statistic_graph-column"
             />
         </div>
@@ -154,6 +154,7 @@ export default {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
         },
+
     },
     computed: {
         ...mapGetters(["getActive", "getAccount"]),

@@ -5,6 +5,10 @@ export class BarGraphData {
         } else {
             this.values = Number(miningRecond.amount);
         }
+
+        this.dayAt = miningRecond.income_at;
+
+        this.dates = new Date(miningRecond.income_at.split(".").reverse().join("."));
     }
 
 }

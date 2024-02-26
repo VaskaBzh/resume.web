@@ -24,6 +24,19 @@ export class GraphDataService {
         return Math.random() * (max - min) + min;
     }
 
+    makeEmptyValues(graphData, objectKeys) {
+        if (graphData.values.length < this.offset) {
+            objectKeys.forEach(key => {
+                for (let i = 0; i < this.offset - 1; i++) {
+                    if (graphData[key].length < this.offset) {
+                        graphData[key].push(0);
+                    }
+                }
+            })
+        }
+
+        return this;
+    }
     makeFullValues() {
         let data = {};
 
@@ -47,6 +60,8 @@ export class GraphDataService {
         objectKeys.forEach(key => {
             graphData[key].reverse();
         })
+
+        // this.makeEmptyValues(graphData, objectKeys);
 
         Object.assign(this.graph, graphData);
     }

@@ -48,12 +48,9 @@ export class StatisticService {
             this.waitGraphChange = true;
 
             try {
-                const response = ResponseTrait.getResponseData(await this.fetchStatistic());
+                const response = await this.fetchStatistic();
 
-                this.graphDataService.setRecords(response.incomes, BarGraphData)
-
-                // this.setDefaultKeys(60 * 60 * 1000 * 24);
-                // await this.makeFullBarValues();
+                this.graphDataService.setRecords(ResponseTrait.getResponseData(response).incomes, BarGraphData).makeFullValues();
 
                 this.waitGraph = false;
                 this.waitGraphChange = false;
