@@ -70,12 +70,14 @@ export class ColumnGraphService extends GraphService {
         const barHeight = this.barElems[tickPosition].getBoundingClientRect().height;
         const barWidth = this.graphElem.clientWidth / this.graphData.values.length;
 
+        const dynamicTooltipPosition = ((tickPosition * barWidth) + (barWidth / 2)) - (this.tooltip.clientWidth / 2);
+
         this.tooltipService.tooltip.isOut = "";
 
-        if (this.tooltip.clientWidth > mouseX) {
+        if (dynamicTooltipPosition < 0) {
             this.tooltipService.tooltip.isOut = "left";
         }
-        if (mouseX > this.graphElem.clientWidth - this.tooltip.clientWidth) {
+        if (dynamicTooltipPosition > this.graphElem.clientWidth - this.tooltip.clientWidth) {
             this.tooltipService.tooltip.isOut = "right";
         }
 
@@ -83,9 +85,15 @@ export class ColumnGraphService extends GraphService {
             ? 0
             : this.tooltipOut === "right"
                 ? this.graphElem.clientWidth - this.tooltip.clientWidth
-                : ((tickPosition * barWidth) + (barWidth / 2)) - (this.tooltip.clientWidth / 2);
+                : dynamicTooltipPosition;
+        const dynamicIconPosition = (position) => (position * barWidth) + (barWidth / 2);
+        const savedPositionIcon = this.tooltipOut === "left"
+            ? dynamicIconPosition(0)
+            : this.tooltipOut === "right"
+                ? dynamicIconPosition(this.barElems.length - 1)
+                : dynamicIconPosition(tickPosition)
 
-        this.tooltipIcon.style.cssText = `opacity: 1; left: ${(tickPosition * barWidth) + (barWidth / 2)}; top: ${this.graphElem.clientHeight - barHeight};`;
+        this.tooltipIcon.style.cssText = `opacity: 1; left: ${savedPositionIcon}; top: ${this.graphElem.clientHeight - barHeight};`;
 
         this.tooltipService.setTooltipPosition(
             savedPosition,
