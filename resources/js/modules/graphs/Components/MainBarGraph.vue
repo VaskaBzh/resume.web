@@ -1,7 +1,7 @@
 <template>
     <div class="chart chart-bar">
         <main-title class="headline">{{ $t("statistic.graph[0]") }}</main-title>
-        <div ref="chart" class="container-chart">
+        <div :style="{ height: `${height}px` }" ref="chart" class="container-chart">
             <div
                 v-if="facade.graphService?.tooltipContent"
                 ref="tooltip"

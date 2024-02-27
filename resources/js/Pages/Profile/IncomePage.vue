@@ -57,11 +57,11 @@
                     :title="$t('block.titles.month_profit')"
                     :bitcoin="getAccount.last_month_amount || 0"
                 />
-<!--                <main-bar-graph-->
-<!--                    v-if="!service.waitGraphChange"-->
-<!--                    :height="130"-->
-<!--                    :graph-data="service.graphService.graph"-->
-<!--                />-->
+                <main-bar-graph
+                    v-if="!service.waitGraphChange"
+                    :height="130"
+                    :graph-data="service.graphDataService.graph"
+                />
                 <instruction-step
                     :step_active="2"
                     :steps_count="instructionService.steps_count"
@@ -165,21 +165,11 @@ export default {
         },
         // удалить НАХУЙ
         async "service.tableService.tableModel.rows"(newTableRows) {
-            // if (newTableRows.length > 0) {
-            //     this.service.graphService.records = newTableRows.map((el) => {
-            //         return new BarGraphData(el);
-            //     });
-            //
-            //     await this.service.graphService.makeFullBarValues();
-            //
-            //     this.service.waitGraphChange = false;
-            // } else {
-            //     this.service.graphService.records = new BarGraphData({
-            //         income: 0,
-            //     });
-            //
-            //     this.service.waitGraphChange = false;
-            // }
+            if (newTableRows.length > 0) {
+                this.service.graphDataService.setRecords(newTableRows, BarGraphData).makeFullValues();
+
+                this.service.waitGraphChange = false;
+            }
         },
     },
     data() {

@@ -5,7 +5,7 @@ import store from "@/store";
 
 export class IncomeService {
     constructor() {
-        this.graphService = new GraphDataService(30);
+        this.graphDataService = new GraphDataService(30);
         this.waitGraphChange = true;
 
         this.tableService = this.createTableService();
@@ -20,9 +20,6 @@ export class IncomeService {
             .setTitlesLength(8)
             .setTitleString("income.table.titles")
             .setRowsData(IncomeData);
-
-        // this.waitGraphChange = true;
-        // this.graphService.setDefaultKeys(60 * 60 * 1000 * 24);
 
         await this.tableService.fetch(
             "incomes",

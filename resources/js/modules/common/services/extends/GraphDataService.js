@@ -9,7 +9,9 @@ export class GraphDataService {
     }
 
     setRecords(newRecordsData, GraphData = LineGraphData) {
-        this.records = newRecordsData.map(recordElem => new GraphData(recordElem, this.offset === 96 ? "hour_at" : "day_at"));
+        this.records = newRecordsData.map(recordElem => new GraphData(recordElem));
+
+        console.log(this.records)
 
         return this;
     }
