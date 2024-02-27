@@ -71,6 +71,7 @@ export class ColumnGraphService extends GraphService {
         const barWidth = this.graphElem.clientWidth / this.graphData.values.length;
 
         const dynamicTooltipPosition = ((tickPosition * barWidth) + (barWidth / 2)) - (this.tooltip.clientWidth / 2);
+        const dynamicIconPosition = (position) => (position * barWidth) + (barWidth / 2);
 
         this.tooltipService.tooltip.isOut = "";
 
@@ -86,7 +87,6 @@ export class ColumnGraphService extends GraphService {
             : this.tooltipOut === "right"
                 ? this.graphElem.clientWidth - this.tooltip.clientWidth
                 : dynamicTooltipPosition;
-        const dynamicIconPosition = (position) => (position * barWidth) + (barWidth / 2);
         const savedPositionIcon = this.tooltipOut === "left"
             ? dynamicIconPosition(0)
             : this.tooltipOut === "right"
