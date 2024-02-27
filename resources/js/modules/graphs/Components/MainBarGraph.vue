@@ -155,6 +155,9 @@ export default {
     width: 100%;
 }
 :global(.bar) {
-    transition: all 0.2s ease 0s;
+    fill: var(--background-island-inner-2, rgba(83, 177, 253, 0.15));
+}
+:global(.bar-transition) {
+    transition: fill 0.2s ease 0s;
 }
 </style>

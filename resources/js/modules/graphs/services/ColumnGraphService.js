@@ -48,6 +48,10 @@ export class ColumnGraphService extends GraphService {
             .attr("ry", 6)
             .attr("rx", 6)
             .attr("class", "bar");
+
+        setTimeout(() => {
+            this.bars.attr("class", "bar bar-transition");
+        }, 10);
     }
 
     setSideElements(graphElement) {
