@@ -2,26 +2,32 @@
     <div class="chart chart-bar">
         <main-title class="headline">{{ $t("statistic.graph[0]") }}</main-title>
         <div ref="chart" class="container-chart">
-            <div ref="tooltip" class="tooltip" style="opacity: 0">
-<!--                <div class="tooltip__content">-->
-<!--                    <p class="tooltip_text">-->
-<!--                        <span class="tooltip_value"-->
-<!--                            >{{ isNaN(service.time) ? "" : service.time }}.{{-->
-<!--                                isNaN(service.fullDate)-->
-<!--                                    ? ".."-->
-<!--                                    : service.fullDate-->
-<!--                            }}</span-->
-<!--                        >-->
-<!--                    </p>-->
-<!--                    <p class="tooltip_text tooltip_text-mining">-->
-<!--                        <span class="tooltip_label">-->
-<!--                            {{ $t("statistic.graph[1]") }}:-->
-<!--                        </span>-->
-<!--                        <span class="tooltip_value">-->
-<!--                            {{ service.mining || 0 }} BTC-->
-<!--                        </span>-->
-<!--                    </p>-->
-<!--                </div>-->
+            <div
+                v-if="facade.graphService?.tooltipContent"
+                ref="tooltip"
+                class="tooltip"
+                :class="{ 'tooltip-left': facade.graphService.isTooltipLeft }"
+                :style="{
+                    opacity: facade.graphService.tooltipOpacity,
+                    left: `${facade.graphService.tooltipPosition.left}px`,
+                    top: `${facade.graphService.tooltipPosition.top}px`,
+                }"
+            >
+                <div class="tooltip__content">
+                    <p class="tooltip_text">
+                        <span class="tooltip_value"
+                            >{{ facade.graphService.tooltipContent.dayAt }}</span
+                        >
+                    </p>
+                    <p class="tooltip_text tooltip_text-mining">
+                        <span class="tooltip_label">
+                            {{ $t("statistic.graph[1]") }}:
+                        </span>
+                        <span class="tooltip_value">
+                            {{ facade.graphService.tooltipContent.mining || 0 }} BTC
+                        </span>
+                    </p>
+                </div>
             </div>
             <tooltip-bar-icon
                 ref="tooltip_icon"
@@ -115,6 +121,7 @@ export default {
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 208px;
+    transition: all 0.2s ease 0s;
 }
 .tooltip__content {
     display: flex;
@@ -146,5 +153,8 @@ export default {
     display: inline-flex;
     justify-content: space-between;
     width: 100%;
+}
+:global(.bar) {
+    transition: all 0.2s ease 0s;
 }
 </style>

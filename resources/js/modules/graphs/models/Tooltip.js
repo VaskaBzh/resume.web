@@ -8,5 +8,5 @@ export class Tooltip {
     };
     opacity = 0;
     html = null;
-    isLeft = false;
+    isOut = "";
 }

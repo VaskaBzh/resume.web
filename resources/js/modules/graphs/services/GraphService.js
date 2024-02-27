@@ -71,8 +71,8 @@ export class GraphService {
         return this.tooltipService.tooltip.html;
     }
 
-    get isTooltipLeft() {
-        return this.tooltipService.tooltip.isLeft;
+    get tooltipOut() {
+        return this.tooltipService.tooltip.isOut;
     }
 
     /* getters end
@@ -89,6 +89,7 @@ export class GraphService {
         }
 
         this.tooltipService.setTooltipHtml(tooltipHtml);
+        this.setSideElements(graphElement);
 
         return this;
     }
@@ -146,6 +147,8 @@ export class GraphService {
     abstractMoveAction() {}
 
     abstractLeaveAction() {}
+    
+    setSideElements() {}
 
     /* abstract methods end
      *
@@ -210,7 +213,7 @@ export class GraphService {
                 .getTargetValue(this.graphData, tickPosition)
                 .showTooltip();
 
-            this.abstractMoveAction(mouseX);
+            this.abstractMoveAction(mouseX, tickPosition);
         }
     }
 

@@ -206,13 +206,15 @@ export class LineGraphService extends GraphService {
 
         const linePosition = this.getClosestPoint(mouseX);
 
-        this.tooltipService.tooltip.isLeft = this.tooltip.clientWidth > mouseX;
+        if (this.tooltip.clientWidth > mouseX) {
+            this.tooltipService.tooltip.isOut = "left";
+        }
 
-        const tooltipLeftMargin = this.isTooltipLeft
+        const tooltipLeftMargin = this.tooltipOut === "left"
             ? this.TOOLTIP_MARGIN
             : -this.TOOLTIP_MARGIN;
 
-        const savedRightPosition = this.isTooltipLeft
+        const savedRightPosition = this.tooltipOut === "left"
             ? 0
             : -this.tooltip.clientWidth;
 
@@ -220,7 +222,6 @@ export class LineGraphService extends GraphService {
             linePosition.x + tooltipLeftMargin + savedRightPosition,
             linePosition.y - this.tooltip.clientHeight / 2
         );
-
         this.svg
             .selectAll(".vertical-line")
             .attr("x1", linePosition.x)
