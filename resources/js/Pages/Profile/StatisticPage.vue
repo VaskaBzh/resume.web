@@ -23,11 +23,10 @@
             <statistic-line-graph
                 class="statistic_graph"
                 :wait-graph-change="lineChartService.waitGraphChange"
-                :offset="lineChartService.offset"
+                :interval="lineChartService.interval"
                 :graph="lineChartService.graphDataService.graph"
-                :buttons="graphOffsetTabs"
                 :instruction-config="instructionService"
-                @getValue="lineChartService.graphDataService.setOffset($event)"
+                @getValue="lineChartService.setInterval($event)"
             />
             <div
                 class="statistic__cards onboarding_block"
@@ -158,24 +157,12 @@ export default {
     },
     computed: {
         ...mapGetters(["getActive", "getAccount"]),
-        graphOffsetTabs() {
-            return [
-                { title: `24 ${this.$t("hours")}`, value: 96 },
-                { title: `7 ${this.$t("days")}`, value: 672 },
-                // { title: `1 ${this.translate("month")}`, value: 2880 },
-            ];
-        },
     },
     async mounted() {
         this.isMounted = true;
         this.instructionService.setStepsCount(4);
 
         document.title = this.$t("header.links.statistic");
-
-        this.lineChartService.graphDataService.setOffset(
-            this.graphOffsetTabs[0].value
-        );
-        this.barChartService.graphDataService.setOffset(30);
 
         await this.lineChartService.lineGraphIndex();
         await this.barChartService.barGraphIndex();

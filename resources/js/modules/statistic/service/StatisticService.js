@@ -6,6 +6,8 @@ import store from "@/store";
 import { ResponseTrait } from "@/traits/ResponseTrait";
 
 export class StatisticService {
+    interval = "day";
+
     constructor(route) {
         this.waitGraph = true;
         this.waitGraphChange = true;
@@ -15,14 +17,19 @@ export class StatisticService {
         this.graphDataService = this.createGraphDataService();
     }
 
+    async setInterval(newIntervalValue) {
+        this.interval = newIntervalValue;
+
+        await this.lineGraphIndex();
+    }
+
     createGraphDataService() {
         return new GraphDataService();
     }
 
     async fetchStatistic() {
-        // this.graphDataService.offset
         return await ProfileApi.get(
-            `/statistic/${store.getters.getActive}?offset=day`
+            `/statistic/${store.getters.getActive}?offset=${this.interval}`
         );
     }
 

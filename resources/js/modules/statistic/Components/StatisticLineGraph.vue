@@ -11,8 +11,8 @@
                 {{ $t("statistic.chart.title") }}
             </main-title>
             <main-tabs
-                :tabs="buttons"
-                :active="offset"
+                :tabs="graphOffsetTabs"
+                :active="interval"
                 @getValue="$emit('getValue', $event)"
             />
         </div>
@@ -57,13 +57,19 @@ export default {
     },
     props: {
         waitGraphChange: Boolean,
-        offset: Number,
+        interval: String,
         graph: Object,
-        buttons: Object,
         instructionConfig: Object,
     },
     computed: {
         ...mapGetters(["viewportWidth"]),
+        graphOffsetTabs() {
+            return [
+                { title: `24 ${this.$t("hours")}`, value: "day" },
+                { title: `7 ${this.$t("days")}`, value: "week" },
+                { title: `1 ${this.$t("month")}`, value: "month" },
+            ];
+        },
         height() {
             if (!this.heightVal) {
                 if (this.viewportWidth < 479.98) return 246;

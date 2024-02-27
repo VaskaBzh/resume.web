@@ -6,9 +6,7 @@
             :key="tab.title"
             :class="{
                 active:
-                    (tab.value?.length
-                        ? tab.value[tab.value.length - 1]
-                        : tab.value) === active,
+                    tab.value === active,
             }"
             @click="$emit('getValue', tab.value)"
         >
