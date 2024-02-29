@@ -9,9 +9,9 @@ export class GraphDataService {
     }
 
     setRecords(newRecordsData, GraphData = LineGraphData) {
-        this.records = newRecordsData.map(recordElem => new GraphData(recordElem));
-
-        console.log(this.records)
+        this.records = Object.values(newRecordsData).map(
+            (recordElem) => new GraphData(recordElem)
+        );
 
         return this;
     }
@@ -28,13 +28,13 @@ export class GraphDataService {
 
     makeEmptyValues(graphData, objectKeys) {
         if (graphData.values.length < this.offset) {
-            objectKeys.forEach(key => {
+            objectKeys.forEach((key) => {
                 for (let i = 0; i < this.offset - 1; i++) {
                     if (graphData[key].length < this.offset) {
                         graphData[key].push(0);
                     }
                 }
-            })
+            });
         }
 
         return this;
@@ -44,24 +44,24 @@ export class GraphDataService {
 
         const objectKeys = Object.keys(this.records[0]);
 
-        objectKeys.forEach(key => data = { ...data, [key]: [] });
+        objectKeys.forEach((key) => (data = { ...data, [key]: [] }));
 
         const graphData = {
             ...this.records.slice(-this.offset).reduce(
                 (acc, el) => {
-                    Object.keys(el).forEach(key => {
+                    Object.keys(el).forEach((key) => {
                         acc[key].push(el[key] || 0);
-                    })
+                    });
 
                     return acc;
                 },
                 { ...data }
-            )
+            ),
         };
 
-        objectKeys.forEach(key => {
+        objectKeys.forEach((key) => {
             graphData[key].reverse();
-        })
+        });
 
         // this.makeEmptyValues(graphData, objectKeys);
 

@@ -3,6 +3,7 @@ import { HashRateFormatters } from "@/formatters/HashRateFormatters";
 export class LineGraphData {
     constructor(hashrateRecord) {
         this.values = hashrateRecord.hash;
+        console.log(hashrateRecord)
         this.convertedValues = HashRateFormatters.formatHashRateInObject(
             hashrateRecord.hash
         ).hashRate;

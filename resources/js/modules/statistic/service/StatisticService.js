@@ -29,7 +29,7 @@ export class StatisticService {
 
     async fetchStatistic() {
         return await ProfileApi.get(
-            `/statistic/${store.getters.getActive}?offset=${this.interval}`
+            `/statistic/${store.getters.getActive}?period=${this.interval}`
         );
     }
 
