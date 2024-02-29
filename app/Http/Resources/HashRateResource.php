@@ -6,6 +6,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
+use DateTime;
 
 #[
     OA\Schema(
@@ -24,8 +25,16 @@ class HashRateResource extends JsonResource
 {
     public function toArray($request): array
     {
+        if (isset($this->rounded_created_at)) {
+            return [
+                'hash' => (float)$this->hash,
+                'unit' => $this->unit,
+                'worker_count' => $this->worker_count,
+                'day_hour' => (new DateTime($this->rounded_created_at))->format('d.m.Y H:i'),
+            ];
+        }
         return [
-            'hash' => (float) $this->hash,
+            'hash' => (float)$this->hash,
             'unit' => $this->unit,
             'worker_count' => $this->worker_count,
             'day_hour' => $this->created_at->format('d.m.Y H:i'),
