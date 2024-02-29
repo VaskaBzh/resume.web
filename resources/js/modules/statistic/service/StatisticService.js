@@ -1,9 +1,12 @@
 import { LineGraphData } from "@/modules/graphs/DTO/LineGraphData";
 import { ProfileApi } from "@/api/api";
 import { BarGraphData } from "@/modules/graphs/DTO/BarGraphData";
+import { PeriodOffsetEnum } from "@/modules/graphs/enums/PeriodOffsetEnum";
+import { PeriodIntervalEnum } from "@/modules/graphs/enums/PeriodIntervalEnum";
 import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
-import store from "@/store";
 import { ResponseTrait } from "@/traits/ResponseTrait";
+
+import store from "@/store";
 
 export class StatisticService {
     interval = "day";
@@ -38,9 +41,15 @@ export class StatisticService {
             this.waitGraphChange = true;
 
             try {
-                const response = ResponseTrait.getResponseData(await this.fetchStatistic());
+                const response = ResponseTrait.getResponseData(
+                    await this.fetchStatistic()
+                );
 
-                this.graphDataService.setRecords(response.hashes, LineGraphData).makeFullValues();
+                this.graphDataService
+                    .setInterval(PeriodIntervalEnum[this.interval])
+                    .setOffset(PeriodOffsetEnum[this.interval])
+                    .setRecords(response.hashes, LineGraphData)
+                    .makeFullValues();
 
                 this.waitGraph = false;
                 this.waitGraphChange = false;
@@ -57,7 +66,14 @@ export class StatisticService {
             try {
                 const response = await this.fetchStatistic();
 
-                this.graphDataService.setRecords(ResponseTrait.getResponseData(response).incomes, BarGraphData).makeFullValues();
+                this.graphDataService
+                    .setInterval(24 * 60 * 30)
+                    .setOffset(30)
+                    .setRecords(
+                        ResponseTrait.getResponseData(response).incomes,
+                        BarGraphData
+                    )
+                    .makeFullValues();
 
                 this.waitGraph = false;
                 this.waitGraphChange = false;

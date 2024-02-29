@@ -6,15 +6,18 @@ export class BarGraphData {
 
             this.dayAt = miningRecond.incomeDate;
 
-            this.dates = new Date(miningRecond.incomeDate.split(".").reverse().join("."));
+            this.dates = new Date(
+                miningRecond.incomeDate.split(".").reverse().join(".")
+            );
         } else {
             this.values = Number(miningRecond.amount);
             this.mining = Number(miningRecond.amount);
 
             this.dayAt = miningRecond.income_at;
 
-            this.dates = new Date(miningRecond.income_at.split(".").reverse().join("."));
+            this.dates = new Date(
+                miningRecond.income_at.split(".").reverse().join(".")
+            );
         }
     }
-
 }

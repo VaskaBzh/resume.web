@@ -1,12 +1,12 @@
 import { LineGraphData } from "@/modules/graphs/DTO/LineGraphData";
+import { DatesFillKeysEnum } from "@/modules/graphs/enums/DatesFillKeysEnum";
+import { DatesFillConfig } from "@/modules/graphs/configs/DatesFillConfig";
 
 export class GraphDataService {
-    constructor(offset = 96) {
-        this.offset = offset;
-
-        this.graph = {};
-        this.records = [];
-    }
+    offset = 0;
+    intervalInMinutes = 0;
+    graph = {};
+    records = [];
 
     setRecords(newRecordsData, GraphData = LineGraphData) {
         this.records = Object.values(newRecordsData).map(
@@ -16,8 +16,14 @@ export class GraphDataService {
         return this;
     }
 
-    setOffset(offset) {
-        this.offset = offset;
+    setOffset(newOffset) {
+        this.offset = newOffset;
+
+        return this;
+    }
+
+    setInterval(newInterval) {
+        this.intervalInMinutes = newInterval;
 
         return this;
     }
@@ -29,9 +35,39 @@ export class GraphDataService {
     makeEmptyValues(graphData, objectKeys) {
         if (graphData.values.length < this.offset) {
             objectKeys.forEach((key) => {
+                if (DatesFillKeysEnum[key]) {
+                    return this;
+                }
+
                 for (let i = 0; i < this.offset - 1; i++) {
                     if (graphData[key].length < this.offset) {
-                        graphData[key].push(0);
+                        if (key === "unit") {
+                            graphData[key].push("T");
+                        } else {
+                            graphData[key].push(0);
+                        }
+                    }
+                }
+            });
+
+            const intervalInMilliseconds = this.intervalInMinutes * 60 * 1000;
+            const latestDate = graphData.dates[graphData.dates.length - 1];
+
+            Object.keys(DatesFillKeysEnum).forEach((key) => {
+                if (!graphData[key]) {
+                    return this;
+                }
+
+                let latestTimestamp = latestDate.getTime();
+
+                for (let i = 0; i < this.offset - 1; i++) {
+                    if (graphData[key].length < this.offset) {
+                        latestTimestamp =
+                            latestTimestamp - intervalInMilliseconds;
+
+                        graphData[key].push(
+                            DatesFillConfig[key](latestTimestamp)
+                        );
                     }
                 }
             });
@@ -39,6 +75,7 @@ export class GraphDataService {
 
         return this;
     }
+
     makeFullValues() {
         let data = {};
 
@@ -58,6 +95,8 @@ export class GraphDataService {
                 { ...data }
             ),
         };
+
+        this.makeEmptyValues(graphData, objectKeys);
 
         objectKeys.forEach((key) => {
             graphData[key].reverse();

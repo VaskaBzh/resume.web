@@ -2,7 +2,7 @@ export const TimeFormatEnum = {
     yy: "getFullYear",
     yyyy: "getFullYear",
     mm: "getMonth",
-    dd: "getDay",
+    dd: "getDate",
     hh: "getHours",
     ii: "getMinutes",
     ss: "getSeconds",

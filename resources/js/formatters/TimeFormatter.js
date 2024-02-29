@@ -1,4 +1,4 @@
-import { TimeFormatEnum } from "../enums/TimeFormatEnum";
+import { TimeFormatEnum } from "@/enums/TimeFormatEnum";
 
 export class TimeFormatter {
     static formatTime(format, timestamp) {
@@ -9,7 +9,11 @@ export class TimeFormatter {
             const splitedFormat = formattedDateArray.split(splitValue);
 
             if (splitedFormat.length > 1) {
-                const timeChapter = dateTime[TimeFormatEnum[splitValue]]();
+                let timeChapter = dateTime[TimeFormatEnum[splitValue]]();
+
+                if (splitValue === "mm") {
+                    timeChapter = timeChapter + 1;
+                }
 
                 formattedDateArray = splitedFormat.join(
                     String(timeChapter).length === 1
