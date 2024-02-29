@@ -30,7 +30,7 @@
                 <worker-tabs
                     :tabs="worker_service.filterButtons"
                     :active_tab="worker_service.status"
-                    @changeStatus="setStatus"
+                    @changeStatus="setStatus($event)"
                 />
                 <div class="workers__table">
                     <main-slider
@@ -78,8 +78,10 @@
                                 worker_service.waitTargetWorker || waitAnimation
                             "
                             :target_worker="worker_service.target_worker"
-                            :graph="worker_service.workers_graph"
+                            :graph="worker_service.graphDataService.graph"
+                            :interval="worker_service.interval"
                             @closeCard="dropWorkers"
+                            @getValue="worker_service.setInterval($event)"
                         />
                     </transition>
                 </div>
@@ -96,12 +98,14 @@
         <worker-card
             class="workers__card"
             :target_worker="worker_service.target_worker"
-            :graph="worker_service.workers_graph"
+            :interval="worker_service.interval"
+            :graph="worker_service.graphDataService.graph"
             :wait="worker_service.waitTargetWorker"
             @closeCard="dropWorkers"
+            @getValue="worker_service.setInterval($event)"
         />
     </workers-popup-card>
-    <teleport to=".header_button-instruction" v-if="isMounted">
+    <teleport v-if="isMounted" to=".header_button-instruction">
         <instruction-button
             hint="workers"
             @openInstruction="instructionService.setStep().setVisible()"
@@ -152,7 +156,7 @@ export default {
                 this.$route
             ),
             instructionService: new InstructionService(),
-            isMounted: false
+            isMounted: false,
         };
     },
     watch: {
@@ -164,19 +168,18 @@ export default {
             this.initWorkers();
             document.title = this.$t("header.links.workers");
         },
-        "getAccount": {
+        getAccount: {
             deep: true,
             handler(newVal) {
-                if(newVal) {
+                if (newVal) {
                     this.worker_service.setFilterButtons();
                 }
-
-            }
-        }
+            },
+        },
     },
     methods: {
         setStatus(status) {
-            this.worker_service.setStatus(status);
+            this.worker_service.dropWorker().setStatus(status);
 
             this.initWorkers();
         },
@@ -229,8 +232,7 @@ export default {
         },
     },
     mounted() {
-
-        this.isMounted = true
+        this.isMounted = true;
         this.instructionService.setStepsCount(2);
         this.worker_service.setFilterButtons();
 

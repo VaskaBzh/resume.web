@@ -102,8 +102,6 @@ export class GraphDataService {
             graphData[key].reverse();
         });
 
-        // this.makeEmptyValues(graphData, objectKeys);
-
         Object.assign(this.graph, graphData);
     }
 }

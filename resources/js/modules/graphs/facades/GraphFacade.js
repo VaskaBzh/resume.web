@@ -1,4 +1,4 @@
-import { ElementsConfig } from "@/modules/graphs/configs/ElementsConfig";
+// import { ElementsConfig } from "@/modules/graphs/configs/ElementsConfig";
 import { GraphFactory } from "@/modules/graphs/factories/GraphFactory";
 
 export class GraphFacade {
@@ -6,7 +6,6 @@ export class GraphFacade {
         this.graphService = GraphFactory.createGraph(type);
 
         if (!element || !graphData) {
-            console.log(element, graphData)
             return this;
         }
 

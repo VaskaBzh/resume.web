@@ -160,8 +160,13 @@ export class LineGraphService extends GraphService {
                 .curve(d3.curveBasis),
             xAxis: d3
                 .axisBottom(this.x)
-                .ticks(12)
-                .tickFormat((d) => TimeFormatter.formatTime("hh:ii", d)),
+                .ticks(6)
+                .tickFormat((d) =>
+                    TimeFormatter.formatTime(
+                        this.graphData.values.length === 96 ? "hh:ii" : "dd:mm",
+                        d
+                    )
+                ),
             yAxis: yAxis,
             band: d3
                 .scaleBand()
@@ -206,17 +211,18 @@ export class LineGraphService extends GraphService {
 
         const linePosition = this.getClosestPoint(mouseX);
 
+        this.tooltipService.tooltip.isOut = "";
         if (this.tooltip.clientWidth > mouseX) {
             this.tooltipService.tooltip.isOut = "left";
         }
 
-        const tooltipLeftMargin = this.tooltipOut === "left"
-            ? this.TOOLTIP_MARGIN
-            : -this.TOOLTIP_MARGIN;
+        const tooltipLeftMargin =
+            this.tooltipOut === "left"
+                ? this.TOOLTIP_MARGIN
+                : -this.TOOLTIP_MARGIN;
 
-        const savedRightPosition = this.tooltipOut === "left"
-            ? 0
-            : -this.tooltip.clientWidth;
+        const savedRightPosition =
+            this.tooltipOut === "left" ? 0 : -this.tooltip.clientWidth;
 
         this.tooltipService.setTooltipPosition(
             linePosition.x + tooltipLeftMargin + savedRightPosition,

@@ -21,16 +21,22 @@
                                 'card_status-dead':
                                     target_worker.class === 'DEAD',
                             }"
-                            >{{ $t(`status-worker.title.${target_worker.class}`) }}</span
+                            >{{
+                                $t(`status-worker.title.${target_worker.class}`)
+                            }}</span
                         >
                     </div>
                 </transition>
                 <cross-icon class="card_close" @click="$emit('closeCard')" />
-                <!--            <main-tabs-->
-                <!--                @getValue="$emit('getValue', $event)"-->
-                <!--                :tabs="buttons"-->
-                <!--                :active="offset"-->
-                <!--            />-->
+                <transition name="fade">
+                    <main-tabs
+                        v-if="!wait"
+                        class="card__tabs"
+                        :tabs="graphOffsetTabs"
+                        :active="interval"
+                        @getValue="$emit('getValue', $event)"
+                    />
+                </transition>
                 <transition name="fade">
                     <div v-if="!wait" class="card_graph">
                         <main-line-graph :graph-data="graph" :height="height" />
@@ -76,7 +82,7 @@ import MinuteHashrateIcon from "@/modules/common/icons/MinuteHashrateIcon.vue";
 import DayHashrateIcon from "@/modules/common/icons/DayHashrateIcon.vue";
 import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import { mapGetters } from "vuex";
-import {WorkerMessages} from "@/modules/workers/lang/WorkerMessages";
+import { WorkerMessages } from "@/modules/workers/lang/WorkerMessages";
 
 export default {
     name: "WorkerCard",
@@ -93,9 +99,10 @@ export default {
         target_worker: Object,
         graph: Object,
         wait: Boolean,
+        interval: String,
     },
     i18n: {
-      sharedMessages: WorkerMessages
+        sharedMessages: WorkerMessages,
     },
     data() {
         return {
@@ -104,6 +111,13 @@ export default {
     },
     computed: {
         ...mapGetters(["viewportWidth"]),
+        graphOffsetTabs() {
+            return [
+                { title: `24 ${this.$t("hours")}`, value: "day" },
+                { title: `7 ${this.$t("days")}`, value: "week" },
+                { title: `1 ${this.$t("month")}`, value: "month" },
+            ];
+        },
         hashPerDay() {
             return this.wait
                 ? null
@@ -120,7 +134,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @keyframes fade {
     from {
         opacity: 0;
@@ -136,6 +150,9 @@ export default {
     overflow: hidden;
     position: relative;
     height: fit-content;
+}
+:global(.card__tabs .cabinet_button) {
+    width: 100%;
 }
 .card_preloader {
     position: absolute;

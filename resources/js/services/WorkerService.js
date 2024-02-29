@@ -1,10 +1,16 @@
 import { ProfileApi } from "@/api/api";
-
 import { workerData } from "@/DTO/workerData";
-import store from "@/store";
 import { workerHashrateData } from "@/DTO/workerHashrateData";
+import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
+import { PeriodIntervalEnum } from "@/modules/graphs/enums/PeriodIntervalEnum";
+import { PeriodOffsetEnum } from "@/modules/graphs/enums/PeriodOffsetEnum";
+import { ResponseTrait } from "@/traits/ResponseTrait";
+
+import store from "@/store";
 
 export class WorkerService {
+    interval = "day";
+
     constructor(translate, titles, route) {
         this.group_id = store.getters.getActive;
         this.worker_id = -1;
@@ -12,12 +18,11 @@ export class WorkerService {
         this.titles = [];
         this.titleIndexes = titles;
         this.rows = [];
-        this.workers_graph = {};
-        this.records = [];
         this.filterButtons = [];
         this.status = "all";
 
         this.table = new Map();
+        this.graphDataService = this.createGraphDataService();
 
         this.waitWorkers = true;
         this.emptyTableWorkers = false;
@@ -30,6 +35,16 @@ export class WorkerService {
         this.visibleCard = false;
 
         this.route = route;
+    }
+
+    createGraphDataService() {
+        return new GraphDataService();
+    }
+
+    async setInterval(newInterval) {
+        this.interval = newInterval;
+
+        await this.getWorkerGraph();
     }
 
     useTranslater(indexes) {
@@ -63,32 +78,30 @@ export class WorkerService {
     }
 
     setFilterButtons() {
-        let active = store.getters.getAccount?.workers_count_active
-        let inActive = store.getters.getAccount?.workers_count_in_active
-        let dead = store.getters.getAccount?.workers_count_unstable
-        let sumWorkers = store.getters.getAccount?.workers_count
+        let active = store.getters.getAccount?.workers_count_active;
+        let inActive = store.getters.getAccount?.workers_count_in_active;
+        let dead = store.getters.getAccount?.workers_count_unstable;
+        let sumWorkers = store.getters.getAccount?.workers_count;
         this.filterButtons = [
             {
                 name: "all",
                 value: "all",
-                count: sumWorkers
-
+                count: sumWorkers,
             },
             {
                 name: "active",
                 value: "active",
-                count: active
+                count: active,
             },
             {
                 name: "inactive",
                 value: "inactive",
-                count: inActive
+                count: inActive,
             },
             {
                 name: "dead",
                 value: "dead",
-                count: dead
-
+                count: dead,
             },
         ];
 
@@ -106,7 +119,9 @@ export class WorkerService {
     }
 
     async fetchWorkerGraph() {
-        return await ProfileApi.get(`/workerhashrate/${this.worker_id}`);
+        return await ProfileApi.get(
+            `/workerhashrate/${this.worker_id}?period=${this.interval}`
+        );
     }
 
     clearTable() {
@@ -138,13 +153,6 @@ export class WorkerService {
         }
     }
 
-    setButtons() {
-        this.buttons = [
-            { title: `24 ${this.translate("hours")}`, value: 24 },
-            { title: `7 ${this.translate("days")}`, value: 168 },
-        ];
-    }
-
     async getWorker() {
         if (this.group_id !== -1) {
             this.waitTargetWorker = true;
@@ -163,54 +171,8 @@ export class WorkerService {
 
         this.visibleCard = false;
         this.waitTargetWorker = true;
-    }
 
-    setGraphTitles() {
-        return [0, 1].map((title) => this.translate(`chart.labels[${title}]`));
-    }
-
-    setDates() {
-        const currentTime = new Date().getTime();
-        const interval = 60 * 60 * 1000;
-
-        return Array.from({ length: 24 }, (_, i) => {
-            const date = new Date(currentTime - (24 - 1 - i) * interval);
-            return date.getTime();
-        });
-    }
-
-    setDefaultKeys() {
-        this.workers_graph = {
-            ...this.workers_graph,
-            title: this.setGraphTitles(),
-            dates: this.setDates(),
-        };
-    }
-
-    randomizeTest(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    async makeFullValues() {
-        const [hashrate, unit] = this.records.slice(-24).reduce(
-            (acc, el) => {
-                acc[0].push(el.hashrate || 0);
-                acc[1].push(el.unit || "T");
-
-                return acc;
-            },
-            [[], [], []]
-        );
-
-        while (hashrate.length < 24) {
-            hashrate.push(0);
-            unit.push("T");
-        }
-
-        Object.assign(this.workers_graph, {
-            values: hashrate.reverse(),
-            unit: unit.reverse(),
-        });
+        return this;
     }
 
     openPopupCard() {
@@ -236,12 +198,11 @@ export class WorkerService {
 
         this.worker_id = worker_id;
 
-        await this.setDefaultKeys();
         this.openPopupCard();
 
         await this.getWorkerGraph();
 
-        await this.makeFullValues();
+        this.waitTargetWorker = true;
         await this.getWorker();
 
         this.waitTargetWorker = false;
@@ -252,13 +213,18 @@ export class WorkerService {
             this.waitTargetWorker = true;
 
             try {
-                this.records = (await this.fetchWorkerGraph()).data.data.map(
-                    (el) => {
-                        return new workerHashrateData({
-                            ...el,
-                        });
-                    }
-                );
+                const response = await this.fetchWorkerGraph();
+
+                this.graphDataService
+                    .setInterval(PeriodIntervalEnum[this.interval])
+                    .setOffset(PeriodOffsetEnum[this.interval])
+                    .setRecords(
+                        ResponseTrait.getResponseData(response),
+                        workerHashrateData
+                    )
+                    .makeFullValues();
+
+                this.waitTargetWorker = false;
             } catch (err) {
                 console.error(`Error with: ${err}`);
             }

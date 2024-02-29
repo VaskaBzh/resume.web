@@ -112,7 +112,7 @@
             />
         </main-slider>
     </div>
-    <teleport to=".header_button-instruction" v-if="isMounted">
+    <teleport v-if="isMounted" to=".header_button-instruction">
         <instruction-button
             hint="income"
             @openInstruction="instructionService.setStep().setVisible()"
@@ -166,7 +166,11 @@ export default {
         // удалить НАХУЙ
         async "service.tableService.tableModel.rows"(newTableRows) {
             if (newTableRows.length > 0) {
-                this.service.graphDataService.setRecords(newTableRows, BarGraphData).makeFullValues();
+                this.service.graphDataService
+                    .setInterval(24 * 60 * 30)
+                    .setOffset(30)
+                    .setRecords(newTableRows, BarGraphData)
+                    .makeFullValues();
 
                 this.service.waitGraphChange = false;
             }
@@ -176,11 +180,11 @@ export default {
         return {
             service: new IncomeService(),
             instructionService: new InstructionService(),
-            isMounted: false
+            isMounted: false,
         };
     },
     async mounted() {
-        this.isMounted = true
+        this.isMounted = true;
         document.title = this.$t("header.links.income");
         this.instructionService.setStepsCount(3);
         await this.service.index();

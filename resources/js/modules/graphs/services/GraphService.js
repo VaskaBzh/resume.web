@@ -147,7 +147,7 @@ export class GraphService {
     abstractMoveAction() {}
 
     abstractLeaveAction() {}
-    
+
     setSideElements() {}
 
     /* abstract methods end

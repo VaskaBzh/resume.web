@@ -4,7 +4,7 @@
             v-if="facade.graphService?.tooltipContent"
             ref="tooltip"
             class="tooltip"
-            :class="{ 'tooltip-left': facade.graphService.isTooltipLeft }"
+            :class="{ 'tooltip-left': Boolean(facade.graphService.tooltipOut) }"
             :style="{
                 opacity: facade.graphService.tooltipOpacity,
                 left: `${facade.graphService.tooltipPosition.left}px`,
@@ -22,7 +22,7 @@
                     </span>
                 </p>
                 <p
-                    v-if="facade.graphService.tooltipContent.amount"
+                    v-if="facade.graphService.tooltipContent.amount >= 0"
                     class="tooltip_text"
                 >
                     <span class="tooltip_label"
@@ -48,10 +48,7 @@
                         {{ facade.graphService.tooltipContent.hourAt }}
                     </span>
                 </p>
-                <tooltip-icon
-                    class="tooltip_icon"
-                    :class="{ 'tooltip_icon-left': isTooltipLeft }"
-                />
+                <tooltip-icon class="tooltip_icon" />
             </div>
         </div>
     </div>
@@ -83,47 +80,23 @@ export default {
     },
     watch: {
         "$refs.chart"(newChartHtml) {
-            this.facade.rebuildGraph(
-                newChartHtml,
-                "line",
-                this.graphData
-            );
+            this.facade.rebuildGraph(newChartHtml, "line", this.graphData);
         },
         graphData(newGraphData) {
-            this.facade.rebuildGraph(
-                this.$refs.chart,
-                "line",
-                newGraphData
-            );
+            this.facade.rebuildGraph(this.$refs.chart, "line", newGraphData);
         },
         height() {
-            this.facade.rebuildGraph(
-                this.$refs.chart,
-                "line",
-                this.graphData
-            );
+            this.facade.rebuildGraph(this.$refs.chart, "line", this.graphData);
         },
         isDark() {
-            this.facade.rebuildGraph(
-                this.$refs.chart,
-                "line",
-                this.graphData
-            );
+            this.facade.rebuildGraph(this.$refs.chart, "line", this.graphData);
         },
         viewportWidth() {
-            this.facade.rebuildGraph(
-                this.$refs.chart,
-                "line",
-                this.graphData
-            );
+            this.facade.rebuildGraph(this.$refs.chart, "line", this.graphData);
         },
     },
     mounted() {
-        this.facade.createGraph(
-            this.$refs.chart,
-            "line",
-            this.graphData
-        );
+        this.facade.createGraph(this.$refs.chart, "line", this.graphData);
     },
     unmounted() {
         this.facade.dropGraph();
@@ -141,7 +114,7 @@ export default {
     box-shadow: 0 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 160px;
-    min-height: 108px;
+    transition: all 0.1s ease 0s;
 }
 .tooltip__content {
     display: flex;
