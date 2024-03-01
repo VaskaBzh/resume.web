@@ -59,7 +59,7 @@
                 />
                 <main-bar-graph
                     v-if="!service.waitGraphChange"
-                    :height="130"
+                    :height="height"
                     :graph-data="service.graphDataService.graph"
                 />
                 <instruction-step
@@ -136,6 +136,7 @@ import { IncomeService } from "@/modules/income/service/IncomeService";
 import { mapGetters } from "vuex";
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { BarGraphData } from "@/modules/graphs/DTO/BarGraphData";
+import { PeriodOffsetEnum } from "@/modules/graphs/enums/PeriodOffsetEnum";
 
 export default {
     name: "IncomePage",
@@ -150,10 +151,16 @@ export default {
         InstructionStep,
     },
     computed: {
-        ...mapGetters(["getAccount", "getActive"]),
+        ...mapGetters(["getAccount", "getActive", "viewportWidth"]),
         IncomeRow() {
             return IncomeRow;
         },
+        height() {
+            if (this.viewportWidth >= 768) {
+                return 130;
+            }
+            return 77;
+        }
     },
     i18n: {
         sharedMessages: IncomeMessages,
@@ -167,7 +174,7 @@ export default {
         async "service.tableService.tableModel.rows"(newTableRows) {
             if (newTableRows.length > 0) {
                 this.service.graphDataService
-                    .setInterval(24 * 60 * 30)
+                    .setInterval(PeriodOffsetEnum["month"])
                     .setOffset(30)
                     .setRecords(newTableRows, BarGraphData)
                     .makeFullValues();

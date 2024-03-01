@@ -1,6 +1,7 @@
 import { GraphService } from "@/modules/graphs/services/GraphService";
 import { GraphDataTrait } from "@/traits/GraphDataTrait";
 import * as d3 from "d3";
+import store from "@/store";
 
 export class ColumnGraphService extends GraphService {
     BAR_PADDING = 1;
@@ -107,19 +108,27 @@ export class ColumnGraphService extends GraphService {
         const customBarHeight = barHeight + (barHeight > 12 ? -6 : 6);
 
         const savedLeftPosition =
-            this.tooltipOut === "left"
-                ? -12
-                : this.tooltipOut === "right"
-                ? this.graphElem.clientWidth - this.tooltip.clientWidth + 12
-                : dynamicTooltipPosition;
-        const savedTopPosition =
-            this.graphElem.clientHeight -
-            customBarHeight -
-            this.tooltip.clientHeight;
+                this.tooltipOut === "left"
+                    ? -12
+                    : this.tooltipOut === "right"
+                        ? this.graphElem.clientWidth - this.tooltip.clientWidth + 12
+                        : dynamicTooltipPosition;
+
+        let savedTopPosition = 0;
+        if (store.getters.viewportWidth >= 992) {
+            savedTopPosition = this.graphElem.clientHeight - customBarHeight - this.tooltip.clientHeight;
+        } else {
+            savedTopPosition = -this.tooltip.clientHeight - 4;
+        }
 
         const savedLeftPositionIcon = dynamicIconPosition(tickPosition);
-        const savedTopPositionIcon =
-            this.graphElem.clientHeight - customBarHeight;
+
+        let savedTopPositionIcon = 0;
+        if (store.getters.viewportWidth >= 992) {
+            savedTopPositionIcon = this.graphElem.clientHeight - customBarHeight;
+        } else {
+            savedTopPositionIcon = -4;
+        }
 
         this.tooltipIcon.style.cssText = `opacity: 1; left: ${savedLeftPositionIcon}; top: ${savedTopPositionIcon};`;
 

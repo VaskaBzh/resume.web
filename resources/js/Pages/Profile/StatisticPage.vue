@@ -260,6 +260,7 @@ export default {
         }
         @media (max-width: 998px) {
             gap: 32px;
+            padding-top: 24px;
         }
 
         &-column {

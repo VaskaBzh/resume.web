@@ -126,7 +126,7 @@ export class LineGraphService extends GraphService {
     getGenerators() {
         const yAxis = d3
             .axisLeft(this.y)
-            .ticks(7)
+            .ticks(6)
             .tickFormat((d) => {
                 const convertedHashRate =
                     HashRateFormatters.formatHashRateInObject(d);
@@ -160,7 +160,11 @@ export class LineGraphService extends GraphService {
                 .curve(d3.curveBasis),
             xAxis: d3
                 .axisBottom(this.x)
-                .ticks(6)
+                .ticks(
+                    store.getters.viewportWidth >= 768
+                        ? 6
+                        : 4
+                )
                 .tickFormat((d) =>
                     TimeFormatter.formatTime(
                         this.graphData.values.length === 96 ? "hh:ii" : "dd:mm",

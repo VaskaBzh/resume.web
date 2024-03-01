@@ -57,7 +57,7 @@ export default {
     },
     data() {
         return {
-            height: 75,
+            height: 77,
         };
     },
     computed: {

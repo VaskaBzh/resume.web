@@ -72,11 +72,11 @@ export default {
         },
         height() {
             if (!this.heightVal) {
-                if (this.viewportWidth < 479.98) return 246;
-                else if (this.viewportWidth < 767.98) return 246;
-                else if (this.viewportWidth < 991.98) return 246;
-                else if (this.viewportWidth < 1320.98) return 246;
-                else return 448;
+                if (this.viewportWidth < 479.98) return 201;
+                else if (this.viewportWidth < 767.98) return 201;
+                else if (this.viewportWidth < 991.98) return 201;
+                else if (this.viewportWidth < 1320.98) return 398;
+                else return 398;
             } else {
                 return this.heightVal;
             }

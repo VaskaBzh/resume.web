@@ -114,7 +114,6 @@ export default {
     box-shadow: 0 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 160px;
-    transition: all 0.1s ease 0s;
 }
 .tooltip__content {
     display: flex;

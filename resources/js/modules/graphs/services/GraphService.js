@@ -119,6 +119,8 @@ export class GraphService {
     }
 
     setGraphY() {
+        GraphDataTrait.setPercentPadding(0);
+
         this.graph.y = d3.scaleLinear(
             [0, GraphDataTrait.domainValueValidation(this.graphData.values)],
             [this.graphElem.clientHeight, 0]
@@ -198,7 +200,10 @@ export class GraphService {
             mouseX /
             (this.graphElem.clientWidth / this.graphData.values.length);
 
-        if (position === this.graphData.values.length) {
+        if (position <= 0) {
+            return 0;
+        }
+        if (position >= this.graphData.values.length) {
             return this.graphData.values.length - 1;
         }
 

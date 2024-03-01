@@ -7,13 +7,17 @@ export class GraphListenersService {
     touchMoveListener = null;
     touchLeaveListener = null;
 
+    getSvg(event) {
+        return event.target.closest(".container-chart svg[width='100%']");
+    }
+
     setSvgMouseEvents(element, callbackResolve, callbackReject) {
-        this.touchMoveListener = element.addEventListener(
+        this.touchStartListener = element.addEventListener(
             "touchstart",
             (event) => {
                 const mouseX =
                     event.touches[0].clientX -
-                    event.target.getBoundingClientRect().left;
+                    this.getSvg(event).getBoundingClientRect().left;
 
                 callbackResolve(event, mouseX);
             }
@@ -27,12 +31,12 @@ export class GraphListenersService {
                 callbackResolve(event, mouseX);
             }
         );
-        this.touchStartListener = element.addEventListener(
+        this.touchMoveListener = element.addEventListener(
             "touchmove",
             (event) => {
                 const mouseX =
                     event.touches[0].clientX -
-                    event.target.getBoundingClientRect().left;
+                    this.getSvg(event).getBoundingClientRect().left;
 
                 callbackResolve(event, mouseX);
             }

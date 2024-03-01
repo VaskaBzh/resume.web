@@ -130,6 +130,7 @@ export default {
     position: relative;
 }
 .tooltip_icon {
+    pointer-events: none;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
