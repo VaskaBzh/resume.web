@@ -215,7 +215,7 @@ export default {
                 }
             }
         }
-        svg {
+        .table-worker_icon {
             transition: all 0.3s ease 0s;
             stroke: var(--text-teritary, #98A2B3);
             position: absolute;

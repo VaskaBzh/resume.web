@@ -67,7 +67,7 @@ export class StatisticService {
                 const response = await this.fetchStatistic();
 
                 this.graphDataService
-                    .setInterval(PeriodOffsetEnum["month"])
+                    .setInterval(60 * 24)
                     .setOffset(30)
                     .setRecords(
                         ResponseTrait.getResponseData(response).incomes,

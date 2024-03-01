@@ -22,6 +22,7 @@
             height="16"
             viewBox="0 0 24 24"
             fill="none"
+            class="table-worker_icon"
         >
             <path
                 d="M10 6L16 12L10 18"

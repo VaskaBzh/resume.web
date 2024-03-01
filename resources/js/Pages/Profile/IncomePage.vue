@@ -136,7 +136,6 @@ import { IncomeService } from "@/modules/income/service/IncomeService";
 import { mapGetters } from "vuex";
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { BarGraphData } from "@/modules/graphs/DTO/BarGraphData";
-import { PeriodOffsetEnum } from "@/modules/graphs/enums/PeriodOffsetEnum";
 
 export default {
     name: "IncomePage",
@@ -174,7 +173,7 @@ export default {
         async "service.tableService.tableModel.rows"(newTableRows) {
             if (newTableRows.length > 0) {
                 this.service.graphDataService
-                    .setInterval(PeriodOffsetEnum["month"])
+                    .setInterval(60 * 24)
                     .setOffset(30)
                     .setRecords(newTableRows, BarGraphData)
                     .makeFullValues();

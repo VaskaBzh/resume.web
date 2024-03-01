@@ -167,6 +167,7 @@ export default {
 @media (max-width: 1200px) {
     .card {
         border-radius: 0;
+        overflow: visible;
     }
     .card_close {
         display: none;
