@@ -3,20 +3,13 @@ import * as d3 from "d3";
 export class GraphListenersService {
     mouseMoveListener = null;
     mouseLeaveListener = null;
+    touchStartListener = null;
     touchMoveListener = null;
     touchLeaveListener = null;
 
     setSvgMouseEvents(element, callbackResolve, callbackReject) {
-        this.mouseMoveListener = element.addEventListener(
-            "mousemove",
-            (event) => {
-                const mouseX = d3.pointer(event)[0];
-
-                callbackResolve(event, mouseX);
-            }
-        );
         this.touchMoveListener = element.addEventListener(
-            "touchmove",
+            "touchstart",
             (event) => {
                 const mouseX =
                     event.touches[0].clientX -
@@ -25,8 +18,17 @@ export class GraphListenersService {
                 callbackResolve(event, mouseX);
             }
         );
-        this.touchMoveListener = element.addEventListener(
-            "touchstart",
+
+        this.mouseMoveListener = element.addEventListener(
+            "mousemove",
+            (event) => {
+                const mouseX = d3.pointer(event)[0];
+
+                callbackResolve(event, mouseX);
+            }
+        );
+        this.touchStartListener = element.addEventListener(
+            "touchmove",
             (event) => {
                 const mouseX =
                     event.touches[0].clientX -
@@ -49,5 +51,9 @@ export class GraphListenersService {
     dropSvgMouseEvents() {
         this.mouseMoveListener = null;
         this.mouseLeaveListener = null;
+
+        this.touchStartListener = null;
+        this.touchMoveListener = null;
+        this.touchLeaveListener = null;
     }
 }
