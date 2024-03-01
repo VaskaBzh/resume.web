@@ -6,9 +6,9 @@ export const TableMessages = {
                     "Accrrual date",
                     "Accrued",
                     "Hashrate",
-                    "Payment Date",
-                    "Wallet",
+                    "Payment date",
                     "Paid",
+                    "Wallet",
                     "TxID",
                     "Status",
                 ],
@@ -40,12 +40,12 @@ export const TableMessages = {
         income: {
             table: {
                 titles: [
-                    "Дата добычи",
-                    "Заработок",
+                    "Дата начисления",
+                    "Начислено",
                     "Хешрейт",
                     "Дата выплаты",
+                    "Выплачено",
                     "Кошелек",
-                    "Выплата",
                     "TxID",
                     "Статус",
                 ],

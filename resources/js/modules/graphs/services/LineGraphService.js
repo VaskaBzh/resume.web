@@ -126,7 +126,7 @@ export class LineGraphService extends GraphService {
     getGenerators() {
         const yAxis = d3
             .axisLeft(this.y)
-            .ticks(12)
+            .ticks(7)
             .tickFormat((d) => {
                 const convertedHashRate =
                     HashRateFormatters.formatHashRateInObject(d);

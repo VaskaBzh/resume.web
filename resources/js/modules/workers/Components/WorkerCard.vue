@@ -121,13 +121,13 @@ export default {
         hashPerDay() {
             return this.wait
                 ? null
-                : Number(this.target_worker.hashrate.split(" ")[0]).toFixed(2);
+                : Number(this.target_worker.hashrate?.split(" ")[0]).toFixed(2);
         },
         hashPerMin() {
             return this.wait
                 ? null
                 : Number(
-                      this.target_worker.hashrate_per_day.split(" ")[0]
+                      this.target_worker.hashrate_per_day?.split(" ")[0]
                   ).toFixed(2);
         },
     },
