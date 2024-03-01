@@ -10,6 +10,7 @@ use App\Actions\Sub\ResetPending;
 use App\Dto\Sub\SubsOverallData;
 use App\Dto\Sub\SubUpsertData;
 use App\Dto\Sub\SubViewData;
+use App\Models\Hash;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcCom\ClientContract;
@@ -103,12 +104,16 @@ final readonly class SubService
 
         $transformed = $this->transformCollection($localSubList, $remoteSubList);
         $transformed->each(static function (SubViewData $subData) {
-            CreateNew::execute(
-                groupId: $subData->groupId,
-                hashRate: $subData->hashPerMinPure,
-                unit: $subData->hashPerMinUnit,
-                workerCount: $subData->activeWorkersCount
-            );
+            $hash = Hash::firstWhere('group_id', $subData->groupId);
+            $worker = $hash->workers->first();
+            if ($worker->status != 'DEAD') {
+                CreateNew::execute(
+                    groupId: $subData->groupId,
+                    hashRate: $subData->hashPerMinPure,
+                    unit: $subData->hashPerMinUnit,
+                    workerCount: $subData->activeWorkersCount
+                );
+            }
         });
     }
 
