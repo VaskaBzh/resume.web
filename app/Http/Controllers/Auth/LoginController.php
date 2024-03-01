@@ -8,7 +8,7 @@ use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
-use App\Services\UserService;
+use App\Services\Internal\UserService;
 use App\Traits\HasVerify;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;

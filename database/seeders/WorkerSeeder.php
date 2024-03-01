@@ -8,8 +8,8 @@ use App\Actions\Worker\Update;
 use App\Dto\WorkerData;
 use App\Models\Sub;
 use App\Models\WorkerHashrate;
-use App\Services\Api\BtcCom\Client;
-use App\Services\Api\BtcCom\TransformContract;
+use App\Services\External\BtcCom\Client;
+use App\Services\External\BtcCom\TransformContract;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 

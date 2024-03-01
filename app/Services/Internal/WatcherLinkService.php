@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Internal;
 
 use App\Actions\WatcherLink\Create;
 use App\Dto\WatcherLink\CreateData;

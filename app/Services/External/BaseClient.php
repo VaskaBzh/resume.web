@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Api;
+namespace App\Services\External;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;

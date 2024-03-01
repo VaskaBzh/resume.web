@@ -34,11 +34,6 @@ return [
     'local' => env('APP_ENV') === 'local',
     'testing_env' => env('APP_ENV') === 'testing',
 
-    /**
-     * Sub-account wallet verification time
-     */
-    'wallet_verification_time' => env('WALLET_VERIFICATION_TIME', 48),
-
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -224,8 +219,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
-        'Income' => \App\Facades\Income::class,
-        'Payout' => \App\Facades\Payout::class,
     ])->toArray(),
 
 ];

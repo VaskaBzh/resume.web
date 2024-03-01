@@ -14,8 +14,6 @@ use App\Services\External\BtcCom\ClientContract;
 use App\Services\External\BtcCom\TransformContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 final readonly class WorkerService
 {
@@ -39,7 +37,7 @@ final readonly class WorkerService
         return $remoteWorkers
             ->filter(static fn (array $data) => in_array($data['gid'], $localSubs->toArray(), true))
             ->map(fn (array $data) => $this->transform->transformWorker($data))
-            ->each(static fn (WorkerData $workerData) => Update::execute(workerData: $workerData));
+            ->each(fn (WorkerData $workerData) => Update::execute(workerData: $workerData));
     }
 
     /**
@@ -59,11 +57,7 @@ final readonly class WorkerService
         $newLocalWorkers = $transformed->map(function (WorkerData $data) use ($owners) {
             if ($owner = $owners->firstWhere('sub', head(explode('.', $data->name)))) {
 
-                $worker = Create::execute($owner, $data);
-
-                $this->log($data, 'added');
-
-                return $worker;
+                return Create::execute($owner, $data);
             }
         })->filter();
 
@@ -87,13 +81,5 @@ final readonly class WorkerService
                 ]);
             }
         });
-    }
-
-    private function log(WorkerData $data, string $action): void
-    {
-        Log::channel('commands.workers')->info(
-            message: Str::upper($action),
-            context: ['worker_name' => $data->name, 'worker_id' => $data->workerId]
-        );
     }
 }

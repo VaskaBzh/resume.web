@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Api\Wallet;
+namespace App\Services\External\Wallet;
 
 use App\Enums\Income\Message;
 use App\Exceptions\PayOutException;

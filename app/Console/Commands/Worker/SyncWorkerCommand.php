@@ -27,7 +27,7 @@ class SyncWorkerCommand extends Command
             ->sync(groupId: config('api.btc.all_groups'), status: 'dead')
             ->count();
 
-        if (config('app.production_env')) {
+        if (! config('app.local')) {
             $addedWorkers = $workerService
                 ->addNew(groupId: config('api.btc.ungrouped_id'))
                 ->count();

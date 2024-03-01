@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\WatcherLinks\CreateLinkRequest;
 use App\Http\Resources\WatcherLinkResource;
 use App\Models\Sub;
-use App\Services\WatcherLinkService;
+use App\Services\Internal\WatcherLinkService;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 

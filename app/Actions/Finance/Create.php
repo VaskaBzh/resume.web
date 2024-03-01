@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions\Finance;
 
-use App\Actions\Executable;
-use App\Dto\DtoContract;
+use App\Dto\FinanceData;
 use App\Models\Finance;
 
-class Create implements Executable
+class Create
 {
-    public static function execute(DtoContract $financeData): void
+    public static function execute(FinanceData $financeData): void
     {
         Finance::create([
             'group_id' => $financeData->groupId,

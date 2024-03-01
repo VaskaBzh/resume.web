@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api\Referral;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Referral\ReferralStatisticResource;
 use App\Models\User;
-use App\Services\ReferralService;
+use App\Services\Internal\ReferralService;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 

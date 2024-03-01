@@ -7,7 +7,7 @@ namespace App\Listeners;
 use App\Actions\User\AttachReferral;
 use App\Enums\User\Roles;
 use App\Events\Registered;
-use App\Services\ReferralService;
+use App\Services\Internal\ReferralService;
 
 final readonly class ReferralCreatingListener
 {

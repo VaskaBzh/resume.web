@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Services\ReferralService;
+use App\Services\Internal\ReferralService;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

@@ -38,7 +38,7 @@ return [
         /**
          *  User id
          */
-        'puid' => '781195',
+        'puid' => 781195,
 
         /**
          * Before grouped workers connected on buffer group
@@ -50,7 +50,7 @@ return [
          */
         'all_groups' => 0,
 
-        'default_page_size' => '1000',
+        'default_page_size' => 1000,
 
         /**
          * Wait before retrying request in in microseconds

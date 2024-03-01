@@ -8,7 +8,7 @@ use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCreateRequest;
 use App\Models\User;
-use App\Services\SubService;
+use App\Services\Internal\SubService;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;

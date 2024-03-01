@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Api\MinerStat;
+namespace App\Services\External\MinerStat;
 
-use App\Services\Api\ApiRequest;
-use App\Services\Api\BaseClient;
+use App\Services\External\ApiRequest;
+use App\Services\External\BaseClient;
 use Illuminate\Support\Collection;
 
 class Client extends BaseClient

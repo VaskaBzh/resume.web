@@ -77,11 +77,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(User::class, 'referrer_id');
     }
 
-    public function referralIncomes(): HasMany
-    {
-        return $this->hasMany(Income::class, 'referral_id');
-    }
-
     public function watcherLinks(): HasMany
     {
         return $this->hasMany(WatcherLink::class);

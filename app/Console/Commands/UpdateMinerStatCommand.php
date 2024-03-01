@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Services\MinerStatService;
+use App\Services\Internal\MinerStatService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 

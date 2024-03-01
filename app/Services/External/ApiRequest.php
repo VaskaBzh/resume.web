@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Api;
+namespace App\Services\External;
 
 class ApiRequest
 {
@@ -24,7 +24,7 @@ class ApiRequest
     /**
      * Create an API request for a given HTTP method and URI.
      */
-    protected function __construct(
+    public function __construct(
         protected string $method = 'get',
         protected string $uri = ''
     ) {
