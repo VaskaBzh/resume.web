@@ -9,9 +9,15 @@ export class GraphDataService {
     records = [];
 
     setRecords(newRecordsData, GraphData = LineGraphData) {
-        this.records = Object.values(newRecordsData).map(
-            (recordElem) => new GraphData(recordElem)
-        );
+        if (Object.values(newRecordsData).length > 0) {
+            this.records = Object.values(newRecordsData).map(
+                (recordElem) => new GraphData(recordElem)
+            );
+
+            return this;
+        }
+
+        this.records = [new GraphData({})];
 
         return this;
     }
